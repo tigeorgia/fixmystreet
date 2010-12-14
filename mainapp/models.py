@@ -1,4 +1,3 @@
-
 from django.db import models, connection
 from django.contrib.gis.db import models
 from django.contrib.gis.maps.google import GoogleMap, GMarker, GEvent, GPolygon, GIcon
@@ -370,11 +369,13 @@ class ReportSubscriber(models.Model):
                    settings.EMAIL_FROM_USER,[self.email], fail_silently=False)
         super(ReportSubscriber, self).save()
 
- 
+# This and subsequent 'XMap' classes should probably be in
+# views somewhere--their primary function is as intermediate
+# classes to aid in displaying model data on maps.
 class ReportMarker(GMarker):
     """
         A marker for an existing report.  Override the GMarker class to 
-        add a numbered, coloured marker.
+        add a numbered, coloured marker. 
         
         If the report is fixed, show a green marker, otherwise red.
     """
@@ -386,8 +387,8 @@ class ReportMarker(GMarker):
         icon_number = icon_number
         img = "/media/images/marker/%s/marker%s.png" %( color, icon_number )
         name = 'letteredIcon%s' %( icon_number )      
-        icon = GIcon(name,image=img,iconsize=(20,34))
-        GMarker.__init__(self,geom=(report.point.x,report.point.y), title=report.title, icon=icon)
+        gIcon = GIcon(name,image=img,iconsize=(20,34))
+        GMarker.__init__(self,geom=(report.point.x,report.point.y), title=report.title, icon=gIcon)
 
     def __unicode__(self):
         "The string representation is the JavaScript API call."

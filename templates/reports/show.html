@@ -2,7 +2,8 @@
 {% load i18n %}
 
 {% block title %}{{report.ward.city.name}}: {{report.title}}{% endblock %}
-{% block script %}<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js?pub=xa-4a620b09451f9502"></script>
+{% block script %}{% if olMap %}{{ olMap.media }}{% endif %}
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js?pub=xa-4a620b09451f9502"></script>
 {% endblock %}
 {% block css %}
 	<style type="text/css" media="screen">
@@ -105,6 +106,7 @@
 	</div>
 	<div id="rightcol">
      	<div id="{{ google.dom_id }}" style="width:400px;height:400px;"></div>
+        {% if olMap %}{{ olMap }}{% endif %}
     	{% include "wards/_info_box.html" %}   	
     </div>
 </div>

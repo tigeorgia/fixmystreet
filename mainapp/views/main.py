@@ -44,7 +44,7 @@ def search_address(request):
     address_lookup = GoogleAddressLookup( address )
 
     if not address_lookup.resolve():
-        return index(request, _("Sorry, we couldn\'t retreive the coordinates of that location, please use the Back button on your browser and try something more specific or include the city name at the end of your search."))
+        return index(request, _("Sorry, we couldn\'t retrieve the coordinates of that location, please use the Back button on your browser and try something more specific or include the city name at the end of your search."))
     
     if not address_lookup.exists():
         return index( request, _("Sorry, we couldn\'t find the address you entered.  Please try again with another intersection, address or postal code, or add the name of the city to the end of the search."))

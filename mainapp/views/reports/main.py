@@ -6,7 +6,7 @@ from django.template import Context, RequestContext
 from django.contrib.gis.geos import *
 from fixmystreet import settings
 from django.utils.translation import ugettext as _
-
+from olwidget.widgets import Map, InfoLayer
 
 def new( request ):
     category_error = None
@@ -59,13 +59,27 @@ def new( request ):
 def show( request, report_id ):
     report = get_object_or_404(Report, id=report_id)
     subscribers = report.reportsubscriber_set.count() + 1
+# OpenLayers Support -DD
+    reportLayer = InfoLayer([(report.point,report.title)],{
+        'overlay_style': {
+				'externalGraphic': '/media/images/marker/default/marker.png',
+				'pointRadius': '15',
+				'graphicOpacity': '1',
+			        #'fill_color': '#ffffff',
+				#'stroke_color': '#008800',
+				}})
+    olMap = Map([reportLayer],options={
+        'layers': ['osm.omc'],
+        'map_options': {},})
+
     return render_to_response("reports/show.html",
                 { "report": report,
                   "subscribers": subscribers,
                   "ward":report.ward,
                   "updates": ReportUpdate.objects.filter(report=report, is_confirmed=True).order_by("created_at")[1:], 
                   "update_form": ReportUpdateForm(), 
-                  "google":  FixMyStreetMap((report.point)) },
+                  "google":  FixMyStreetMap((report.point)), 
+                  "olMap": olMap },
                 context_instance=RequestContext(request))
 
 

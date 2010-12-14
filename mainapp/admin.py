@@ -1,9 +1,11 @@
-from fixmystreet.mainapp.models import EmailRule,Ward,ReportCategory,City, ReportCategoryClass, FaqEntry, Councillor
+from fixmystreet.mainapp.models import EmailRule,Ward,ReportCategory,City, ReportCategoryClass, FaqEntry, Councillor,Province,Report
 from django.contrib import admin
 from contrib.transmeta import canonical_fieldname
 
 admin.site.register(EmailRule)
 admin.site.register(City)
+admin.site.register(Province)
+admin.site.register(Report)
 
 class ReportCategoryClassAdmin(admin.ModelAdmin):
     list_display = ('name',)
