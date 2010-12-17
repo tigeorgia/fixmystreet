@@ -46,18 +46,21 @@ def show( request, ward_id ):
                                 'fill_color': '#c0c0c0',
                                 'stroke_color': '#0000FF',
                                 'stroke_width': 2,}})
-    wardReports = InfoLayer([(r.point,r.title) for r in reports],{ # Python list comprehensions rock. -DD
-                            'overlay_style': {
-				'externalGraphic': '/media/images/marker/default/marker.png',
-				'pointRadius': '15',
-				'graphicOpacity': '1',
-			        #'fill_color': '#ffffff',
-				#'stroke_color': '#008800',
-				}})
-    olMap = Map([wardBoundary,wardReports],options={
-                                             'layers': ['osm.omc'],
-                                             'map_options': {},})
-
+    counter = 1
+    allLayers = [wardBoundary] 	
+    for r in reports:
+        if r.is_fixed:
+            markerColor = 'green'
+        else:
+            markerColor = 'red'	
+        options = {'overlay_style': {
+        'externalGraphic': '/media/images/marker/%s/marker%d.png' %(markerColor, counter),
+        'pointRadius': '15',
+        'graphicOpacity': '1',}}
+        counter+=1
+        thisLayer = InfoLayer([(r.point,r.title)],options)
+        allLayers.append(thisLayer)
+    olMap = Map(allLayers,options={'layers': ['osm.omc'],'map_options': {},})
     return render_to_response("wards/show.html",
                 {"ward": ward,
                  "google": google,
