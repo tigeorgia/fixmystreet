@@ -11,11 +11,11 @@ def show_by_number( request, city_id, ward_no ):
     google = WardMap(wards[0],[])
 
 # This should be updated to copy the functional code below. This doesn't work. -DD
-    olMap = Map([],options={'layers': ['osm.mapnik', 'google.physical']})
+    olMap = Map([],options={'layers': ['osm.mapnik']})
 
     return render_to_response("wards/show.html",
                 {"ward": wards[0],
-                 "google": google,
+                 #"google": google,
 		 "olMap": olMap,
                  "reports": [] },
                 context_instance=RequestContext(request))    
@@ -63,7 +63,7 @@ def show( request, ward_id ):
     olMap = Map(allLayers,options={'layers': ['osm.omc'],'map_options': {},})
     return render_to_response("wards/show.html",
                 {"ward": ward,
-                 "google": google,
+                 #"google": google,
                  "olMap": olMap,
                  "reports": reports,
                  "status_display" : [ _('New Problems'), _('Older Unresolved Problems'),  _('Recently Fixed'), _('Older Fixed Problems') ] 
