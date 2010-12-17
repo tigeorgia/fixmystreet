@@ -1,0 +1,8 @@
+1. Fix formatting of menu items in Georgian
+2. Get ward data, add wards and boundaries
+3. Update administrative interface
+    -Fix errors because of lack of Georgian fields
+    -Add functions to output names of objects (instead of "Report object")
+    -Change report categories, and translate
+4. Match reporting interface with Google (add drag and drop)
+5. Implement address search once OMC has it
