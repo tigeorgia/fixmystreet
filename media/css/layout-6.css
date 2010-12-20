@@ -101,7 +101,8 @@ min-height: 300px;
     float: left;
     margin-left: 20px;
 	list-style-type: none;
-	padding: 1em;
+	padding: 0.5em;
+    padding-top: 1em;
 }
 
 #top_menu a {
