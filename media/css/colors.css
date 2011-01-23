@@ -89,6 +89,10 @@
 	color: #ffffff;
 }
 
+#start_box a{
+    color:#ffffff;
+}
+
 #start_box div {
 	background: url(/media/images/start_tr.png) top right no-repeat;
 }

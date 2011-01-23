@@ -1,0 +1,27 @@
+<div id="{{ id }}"></div>
+{{ layer_html|join:"" }}
+<script type="text/javascript">
+    function pointMoved(eventObj){
+        //alert("point moved"+"("+eventObj.feature.geometry.x.toString()+","+eventObj.feature.geometry.y.toString()+")");
+        cloned = eventObj.feature.geometry.clone();
+        cloned.transform(new OpenLayers.Projection("EPSG:900913"), new OpenLayers.Projection("EPSG:4326"));
+        x = cloned.x;
+        y = cloned.y;
+
+        alert(x.toString()+","+y.toString());
+        return true;
+    }
+
+    myMap = new olwidget.Map("{{ id }}", [
+            {{ layer_js|join:"," }}
+        ], 
+        {{ map_opts|safe }}
+    );
+    el = (myMap.getLayersByClass ("olwidget.EditableLayer"))[0];
+    el.textarea.value = "SRID=4326;{{params.point}}";
+    el.readWKT();
+    el.addUndoState();
+
+    el.events.register('featureadded', el, pointMoved);
+</script>
+

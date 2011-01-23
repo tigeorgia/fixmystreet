@@ -128,7 +128,7 @@ class ReportCategory(models.Model):
     name = models.CharField(max_length=100)
     hint = models.TextField(blank=True, null=True)
     category_class = models.ForeignKey(ReportCategoryClass)
-  
+
     class Meta:
         db_table = u'report_categories'
         translate = ('name', 'hint', )

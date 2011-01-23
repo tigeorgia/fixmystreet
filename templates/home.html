@@ -25,11 +25,20 @@
 	</div>
 			
 	<div id="start_box"><div><div><div>
-	    <form name="lookup" action="/search/"   method="post">
-		<b>{% trans "Enter a nearby postal code, or street name and city:" %}</b>
-		<input type="text" name="q">
-		<input type="submit" name="submit" value="{% trans "Go" %}">
-		</form>		
+	    <table>
+        <tr>
+        <td><a href="search/?q=8">{% trans "Isani-Samgori"%}</a></td>
+        <td><a href="search/?q=11 ">{% trans "Didgori"%}</a></td>
+        </tr>
+        <tr>
+        <td><a href="search/?q=9">{% trans "Vake-Saburtalo"%}</a></td>
+        <td><a href="search/?q=12">{% trans "Didube-Chugureti"%}</a></td>
+        </tr>
+        <tr>
+        <td><a href="search/?q=10">{% trans "Gldani-Nadzaladevi"%}</a></td>
+        <td><a href="search/?q=13">{% trans "Old Tbilisi"%}</a></td>
+        </tr>
+        </table>	
 	</div></div></div></div>
 
 
@@ -48,7 +57,7 @@
 			<div class='block'>
 				<h4>{% trans "How to report a Problem" %}</h4>
 			   <ol>
-				   <li>{% trans "Enter a nearby postal code, or street name and city" %}</li>
+				   <li>{% trans "Choose your district" %}</li>
    				   <li>{% trans "Locate the problem on a map of the area" %}</li>
    				   <li>{% trans "Enter details of the problem" %}</li>
    				   <li>{% trans "We send it to the city on your behalf" %}</li>

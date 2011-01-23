@@ -36,11 +36,14 @@ table {
 	border-collapse: separate;
 	border-spacing: 0;
 }
+#start_box table{
+    color:#ffffff;
+    width:100%;
+}
 caption, th, td {
 	text-align: left;
 	font-weight: normal;
 }
-
 
 /*--------------------------------------------------------------------------------------------------------*/
 /**** GLOBAL STYLES ****/
@@ -82,4 +85,3 @@ a {
     background-color: #ffcccc;
     border: solid 2px #990000;
 }
-

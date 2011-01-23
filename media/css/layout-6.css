@@ -229,6 +229,9 @@ margin-left: auto;
 margin-right: auto;
 }
 
+#stat_box table{
+width:100%;
+}
 
 
 #supported_cities {

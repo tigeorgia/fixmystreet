@@ -117,7 +117,7 @@ msgstr "პიერ ლუისი, მისი MTM კონვერტა�
 
 #: templates/base.html:6
 msgid "FixMyStreet.ge"
-msgstr "chemikucha.ge"
+msgstr "ChemiKucha.ge"
 
 #: templates/base.html:6
 msgid "Home"
@@ -168,15 +168,35 @@ msgstr "შეატყობინე, დაათვალიერე და
 
 #: templates/home.html:24
 msgid "(like graffiti, potholes, excessive garbage, or street lighting)"
-msgstr "(როგორც ფრაფიტი, ორმოები, ზედმეტი ნაგავი, ან ქუჩის განათება)"
+msgstr "(როგორც გრაფიტი, ორმოები, ზედმეტი ნაგავი, ან ქუჩის განათება)"
 
 #: templates/home.html:29
 msgid "Enter a nearby postal code, or street name and city:"
 msgstr "შეიყვანეთ მიმდებარე ფოსტის კოდი, ან ქუჩის სახელი და ქალაქი"
 
+#: templates/home.html:30
+msgid "Isani-Samgori"
+msgstr "ისანი-სამგორი"
+
 #: templates/home.html:31
-msgid "Go"
-msgstr "წინ"
+msgid "Didgori"
+msgstr "დიდგორი"
+
+#: templates/home.html:34
+msgid "Vake-Saburtalo"
+msgstr "ვაკე-საბურთალო"
+
+#: templates/home.html:35
+msgid "Didube-Chugureti"
+msgstr "დიდუბე-ჩუღურეთი"
+
+#: templates/home.html:38
+msgid "Gldani-Nadzaladevi"
+msgstr "გლდანი-ნაძალადედვი"
+
+#: templates/home.html:39
+msgid "Old Tbilisi"
+msgstr "ძვლი თბილისი"
 
 #: templates/home.html:38
 msgid "Supported Cities"
@@ -191,8 +211,8 @@ msgid "How to report a Problem"
 msgstr "როგორ შევატყობინოთ პრობლემა"
 
 #: templates/home.html:51
-msgid "Enter a nearby postal code, or street name and city"
-msgstr "შეიყვანეთ მიმდებარე ფოსტის კოდი, ან ქუჩის სახელი და ქალაქი"
+msgid "Choose your district"
+msgstr "აირჩიეთ თქვენი უბანი"
 
 #: templates/home.html:52
 msgid "Locate the problem on a map of the area"
@@ -225,7 +245,7 @@ msgstr "განახლებული შეტყობინებებ�
 #: templates/home.html:70
 #: templates/cities/_report_count_table.html:28
 msgid "As reported by fixmystreet.ca users."
-msgstr "როგორც chemikucha.ge-ს მომხმარებლები იტყობინებიან"
+msgstr "როგორც ChemiKucha.ge-ს მომხმარებლები იტყობინებიან"
 
 #: templates/home.html:75
 msgid "Recent Photos"
@@ -249,7 +269,7 @@ msgstr "შეკეთებული"
 
 #: templates/search_result.html:19
 msgid "Zoom out to see more reports nearby."
-msgstr "გთხოვთ შეამციროთ, რათა იხილოთ უფრო მეტი ახლომდებარე შეტყობინებები"
+msgstr "გთხოვთ შეამციროთ, რათა იხილოთ უფრო მეტი ახლომდებარე შეტყობინება"
 
 #: templates/search_result.html:21
 msgid "No problems have been reported yet."
@@ -391,7 +411,7 @@ msgstr "შეტყობინების დიდი ასოებით,
 
 #: templates/reports/new.html:98
 msgid "Remember that FixMyStreet is primarily for reporting physical problems that can be fixed. If your problem is not appropriate for submission via this site please contact city officials directly."
-msgstr "გაითვალისწინეთ, რომ chemikucha.ge-ს მიზანია ფიზიკური სახის პრობლემების გადაჭრა. თუ თქვენი პრობლემა არ არის შესაფერისი ჩვენი ვებ–გვერდისათვის, გთხოვთ დაეკონტაქტოთ უშუალოდ ქალაქის ადმინისტრაციას. "
+msgstr "გაითვალისწინეთ, რომ ChemiKucha.ge-ს მიზანია ფიზიკური სახის პრობლემების გადაჭრა. თუ თქვენი პრობლემა არ არის შესაფერისი ჩვენი ვებ–გვერდისათვის, გთხოვთ დაეკონტაქტოთ უშუალოდ ქალაქის ადმინისტრაციას. "
 
 #: templates/reports/new.html:106
 #: templates/reports/show.html:100
@@ -405,7 +425,7 @@ msgstr "ეს პრობლემა შეკეთდა"
 
 #: templates/reports/show.html:35
 msgid "<p>Please check your email for a message from fixmystreet.ca, which will include a confirmation link.  Complete your submission by clicking on it.</p><p>Your report will not be sent to city officials or be visible to other visitors until you have done so.</p>"
-msgstr "<p> გთხოვთ შეამოწმოთ თქვენი ელ.ფოსტა, რათა იხილოთ chemikucha.ge-ს შეტყობინებას დამადატურებელ ბმულით. დაასრულეთ თქვენი გაწევრიანება მასზე დაკლიკებით. </p><p> მანამ სანამ ამ ინსტრუქციებს არ მიჰყვებით, თქვენი შეტყობინების ხილვის საშუალება არც ქალაქის ადმინისტრაციას და არც სტუმრებს არ შეეძლებათ."
+msgstr "<p> გთხოვთ შეამოწმოთ თქვენი ელ.ფოსტა, რათა იხილოთ ChemiKucha.ge-ს შეტყობინებას დამადატურებელ ბმულით. დაასრულეთ თქვენი გაწევრიანება მასზე დაკლიკებით. </p><p> მანამ სანამ ამ ინსტრუქციებს არ მიჰყვებით, თქვენი შეტყობინების ხილვის საშუალება არც ქალაქის ადმინისტრაციას და არც სტუმრებს არ შეეძლებათ."
 
 #: templates/reports/show.html:53
 msgid "Filed by:"
@@ -526,5 +546,5 @@ msgstr "პრობლემები არ იქნა შეტყობი
 
 #: templates/wards/show.html:25
 msgid "Note: fixmystreet.ca relies on users to report problems as fixed."
-msgstr "გაითვალისწინეთ, რომ chemikucha.ge იმედს იტოვებს, რომ წევრები თვითონ მიუთითებენ იმის შესახებ, რომ პრობლემა მოგვარდა"
+msgstr "გაითვალისწინეთ, რომ ChemiKucha.ge იმედს იტოვებს, რომ წევრები თვითონ მიუთითებენ იმის შესახებ, რომ პრობლემა მოგვარდა"
 
