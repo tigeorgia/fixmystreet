@@ -5,10 +5,11 @@
         //alert("point moved"+"("+eventObj.feature.geometry.x.toString()+","+eventObj.feature.geometry.y.toString()+")");
         cloned = eventObj.feature.geometry.clone();
         cloned.transform(new OpenLayers.Projection("EPSG:900913"), new OpenLayers.Projection("EPSG:4326"));
-        x = cloned.x;
-        y = cloned.y;
-
-        alert(x.toString()+","+y.toString());
+        lon = cloned.x;
+        lat = cloned.y;
+        
+        window.location.href = "/reports/new?" +"&lat="+lat.toString()+"&lon="+lon.toString();
+//        alert(x.toString()+","+y.toString());
         return true;
     }
 

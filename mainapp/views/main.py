@@ -107,7 +107,7 @@ def search_address(request):
                                 'pointRadius': '15',
                                 'graphicOpacity': '1'}})
     allLayers = [wardBoundary, reportPoint] 	
-    olMap = Map(vector_layers=allLayers,options={'layers': ['osm.omc'],'map_options': {}, 'hide_textarea':'false'},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt})   
+    olMap = Map(vector_layers=allLayers,options={'layers': ['osm.omc'],'map_options': {},},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt})   
     return render_to_response("search_result.html",
                 {"olMap": olMap,
                  "pnt": pnt,
