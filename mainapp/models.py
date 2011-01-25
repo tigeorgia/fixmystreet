@@ -42,6 +42,8 @@ class CCEmailMessage(EmailMessage):
 
          
 class Province(models.Model):
+    __metaclass__ = TransMeta
+
     name = models.CharField(max_length=100)
     abbrev = models.CharField(max_length=3)
 
@@ -50,8 +52,11 @@ class Province(models.Model):
 
     class Meta:
         db_table = u'province'
+        translate = ('name',)
     
 class City(models.Model):
+    __metaclass__ = TransMeta
+
     province = models.ForeignKey(Province)
     name = models.CharField(max_length=100)
     # the city's 311 email, if it has one.
@@ -67,8 +72,11 @@ class City(models.Model):
 
     class Meta:
         db_table = u'cities'
+        translate = ('name',)
 
 class Councillor(models.Model):
+    __metaclass__ = TransMeta
+
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     
@@ -78,12 +86,15 @@ class Councillor(models.Model):
     phone = models.CharField(max_length=20,blank=True, null=True)
 
     def __unicode__(self):
-        return self.name
+        return self.last_name
 
     class Meta:
         db_table = u'councillors'
+        translate = ('first_name','last_name',)
    
 class Ward(models.Model):
+    __metaclass__ = TransMeta
+
     name = models.CharField(max_length=100)
     number = models.IntegerField()
     councillor = models.ForeignKey(Councillor)
@@ -118,6 +129,7 @@ class Ward(models.Model):
 
     class Meta:
         db_table = u'wards'
+        translate = ('name', )
 
 class ReportCategoryClass(models.Model):
     __metaclass__ = TransMeta
