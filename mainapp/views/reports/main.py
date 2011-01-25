@@ -7,6 +7,7 @@ from django.contrib.gis.geos import *
 from fixmystreet import settings
 from django.utils.translation import ugettext as _
 from olwidget.widgets import Map, InfoLayer, EditableLayer
+from django.contrib.gis.measure import D 
 
 def new( request ):
     category_error = None
@@ -50,11 +51,12 @@ def new( request ):
     wards = Ward.objects.filter(geom__contains=point_str)
     if (len(wards) == 0):
         return( index(request, _("Sorry, we don't yet have that area in our database.  Please have your area councillor contact fixmystreet.ca.")))
-
+    
     ward = wards[0]
     wardBoundary = InfoLayer([[ward.geom,"Boundary"]],{
         'overlay_style': {
-            'fill-color': '#FFFFFF',
+            'fill_color': '#FFFFFF',
+            'fill_opacity':0,
             'stroke_color': '#0000FF',
             'stroke_width': 2,}})
 
@@ -65,7 +67,7 @@ def new( request ):
             'graphicOpacity': '1'}})
     allLayers = [wardBoundary,reportPoint]
     
-    olMap = Map(vector_layers=allLayers,options={'layers': ['osm.omc'],'map_options': {},},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt})
+    olMap = Map(vector_layers=allLayers,options={'layers': ['osm.omc'],'map_options': {'controls': ['Navigation', 'PanZoom', 'Attribution']},'default_zoom': 13, 'default_lat':request.GET["lat"], 'default_lon':request.GET["lon"], 'zoom_to_data_extent': False},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt}, )
     
     return render_to_response("reports/new.html",
                 { "lat": pnt.y,
@@ -92,7 +94,8 @@ def show( request, report_id ):
 				}})
     olMap = Map([reportLayer],options={
         'layers': ['osm.omc'],
-        'map_options': {},})
+        'map_options': {},
+        'default_zoom': 1})
 
     return render_to_response("reports/show.html",
                 { "report": report,

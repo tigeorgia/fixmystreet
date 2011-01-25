@@ -45,8 +45,8 @@ def search_address(request):
     address_lookup = address 
 
     if address == '8':
-        lon = 44.95068261071
-        lat = 41.711067211255
+        lon = 44.922294596002
+        lat = 41.688166794582
     elif address == '9':
         lon = 44.714133224211
         lat = 41.771908159298
@@ -97,7 +97,8 @@ def search_address(request):
     ward = wards[0]
     wardBoundary = InfoLayer([[ward.geom,"Boundary"]],{
                             'overlay_style': {
-                                'fill_color': '#c0c0c0',
+                                'fillColor': '#FFFFFF',
+                                'fill_opacity': 0,
                                 'stroke_color': '#0000FF',
                                 'stroke_width': 2,}})
 
