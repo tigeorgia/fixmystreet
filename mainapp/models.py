@@ -45,6 +45,9 @@ class Province(models.Model):
     name = models.CharField(max_length=100)
     abbrev = models.CharField(max_length=3)
 
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         db_table = u'province'
     
@@ -74,6 +77,9 @@ class Councillor(models.Model):
     fax = models.CharField(max_length=20,blank=True, null=True)
     phone = models.CharField(max_length=20,blank=True, null=True)
 
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         db_table = u'councillors'
    
@@ -85,6 +91,9 @@ class Ward(models.Model):
     geom = models.MultiPolygonField( null=True)
     objects = models.GeoManager()
     
+    def __unicode__(self):
+        return self.name
+
     def get_absolute_url(self):
         return "/wards/" + str(self.id)
 
@@ -128,6 +137,9 @@ class ReportCategory(models.Model):
     name = models.CharField(max_length=100)
     hint = models.TextField(blank=True, null=True)
     category_class = models.ForeignKey(ReportCategoryClass)
+
+    def __unicode__(self):
+        return self.name
 
     class Meta:
         db_table = u'report_categories'
@@ -222,6 +234,9 @@ class Report(models.Model):
 
     objects = models.GeoManager()
     
+    def __unicode__(self):
+        return self.title
+
     def is_subscribed(self, email):
         if len( self.reportsubscriber_set.filter(email=email)) != 0:
             return( True )
