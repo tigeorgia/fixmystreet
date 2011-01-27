@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-25 11:18+0300\n"
+"POT-Creation-Date: 2011-01-26 10:49+0300\n"
 "PO-Revision-Date: 2010-12-07 12:11+0400\n"
 "Last-Translator: Ruso <rusudan.khotivari@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: mainapp/forms.py:11 mainapp/models.py:216 mainapp/models.py:264
+#: mainapp/forms.py:11 mainapp/models.py:240 mainapp/models.py:291
 msgid "Name"
 msgstr "სახელი"
 
-#: mainapp/forms.py:14 mainapp/models.py:263
+#: mainapp/forms.py:14 mainapp/models.py:290
 msgid "Email"
 msgstr "ელ.ფოსტა"
 
@@ -27,29 +27,30 @@ msgstr "ელ.ფოსტა"
 msgid "Message"
 msgstr "შეტყობინება"
 
-#: mainapp/models.py:191
+#: mainapp/models.py:215
 msgid "Subject"
 msgstr "თემა"
 
-#: mainapp/models.py:214
+#: mainapp/models.py:238
 msgid "* Photo"
 msgstr "ფოტო"
 
-#: mainapp/models.py:215 mainapp/models.py:258
+#: mainapp/models.py:239 mainapp/models.py:285
 msgid "Details"
 msgstr "დეტალები"
 
-#: mainapp/models.py:265
+#: mainapp/models.py:292
 msgid "Phone"
 msgstr "ტელეფონი"
 
-#: mainapp/views/main.py:93 mainapp/views/reports/main.py:52
+#: mainapp/views/main.py:93 mainapp/views/reports/main.py:53
 msgid ""
 "Sorry, we don't yet have that area in our database.  Please have your area "
 "councillor contact fixmystreet.ca."
 msgstr ""
-"უკაცრავად, ეგ უბანი ჯეჯერობით არ არის შეტანილი ჩვენს ბაზაში." 
-"სთხოვეთ თქვენი უბნის მაჟორიტარს შეგვატყობინოს ამის შესახებ."
+"უკაცრავად, ეგ უბანი ჯეჯერობით არ არის შეტანილი ჩვენს ბაზაში.სთხოვეთ თქვენი "
+"უბნის მაჟორიტარს შეგვატყობინოს ამის შესახებ."
+
 #: mainapp/views/wards.py:69 templates/cities/_report_count_table.html:7
 msgid "New Problems"
 msgstr "ახალი პრობლემები"
@@ -67,7 +68,7 @@ msgstr "ახლახან შეკეთებული"
 msgid "Older Fixed Problems"
 msgstr "ძველი გადაუჭრელი პრობლემები"
 
-#: mainapp/views/reports/main.py:42
+#: mainapp/views/reports/main.py:43
 msgid "Please select a category"
 msgstr "გთხოვთ აირჩიოთ კატეგორია"
 
@@ -189,32 +190,26 @@ msgstr "შეატყობინე, დაათვალიერე და
 msgid "(like graffiti, potholes, excessive garbage, or street lighting)"
 msgstr "(როგორიცაა გრაფიტი, ორმოები, ზედმეტი ნაგავი, ან ქუჩის განათება)"
 
-#: mainapp/views/wards.py:69 templates/cities/_report_count_table.html:14
 #: templates/home.html:30
 msgid "Isani-Samgori"
 msgstr "ისანი-სამგორი"
 
-#: mainapp/views/wards.py:69 templates/cities/_report_count_table.html:9
 #: templates/home.html:31
 msgid "Didgori"
 msgstr "დიდგორი"
 
-#: mainapp/views/wards.py:69 templates/cities/_report_count_table.html:9
 #: templates/home.html:34
 msgid "Vake-Saburtalo"
 msgstr "ვაკე-საბურთალო"
 
-#: mainapp/views/wards.py:69 templates/cities/_report_count_table.html:9
 #: templates/home.html:35
 msgid "Didube-Chugureti"
 msgstr "დიდუბე-ჩუღურეთი"
 
-#: mainapp/views/wards.py:69 templates/cities/_report_count_table.html:9
 #: templates/home.html:38
 msgid "Gldani-Nadzaladevi"
 msgstr "გლდანი-ნაძალადედვი"
 
-#: mainapp/views/wards.py:69 templates/cities/_report_count_table.html:9
 #: templates/home.html:39
 msgid "Old Tbilisi"
 msgstr "ძვლი თბილისი"
@@ -236,8 +231,9 @@ msgid "Choose your district"
 msgstr "აირჩიეთ თქვენი უბანი"
 
 #: templates/home.html:61
-msgid "Locate the problem on a map of the area"
-msgstr "განათავსეთ პრობლემა რუკაზე აღნიშნულ ტერიტორიაზე"
+#, fuzzy
+msgid "Locate the problem on a map of the area by clicking EDIT"
+msgstr "განათავსეთ პრობლემა რუკაზე აღნიშნულ ტერიტორიაზე EDIT ღილაკზე დაჭერით"
 
 #: templates/home.html:62
 msgid "Enter details of the problem"
@@ -369,7 +365,16 @@ msgid ""
 "</p>\n"
 "<p>We'd love to get your feedback on this site:</p> \n"
 msgstr ""
-
+"\n"
+"<p>\n"
+"\tგთხოვთ ამ ფორმის საშუალებით <strong>არ გამოაგზავნოთ</strong> პრობლემაზე შეტყობინება.\n"
+"\tამ ფოორმით გამოგზავნილი შეტყობინებები მოდის ChemiKucha.ge-ს შემქმნელებთან და არა უბნის  პასუხისმგებელ პირთან.\n"
+"</p>\n"
+"<p>\n"
+"\tპრობლემის შეტყბინებისთვის ნახეთ ინსტრუქცია <a href=\"/\">აქ</"
+"a>.\n"
+"</p>\n"
+"<p>გაგვიხარდება თუ თქვენ გაგვიზიარებთ თქვენს აზრს ვებ გვერდის შესახებ:</p> \n"
 #: templates/contact/new.html:24
 msgid "Send"
 msgstr "გაგზავნა"
@@ -555,15 +560,17 @@ msgstr ""
 "\n"
 "<h2>თითქმის დასრულებულია! ახლა შეამოწმეთ თქვენი ელ.ფოსტა...</h2>\n"
 "\n"
-"<p>დასტურის წერილს შესაძლებელია რამდენიმე წუთი დასჭირდეს მოსასვლელად"
-"გთხოვთ იქონიეთ მოთმინება</p>\n"
+"<p>დასტურის წერილს შესაძლებელია რამდენიმე წუთი დასჭირდეს მოსასვლელადგთხოვთ "
+"იქონიეთ მოთმინება</p>\n"
 "\n"
-"<p>თუ თქვენ იყენებთ ვებ-ფოსტას ან ჩართული გაქვთ სპამ-ფილტრი, შესაძლებელია"
-"მოგიწიოთ სპამის შემოწმება, რადგან ხანდახან ჩვენი წერილები შეცდომით იქ ხვდება\n"
-"ახლა თქვენ უნდა დააჭიროთ ბმულს რომელიც ცვენ გამოგიგზავნეთ- წინააღმდეგ შემთხვევაში"
-"თქვენი შეტყობინება აქტიბვირებული არ იქნება.</p>\n"
+"<p>თუ თქვენ იყენებთ ვებ-ფოსტას ან ჩართული გაქვთ სპამ-ფილტრი, "
+"შესაძლებელიამოგიწიოთ სპამის შემოწმება, რადგან ხანდახან ჩვენი წერილები "
+"შეცდომით იქ ხვდება\n"
+"ახლა თქვენ უნდა დააჭიროთ ბმულს რომელიც ცვენ გამოგიგზავნეთ- წინააღმდეგ "
+"შემთხვევაშითქვენი შეტყობინება აქტიბვირებული არ იქნება.</p>\n"
 "\n"
-"<p>(ნუ შეწწუხდებით ჩვენ დაგელოდებით სანამ თქვენ ამოწმებთ თქვენს ფოსტას.)</p>\n"
+"<p>(ნუ შეწწუხდებით ჩვენ დაგელოდებით სანამ თქვენ ამოწმებთ თქვენს ფოსტას.)</"
+"p>\n"
 
 #: templates/reports/subscribers/new.html:3
 msgid "Subscribe to a Report"

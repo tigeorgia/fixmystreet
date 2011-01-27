@@ -3,9 +3,9 @@ from mainapp.models import City, Report, CityTotals, CityWardsTotals, AllCityTot
 from django.template import Context, RequestContext
 from django.db.models import  Count
 
-def index(request):    
+def index(request):
     return render_to_response("cities/index.html",
-                {"report_counts": AllCityTotals() },
+                {"report_counts": AllCityTotals(request.LANGUAGE_CODE) },
                 context_instance=RequestContext(request))
 
 
@@ -23,7 +23,7 @@ def show( request, city_id ):
                 {"city":city,
                  "google": google,
                  'top_problems': top_problems,
-                 "report_counts": CityWardsTotals(city) },
+                 "report_counts": CityWardsTotals(city,request.LANGUAGE_CODE) },
                  context_instance=RequestContext(request))
 
 def home( request, city, error_msg, disambiguate ):

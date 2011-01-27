@@ -623,15 +623,15 @@ class CityTotals(ReportCountQuery):
         
 class CityWardsTotals(ReportCountQuery):
 
-    def __init__(self, city):
+    def __init__(self, city, lang):
         ReportCountQuery.__init__(self,"1 month")
         self.sql = self.base_query 
-        self.url_prefix = "/wards/"            
-        self.sql +=  ", wards.name, wards.id, wards.number from wards "
+        self.url_prefix = "/wards/"
+        self.sql +=  ", wards.name_%s, wards.id, wards.number from wards " %lang #Hack to link custom SQL with TransMeta
         self.sql += """left join reports on wards.id = reports.ward_id join cities on wards.city_id = cities.id join province on cities.province_id = province.id
         """
         self.sql += "and cities.id = " + str(city.id)
-        self.sql += " group by  wards.name, wards.id, wards.number order by wards.number" 
+        self.sql += " group by  wards.name_%s, wards.id, wards.number order by wards.number" %(lang)
     
     def number(self):
          return(self.get_results()[self.index][7])
@@ -641,14 +641,14 @@ class CityWardsTotals(ReportCountQuery):
 
 class AllCityTotals(ReportCountQuery):
 
-    def __init__(self):
+    def __init__(self, lang):
         ReportCountQuery.__init__(self,"1 month")
         self.sql = self.base_query         
         self.url_prefix = "/cities/"            
-        self.sql +=  ", cities.name, cities.id, province.name from cities "
+        self.sql +=  ", cities.name_%s, cities.id, province.name_%s from cities " %(lang,lang)
         self.sql += """left join wards on wards.city_id = cities.id join province on cities.province_id = province.id left join reports on wards.id = reports.ward_id 
         """ 
-        self.sql += "group by cities.name, cities.id, province.name order by province.name, cities.name"
+        self.sql += "group by cities.name_%s, cities.id, province.name_%s order by province.name_%s, cities.name_%s" %(lang, lang, lang, lang)
            
     def get_absolute_url(self):
         return( self.url_prefix + str(self.get_results()[self.index][6]))

@@ -24,6 +24,6 @@
     el.addUndoState();
 
     el.events.register('featureadded', el, pointMoved);
-    myMap.selectControl.setLayer(el);
+    myMap.selectControl.setLayer(el); // Resets the click control to just the marker layer, so we don't block dragging.
 </script>
 

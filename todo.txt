@@ -1,8 +1,3 @@
-1. Fix formatting of menu items in Georgian
-2. Get ward data, add wards and boundaries
-3. Update administrative interface
-    -Fix errors because of lack of Georgian db fields
-    -Add functions to output names of objects (instead of "Report object")
-    -Change report categories, and translate them
-4. Match reporting interface with Google (add drag and drop)
-5. Implement address search once OMC has it
+-Typo: maintained by Transparency Intrenational Georgia (logo)
+-Tran: main page, "Locate the problem on a map of the area by clicking EDIT" no georgian
+-Imag: Banner looks a little funky; maybe remove drop shadow?
