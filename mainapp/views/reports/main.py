@@ -67,7 +67,7 @@ def new( request ):
             'graphicOpacity': '1'}})
     allLayers = [wardBoundary,reportPoint]
     
-    olMap = Map(vector_layers=allLayers,options={'layers': ['osm.omc'],'map_options': {'controls': ['Navigation', 'PanZoom', 'Attribution']},'default_zoom': 13, 'default_lat':request.GET["lat"], 'default_lon':request.GET["lon"], 'zoom_to_data_extent': False},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt}, )
+    olMap = Map(vector_layers=allLayers,options={'layers': ['osm.omc'],'map_options': {'controls': ['Navigation', 'PanZoom']},'default_zoom': 13, 'default_lat':request.GET["lat"], 'default_lon':request.GET["lon"], 'zoom_to_data_extent': False},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt}, )
     
     return render_to_response("reports/new.html",
                 { "lat": pnt.y,
