@@ -57,7 +57,7 @@
 					{% trans "Sent to" %}: {{report.email_sent_to}}<br/>
 					{% trans "On" %}: {{report.sent_at|date}}.
 				{% endif %}
-				</i>
+                </i><br />
 				<br/>
 				</div>
 				{% if report.is_confirmed %}
@@ -76,6 +76,7 @@
 		    {% endif %}
 		    {% if report.is_confirmed %}
 				<div id="more-actions">
+                    <p><a href="/reports/{{report.id}}/poster">{% trans "Print a flyer" %}</a>{% trans " to tell others about this problem." %}</p>
 					<p><a href='/reports/{{report.id}}/flags'>{% trans "Offensive? Unsuitable? Tell us" %}</a></p>
 				</div>
 			

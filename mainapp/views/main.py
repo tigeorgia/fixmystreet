@@ -48,20 +48,20 @@ def search_address(request):
         lon = 44.922294596002
         lat = 41.688166794582
     elif address == '9':
-        lon = 44.714133224211
-        lat = 41.771908159298
+        lon = 44.745675450098
+        lat = 41.714791286274
     elif address == '10':
-        lon = 44.850089039963
-        lat = 41.791877031859
+        lon = 44.821181771768
+        lat = 41.791573324918
     elif address == '11':
         lon = 44.749838791985
         lat = 41.676073592951
     elif address == '12':
-        lon = 44.779707872719
-        lat = 41.727339805222
+        lon = 44.777475720192
+        lat = 41.749283573879
     elif address == '13':
-        lon = 44.779707872719
-        lat = 41.701968138661
+        lon = 44.80153927177
+        lat = 41.694033197126
     else:
         lon = 0 # In case someone puts in something else. -DD
         lat = 0
@@ -108,9 +108,11 @@ def search_address(request):
                                 'pointRadius': '15',
                                 'graphicOpacity': '1'}})
     allLayers = [wardBoundary, reportPoint] 	
-    olMap = Map(vector_layers=allLayers,options={'layers': ['osm.omc'],'map_options': {},},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt})   
+    olMap = Map(vector_layers=allLayers,options={'layers': ['osm.omc'],'map_options': {'zoom_to_data_extent':False, 'default_zoom':13, 'default_lat':pnt.y, 'default_lon':pnt.x},},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt})   
     return render_to_response("search_result.html",
-                {"olMap": olMap,
+                {"lat": pnt.y,
+                 "lon": pnt.x,
+                 "olMap": olMap,
                  "pnt": pnt,
                  "enable_map": True,
                  "ward" : wards[0],
