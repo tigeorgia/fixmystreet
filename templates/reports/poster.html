@@ -1,0 +1,19 @@
+{% load i18n %}
+{# load googleanalytics_tags #}
+{% load analytics %}
+<html>
+<head>
+    <title>{% trans "FixMyStreet.ge" %} - {% block title %}{% trans "Print Poster" %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/media/css/poster.css" media="print,screen" />
+</head>
+<body>
+    <div id="poster">
+        <h1>{% trans "Want this fixed?" %}</h1>
+        <h2>{{ url }}</h2>
+        <img class="qrcode" src="https://chart.googleapis.com/chart?cht=qr&chs=400x400&chl={{ url }}&chld=M" />
+    </div>
+    <div id="instructions">
+        <a href="javascript:window.print()">{% trans "Print this page" %}</a>
+    </div>
+</body>
+

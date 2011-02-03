@@ -67,7 +67,7 @@ def new( request ):
             'graphicOpacity': '1'}})
     allLayers = [wardBoundary,reportPoint]
     
-    olMap = Map(vector_layers=allLayers,options={'layers': ['osm.omc'],'map_options': {'controls': ['Navigation', 'PanZoom']},'default_zoom': 2, 'default_lat':pnt.y, 'default_lon':pnt.x, 'zoom_to_data_extent': False},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt}, )
+    olMap = Map(vector_layers=allLayers,options={'layers': ['osm.omc'],'map_options': {'controls': ['Navigation', 'PanZoom']},'default_zoom': 15, 'default_lat':pnt.y, 'default_lon':pnt.x, 'zoom_to_data_extent': False},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt}, )
     
     return render_to_response("reports/new.html",
                 { "lat": pnt.y,
@@ -107,4 +107,7 @@ def show( request, report_id ):
                   "olMap": olMap },
                 context_instance=RequestContext(request))
 
-
+def poster ( request, report_id ):
+    # Build URL
+    url = request.get_host()+request.path[:-7] # Hard-coded value to trim "/poster" off the end. Sorry.
+    return render_to_response("reports/poster.html", { 'url': url })
