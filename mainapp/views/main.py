@@ -92,7 +92,7 @@ def search_address(request):
     if (len(wards) == 0):
         return( index(request, _("Sorry, we don't yet have that area in our database.  Please have your area councillor contact fixmystreet.ca.")))
 
-    reports = Report.objects.filter(is_confirmed = True,point__distance_lte=(pnt,D(km=4))).distance(pnt).order_by('distance')
+    reports = Report.objects.filter(is_confirmed = True,point__distance_lte=(pnt,D(km=1))).distance(pnt).order_by('distance')
 #    gmap = FixMyStreetMap(pnt,True,reports)
     ward = wards[0]
     wardBoundary = InfoLayer([[ward.geom,"Boundary"]],{
@@ -108,7 +108,16 @@ def search_address(request):
                                 'pointRadius': '15',
                                 'graphicOpacity': '1'}})
     allLayers = [wardBoundary, reportPoint] 	
-    olMap = Map(vector_layers=allLayers,options={'layers': ['osm.omc'],'map_options': {'zoom_to_data_extent':False, 'default_zoom':13, 'default_lat':pnt.y, 'default_lon':pnt.x},},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt})   
+    olMap = Map(vector_layers=allLayers,
+                options={'layers': ['osm.omc'],
+                         'map_div_style':{'width': '400px', 'height': '400px'},
+                         'zoom_to_data_extent':False, 
+                         'default_zoom':14, 
+                         'default_lat':pnt.y, 
+                         'default_lon':pnt.x,},
+                layer_names=[None,"report-point"],
+                template="multi_layer_map.html",
+                params={'point':pnt})   
     return render_to_response("search_result.html",
                 {"lat": pnt.y,
                  "lon": pnt.x,
