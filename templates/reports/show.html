@@ -81,17 +81,23 @@
 				</div>
 			
 				{% if updates %}
-					<h3>{% trans "Updates" %}</h3>		
+					<h3>{% trans "Updates" %}</h3>
+                    <div id="updates">
 					{% for update in updates %}
-						{% trans "posted by" %} {{update.author}}, {{update.created_at|date}}
-						<br/>
-						{{update.desc}}
-                        <br />
+						<div class="update-info">
+                            {% trans "posted by" %} {{update.author}}, {{update.created_at|date}}
+                        </div>
+					    <div class="update-desc">
+						    {{update.desc}}
+                        </div>
                         {% if update.is_verified_author %}
-                            <em><a href='/about'>{% trans "This report's author has been verified." %}</a></em>
+                            <div class="update-verified">
+                            <a href='/about'>{% trans "This report's author has been verified." %}</a>
+                            </div>
                         {% endif %}
 						<hr />
 					{% endfor %}
+                    </div>
 				{% endif %}
 				{% if not report.is_fixed %}
 				<hr/>

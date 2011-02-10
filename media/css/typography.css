@@ -100,6 +100,16 @@ ul.info_links li {
 color:silver;	
 }
 
+.update-info {
+    font-weight: bold;
+}
+
+.update-verified {
+    text-align: right;
+    font-style: italic;
+    font-size: 75%;
+}
+
 
 blockquote {
 margin-left:3em;
