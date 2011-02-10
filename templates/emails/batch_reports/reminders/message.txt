@@ -1,22 +1,17 @@
-Hello {{report.author}}
+﻿მოგესალმებით {{report.author}}
 
-On {{report.created_at|date:"l, F dS, Y"}}, you left a problem on FixMyStreet.ca with the 
-details provided at the end of this email. To keep our site up to date 
-and relevant, we'd appreciate it if you could follow the link below and 
-fill in our short questionnaire updating the status of your problem:
+On {{report.created_at|date:"l, F dS, Y"}}, თქვენ დატოვეთ შეტყობინება ვებ გვერდზე ChemiKucha.ge, ქვემოთ მოყვენილია თქვენი განცხადების დეტალები. ჩვენი ვებ გვერდის განახლებულად და გამართულად შენარჩუნებისთვის, მადლობელი ვიქნებით თუ თქვენ გადახვალთ ქვემოთ მიმაგრებულ ბმულზე და შეავსებთ ჩვენს მოკლე კითხვარს თქვენს მიერ შეტყობინებული პრობლემის განახლების შესახებ:
 
 {{report.get_absolute_url}}
 
-Please do not reply to this email; there is a public update box on the above page.
+გთხოვთ ნუ უპასუხებთ ამ ელ.შეტყობინებას; ზემოთ მოცემულ გვერდზე არის საჯარო განახლების უჯრა.
 
-Yours,  
-The FixMyStreet.ca Team
-
+პატივისცემით,
+ChemiKucha.ge-ს გუნდი
 ===
 
-Your problem was as follows:
-
-{{report.title}}
+თქვეი შეტყობინება შემდეგი სახის იყო.
+{{report.title}},
 
 {{report.desc}}
 

@@ -1,12 +1,11 @@
-{% if update.author %}Hello {{update.author|safe}}{% endif %}
+﻿{% if update.author %}მოგესალმებით {{update.author|safe}}{% endif %}
 
-{% if update.first_update %}Thank you for submitting the report '{{update.report.title|safe}}' to FixMyStreet.ca.  
-{% else %}Thank you for submitting an update on the report '{{update.report.title|safe}}'
-to FixMyStreet.ca.  
+{% if update.first_update %}მადლობას გიხდით ChemiKucha.ge-ზე თქვენი შეტყობინებისთვის: '{{update.report.title|safe}}'.  
+{% else %}მადლობას გიხდით ChemiKucha.ge-ზე შეტყობინების განახლებისთვის '{{update.report.title|safe}}'.
 {% endif %}
 
-To confirm your submission, please click on the following URL:
+შეტყობინების დასადასტურებლად გთხოვთ გადახვიდეთ შემდეგ ბმულზე:
 {{confirm_url}}
 
-Thank you,
-The FixMyStreet.ca Team
+გმადლობთ,
+ChemiKucha.ge-ს გუნდი

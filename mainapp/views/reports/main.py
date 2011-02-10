@@ -50,7 +50,7 @@ def new( request ):
 
     wards = Ward.objects.filter(geom__contains=point_str)
     if (len(wards) == 0):
-        return( index(request, _("Sorry, we don't yet have that area in our database.  Please have your area councillor contact fixmystreet.ca.")))
+        return( index(request, _("Sorry, we don't yet have that area in our database.  Please have your area councillor contact FixMyStreet.ge.")))
     
     ward = wards[0]
     wardBoundary = InfoLayer([[ward.geom,"Boundary"]],{
@@ -67,7 +67,7 @@ def new( request ):
             'graphicOpacity': '1'}})
     allLayers = [wardBoundary,reportPoint]
     
-    olMap = Map(vector_layers=allLayers,options={'layers': ['osm.omc'],'map_options': {'controls': ['Navigation', 'PanZoom']},'default_zoom': 15, 'default_lat':pnt.y, 'default_lon':pnt.x, 'zoom_to_data_extent': False},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt}, )
+    olMap = Map(vector_layers=allLayers,options={'layers': ['osm.omc'],'map_div_style':{'width': '400px', 'height': '400px'},'map_options': {'controls': ['Navigation', 'PanZoom']},'default_zoom': 15, 'default_lat':pnt.y, 'default_lon':pnt.x, 'zoom_to_data_extent': False},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt}, )
     
     return render_to_response("reports/new.html",
                 { "lat": pnt.y,
@@ -94,7 +94,8 @@ def show( request, report_id ):
 				}})
     olMap = Map([reportLayer],options={
         'layers': ['osm.omc'],
-        'map_options': {},
+		'map_div_style':{'width': '400px', 'height': '400px'},
+        'map_options': {'controls': ['Navigation', 'PanZoom', 'Attribution'] },
         'default_zoom': 1})
 
     return render_to_response("reports/show.html",

@@ -289,7 +289,7 @@ class ReportUpdate(models.Model):
     confirm_token = models.CharField(max_length=255, null=True)
     email = models.EmailField(max_length=255, verbose_name = ugettext_lazy("Email"))
     author = models.CharField(max_length=255,verbose_name = ugettext_lazy("Name"))
-    phone = models.CharField(max_length=255, verbose_name = ugettext_lazy("Phone") )
+    phone = models.CharField(max_length=255, verbose_name = ugettext_lazy("Phone"), blank=True )
     first_update = models.BooleanField(default=False)
     
     def send_emails(self):

@@ -1,16 +1,16 @@
-<p>Hello Councillor {{ward.councillor.first_name}} {{ward.councillor.last_name}},</p>
+<p>&#4315;&#4317;&#4306;&#4308;&#4321;&#4304;&#4314;&#4315;&#4308;&#4305;&#4312;&#4311; {{ward.councillor.first_name}} {{ward.councillor.last_name}},</p>
 <br/>
-<p>The following is a summary of reports affecting {{ward.name}}, {{ward.city.name}} 
-that have been submitted in the last 24 hours</p>
+<p>&#4325;&#4309;&#4308;&#4309;&#4312;&#4311; &#4315;&#4317;&#4327;&#4309;&#4308;&#4316;&#4312;&#4314;&#4312;&#4304;  {{ward.name}}, {{ward.city.name}}-&#4321; &#4323;&#4305;&#4304;&#4316;&#4310;&#4308; 
+&#4323;&#4313;&#4304;&#4316;&#4304;&#4321;&#4313;&#4316;&#4308;&#4314; 24 &#4321;&#4304;&#4304;&#4311;&#4328;&#4312; &#4306;&#4304;&#4313;&#4308;&#4311;&#4308;&#4305;&#4323;&#4314;&#4312; &#4306;&#4304;&#4316;&#4330;&#4334;&#4304;&#4307;&#4308;&#4305;&#4308;&#4305;&#4312;.</p>
 
 <ul>
 {% for report in new_reports %}
 	<li><a href='{{report.get_absolute_url}}'>{{report.title}}</a></li>
-	<p>Reported by: {{report.first_update.author}}, {{report.first_update.phone}} ({{report.first_update.email}})</p>
+	<p>&#4328;&#4308;&#4322;&#4327;&#4317;&#4305;&#4312;&#4316;&#4308;&#4305;&#4312;&#4321; &#4304;&#4309;&#4322;&#4317;&#4320;&#4312;: {{report.first_update.author}}, {{report.first_update.phone}} ({{report.first_update.email}})</p>
 	<p>{{report.desc}}</p>
 {% endfor %}
 </ul>
 
-<p>Thank you for your co-operation,</p>
-<p>The FixMyStreet.ca Team</p>
+<p>&#4306;&#4315;&#4304;&#4307;&#4314;&#4317;&#4305;&#4311; &#4311;&#4304;&#4316;&#4304;&#4315;&#4328;&#4320;&#4317;&#4315;&#4314;&#4317;&#4305;&#4312;&#4321;&#4311;&#4309;&#4312;&#4321;,</p>
+<p>ChemiKucha.ge-&#4321; &#4306;&#4323;&#4316;&#4307;&#4312;</p>
 

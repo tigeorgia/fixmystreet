@@ -1,1 +1,1 @@
-FixMyStreet.ca - Reports submitted in the last 24 hours in {{ward.name}}
+﻿ChemiKucha.ge - {{ward.name}} -ს უბანზე უკანასკნელ 24 საათში გაკეთებული განცხადებები.

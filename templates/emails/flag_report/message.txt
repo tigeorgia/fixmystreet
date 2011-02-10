@@ -1,4 +1,4 @@
-
-Report '{{report.title}}' has been flagged as offensive:
+﻿
+შეტყობინება '{{report.title}}' მონიშნულია როგორც შეურაცხმყოფელი:
 
 {{report.get_absolute_url}}

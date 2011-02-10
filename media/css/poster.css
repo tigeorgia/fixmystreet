@@ -1,3 +1,31 @@
 @media print{
     #instructions { display: none; }
+    }
+h1 {
+	font-size: 3em;
 }
+#header {
+height: 80px;
+margin-top: 10px;
+width: 100%;
+}
+
+#header_left {
+float: left;
+height: 60px;
+width: 70%;
+}
+
+#header_right {
+float: right;
+height: 60px;
+width: 29%;
+}
+
+#poster {
+color:#48587A;
+margin: 0px auto;
+text-align:center;
+width: 750px;
+}
+    

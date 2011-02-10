@@ -17,7 +17,7 @@ class ContactForm(forms.Form):
     
     def save(self, fail_silently=False):
         message = render_to_string("emails/contact/message.txt", self.cleaned_data )
-        send_mail('FixMyStreet.ca User Message from %s' % self.cleaned_data['email'], message, 
+        send_mail('FixMyStreet.ge User Message from %s' % self.cleaned_data['email'], message, 
                    settings.EMAIL_FROM_USER,[settings.ADMIN_EMAIL], fail_silently=False)
 
 

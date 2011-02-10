@@ -1,21 +1,20 @@
-The FixMyStreet.ca Report: '{{update.report.title|safe}}' 
-was updated by {{update.author|safe}} on {{update.created_at|date}}:
+﻿ChemiKucha.ge-ს შეტყობინება: '{{update.report.title|safe}}' 
+განახლებულია {{update.author|safe}}-ს მიერ, {{update.created_at|date}}:
 
-{% if update.is_fixed %}This issue has been fixed. {% endif %}
+{% if update.is_fixed %}ეს პრობლემა გამოსწორებულია. {% endif %}
 -----------------------------------------------------------------------------
 
 {{update.desc|safe}}
 
 -----------------------------------------------------------------------------
 
-For more information, see the full report at:
+სრული ინფორმაცია შეტყობინების შესახებ იხილეთ:
 {{update.report.get_absolute_url}}
 
-Thank you for supporting FixMyStreet.ca,
-The FixMyStreet.ca Team
+გმადლობთ ChemiKucha.ge-ს მხარდაჭერისთვის
+ChemiKucha.ge-ს გუნდი
 
 {% if unsubscribe_url %}
-You are receiving this email because you subscribed to updates for this report
-on FixMyStreet.ca.  To unsubscribe from updates to this report, click the 
-following link: {{unsubscribe_url}}
+თქვენ მიიღეთ ეს წერილი რადგან გამოიწერეთ განახლებები ამ შეტყობინებაზე ChemiKucha.ge-ზე.  ამ შეტყობინებაზე განახლებების გამოწერის შესაწყვეტად
+მიჰყევით შემდეგ ბმულს: {{unsubscribe_url}}
 {% endif %}

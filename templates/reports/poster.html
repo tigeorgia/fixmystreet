@@ -7,10 +7,19 @@
     <link rel="stylesheet" type="text/css" href="/media/css/poster.css" media="print,screen" />
 </head>
 <body>
-    <div id="poster">
+	<div id="poster">
+		<div id="header">
+			<div id="header_left">
+				<a href='/'><img src="/media/images/fixmystreetlogo.png"></a>
+			</div>
+			<div id="header_right">
+				<a href='http://www.transparency.ge'><img src="/media/images/sitebyvg.png"></a>
+			</div>
+		</div>
         <h1>{% trans "Want this fixed?" %}</h1>
-        <h2>{{ url }}</h2>
+        <h2>{% trans "Go to:" %}{{ url }}</h2>
         <img class="qrcode" src="https://chart.googleapis.com/chart?cht=qr&chs=400x400&chl={{ url }}&chld=M" />
+        <h2>{% trans "OR read the code with your smartphone." %}</h2>
     </div>
     <div id="instructions">
         <a href="javascript:window.print()">{% trans "Print this page" %}</a>

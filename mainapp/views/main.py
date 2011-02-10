@@ -107,10 +107,40 @@ def search_address(request):
                                 'externalGraphic': '/media/images/marker/default/marker.png',
                                 'pointRadius': '15',
                                 'graphicOpacity': '1'}})
-    allLayers = [wardBoundary, reportPoint] 	
+    reportsOld = Report.objects.filter( ward = ward, is_confirmed = True ).extra( select = { 'status' : """
+        CASE 
+        WHEN age( clock_timestamp(), created_at ) < interval '1 month' AND is_fixed = false THEN 'New Problems'
+        WHEN age( clock_timestamp(), created_at ) > interval '1 month' AND is_fixed = false THEN 'Older Unresolved Problems'
+        WHEN age( clock_timestamp(), fixed_at ) < interval '1 month' AND is_fixed = true THEN 'Recently Fixed'
+        WHEN age( clock_timestamp(), fixed_at ) > interval '1 month' AND is_fixed = true THEN 'Old Fixed'
+        ELSE 'Unknown Status'
+        END """,
+        'status_int' : """
+        CASE 
+        WHEN age( clock_timestamp(), created_at ) < interval '1 month' AND is_fixed = false THEN 0
+        WHEN age( clock_timestamp(), created_at ) > interval '1 month' AND is_fixed = false THEN 1
+        WHEN age( clock_timestamp(), fixed_at ) < interval '1 month' AND is_fixed = true THEN 2
+        WHEN age( clock_timestamp(), fixed_at ) > interval '1 month' AND is_fixed = true THEN 3
+        ELSE 4
+        END """ }, order_by = ['status_int'] )
+    counter = 1
+    allLayers = [wardBoundary, reportPoint] 
+    for r in reportsOld:
+        if r.is_fixed:
+            markerColor = 'green'
+        else:
+            markerColor = 'red'	
+        options = {'overlay_style': {
+        'externalGraphic': '/media/images/marker/%s/marker%d.png' %(markerColor, counter),
+        'pointRadius': '15',
+        'graphicOpacity': '1',}}
+        counter+=1
+        thisLayer = InfoLayer([(r.point,r.title)],options)
+        allLayers.append(thisLayer)	
     olMap = Map(vector_layers=allLayers,
                 options={'layers': ['osm.omc'],
                          'map_div_style':{'width': '400px', 'height': '400px'},
+                         'map_options': {'controls': ['Navigation', 'PanZoom', 'Attribution'] },
                          'zoom_to_data_extent':False, 
                          'default_zoom':14, 
                          'default_lat':pnt.y, 

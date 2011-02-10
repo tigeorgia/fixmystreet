@@ -60,7 +60,7 @@ def show( request, ward_id ):
         counter+=1
         thisLayer = InfoLayer([(r.point,r.title)],options)
         allLayers.append(thisLayer)
-    olMap = Map(allLayers,options={'layers': ['osm.omc'],'map_options': {},})
+    olMap = Map(allLayers,options={'layers': ['osm.omc'],'map_div_style':{'width': '400px', 'height': '400px'},'map_options': {'controls': ['Navigation', 'PanZoom', 'Attribution'] },})
     return render_to_response("wards/show.html",
                 {"ward": ward,
                  #"google": google,

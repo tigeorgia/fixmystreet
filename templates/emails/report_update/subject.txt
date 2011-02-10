@@ -1,1 +1,1 @@
-FixMyStreet.ca: '{{update.report.title|safe}}' {% if update.is_fixed %} Fixed {% else %} Updated {% endif %}
+﻿ChemiKucha.ge: '{{update.report.title|safe}}' {% if update.is_fixed %} გადაჭრილია {% else %} განახლებულია {% endif %}
