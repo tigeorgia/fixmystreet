@@ -286,6 +286,7 @@ class ReportUpdate(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_confirmed = models.BooleanField(default=False)
     is_fixed = models.BooleanField(default=False)
+    is_verified_author = models.BooleanField(default=False)
     confirm_token = models.CharField(max_length=255, null=True)
     email = models.EmailField(max_length=255, verbose_name = ugettext_lazy("Email"))
     author = models.CharField(max_length=255,verbose_name = ugettext_lazy("Name"))
@@ -356,6 +357,9 @@ class ReportUpdate(models.Model):
                     {  'update': self })
             send_mail(subject, message, 
                    settings.EMAIL_FROM_USER,[self.email], fail_silently=False)
+
+        if VerifiedAuthor.objects.filter(domain=self.email.partition('@')[2]):
+            self.is_verified_author = True
             
         super(ReportUpdate, self).save()
     
@@ -395,6 +399,15 @@ class ReportSubscriber(models.Model):
             send_mail('Subscribe to FixMyStreet.ca Report Updates', message, 
                    settings.EMAIL_FROM_USER,[self.email], fail_silently=False)
         super(ReportSubscriber, self).save()
+
+# Email domains; report updates by authors from these email domains
+# will be marked as verified.
+class VerifiedAuthor(models.Model):
+    domain = models.CharField(max_length=255,verbose_name = ugettext_lazy("Domain"))
+
+    def __unicode__(self):
+        return self.domain
+
 
 # This and subsequent 'XMap' classes should probably be in
 # views somewhere--their primary function is as intermediate

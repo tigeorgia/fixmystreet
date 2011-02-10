@@ -1,4 +1,4 @@
-from fixmystreet.mainapp.models import EmailRule,Ward,ReportCategory,City, ReportCategoryClass, FaqEntry, Councillor,Province,Report
+from fixmystreet.mainapp.models import EmailRule,Ward,ReportCategory,City, ReportCategoryClass, FaqEntry, Councillor,Province,Report,VerifiedAuthor
 from django.contrib import admin
 from contrib.transmeta import canonical_fieldname
 
@@ -31,6 +31,7 @@ admin.site.register(Councillor,CouncillorAdmin)
 class WardAdmin(admin.ModelAdmin):
     list_display = ('id','city','number','name')
     ordering       = ['city', 'number']
-
     
 admin.site.register(Ward,WardAdmin)
+
+admin.site.register(VerifiedAuthor)

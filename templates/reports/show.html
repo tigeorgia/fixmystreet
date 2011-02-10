@@ -86,7 +86,11 @@
 						{% trans "posted by" %} {{update.author}}, {{update.created_at|date}}
 						<br/>
 						{{update.desc}}
-						<hr/>
+                        <br />
+                        {% if update.is_verified_author %}
+                            <em><a href='/about'>{% trans "This report's author has been verified." %}</a></em>
+                        {% endif %}
+						<hr />
 					{% endfor %}
 				{% endif %}
 				{% if not report.is_fixed %}
