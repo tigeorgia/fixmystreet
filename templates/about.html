@@ -9,7 +9,7 @@
 <h3>{% trans "About" %} FixMyStreet Canada</h3>
 <div id="faq">
 	{% for faq in faq_entries %}
-	<h4>{{faq.q}}</h4>
+	<h4><a name="{{faq.q|slugify}}" href="#{{faq.q|slugify}}">{{faq.q}}</a></h4>
 	<p>{{faq.a|safe}}</p>
 	{% endfor %}
 
