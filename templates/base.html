@@ -20,17 +20,18 @@
 			<div id="page_container">
 				<div id="header">
 					<div id="header_left">
-						<a href='/'><img src="/media/images/fixmystreetlogo.png"></a>
+						<a href='/'><img src='/media/images/{% trans "fixmystreetlogo.png" %}'></a>
 					</div>
 					<div id="header_right">
-						<a href='http://www.transparency.ge'><img src="/media/images/sitebyvg.png"></a>
+						<a href='http://www.transparency.ge'><img src='/media/images/{% trans "sitebyvg.png" %}'></a>
 					</div>
 				</div>
 				<div id="top_menu"><div id='top_menu_tr'><div id='top_menu_bl'><div id='top_menu_br'>
 					<div id="top_menu_links"><div>
 					<ul>
 						<li><a href="/" >{% trans "Report a Problem" %}</a></li>
-						<li><a href={% block all_reports_link %}"/cities/"{% endblock %}>{% trans "All Reports" %}</a></li>
+                        <!--Remember to switch back to /cities/ if we add some other city-->
+						<li><a href={% block all_reports_link %}"/cities/2"{% endblock %}>{% trans "All Reports" %}</a></li>
 						<li><a href="/contact/">{% trans "Contact" %}</a></li>
 						<li><a href="/about/">{% trans "About" %}</a></li>
 					</ul>
@@ -53,7 +54,7 @@
 					{% block content %}{% endblock %}
 				</div>
 				<div id="footer">
- 					<div><a href="{% trans "http://www.epfound.ge/" %}"><img src="/media/images/epf-logo.png"></a></div>
+ 					<div><a href="{% trans "http://www.epfound.ge/" %}"><img src="/media/images/epf-logo.png" width="200px"></a></div>
   					<div><a href="{% trans "http://transparency.ge/en" %}">{% trans "Transparency International Georgia" %}</a></div>
 					<div id='bugreport'>{% trans "Find a bug?" %} <a href="/contact/">{% trans "Tell us" %}</a>!</div>
 				</div>
