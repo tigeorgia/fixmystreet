@@ -16,7 +16,7 @@
 			{% if report.is_fixed %}({% trans "fixed" %}){% endif %}
 			</li>
 		{% endfor %}
-			<p/>n
+			<p/>
 			<p>{% trans "Zoom out to see more reports nearby." %}</p>
 	{% else %}
 			<p>{% trans "No problems have been reported yet." %}</p>
@@ -26,8 +26,6 @@
 	</div>
 
 	<div id="rightcol">	
-    <!--<div id="{{ google.dom_id }}" style="width:400px;height:400px;"></div>
- 	{{google.body}}-->
     <!--<textarea id="pnt" name="point">SRID=4326;{{pnt}}</textarea>-->
     {% if olMap %}{{ olMap }}{% endif %}
     </div>  

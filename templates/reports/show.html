@@ -48,6 +48,17 @@
 			</div>
 			<!-- AddThis Button END -->
 			{% endif %}
+			<div>{% trans "Translate this report" %}
+			<div id="google_translate_element"></div><script>
+				function googleTranslateElementInit() {
+					new google.translate.TranslateElement({
+						pageLanguage: 'en',
+						autoDisplay: false,
+						multilanguagePage: true
+					}, 'google_translate_element');
+				}
+        </script><script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    </div>
 			<div id='report-header'>
 				<div id='report-status'>
 				{% trans "Category:" %}<b>{{report.category.name}}</b><br/>
@@ -116,20 +127,9 @@
 		{% endif %}
 	</div>
 	<div id="rightcol">
-     	<!--<div id="{{ google.dom_id }}" style="width:400px;height:400px;"></div>-->
         {% if olMap %}{{ olMap }}{% endif %}
     	{% include "wards/_info_box.html" %}
-        <div>{% trans "Translate this report" %}
-        <div id="google_translate_element"></div><script>
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                autoDisplay: false,
-                multilanguagePage: true
-            }, 'google_translate_element');
-        }
-        </script><script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    </div>
+        
 </div>
 	
 {% endblock %}

@@ -2,30 +2,54 @@
     #instructions { display: none; }
     }
 h1 {
-	font-size: 3em;
+	font-size: 2em;
+}
+img{
+border:none;
 }
 #header {
-height: 80px;
 margin-top: 10px;
-width: 100%;
+display: inline;
 }
-
+#header_en{
+display: inline;
+}
 #header_left {
-float: left;
-height: 60px;
-width: 70%;
 }
-
 #header_right {
-float: right;
-height: 60px;
-width: 29%;
 }
-
-#poster {
+#header_left_en {
+}
+#header_right_en {
+}
+.poster {
+border: #48587A  solid 2px;
 color:#48587A;
 margin: 0px auto;
 text-align:center;
 width: 750px;
 }
-    
+#footer{
+margin-top:20px;
+text-align:center;
+width:95%;
+}  
+/** Clearfix */
+.clearfix:after {
+clear: both;
+content: ".";
+display: block;
+height: 0;
+line-height: 0;
+visibility: hidden;
+}
+.clearfix {
+display: inline-block;
+}
+html[xmlns] .clearfix {
+display: block;
+}
+* html .clearfix {
+height: 1%;
+}
+/** End Clearfix */

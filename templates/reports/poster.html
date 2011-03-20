@@ -1,28 +1,47 @@
-{% load i18n %}
+﻿{% load i18n %}
 {# load googleanalytics_tags #}
 {% load analytics %}
+
 <html>
 <head>
     <title>{% trans "FixMyStreet.ge" %} - {% block title %}{% trans "Print Poster" %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="/media/css/poster.css" media="print,screen" />
 </head>
-<body>
-	<div id="poster">
+<body>    
+<div id="instructions">
+    <a href="javascript:window.print()">{% trans "Print this page" %}</a>
+</div>
+<center>
+	<div class="poster clearfix">
 		<div id="header">
-			<div id="header_left">
-				<a href='/'><img src="/media/images/fixmystreetlogo.png"></a>
-			</div>
-			<div id="header_right">
-				<a href='http://www.transparency.ge'><img src="/media/images/sitebyvg.png"></a>
-			</div>
+				<a href="/"><img src="/media/images/fixmystreetlogo_geo.png"></a>
+				<a href="http://www.transparency.ge"><img src="/media/images/sitebyvg_geo.png"></a>
 		</div>
-        <h1>{% trans "Want this fixed?" %}</h1>
-        <h2>{% trans "Go to:" %}{{ url }}</h2>
-        <img class="qrcode" src="https://chart.googleapis.com/chart?cht=qr&chs=400x400&chl={{ url }}&chld=M" />
-        <h2>{% trans "OR read the code with your smartphone." %}</h2>
+		<div class="intro_text">	
+			<h3>{% block search_instructions %}გაგზავნეთ შეტყობინება თბილისის ქუჩებში არსებულ დაზიანებებზე, რომ დროულად მოხდეს მათი შეკეთება{% endblock %}</h3>
+			<p>(როგორიცაა გრაფიტი, ორმოები, ზედმეტი ნაგავი, ან ქუჩის განათება)</p>
+		</div>
+		<h2>{{report.ward.city.name}}: {{report.title}}</h2>
+        <h2>გსურთ ამ დაზიანების შეკეთება?</h2>
+        <h2>გადადით ბმულზე: {{ url }}</h2>
+        <img class="qrcode" src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl={{ url }}&chld=M" width="200px" height="200px" />
+        <h2>ან ამოიკითხეთ კოდი თქვენი სმარტფონის საშუალებით</h2>
     </div>
-    <div id="instructions">
-        <a href="javascript:window.print()">{% trans "Print this page" %}</a>
+	<div class="poster clearfix">
+		<div id="header_en" class="clearfix">
+				<a href="/"><img src="/media/images/fixmystreetlogo.png" width="540px"></a>
+				<a href="http://www.transparency.ge"><img src="/media/images/sitebyvg.png"></a>
+		</div>
+        <h1>Want this problem fixed?</h1>
+        <h2>Go to: {{ url }}</h2>
+        <h2>Or read the code with your smartphone</h2>
+        </div>
+
     </div>
+
+	<div id="footer">
+		<a href="http://www.epfound.ge/"><img src="/media/images/epf-logo.png" width="100px" /></a>
+	</div>
+</center>
 </body>
 

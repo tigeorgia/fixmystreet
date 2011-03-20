@@ -137,8 +137,13 @@ def search_address(request):
         counter+=1
         thisLayer = InfoLayer([(r.point,r.title)],options)
         allLayers.append(thisLayer)	
+    if request.LANGUAGE_CODE == 'ka':
+        map_lang = ['osm.omcen']
+    else:
+        map_lang = ['osm.omcka']
+
     olMap = Map(vector_layers=allLayers,
-                options={'layers': ['osm.omc'],
+                options={'layers': map_lang,
                          'map_div_style':{'width': '400px', 'height': '400px'},
                          'map_options': {'controls': ['Navigation', 'PanZoom', 'Attribution'] },
                          'zoom_to_data_extent':False, 

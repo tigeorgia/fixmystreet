@@ -66,8 +66,13 @@ def new( request ):
             'pointRadius': '15',
             'graphicOpacity': '1'}})
     allLayers = [wardBoundary,reportPoint]
+
+    if request.LANGUAGE_CODE == 'ka':
+        map_lang = 'osm.omcka'
+    else:
+        map_lang = 'osm.omcen'
     
-    olMap = Map(vector_layers=allLayers,options={'layers': ['osm.omc'],'map_div_style':{'width': '400px', 'height': '400px'},'map_options': {'controls': ['Navigation', 'PanZoom']},'default_zoom': 15, 'default_lat':pnt.y, 'default_lon':pnt.x, 'zoom_to_data_extent': False},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt}, )
+    olMap = Map(vector_layers=allLayers,options={'layers': [map_lang],'map_div_style':{'width': '400px', 'height': '400px'},'map_options': {'controls': ['Navigation', 'PanZoom']},'default_zoom': 15, 'default_lat':pnt.y, 'default_lon':pnt.x, 'zoom_to_data_extent': False},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt}, )
     
     return render_to_response("reports/new.html",
                 { "lat": pnt.y,
@@ -92,8 +97,13 @@ def show( request, report_id ):
 			        #'fill_color': '#ffffff',
 				#'stroke_color': '#008800',
 				}})
+
+    if request.LANGUAGE_CODE == 'ka':
+        map_lang = 'osm.omcka'
+    else:
+        map_lang = 'osm.omcen'
     olMap = Map([reportLayer],options={
-        'layers': ['osm.omc'],
+        'layers': [map_lang],
 		'map_div_style':{'width': '400px', 'height': '400px'},
         'map_options': {'controls': ['Navigation', 'PanZoom', 'Attribution'] },
         'default_zoom': 1})
@@ -110,5 +120,6 @@ def show( request, report_id ):
 
 def poster ( request, report_id ):
     # Build URL
+    report = get_object_or_404(Report,id=report_id)
     url = request.get_host()+request.path[:-7] # Hard-coded value to trim "/poster" off the end. Sorry.
-    return render_to_response("reports/poster.html", { 'url': url })
+    return render_to_response("reports/poster.html", { 'url': url, 'report':report})
