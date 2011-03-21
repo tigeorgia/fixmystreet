@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-03-19 15:40+0300\n"
-"PO-Revision-Date: 2011-03-19 16:39+0400\n"
+"PO-Revision-Date: 2011-03-20 20:37+0400\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -178,7 +178,7 @@ msgstr "აღნიშნულ მისამართზე დაბრუ�
 
 #: templates/home.html:23
 msgid "Report problems on the streets of Tbilisi to get them fixed!"
-msgstr "გაგზავნეთ შეტყობინება თბილისის ქუჩებში არსებულ დაზიანებებზე, რომ დროულად მოხდეს მათი შეკეთება."
+msgstr "გაგზავნეთ შეტყობინება თბილისის ქუჩებში არსებულ დაზიანებებზე, რომ დროულად მოხდეს მათი შეკეთება"
 
 #: templates/home.html:24
 msgid "(like graffiti, potholes, excessive garbage, or street lighting)"
@@ -202,7 +202,7 @@ msgstr "დიდუბე-ჩუღურეთი"
 
 #: templates/home.html:38
 msgid "Gldani-Nadzaladevi"
-msgstr "გლდანი-ნაძალადედვი"
+msgstr "გლდანი-ნაძალადევი"
 
 #: templates/home.html:39
 msgid "Old Tbilisi"

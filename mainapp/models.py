@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models, connection
 from django.contrib.gis.db import models
 from django.contrib.gis.maps.google import GoogleMap, GMarker, GEvent, GPolygon, GIcon
@@ -396,7 +397,7 @@ class ReportSubscriber(models.Model):
             confirm_url = settings.SITE_URL + "/reports/subscribers/confirm/" + self.confirm_token
             message = render_to_string("emails/subscribe/message.txt", 
                     { 'confirm_url': confirm_url, 'subscriber': self })
-            send_mail('Subscribe to FixMyStreet.ca Report Updates', message, 
+            send_mail('FixMyStreet.ge-ზე გამოწერილი შეტყობინების განახლებები', message, 
                    settings.EMAIL_FROM_USER,[self.email], fail_silently=False)
         super(ReportSubscriber, self).save()
 
