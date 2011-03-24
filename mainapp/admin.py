@@ -1,11 +1,12 @@
-from fixmystreet.mainapp.models import EmailRule,Ward,ReportCategory,City, ReportCategoryClass, FaqEntry, Councillor,Province,Report,VerifiedAuthor
+from fixmystreet.mainapp.models import EmailRule,Ward,ReportCategory,City, ReportCategoryClass, FaqEntry, Councillor,Province,Report,ReportUpdate,VerifiedAuthor
 from django.contrib import admin
 from contrib.transmeta import canonical_fieldname
 
 admin.site.register(EmailRule)
 admin.site.register(City)
-admin.site.register(Province)
+#admin.site.register(Province)
 admin.site.register(Report)
+admin.site.register(ReportUpdate)
 
 class ReportCategoryClassAdmin(admin.ModelAdmin):
     list_display = ('name',)
@@ -31,6 +32,9 @@ admin.site.register(Councillor,CouncillorAdmin)
 class WardAdmin(admin.ModelAdmin):
     list_display = ('id','city','number','name')
     ordering       = ['city', 'number']
+
+class ReportUpdate(admin.ModelAdmin):
+	list_display = ('report.title', 'author')
     
 admin.site.register(Ward,WardAdmin)
 

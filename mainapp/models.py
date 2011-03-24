@@ -293,6 +293,8 @@ class ReportUpdate(models.Model):
     author = models.CharField(max_length=255,verbose_name = ugettext_lazy("Name"))
     phone = models.CharField(max_length=255, verbose_name = ugettext_lazy("Phone"), blank=True )
     first_update = models.BooleanField(default=False)
+    def __unicode__(self):
+        return self.report.title
     
     def send_emails(self):
         if self.first_update:
