@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-22 16:59+0300\n"
-"PO-Revision-Date: 2011-03-22 18:05+0400\n"
+"POT-Creation-Date: 2011-03-25 13:39+0300\n"
+"PO-Revision-Date: 2011-03-25 14:43+0400\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,12 +19,12 @@ msgstr ""
 #: mainapp/models.py:241
 #: mainapp/models.py:293
 msgid "Name"
-msgstr "სახელი"
+msgstr "სახელი(*)"
 
 #: mainapp/forms.py:14
 #: mainapp/models.py:292
 msgid "Email"
-msgstr "ელ.ფოსტა"
+msgstr "ელ.ფოსტა(*)"
 
 #: mainapp/forms.py:16
 msgid "Message"
@@ -92,10 +92,8 @@ msgstr "თქვენ შეწყვიტეთ წევრობა გა
 
 #: templates/about.html:4
 #: templates/base.html:32
-#: templates/faq/show.html:3
-#: templates/faq/show.html.py:7
-msgid "About"
-msgstr "ჩვენს შესახებ"
+msgid "Questions"
+msgstr "შეკითხვები"
 
 #: templates/about.html:9
 msgid "About Chemikucha.ge - FixMyStreet Georgia"
@@ -382,6 +380,11 @@ msgstr ""
 "<p>გმადლობთ კომენტარისთვის.</p>\n"
 "<a href=\"/\">ChemiKucha.ge-ზე დაბრუნება</a>\n"
 
+#: templates/faq/show.html:3
+#: templates/faq/show.html.py:7
+msgid "About"
+msgstr "ჩვენს შესახებ"
+
 #: templates/promotions/show.html:8
 msgid "First 100 Reports"
 msgstr "პირველი 100 შეტყობინება"
@@ -443,7 +446,7 @@ msgstr "ეს პრობლემა შეკეთდა"
 
 #: templates/reports/show.html:36
 msgid "<p>Please check your email for a message from FixMyStreet.ge, which will include a confirmation link.  Complete your submission by clicking on it.</p><p>Your report will not be sent to city officials or be visible to other visitors until you have done so.</p>"
-msgstr "<p> გთხოვთ შეამოწმოთ თქვენი ელ.ფოსტა, რათა იხილოთ ChemiKucha.ge-ს შეტყობინებას დამადატურებელ ბმულით. დაასრულეთ თქვენი გაწევრიანება მასზე დაკლიკებით. </p><p> მანამ სანამ ამ ინსტრუქციებს არ მიჰყვებით, თქვენი შეტყობინების ხილვის საშუალება არც ქალაქის ადმინისტრაციას და არც სტუმრებს არ შეეძლებათ."
+msgstr "<p> გთხოვთ შეამოწმოთ თქვენი ელ.ფოსტა, რათა იხილოთ ChemiKucha.ge-ს შეტყობინების დამადასტურებელი ბმული. დაასრულეთ შეტყობინების ატვირთვა მასზე დაკლიკებით. </p><p> სანამ ამ ინსტრუქციებს არ მიჰყვებით, თქვენი შეტყობინების ხილვის საშუალება არც ქალაქის ადმინისტრაციას და არც სტუმრებს არ ექნებათ."
 
 #: templates/reports/show.html:51
 msgid "Translate this report"
@@ -492,7 +495,7 @@ msgstr "გამოქვეყნებული:"
 
 #: templates/reports/show.html:106
 msgid "<a href='/about/#How%20is%20a%20problem%20fixed%3F'> This report's author has been verified.</a>"
-msgstr "<a href='/about/#%E1%83%A0%E1%83%9D%E1%83%92%E1%83%9D%E1%83%A0%20%E1%83%AE%E1%83%93%E1%83%94%E1%83%91%E1%83%90%20%E1%83%9E%E1%83%A0%E1%83%9D%E1%83%91%E1%83%9A%E1%83%94%E1%83%9B%E1%83%98%E1%83%A1%20%E1%83%9B%E1%83%9D%E1%83%92%E1%83%95%E1%83%90%E1%83%A0%E1%83%94%E1%83%91%E1%83%90%3F'>შეტყობინების ავტორი დამოწმებულია.</a>"
+msgstr "<a href='about/#%E1%83%A0%E1%83%9D%E1%83%92%E1%83%9D%E1%83%A0%20%E1%83%AE%E1%83%93%E1%83%94%E1%83%91%E1%83%90%20%E1%83%9E%E1%83%A0%E1%83%9D%E1%83%91%E1%83%9A%E1%83%94%E1%83%9B%E1%83%98%E1%83%A1%20%E1%83%9B%E1%83%9D%E1%83%92%E1%83%95%E1%83%90%E1%83%A0%E1%83%94%E1%83%91%E1%83%90%3F'> ამ შეტყობინების ავტორი დამოწმებულია.</a>"
 
 #: templates/reports/show.html:116
 msgid "Provide an update"
