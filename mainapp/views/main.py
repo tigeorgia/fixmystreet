@@ -92,7 +92,7 @@ def search_address(request):
     if (len(wards) == 0):
         return( index(request, _("Sorry, we don't yet have that area in our database.  Please have your area councillor contact fixmystreet.ca.")))
 
-    reports = Report.objects.filter(is_confirmed = True,point__distance_lte=(pnt,D(km=1))).distance(pnt).order_by('distance')
+    reports = Report.objects.filter(is_confirmed = True,point__distance_lte=(pnt,D(km=3))).distance(pnt).order_by('distance')
 #    gmap = FixMyStreetMap(pnt,True,reports)
     ward = wards[0]
     wardBoundary = InfoLayer([[ward.geom,"Boundary"]],{
