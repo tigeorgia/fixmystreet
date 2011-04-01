@@ -22,7 +22,7 @@ def home(request, error_msg = None, disambiguate=None):
             return( city_home(request, matching_cities[0], error_msg, disambiguate ) )
             
     reports_with_photos = Report.objects.filter(is_confirmed=True).exclude(photo='').order_by("-created_at")[:3]
-    recent_reports = Report.objects.filter(is_confirmed=True).order_by("-created_at")[:5]
+    recent_reports = Report.objects.filter(is_confirmed=True).order_by("-updated_at")[:5]
         
     return render_to_response("home.html",
                 {"report_counts": ReportCountQuery('1 year'),
