@@ -2,6 +2,7 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.contrib import admin
+from django.contrib.sitemaps import FlatPageSitemap, GenericSitemap
 from mainapp.feeds import LatestReports, LatestReportsByCity, LatestReportsByWard, LatestUpdatesByReport
 from mainapp.models import City
 import mainapp.views.cities as cities
@@ -13,11 +14,16 @@ feeds = {
     'report_updates': LatestUpdatesByReport,
 }
 
+sitemaps = {
+    'flatpages': FlatPageSitemap
+}
+
 admin.autodiscover()
 urlpatterns = patterns('',
     (r'^admin/(.*)', admin.site.root),
     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     (r'^i18n/', include('django.conf.urls.i18n')),
+    (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),(r'^sitemap-(?P<section>.+)\.xml$', 'sitemap', {'sitemaps': sitemaps}),
 )
 
 
