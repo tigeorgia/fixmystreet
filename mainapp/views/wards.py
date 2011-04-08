@@ -38,7 +38,7 @@ def show( request, ward_id ):
             WHEN age( clock_timestamp(), fixed_at ) < interval '1 month' AND is_fixed = true THEN 2
             WHEN age( clock_timestamp(), fixed_at ) > interval '1 month' AND is_fixed = true THEN 3
             ELSE 4
-            END """ }, order_by = ['status_int'] ) 
+            END """ }, order_by = ['status_int','-created_at'] ) 
 
 #google = WardMap(ward,reports)
 # Added for OpenLayers functionality -DD

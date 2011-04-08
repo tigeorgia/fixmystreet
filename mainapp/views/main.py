@@ -92,7 +92,7 @@ def search_address(request):
     if (len(wards) == 0):
         return( index(request, _("Sorry, we don't yet have that area in our database.  Please have your area councillor contact fixmystreet.ca.")))
 
-    reports = Report.objects.filter(is_confirmed = True,point__distance_lte=(pnt,D(km=3))).distance(pnt).order_by('distance')
+    #reports = Report.objects.filter(is_confirmed = True,point__distance_lte=(pnt,D(km=3))).distance(pnt).order_by('-created_at')
 #    gmap = FixMyStreetMap(pnt,True,reports)
     ward = wards[0]
     wardBoundary = InfoLayer([[ward.geom,"Boundary"]],{
@@ -107,7 +107,7 @@ def search_address(request):
                                 'externalGraphic': '/media/images/marker/default/marker.png',
                                 'pointRadius': '15',
                                 'graphicOpacity': '1'}})
-    reportsOld = Report.objects.filter( ward = ward, is_confirmed = True ).extra( select = { 'status' : """
+    reports = Report.objects.filter( ward = ward, is_confirmed = True ).distance(pnt).extra( select = { 'status' : """
         CASE 
         WHEN age( clock_timestamp(), created_at ) < interval '1 month' AND is_fixed = false THEN 'New Problems'
         WHEN age( clock_timestamp(), created_at ) > interval '1 month' AND is_fixed = false THEN 'Older Unresolved Problems'
@@ -122,10 +122,10 @@ def search_address(request):
         WHEN age( clock_timestamp(), fixed_at ) < interval '1 month' AND is_fixed = true THEN 2
         WHEN age( clock_timestamp(), fixed_at ) > interval '1 month' AND is_fixed = true THEN 3
         ELSE 4
-        END """ }, order_by = ['status_int'] )
+        END """ }, order_by = ['status_int','-created_at'] )
     counter = 1
     allLayers = [wardBoundary, reportPoint] 
-    for r in reportsOld:
+    for r in reports:
         if r.is_fixed:
             markerColor = 'green'
         else:
@@ -138,9 +138,9 @@ def search_address(request):
         thisLayer = InfoLayer([(r.point,r.title)],options)
         allLayers.append(thisLayer)	
     if request.LANGUAGE_CODE == 'ka':
-        map_lang = ['osm.omcen']
-    else:
         map_lang = ['osm.omcka']
+    else:
+        map_lang = ['osm.omcen']
 
     olMap = Map(vector_layers=allLayers,
                 options={'layers': map_lang,
