@@ -291,8 +291,10 @@ class ReportUpdate(models.Model):
     confirm_token = models.CharField(max_length=255, null=True)
     email = models.EmailField(max_length=255, verbose_name = ugettext_lazy("Email"))
     author = models.CharField(max_length=255,verbose_name = ugettext_lazy("Name"))
-    phone = models.CharField(max_length=255, verbose_name = ugettext_lazy("Phone"), blank=True )
+    phone = models.CharField(max_length=255, verbose_name = ugettext_lazy("Phone"), )
     first_update = models.BooleanField(default=False)
+    photo = StdImageField(upload_to="photos/updates", blank=True, verbose_name =  ugettext_lazy("* Photo"), size=(133,100))
+
     def __unicode__(self):
         return self.report.title
     

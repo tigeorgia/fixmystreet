@@ -22,8 +22,15 @@ Follow TI Georgia on <a href="https://www.facebook.com/TransparencyInternational
 and <a href="https://twitter.com/#!/TIGeorgiaEng">Twitter</a></p>
 <p>We'd love to get your feedback on this site:</p> 
 {% endblocktrans %}
-<form action="/contact" method="POST">
-<table class='form'>
+<form name="contact-form" action="/contact" method="POST">
+<table class="form">
+<tr>
+    <th><label>{% trans "Georgian keyboard" %}</label></th>
+    <td>
+        <input type="checkbox" name="geo" checked="checked"/>
+   
+    </td>
+</tr>
 {{contact_form}}
 <tr>
 	<td></td>
@@ -33,7 +40,12 @@ and <a href="https://twitter.com/#!/TIGeorgiaEng">Twitter</a></p>
 </tr>
 </table>
 </form>
-
+<script type="text/javascript">
+//var language = {{lang.0}}
+    //if( language == 'ka'){
+        GeoKBD.map('contact-form');
+        GeoKBD.setGlobalHandler(true,"geo");//}
+</script>
 </div>
 
 {% endblock %}

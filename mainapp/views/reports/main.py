@@ -18,7 +18,7 @@ def new( request ):
         f = request.POST.copy()
         update_form = ReportUpdateForm( {'email':request.POST['email'], 'desc':request.POST['desc'],
                                          'author':request.POST['author'], 'phone': request.POST['phone']})    
-        report_form = ReportForm({'title' : request.POST['title']}, request.FILES )
+        report_form = ReportForm({'title' : request.POST['title']}, request.FILES)
         
         # this is a lot more complicated than it has to be because of the infortmation
         # spread across two records.

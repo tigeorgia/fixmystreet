@@ -83,7 +83,7 @@
 			<br/>
 			<p>{{report.desc|linebreaks}}</p>
 			{% if report.photo  %}
-                   <img align=center' src='/media/{{report.photo}}'>
+                   <img align='center' src='/media/{{report.photo}}'>
 		    {% endif %}
 		    {% if report.is_confirmed %}
 				<div id="more-actions">
@@ -101,6 +101,11 @@
 					    <div class="update-desc">
 						    {{update.desc}}
                         </div>
+                        <div class="update-photo">
+                        {% if update.photo %}
+                           <img align='center' src='/media/{{update.photo}}'>
+                        {% endif %}
+                        </div>
                         {% if update.is_verified_author %}
                             <div class="update-verified">
                             {% trans "<a href='/about/#How%20is%20a%20problem%20fixed%3F'> This report's author has been verified.</a>" %}
@@ -110,20 +115,25 @@
 					{% endfor %}
                     </div>
 				{% endif %}
-				{% if not report.is_fixed %}
 				<hr/>
 				<div id="update-header">
 					<div id="update-title"><h3>{% trans "Provide an update" %} </h3></div>
 				</div>				
 				<p>{% trans "Please note that updates are not sent to city officials." %}</p>
-				<form action="/reports/{{report.id}}/updates/" method="post">
+				<form action="/reports/{{report.id}}/updates/" method="post" name="my-form">
 				<table class="form">
+                <tr>
+                    <th><label>{% trans "Georgian keyboard" %}</label></th>
+                    <td><input type="checkbox" name="geo" checked="checked"></td>
+                </tr>
 					{{update_form.as_table}}					
 				<tr><td></td><td><input type="checkbox" id="is_fixed" name="is_fixed" value="1">{% trans "This problem has been fixed." %}</td></tr>
 				<tr><td></td><td><input type ="submit" value= "{% trans "Submit" %}"></td></td>
 				</table>
 				</form>
-				{% endif %}	
+                <script type="text/javascript">
+                    GeoKBD.map('my-form');
+                </script>	
 		{% endif %}
 	</div>
 	<div id="rightcol">

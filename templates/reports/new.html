@@ -58,10 +58,16 @@ margin-left:1.5em;
 	<div id="leftcol">
 	<h3>{% trans "Report a Problem" %}</h3>
 	
-	<form enctype="multipart/form-data" method="post" action="/reports/">
+	<form enctype="multipart/form-data" method="post" name="my-form" action="/reports/">
 		<input type="hidden" name="lat" id="lat" value="{{lat}}" />
 		<input type="hidden" name="lon" id="lon" value="{{lon}}" />
-		<table class='form'>		
+		<table class='form'>
+            <tr>
+                <th><label>{% trans "Georgian keyboard" %}</th>
+                    <td>
+                    <input type='checkbox' name='geo' checked='checked' />
+                    </td>
+            </tr>
 			{{ report_form.as_table }}			
 			<tr>
 				<th></th>
@@ -109,7 +115,9 @@ margin-left:1.5em;
         </table>
     	
     	</form>
-	
+   <script type="text/javascript">
+    GeoKBD.map('my-form');
+    </script>
 	</div>
 	<div id="rightcol">
      <!--div id="{{ google.dom_id }}" style="width:400px;height:400px;"></div-->
