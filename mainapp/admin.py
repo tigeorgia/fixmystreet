@@ -5,8 +5,6 @@ from contrib.transmeta import canonical_fieldname
 admin.site.register(EmailRule)
 admin.site.register(City)
 #admin.site.register(Province)
-admin.site.register(Report)
-admin.site.register(ReportUpdate)
 
 class ReportCategoryClassAdmin(admin.ModelAdmin):
     list_display = ('name',)
@@ -33,9 +31,18 @@ class WardAdmin(admin.ModelAdmin):
     list_display = ('id','city','number','name')
     ordering       = ['city', 'number']
 
-class ReportUpdate(admin.ModelAdmin):
-	list_display = ('report.title', 'author')
-    
 admin.site.register(Ward,WardAdmin)
 
 admin.site.register(VerifiedAuthor)
+
+class ReportUpdateAdmin(admin.ModelAdmin):
+	list_display = ('title', 'author', 'is_confirmed', 'is_fixed', 'created_at')
+
+admin.site.register(ReportUpdate,ReportUpdateAdmin)
+
+class ReportAdmin(admin.ModelAdmin):
+    list_display = ('title', 'category','ward', 'is_fixed','is_confirmed', 'created_at')
+
+admin.site.register(Report,ReportAdmin)
+
+

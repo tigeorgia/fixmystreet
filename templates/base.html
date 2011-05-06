@@ -3,6 +3,7 @@
 {% load analytics %}
 <html>
 <head>
+    <meta name="google-site-verification" content="xm9edHANmF2FStQkLknknSZM4Rz1TX6Q-0vG-59dy0c" />
     <meta name="google-site-verification" content="dawDvNOnivoTMIZxLGQHzc4f-zhZs8D8fe4yY98Xy3E" />
     <meta keywords="fix my street fixmystreet georgia chemi kucha chemikucha tbilisi repair streets pothole sidewalk street vandalism manhole trees trash collection trasffic streetlight sewage problem park electrical wires abandoned vehicle or and ჩემი ქუჩა საქართველო თბილისი შეაკეთე შეტყობინება შეტყობინებები შეკეთება ქუჩის გაფუჭებული დაზიანებული ქუჩები ორბო ორმოები ასფალტი დანგრეული ტროტუარი ვანდალიზმი თავახდილი ლუქი ხე ხეები ნაგავსაყრელი უკანონო ტრანსპორტი უსაფრთხოება ქვეითები საგზაო ნიშანი განათება დსუფთავება კანალიზაცია კანალიზაციის მილი მჟონავი დაზიანება პარკები მილები მილი პარკი ელექრტო სადენები სადენი ან და" />
 	<title>{% trans "FixMyStreet .ge" %} - {% block title %}{% trans "Home" %}{% endblock %}</title>
@@ -11,8 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="/media/css/layout-6.css" />
 	<link rel="stylesheet" type="text/css" href="/media/css/colors.css" />
     <link rel="stylesheet" type="text/css" href="/media/css/fms-custom.css" />
-    <script type="text/javascript" src="/media/js/geokbd.js"></script>
-    	{% block css %}{% endblock %}
+       {% block css %}{% endblock %}
 	{% block script %}{% endblock %}	
 </head>
 	<body>
@@ -29,7 +29,7 @@
 				<div id="top_menu"><div id='top_menu_tr'><div id='top_menu_bl'><div id='top_menu_br'>
 					<div id="top_menu_links"><div>
 					<ul>
-						<li><a href="/" >{% trans "Report a Problem" %}</a></li>
+						<li><a href="/" >{% trans "Home" %}</a></li>
                         <!--Remember to switch back to /cities/ if we add some other city-->
 						<li><a href={% block all_reports_link %}"/cities/2"{% endblock %}>{% trans "All Reports" %}</a></li>
 						<li><a href="/contact/">{% trans "Contact" %}</a></li>

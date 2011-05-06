@@ -20,7 +20,12 @@ def show_by_number( request, city_id, ward_no ):
 		 "olMap": olMap,
                  "reports": [] },
                 context_instance=RequestContext(request))    
-    
+def show_by_category (request, ward_id):
+    category = get_object_or_404(Category, id=ward_id)
+    report = Report.objects.filter(category = category, is_confirmed = True)
+    return render_to_response("wards/show-cat.html",
+                                {"report":report,
+                                "category":category })
 def show( request, ward_id ):
     ward = get_object_or_404(Ward, id=ward_id)
     reports = Report.objects.filter( ward = ward, is_confirmed = True ).extra( select = { 'status' : """

@@ -293,7 +293,6 @@ class ReportUpdate(models.Model):
     author = models.CharField(max_length=255,verbose_name = ugettext_lazy("Name"))
     phone = models.CharField(max_length=255, verbose_name = ugettext_lazy("Phone"), )
     first_update = models.BooleanField(default=False)
-    photo = StdImageField(upload_to="photos/updates", blank=True, verbose_name =  ugettext_lazy("* Photo"), size=(133,100))
 
     def __unicode__(self):
         return self.report.title
