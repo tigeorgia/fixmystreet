@@ -63,6 +63,7 @@
 			<div id='report-header'>
 				<div id='report-status'>
 				{% trans "Category:" %}<b>{{report.category.name}}</b><br/>
+				{% trans "Street Address:" %}<b>{{report.street}}</b><br/>
 				{% trans "Filed by:" %}{{report.author}}<br/>				
 				<i>
 				{% if report.sent_at %}
@@ -128,7 +129,11 @@
                     <td><input type="checkbox" name="geo" checked="checked"></td>
                 </tr>
 					{{update_form.as_table}}					
-				<tr><td></td><td><input type="checkbox" id="is_fixed" name="is_fixed" value="1">{% trans "This problem has been fixed." %}</td></tr>
+				{% if not report.is_fixed %}
+                <tr><td></td><td><input type="checkbox" id="is_fixed" name="is_fixed" value="1">{% trans "This problem has been fixed." %}</td></tr>
+                {% else %}{% if report.is_fixed %}
+                <tr><td></td><td><input type="checkbox" id="is_fixed" name="is_fixed" value="0">{% trans "This problem has not been fixed." %}</td></tr>
+                {% endif %}{% endif %}
 				<tr><td></td><td><input type ="submit" value= "{% trans "Submit" %}"></td></td>
 				</table>
 				</form>

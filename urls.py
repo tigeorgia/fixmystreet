@@ -77,6 +77,8 @@ urlpatterns += patterns( 'mainapp.views.reports.flags',
 urlpatterns += patterns('mainapp.views.reports.main',
     (r'^reports/(\d+)$', 'show'),
     (r'^reports/(\d+)/poster$', 'poster'),
+    (r'^reports/category/(\d+)$', 'category'),
+    (r'^reports/category$', 'categories'),
     (r'^reports/', 'new'),
 )
 

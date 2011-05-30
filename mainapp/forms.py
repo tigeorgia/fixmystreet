@@ -34,5 +34,5 @@ class ReportSubscriberForm(forms.ModelForm):
 class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
-        fields = ('title', 'photo')
+        fields = ('title', 'photo', 'street')
 

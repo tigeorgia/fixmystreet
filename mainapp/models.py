@@ -17,6 +17,24 @@ from contrib.transmeta import TransMeta
 from contrib.stdimage import StdImageField
 import libxml2
 from django.utils.encoding import iri_to_uri
+from south.modelsinspector import add_introspection_rules
+
+try:
+    from south.modelsinspector import add_introspector_rules
+    rules = [((StdImageField,), [],
+            {
+               "upload_to": ["upload_to", {"default": None}],
+               "blank": ["blank", {"default": None}],
+               "verbose_name": ["verbose_name", {"default": None}],
+               "size": ["size", {"default": None}],
+                "thumbnail_size": ["thumbnail_size", {"default": None}],
+
+            },
+          )
+        ]
+    add_introspection_rules(rules, ["^django\.contrib\.stdimage"])
+except ImportError:
+    pass
       
 # from here: http://www.djangosnippets.org/snippets/630/        
 class CCEmailMessage(EmailMessage):
@@ -158,6 +176,10 @@ class ReportCategory(models.Model):
         db_table = u'report_categories'
         translate = ('name', 'hint', )
     
+    def get_absolute_url(self):
+        return  "category/" + str(self.id)
+
+    
             
 # Override where to send a report for a given city.        
 #
@@ -217,7 +239,7 @@ class Report(models.Model):
     category = models.ForeignKey(ReportCategory,null=True)
     ward = models.ForeignKey(Ward,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    street = models.CharField(max_length=255, verbose_name = ugettext_lazy("Street address"))
     # last time report was updated
     updated_at = models.DateTimeField(auto_now_add=True)
     
@@ -293,6 +315,8 @@ class ReportUpdate(models.Model):
     author = models.CharField(max_length=255,verbose_name = ugettext_lazy("Name"))
     phone = models.CharField(max_length=255, verbose_name = ugettext_lazy("Phone"), )
     first_update = models.BooleanField(default=False)
+   # photo = StdImageField(upload_to="photos/updates", blank=True, verbose_name =  ugettext_lazy("* Photo"), size=(200, 200), thumbnail_size=(133,100))
+
 
     def __unicode__(self):
         return self.report.title
@@ -620,11 +644,11 @@ class ReportCountQuery(SqlQuery):
             
     def __init__(self, interval = '1 month'):
         SqlQuery.__init__(self)
-        self.base_query = """select count( case when age(clock_timestamp(), reports.created_at) < interval '%s' and reports.is_confirmed THEN 1 ELSE null end ) as recent_new,\
+        self.base_query = """select count( case when age(clock_timestamp(), reports.created_at) < interval '%s' and reports.is_confirmed = True THEN 1 ELSE null end ) as recent_new,\
  count( case when age(clock_timestamp(), reports.fixed_at) < interval '%s' AND reports.is_fixed = True THEN 1 ELSE null end ) as recent_fixed,\
- count( case when age(clock_timestamp(), reports.updated_at) < interval '%s' AND reports.is_fixed = False and reports.updated_at != reports.created_at THEN 1 ELSE null end ) as recent_updated,\
- count( case when age(clock_timestamp(), reports.fixed_at) > interval '%s' AND reports.is_fixed = True THEN 1 ELSE null end ) as old_fixed,\
- count( case when age(clock_timestamp(), reports.created_at) > interval '%s' AND reports.is_confirmed AND reports.is_fixed = False THEN 1 ELSE null end ) as old_unfixed   
+ count( case when age(clock_timestamp(), reports.updated_at) < interval '%s' AND reports.is_fixed = False AND reports.is_confirmed = True AND reports.updated_at != reports.created_at THEN 1 ELSE null end ) as recent_updated,\
+ count( case when age(clock_timestamp(), reports.fixed_at) > interval '%s' AND reports.is_fixed = True AND reports.is_confirmed = True THEN 1 ELSE null end ) as old_fixed,\
+ count( case when age(clock_timestamp(), reports.created_at) > interval '%s' AND reports.is_confirmed = True AND reports.is_fixed = False THEN 1 ELSE null end ) as old_unfixed   
  """ % (interval,interval,interval,interval,interval) 
         self.sql = self.base_query + " from reports where reports.is_confirmed = true" 
 
