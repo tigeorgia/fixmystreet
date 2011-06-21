@@ -19,23 +19,6 @@ import libxml2
 from django.utils.encoding import iri_to_uri
 from south.modelsinspector import add_introspection_rules
 
-try:
-    from south.modelsinspector import add_introspector_rules
-    rules = [((StdImageField,), [],
-            {
-               "upload_to": ["upload_to", {"default": None}],
-               "blank": ["blank", {"default": None}],
-               "verbose_name": ["verbose_name", {"default": None}],
-               "size": ["size", {"default": None}],
-                "thumbnail_size": ["thumbnail_size", {"default": None}],
-
-            },
-          )
-        ]
-    add_introspection_rules(rules, ["^django\.contrib\.stdimage"])
-except ImportError:
-    pass
-      
 # from here: http://www.djangosnippets.org/snippets/630/        
 class CCEmailMessage(EmailMessage):
     def __init__(self, subject='', body='', from_email=None, to=None, cc=None,
@@ -315,7 +298,7 @@ class ReportUpdate(models.Model):
     author = models.CharField(max_length=255,verbose_name = ugettext_lazy("Name"))
     phone = models.CharField(max_length=255, verbose_name = ugettext_lazy("Phone"), )
     first_update = models.BooleanField(default=False)
-   # photo = StdImageField(upload_to="photos/updates", blank=True, verbose_name =  ugettext_lazy("* Photo"), size=(200, 200), thumbnail_size=(133,100))
+    photo = StdImageField(upload_to="photos/updates", blank=True, verbose_name =  ugettext_lazy("* Photo"), size=(200, 200), thumbnail_size=(133,100))
 
 
     def __unicode__(self):

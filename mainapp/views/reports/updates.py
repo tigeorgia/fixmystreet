@@ -7,7 +7,7 @@ from django.template import Context, RequestContext
 def new( request, report_id ):
     report = get_object_or_404(Report, id=report_id)
     if request.method == 'POST':    
-        update_form = ReportUpdateForm( request.POST )
+        update_form = ReportUpdateForm( request.POST, request.FILES )
         if update_form.is_valid():
             update = update_form.save(commit=False)
             update.is_fixed = request.POST.has_key('is_fixed')

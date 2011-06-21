@@ -122,7 +122,7 @@
 					<div id="update-title"><h3>{% trans "Provide an update" %} </h3></div>
 				</div>				
 				<p>{% trans "Please note that updates are not sent to city officials." %}</p>
-				<form action="/reports/{{report.id}}/updates/" method="post" name="my-form">
+				<form enctype="multipart/form-data" action="/reports/{{report.id}}/updates/" method="post" name="my-form">
 				<table class="form">
                 <tr>
                     <th><label>{% trans "Georgian keyboard" %}</label></th>

@@ -24,7 +24,7 @@ class ContactForm(forms.Form):
 class ReportUpdateForm(forms.ModelForm):
     class Meta:
         model = ReportUpdate
-        fields = ( 'desc','author','email','phone')
+        fields = ( 'desc','author','email','phone', 'photo')
 
 class ReportSubscriberForm(forms.ModelForm):
     class Meta:
@@ -34,5 +34,5 @@ class ReportSubscriberForm(forms.ModelForm):
 class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
-        fields = ('title', 'photo', 'street')
+        fields = ('title', 'street')
 
