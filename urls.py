@@ -52,7 +52,9 @@ urlpatterns += patterns('mainapp.views.wards',
 
 urlpatterns += patterns('',
     (r'^cities/(\d+)$', cities.show ),       
+    (r'^cities/(\d+)/category/(\d+)$', cities.category),
     (r'^cities', cities.index),
+
 )
 
 urlpatterns += patterns( 'mainapp.views.reports.updates',
@@ -77,8 +79,7 @@ urlpatterns += patterns( 'mainapp.views.reports.flags',
 urlpatterns += patterns('mainapp.views.reports.main',
     (r'^reports/(\d+)$', 'show'),
     (r'^reports/(\d+)/poster$', 'poster'),
-    (r'^reports/category/(\d+)$', 'category'),
-    (r'^reports/category$', 'categories'),
+    #(r'^reports/category/(\d+)$', 'category'),
     (r'^reports/', 'new'),
 )
 

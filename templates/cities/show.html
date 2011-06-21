@@ -32,7 +32,18 @@
 	</div>
 	</div>
 	<br/ style="clear:both;">
-	
+		<div id="reports_by_category">
+		<p><b>{% trans "Categories" %}</b></p>
+		<table style="width:50%;">
+			{% for cat in categories %}
+			<tr class="{% cycle 'row-odd' 'row-even' %}" style="line-height:30px;">
+				<td>{{forloop.counter}}</td>
+				<td><a href='{% url mainapp.views.cities.category city.id cat.id %}'>{{cat.name}}</a></td>
+			</tr>
+			{% endfor %}
+		</table>
+		<br/>
+	</div>
 </div>
 
 {% endblock %}

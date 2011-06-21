@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Reports for" %} {{category}}{% endblock %}
+{% block content %}
+	<div id="fullwidth">
+	<h3>{% trans "Reports for" %} {{category}}</h3>
+		<div id='leftcol'>
+            <ol>
+            <h2>{% trans "Unfixed reports" %}</h2>
+				{% for report in reportsuf %}
+                    <li><a href='{{report.get_absolute_url}}'>{{report.title}}</a></li>
+                {% endfor %}
+             </ol>
+              <ol>
+                <h2>{% trans "Fixed reports" %}</h2>
+				{% for report in reports %}
+                    <li><a href='{{report.get_absolute_url}}'>{{report.title}}</a></li>
+                {% endfor %}
+             </ol>
+             <br/><br/>
+             </div>
+		<div id='rightcol'>
+		</div>
+	</div>
+	<br/ style="clear:both;">
+{% endblock %}

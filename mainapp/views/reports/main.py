@@ -123,15 +123,4 @@ def poster ( request, report_id ):
     report = get_object_or_404(Report,id=report_id)
     url = request.get_host()+request.path[:-7] # Hard-coded value to trim "/poster" off the end. Sorry.
     return render_to_response("reports/poster.html", { 'url': url, 'report':report})
-def categories (request):
-    category = ReportCategory.objects.all()
-    return render_to_response("reports/categories.html", {'category': category},
-                                context_instance=RequestContext(request))
-def category (request, category_id):
-    reports = Report.objects.filter(category = category_id, is_confirmed = True, is_fixed = True).order_by("created_at")
-    reportsuf = Report.objects.filter(category = category_id, is_confirmed = True, is_fixed = False).order_by("created_at")
-    return render_to_response("reports/category.html", 
-                               {'reports': reports, 
-                               'reportsuf': reportsuf,
-                               'category': get_object_or_404(ReportCategory, id=category_id)},
-                              context_instance=RequestContext(request))
+
