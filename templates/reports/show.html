@@ -110,7 +110,8 @@
                         </div>
                         {% if update.is_verified_author %}
                             <div class="update-verified">
-                            {% trans "<a href='/about/#How%20is%20a%20problem%20fixed%3F'> This report's author has been verified.</a>" %}
+                            <a href="/about/#How%20is%20a%20problem%20fixed%3F">{% trans "This report's author has been verified" %}</a>
+                           {# {% trans "<a href='/about/#How%20is%20a%20problem%20fixed%3F'> This update is from: </a>" %}{{verified_name}}#}
                             </div>
                         {% endif %}
 						<hr />
@@ -131,9 +132,9 @@
 					{{update_form.as_table}}					
 				{% if not report.is_fixed %}
                 <tr><td></td><td><input type="checkbox" id="is_fixed" name="is_fixed" value="1">{% trans "This problem has been fixed." %}</td></tr>
-                {% else %}{% if report.is_fixed %}
-                <tr><td></td><td><input type="checkbox" id="is_fixed" name="is_fixed" value="0">{% trans "This problem has not been fixed." %}</td></tr>
-                {% endif %}{% endif %}
+                {% else %}
+                <tr><td></td><td><input type="checkbox" id="un_fixed" name="is_fixed" value="1" checked="checked">{% trans "This problem is still actually fixed." %}</td></tr>
+                {% endif %}
 				<tr><td></td><td><input type ="submit" value= "{% trans "Submit" %}"></td></td>
 				</table>
 				</form>

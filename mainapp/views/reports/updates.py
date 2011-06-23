@@ -10,6 +10,10 @@ def new( request, report_id ):
         update_form = ReportUpdateForm( request.POST, request.FILES )
         if update_form.is_valid():
             update = update_form.save(commit=False)
+            #if request.POST.has_key('is_fixed')
+            #    update.is_fixed = request.POST['is_fixed']
+            #else:
+            #    update.is_fixed = False
             update.is_fixed = request.POST.has_key('is_fixed')
             update.report=report
             update.save()    
@@ -38,9 +42,15 @@ def confirm( request, confirm_token ):
     
     # is the update fixed?
     
-    if update.is_fixed:
+    # unfixed -> unfixed
+    # unfixed -> fixed
+    if update.is_fixed and not update.report.is_fixed:
         update.report.is_fixed = True
         update.report.fixed_at = update.created_at
+    # fixed -> unfixed
+    elif not update.is_fixed and update.report.is_fixed:
+        update.report.is_fixed = False
+        update.report.fixed_at = None
     
     update.is_confirmed = True    
     update.save()
