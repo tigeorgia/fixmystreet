@@ -72,7 +72,7 @@ margin-left:1.5em;
 			{{ report_form.as_table }}			
 			<tr>
 				<th></th>
-				<td id="photo_note">{% trans "* Optional" %}</td>
+				{% comment %}<td id="photo_note">{% trans "* Optional" %}</td>{% endcomment %}
 			</tr>
        		<tr>			
 				<th><label for="strCategory">{% trans "Category:" %}</label></th>
@@ -94,7 +94,12 @@ margin-left:1.5em;
 				<td></td>
 				<td><div id='secondary_container'></div></td>
 			</tr>
-        	{{ update_form.as_table }}
+            <tr><th>{{update_form.desc.label_tag}}</th><td>{{update_form.desc.errors}}{{update_form.desc}}</td></tr>
+            
+           <tr><th>{{update_form.author.label_tag}}</th><td>{{update_form.author.errors}}{{update_form.author}}</td></tr>
+            <tr><th>{{update_form.email.label_tag}}</th><td>{{update_form.email.errors}}{{update_form.email}}</td></tr>
+            <tr><th>{{update_form.phone.label_tag}}</th><td>{{update_form.phone.errors}}{{update_form.phone}}</td></tr>
+        	{% comment %}{{ update_form.as_table }}{% endcomment %}
         	<tr>
         		<td></td>
         		<td><div class='note'>

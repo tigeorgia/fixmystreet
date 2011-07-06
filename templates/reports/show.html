@@ -93,7 +93,7 @@
 			<br/>
 			<p>{{report.desc|linebreaks}}</p>
 			{% if report.photo  %}
-                   <img align='center' src='/media/{{report.photo}}'>
+                   <img align='center' src='{{report.photo.url}}'>
 		    {% endif %}
 		    {% if report.is_confirmed %}
 				<div id="more-actions">
@@ -113,7 +113,7 @@
                         </div>
                         <div class="update-photo">
                         {% if update.photo %}
-                           <img align='center' src='/media/{{update.photo}}'>
+                           <img align='center' src='{{update.photo.url}}'>
                         {% endif %}
                         </div>
                         {% if update.is_verified_author %}

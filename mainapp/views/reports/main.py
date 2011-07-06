@@ -17,7 +17,7 @@ def new( request ):
         pnt = fromstr(point_str, srid=4326)         
         f = request.POST.copy()
         update_form = ReportUpdateForm( {'email':request.POST['email'], 'desc':request.POST['desc'],
-                                         'author':request.POST['author'], 'phone': request.POST['phone']})    
+                                         'author':request.POST['author'], 'phone': request.POST['phone']}, request.FILES)    
         report_form = ReportForm({'title' : request.POST['title'], 'street':request.POST['street']}, request.FILES)
         
         # this is a lot more complicated than it has to be because of the infortmation
