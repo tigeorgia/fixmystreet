@@ -66,13 +66,13 @@ def new( request ):
             'pointRadius': '15',
             'graphicOpacity': '1'}})
     allLayers = [wardBoundary,reportPoint]
-
+# If Mapspot goes down, comment out the next four lines and uncomment the line below them.
     if request.LANGUAGE_CODE == 'ka':
-        map_lang = 'osm.omcka'
+        map_lang = ['osm.omcka']
     else:
-        map_lang = 'osm.omcen'
-    
-    olMap = Map(vector_layers=allLayers,options={'layers': [map_lang],'map_div_style':{'width': '400px', 'height': '400px'},'map_options': {'controls': ['Navigation', 'PanZoom']},'default_zoom': 15, 'default_lat':pnt.y, 'default_lon':pnt.x, 'zoom_to_data_extent': False},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt}, )
+        map_lang = ['osm.omcen']
+#    map_lang = ['osm.mapnik'] # Until Mapspot returns
+    olMap = Map(vector_layers=allLayers,options={'layers': map_lang,'map_div_style':{'width': '400px', 'height': '400px'},'map_options': {'controls': ['Navigation', 'PanZoom']},'default_zoom': 15, 'default_lat':pnt.y, 'default_lon':pnt.x, 'zoom_to_data_extent': False},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt}, )
     
     return render_to_response("reports/new.html",
                 { "lat": pnt.y,
@@ -97,13 +97,15 @@ def show( request, report_id ):
 			        #'fill_color': '#ffffff',
 				#'stroke_color': '#008800',
 				}})
-
+# If Mapspot goes down, comment out the next four lines and uncomment the line below them.
     if request.LANGUAGE_CODE == 'ka':
-        map_lang = 'osm.omcka'
+        map_lang = ['osm.omcka']
     else:
-        map_lang = 'osm.omcen'
+        map_lang = ['osm.omcen']
+
+#    map_lang = ['osm.mapnik'] #Until Mapspot returns
     olMap = Map([reportLayer],options={
-        'layers': [map_lang],
+        'layers': map_lang,
 		'map_div_style':{'width': '400px', 'height': '400px'},
         'map_options': {'controls': ['Navigation', 'PanZoom', 'Attribution'] },
         'default_zoom': 1})

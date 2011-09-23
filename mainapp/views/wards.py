@@ -43,7 +43,8 @@ def show( request, ward_id ):
 # Added for OpenLayers functionality -DD
     wardBoundary = InfoLayer([[ward.geom,"Boundary"]],{
             'overlay_style': {
-            'fill_color': '#c0c0c0',
+            'fillColor': '#FFFFFF',
+            'fillOpacity': 0,
             'stroke_color': '#0000FF',
             'stroke_width': 2,}})
     counter = 1
@@ -60,10 +61,12 @@ def show( request, ward_id ):
         counter+=1
         thisLayer = InfoLayer([(r.point,r.title)],options)
         allLayers.append(thisLayer)
+# If Mapspot goes down, comment out the next four lines and uncomment the line below them.
     if request.LANGUAGE_CODE == 'ka':
         map_lang = ['osm.omcka']
     else:
         map_lang = ['osm.omcen']
+#    map_lang = ['osm.mapnik'] #Until Mapspot returns
     olMap = Map(allLayers,options={'layers': map_lang,'map_div_style':{'width': '400px', 'height': '400px'},'map_options': {'controls': ['Navigation', 'PanZoom', 'Attribution'] },})
     return render_to_response("wards/show.html",
         {"ward": ward,

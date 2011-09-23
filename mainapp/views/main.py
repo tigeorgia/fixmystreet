@@ -137,11 +137,13 @@ def search_address(request):
         counter+=1
         thisLayer = InfoLayer([(r.point,r.title)],options)
         allLayers.append(thisLayer)	
+# If Mapspot goes down, comment out the next 4 lines, and uncomment the line below them.
     if request.LANGUAGE_CODE == 'ka':
         map_lang = ['osm.omcka']
     else:
         map_lang = ['osm.omcen']
 
+#    map_lang = ['osm.mapnik'] #Until Mapspot returns
     olMap = Map(vector_layers=allLayers,
                 options={'layers': map_lang,
                          'map_div_style':{'width': '400px', 'height': '400px'},
