@@ -33,7 +33,10 @@ class WardAdmin(admin.ModelAdmin):
 
 admin.site.register(Ward,WardAdmin)
 
-admin.site.register(VerifiedAuthor)
+class VerifiedAuthorAdmin(admin.ModelAdmin):
+    list_display = ('id', 'domain', 'name')
+
+admin.site.register(VerifiedAuthor, VerifiedAuthorAdmin)
 
 class ReportUpdateAdmin(admin.ModelAdmin):
 	list_display = ('title', 'author', 'is_confirmed', 'is_fixed', 'created_at')

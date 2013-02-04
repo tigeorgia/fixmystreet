@@ -16,10 +16,10 @@ from olwidget.widgets import Map, EditableLayer, InfoLayer
 
 
 def home(request, error_msg = None, disambiguate=None): 
-    if request.subdomain:
-        matching_cities = City.objects.filter(name__iexact=request.subdomain)
-        if matching_cities:
-            return( city_home(request, matching_cities[0], error_msg, disambiguate ) )
+    #if request.subdomain:
+        #matching_cities = City.objects.filter(name__iexact=request.subdomain)
+        #if matching_cities:
+            #return( city_home(request, matching_cities[0], error_msg, disambiguate ) )
             
     reports_with_photos = Report.objects.filter(is_confirmed=True).exclude(photo='').order_by("-created_at")[:3]
     recent_reports = Report.objects.filter(is_confirmed=True).order_by("-updated_at")[:5]
@@ -129,21 +129,25 @@ def search_address(request):
         if r.is_fixed:
             markerColor = 'green'
         else:
-            markerColor = 'red'	
+            markerColor = 'red'
+        if counter < 200:
+            strPnt = '/media/images/marker/%s/marker%d.png' %(markerColor, counter)
+        else:
+            strPnt = '/media/images/marker/%s/blank.png' %(markerColor)
         options = {'overlay_style': {
-        'externalGraphic': '/media/images/marker/%s/marker%d.png' %(markerColor, counter),
+        'externalGraphic': strPnt, 
         'pointRadius': '15',
         'graphicOpacity': '1',}}
         counter+=1
         thisLayer = InfoLayer([(r.point,r.title)],options)
         allLayers.append(thisLayer)	
 # If Mapspot goes down, comment out the next 4 lines, and uncomment the line below them.
-    if request.LANGUAGE_CODE == 'ka':
-        map_lang = ['osm.omcka']
-    else:
-        map_lang = ['osm.omcen']
+    #if request.LANGUAGE_CODE == 'ka':
+       # map_lang = ['osm.omcka']
+  #  else:
+     #   map_lang = ['osm.omcen']
 
-#    map_lang = ['osm.mapnik'] #Until Mapspot returns
+    map_lang = ['osm.mapnik'] #Until Mapspot returns
     olMap = Map(vector_layers=allLayers,
                 options={'layers': map_lang,
                          'map_div_style':{'width': '400px', 'height': '400px'},

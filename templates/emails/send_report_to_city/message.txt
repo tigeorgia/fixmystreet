@@ -3,6 +3,7 @@
 ავტორი: {{update.author|safe}}	
 ტელეფონი:        {{update.phone}}
 ელ.ფოსტა:        {{update.email}}
+Address: {{update.report.street}}
 FMS ID:       {{update.report.id}}
 
 {{update.desc|safe}}

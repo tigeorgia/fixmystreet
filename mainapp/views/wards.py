@@ -55,18 +55,18 @@ def show( request, ward_id ):
         else:
             markerColor = 'red'	
         options = {'overlay_style': {
-            'externalGraphic': '/media/images/marker/%s/marker%d.png' %(markerColor, counter),
+            'externalGraphic': '/media/images/marker/%s/blank.png' %(markerColor),
             'pointRadius': '15',
             'graphicOpacity': '1',}}
         counter+=1
         thisLayer = InfoLayer([(r.point,r.title)],options)
         allLayers.append(thisLayer)
 # If Mapspot goes down, comment out the next four lines and uncomment the line below them.
-    if request.LANGUAGE_CODE == 'ka':
-        map_lang = ['osm.omcka']
-    else:
-        map_lang = ['osm.omcen']
-#    map_lang = ['osm.mapnik'] #Until Mapspot returns
+    #if request.LANGUAGE_CODE == 'ka':
+    #    map_lang = ['osm.omcka']
+    #else:
+    #    map_lang = ['osm.omcen']
+    map_lang = ['osm.mapnik'] #Until Mapspot returns
     olMap = Map(allLayers,options={'layers': map_lang,'map_div_style':{'width': '400px', 'height': '400px'},'map_options': {'controls': ['Navigation', 'PanZoom', 'Attribution'] },})
     return render_to_response("wards/show.html",
         {"ward": ward,

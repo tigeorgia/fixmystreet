@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-29 12:54+0100\n"
-"PO-Revision-Date: 2012-10-29 15:47+0400\n"
+"PO-Revision-Date: 2012-10-29 15:48+0400\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -212,8 +212,9 @@ msgstr ""
 "მერიას!"
 
 #: templates/home.html:24
+#, fuzzy
 msgid "(like potholes, excessive garbage, or street lighting)"
-msgstr "(როგორიცაა: ორმოები, ზედმეტი ნაგავი ან ქუჩის განათება)"
+msgstr "(როგორიცაა: გრაფიტი, ორმოები, ზედმეტი ნაგავი ან ქუჩის განათება)"
 
 #: templates/home.html:30
 msgid "Isani-Samgori"
@@ -272,8 +273,9 @@ msgid "Stats"
 msgstr "სტატისტიკა"
 
 #: templates/home.html:70
+#, fuzzy
 msgid "Reports Filed in the past year"
-msgstr "შეტყობინება წლის განმავლობაში"
+msgstr "სულ შეტყობინება"
 
 #: templates/home.html:73
 msgid "Reports Fixed"
@@ -726,6 +728,9 @@ msgid "Note: FixMyStreet.ge relies on users to report problems as fixed."
 msgstr ""
 "გაითვალისწინეთ, რომ ChemiKucha.ge იმედს იტოვებს, რომ წევრები თვითონ "
 "მიუთითებენ იმის შესახებ, რომ პრობლემა მოგვარდა"
+
+#~ msgid "During the year."
+#~ msgstr "წლის განმავლობაში."
 
 #~ msgid "Sorting by categories"
 #~ msgstr "სორტირება კატეგორიების მიხედვით"

@@ -415,9 +415,9 @@ class ReportSubscriber(models.Model):
 # will be marked as verified.
 class VerifiedAuthor(models.Model):
     domain = models.CharField(max_length=255,verbose_name = ugettext_lazy("Domain"))
-
+    name = models.CharField(max_length=255, verbose_name = ugettext_lazy("Name"))
     def __unicode__(self):
-        return self.domain
+        return self.name
 
 
 # This and subsequent 'XMap' classes should probably be in
