@@ -1,0 +1,11 @@
+*.pyc
+media/*.png
+media/images/marker/*
+*.mo
+*.py.sw*
+media/photos
+*.html.sw*
+media-old
+apache
+settings.py
+local_settings.py
