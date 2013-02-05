@@ -1,0 +1,11 @@
+Django==1.2.7
+PIL==1.1.7
+South==0.7.6
+django-stdimage==0.2.2
+django-transmeta==0.6.0
+google-analytics==0.2
+libxml2-python==2.6.21
+lxml==2.3.6
+psycopg2==2.4.6
+wsgiref==0.1.2
+yolk==0.4.3
