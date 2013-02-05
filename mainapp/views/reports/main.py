@@ -6,7 +6,6 @@ from django.template import Context, RequestContext
 from django.contrib.gis.geos import *
 from fixmystreet import settings
 from django.utils.translation import ugettext as _
-from olwidget.widgets import Map, InfoLayer, EditableLayer
 from django.contrib.gis.measure import D 
 
 def new( request ):
@@ -57,43 +56,6 @@ def new( request ):
               "update_form": update_form,
               "category_error": category_error, },
             context_instance=RequestContext(request))
-
-    wards = Ward.objects.filter(geom__contains=point_str)
-    if (len(wards) == 0):
-        return( home(request, _("Sorry, we don't yet have that area in our database.  Please have your area councillor contact FixMyStreet.ge.")))
-    
-    ward = wards[0]
-    wardBoundary = InfoLayer([[ward.geom,"Boundary"]],{
-        'overlay_style': {
-            'fill_color': '#FFFFFF',
-            'fill_opacity':0,
-            'stroke_color': '#0000FF',
-            'stroke_width': 2,}})
-
-    reportPoint = EditableLayer({ 'name': 'report-point',
-        'overlay_style': {
-            'externalGraphic': '/media/images/marker/default/marker.png',
-            'pointRadius': '15',
-            'graphicOpacity': '1'}})
-    allLayers = [wardBoundary,reportPoint]
-# If Mapspot goes down, comment out the next four lines and uncomment the line below them.
-    #if request.LANGUAGE_CODE == 'ka':
-    #    map_lang = ['osm.omcka']
-   # else:
-    #    map_lang = ['osm.omcen']
-    map_lang = ['osm.mapnik'] # Until Mapspot returns
-    olMap = Map(vector_layers=allLayers,options={'layers': map_lang,'map_div_style':{'width': '400px', 'height': '400px'},'map_options': {'controls': ['Navigation', 'PanZoom']},'default_zoom': 15, 'default_lat':pnt.y, 'default_lon':pnt.x, 'zoom_to_data_extent': False},layer_names=[None,"report-point"],template="multi_layer_map.html",params={'point':pnt}, )
-    
-    return render_to_response("reports/new.html",
-                { "lat": pnt.y,
-                  "lon": pnt.x,
-                  "pnt": pnt,
-                  "olMap": olMap,
-                  "categories": ReportCategory.objects.all().order_by("category_class"),
-                  "report_form": report_form,
-                  "update_form": update_form, 
-                  "category_error" : category_error, },
-                context_instance=RequestContext(request))
     
 def show( request, report_id ):
     report = get_object_or_404(Report, id=report_id)
@@ -106,37 +68,6 @@ def show( request, report_id ):
               "update_form": ReportUpdateForm(),
               "google": FixMyStreetMap((report.point)) },
             context_instance=RequestContext(request))
-# OpenLayers Support -DD
-    reportLayer = InfoLayer([(report.point,report.title)],{
-        'overlay_style': {
-				'externalGraphic': '/media/images/marker/default/marker.png',
-				'pointRadius': '15',
-				'graphicOpacity': '1',
-			        #'fill_color': '#ffffff',
-				#'stroke_color': '#008800',
-				}})
-# If Mapspot goes down, comment out the next four lines and uncomment the line below them.
-    #if request.LANGUAGE_CODE == 'ka':
-    #    map_lang = ['osm.omcka']
-    #else:
-    #    map_lang = ['osm.omcen']
-
-    map_lang = ['osm.mapnik'] #Until Mapspot returns
-    olMap = Map([reportLayer],options={
-        'layers': map_lang,
-		'map_div_style':{'width': '400px', 'height': '400px'},
-        'map_options': {'controls': ['Navigation', 'PanZoom', 'Attribution'] },
-        'default_zoom': 1})
-
-    return render_to_response("reports/show.html",
-                { "report": report,
-                  "subscribers": subscribers,
-                  "ward":report.ward,
-                  "updates": ReportUpdate.objects.filter(report=report, is_confirmed=True).order_by("created_at")[1:], 
-                  "update_form": ReportUpdateForm(), 
-                  "google":  FixMyStreetMap((report.point)), 
-                  "olMap": olMap },
-                context_instance=RequestContext(request))
 
 def poster ( request, report_id ):
     # Build URL

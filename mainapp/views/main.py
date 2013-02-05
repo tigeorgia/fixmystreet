@@ -12,8 +12,6 @@ from mainapp.views.cities import home as city_home
 import logging
 import os
 import urllib
-from olwidget.widgets import Map, EditableLayer, InfoLayer
-
 
 def home(request, error_msg = None, disambiguate=None): 
     #if request.subdomain:
@@ -43,29 +41,6 @@ def search_address(request):
 
     address = request.GET["q"] 
     address_lookup = GoogleAddressLookup( address )
-    """
-    if address == '8':
-        lon = 44.922294596002
-        lat = 41.688166794582
-    elif address == '9':
-        lon = 44.745675450098
-        lat = 41.714791286274
-    elif address == '10':
-        lon = 44.821181771768
-        lat = 41.791573324918
-    elif address == '11':
-        lon = 44.749838791985
-        lat = 41.676073592951
-    elif address == '12':
-        lon = 44.777475720192
-        lat = 41.749283573879
-    elif address == '13':
-        lon = 44.80153927177
-        lat = 41.694033197126
-    else:
-        lon = 0 # In case someone puts in something else. -DD
-        lat = 0
-    """
     if not address_lookup.resolve():
         return home(request, _("Sorry, we couldn\'t retrieve the coordinates of that location, please use the Back button on your browser and try something more specific or include the city name at the end of your search."))
 
@@ -105,81 +80,6 @@ def search_address(request):
              "ward" : wards[0],
              "reports" : reports,},
              context_instance=RequestContext(request))
-
-    ward = wards[0]
-    wardBoundary = InfoLayer([[ward.geom,"Boundary"]],{
-                            'overlay_style': {
-                                'fillColor': '#FFFFFF',
-                                'fill_opacity': 0,
-                                'stroke_color': '#0000FF',
-                                'stroke_width': 2,}})
-
-    reportPoint = EditableLayer({ 'name': 'report-point',
-                            'overlay_style': {
-                                'externalGraphic': '/media/images/marker/default/marker.png',
-                                'pointRadius': '15',
-                                'graphicOpacity': '1'}})
-    reports = Report.objects.filter( ward = ward, is_confirmed = True ).distance(pnt).extra( select = { 'status' : """
-        CASE 
-        WHEN age( clock_timestamp(), created_at ) < interval '1 month' AND is_fixed = false THEN 'New Problems'
-        WHEN age( clock_timestamp(), created_at ) > interval '1 month' AND is_fixed = false THEN 'Older Unresolved Problems'
-        WHEN age( clock_timestamp(), fixed_at ) < interval '1 month' AND is_fixed = true THEN 'Recently Fixed'
-        WHEN age( clock_timestamp(), fixed_at ) > interval '1 month' AND is_fixed = true THEN 'Old Fixed'
-        ELSE 'Unknown Status'
-        END """,
-        'status_int' : """
-        CASE 
-        WHEN age( clock_timestamp(), created_at ) < interval '1 month' AND is_fixed = false THEN 0
-        WHEN age( clock_timestamp(), created_at ) > interval '1 month' AND is_fixed = false THEN 1
-        WHEN age( clock_timestamp(), fixed_at ) < interval '1 month' AND is_fixed = true THEN 2
-        WHEN age( clock_timestamp(), fixed_at ) > interval '1 month' AND is_fixed = true THEN 3
-        ELSE 4
-        END """ }, order_by = ['status_int','-created_at'] )
-    counter = 1
-    allLayers = [wardBoundary, reportPoint] 
-    for r in reports:
-        if r.is_fixed:
-            markerColor = 'green'
-        else:
-            markerColor = 'red'
-        if counter < 200:
-            strPnt = '/media/images/marker/%s/marker%d.png' %(markerColor, counter)
-        else:
-            strPnt = '/media/images/marker/%s/blank.png' %(markerColor)
-        options = {'overlay_style': {
-        'externalGraphic': strPnt, 
-        'pointRadius': '15',
-        'graphicOpacity': '1',}}
-        counter+=1
-        thisLayer = InfoLayer([(r.point,r.title)],options)
-        allLayers.append(thisLayer)	
-# If Mapspot goes down, comment out the next 4 lines, and uncomment the line below them.
-    #if request.LANGUAGE_CODE == 'ka':
-       # map_lang = ['osm.omcka']
-  #  else:
-     #   map_lang = ['osm.omcen']
-
-    map_lang = ['osm.mapnik'] #Until Mapspot returns
-    olMap = Map(vector_layers=allLayers,
-                options={'layers': map_lang,
-                         'map_div_style':{'width': '400px', 'height': '400px'},
-                         'map_options': {'controls': ['Navigation', 'PanZoom', 'Attribution'] },
-                         'zoom_to_data_extent':False, 
-                         'default_zoom':14, 
-                         'default_lat':pnt.y, 
-                         'default_lon':pnt.x,},
-                layer_names=[None,"report-point"],
-                template="multi_layer_map.html",
-                params={'point':pnt})   
-    return render_to_response("search_result.html",
-                {"lat": pnt.y,
-                 "lon": pnt.x,
-                 "olMap": olMap,
-                 "pnt": pnt,
-                 "enable_map": True,
-                 "ward" : wards[0],
-                 "reports" : reports, },
-                 context_instance=RequestContext(request))
 
 def about(request):
    return render_to_response("about.html",{'faq_entries' : FaqEntry.objects.all().order_by('order')},

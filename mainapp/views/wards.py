@@ -3,7 +3,6 @@ from mainapp.models import City, Ward, WardMap, Report, ReportCategory
 from django.template import Context, RequestContext
 from django.db import connection
 from django.utils.translation import ugettext_lazy, ugettext as _
-from olwidget.widgets import Map, InfoLayer
 
 # We will need to update this if we have more than one city.
 def show_by_number( request, city_id, ward_no ):
@@ -40,38 +39,9 @@ def show( request, ward_id ):
             END """ }, order_by = ['status_int','-created_at'] ) 
 
     google = WardMap(ward,reports)
-# Added for OpenLayers functionality -DD
-    wardBoundary = InfoLayer([[ward.geom,"Boundary"]],{
-            'overlay_style': {
-            'fillColor': '#FFFFFF',
-            'fillOpacity': 0,
-            'stroke_color': '#0000FF',
-            'stroke_width': 2,}})
-    counter = 1
-    allLayers = [wardBoundary] 	
-    for r in reports:
-        if r.is_fixed:
-            markerColor = 'green'
-        else:
-            markerColor = 'red'	
-        options = {'overlay_style': {
-            'externalGraphic': '/media/images/marker/%s/blank.png' %(markerColor),
-            'pointRadius': '15',
-            'graphicOpacity': '1',}}
-        counter+=1
-        thisLayer = InfoLayer([(r.point,r.title)],options)
-        allLayers.append(thisLayer)
-# If Mapspot goes down, comment out the next four lines and uncomment the line below them.
-    #if request.LANGUAGE_CODE == 'ka':
-    #    map_lang = ['osm.omcka']
-    #else:
-    #    map_lang = ['osm.omcen']
-    map_lang = ['osm.mapnik'] #Until Mapspot returns
-    olMap = Map(allLayers,options={'layers': map_lang,'map_div_style':{'width': '400px', 'height': '400px'},'map_options': {'controls': ['Navigation', 'PanZoom', 'Attribution'] },})
     return render_to_response("wards/show.html",
         {"ward": ward,
         "google": google,
-        #"olMap": olMap,
         "reports": reports,
         "status_display" : [ _('New Unresolved Problems'), _('Older Unresolved Problems'),  _('Recently Fixed'), _('Older Fixed Problems') ] 
         },
