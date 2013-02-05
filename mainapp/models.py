@@ -580,8 +580,8 @@ class GoogleAddressLookup(object):
     def get_match_options(self):
         addr_list = []
         addr_nodes = self.xpathContext.xpathEval("//google:address")
-        for i in range(0,len(addr_nodes)):
-            addr_list.append(addr_nodes[i].content) 
+        for n in addr_nodes:
+            addr_list.append(n.content.decode('utf-8')) 
         return ( addr_list )
     
 class SqlQuery(object):
