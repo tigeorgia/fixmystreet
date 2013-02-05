@@ -44,7 +44,7 @@ $('.radiohate').livequery('click', function(event) {
 
    });
 </script>
-{% if olMap %}{{ olMap.media }}{% endif %}
+{# if olMap %}{{ olMap.media }}{% endif #}
 {% endblock %}
 {% block content %}
 
@@ -126,8 +126,8 @@ margin-left:1.5em;
     </script>
 	</div>
 	<div id="rightcol">
-     <!--div id="{{ google.dom_id }}" style="width:400px;height:400px;"></div-->
-     {% if olMap %}{{ olMap }}{% endif %}
+     <div id="{{ google.dom_id }}" style="width:400px;height:400px;"></div>
+     {# if olMap %}{{ olMap }}{% endif #}
 	</div>
 </div>
 {% endblock %}

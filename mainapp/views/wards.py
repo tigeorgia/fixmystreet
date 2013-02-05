@@ -12,12 +12,12 @@ def show_by_number( request, city_id, ward_no ):
     google = WardMap(wards[0],[])
 
 # This should be updated to copy the functional code below. This doesn't work. -DD
-    olMap = Map([],options={'layers': ['osm.mapnik']})
+    #olMap = Map([],options={'layers': ['osm.mapnik']})
 
     return render_to_response("wards/show.html",
                 {"ward": wards[0],
-                 #"google": google,
-		 "olMap": olMap,
+                 "google": google,
+		 #"olMap": olMap,
                  "reports": [] },
                 context_instance=RequestContext(request))    
 def show( request, ward_id ):
@@ -39,7 +39,7 @@ def show( request, ward_id ):
             ELSE 4
             END """ }, order_by = ['status_int','-created_at'] ) 
 
-#google = WardMap(ward,reports)
+    google = WardMap(ward,reports)
 # Added for OpenLayers functionality -DD
     wardBoundary = InfoLayer([[ward.geom,"Boundary"]],{
             'overlay_style': {
@@ -70,8 +70,8 @@ def show( request, ward_id ):
     olMap = Map(allLayers,options={'layers': map_lang,'map_div_style':{'width': '400px', 'height': '400px'},'map_options': {'controls': ['Navigation', 'PanZoom', 'Attribution'] },})
     return render_to_response("wards/show.html",
         {"ward": ward,
-#"google": google,
-        "olMap": olMap,
+        "google": google,
+        #"olMap": olMap,
         "reports": reports,
         "status_display" : [ _('New Unresolved Problems'), _('Older Unresolved Problems'),  _('Recently Fixed'), _('Older Fixed Problems') ] 
         },

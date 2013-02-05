@@ -47,10 +47,20 @@ def new( request ):
         pnt = fromstr(point_str, srid=4326)
         report_form = ReportForm()
         update_form = ReportUpdateForm()
+    
+    return render_to_response("reports/new.html",
+            { "lat": pnt.y,
+              "lon": pnt.x,
+              "google": FixMyStreetMap(pnt, True),
+              "categories": ReportCategory.objects.all().order_by("category_class"),
+              "report_form": report_form,
+              "update_form": update_form,
+              "category_error": category_error, },
+            context_instance=RequestContext(request))
 
     wards = Ward.objects.filter(geom__contains=point_str)
     if (len(wards) == 0):
-        return( index(request, _("Sorry, we don't yet have that area in our database.  Please have your area councillor contact FixMyStreet.ge.")))
+        return( home(request, _("Sorry, we don't yet have that area in our database.  Please have your area councillor contact FixMyStreet.ge.")))
     
     ward = wards[0]
     wardBoundary = InfoLayer([[ward.geom,"Boundary"]],{
@@ -88,6 +98,14 @@ def new( request ):
 def show( request, report_id ):
     report = get_object_or_404(Report, id=report_id)
     subscribers = report.reportsubscriber_set.count() + 1
+    return render_to_response("reports/new.html",
+            { "report": report,
+              "subscribers": subscribers,
+              "ward": report.ward,
+              "updates": ReportUpdate.objects.filter(report=report, is_confirmed=True).order_by("created_ad")[1:],
+              "update_form": ReportUpdateForm(),
+              "google": FixMyStreetMap((report.point)) },
+            context_instance=RequestContext(request))
 # OpenLayers Support -DD
     reportLayer = InfoLayer([(report.point,report.title)],{
         'overlay_style': {

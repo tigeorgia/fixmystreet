@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block title %}{% trans "Reports for" %} {{ward.name}}, {{ward.city.name}}{% endblock %}
-{% block script %}{% if olMap %}{{ olMap.media }}{% endif %}{% endblock %}
+{% block script %}{# if olMap %}{{ olMap.media }}{% endif #}{% endblock %}
 {% block content %}
 	<div id="fullwidth">
 	<h3>{% trans "Reports for" %} {{ward.name}}, {{ward.city.name}} (Ward {{ward.number}})</h3>
@@ -27,7 +27,9 @@
              {% endif %}
  		</div>
 		<div id='rightcol'>
-	<h3></h3>{{ olMap }}
+	<h3></h3>
+        {#{{ olMap }}#}
+     <div id="{{ google.dom_id }}" style="width:400px;height:400px;"></div>
     	{% include "wards/_info_box.html" %}   	
 		</div>
 	</div>

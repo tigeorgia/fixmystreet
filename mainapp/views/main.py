@@ -42,8 +42,8 @@ def search_address(request):
         #return HttpResponseRedirect("/search?q=" + address )
 
     address = request.GET["q"] 
-    address_lookup = address 
-
+    address_lookup = GoogleAddressLookup( address )
+    """
     if address == '8':
         lon = 44.922294596002
         lat = 41.688166794582
@@ -65,35 +65,47 @@ def search_address(request):
     else:
         lon = 0 # In case someone puts in something else. -DD
         lat = 0
-
-    '''    if not address_lookup.resolve():
-        return index(request, _("Sorry, we couldn\'t retrieve the coordinates of that location, please use the Back button on your browser and try something more specific or include the city name at the end of your search."))
+    """
+    if not address_lookup.resolve():
+        return home(request, _("Sorry, we couldn\'t retrieve the coordinates of that location, please use the Back button on your browser and try something more specific or include the city name at the end of your search."))
 
     if not address_lookup.exists():
-        return index( request, _("Sorry, we couldn\'t find the address you entered.  Please try again with another intersection, address or postal code, or add the name of the city to the end of the search."))
+        return home( request, _("Sorry, we couldn\'t find the address you entered.  Please try again with another intersection, address or postal code, or add the name of the city to the end of the search."))
 
     if address_lookup.matches_multiple() and not request.GET.has_key("index"):
         addrs = address_lookup.get_match_options() 
-        addr_list = "" 
+        addr_list = u"" 
         for i in range(0,len(addrs)):
-            link = "/search?q=" + urlquote(address) + "&index=" + str(i)
-            addr_list += "<li><a href='%s'>%s</a></li>" % ( link, addrs[i] )
-            addr_list += "</ul>"
-        return index(request,disambiguate = addr_list )'''
+            link = u"/search?q=" + unicode(urlquote(address)) + u"&index=" + unicode(i)
+            addr_list += u"<li><a href='%s'>" % ( link)
+            addr_list += addrs[i]
+            addr_list += u"</a></li>"
+            addr_list += u"</ul>"
+        return home(request,disambiguate = addr_list )
 
     # otherwise, we have a specific match
     match_index = 0
     if request.GET.has_key("index"):
         match_index = int(request.GET["index"])
 
-    point_str = "POINT("+ str(lon) +" "+ str(lat) +")"
+    point_str = "POINT(" + address_lookup.lon(match_index) + " " + address_lookup.lat(match_index) + ")"
+    #point_str = "POINT("+ str(lon) +" "+ str(lat) +")"
     pnt = fromstr(point_str, srid=4326)    
     wards = Ward.objects.filter(geom__contains=point_str)
     if (len(wards) == 0):
-        return( index(request, _("Sorry, we don't yet have that area in our database.  Please have your area councillor contact fixmystreet.ca.")))
+        return( home(request, _("Sorry, we don't yet have that area in our database.  Please have your area councillor contact fixmystreet.ge.")))
 
-    #reports = Report.objects.filter(is_confirmed = True,point__distance_lte=(pnt,D(km=3))).distance(pnt).order_by('-created_at')
-#    gmap = FixMyStreetMap(pnt,True,reports)
+    reports = Report.objects.filter(is_confirmed = True,point__distance_lte=(pnt,D(km=1.5))).distance(pnt).order_by('-created_at')
+    gmap = FixMyStreetMap(pnt,True,reports)
+
+    return render_to_response("search_result.html",
+            {'google' : gmap,
+             "pnt": pnt,
+             "enable_map" : True,
+             "ward" : wards[0],
+             "reports" : reports,},
+             context_instance=RequestContext(request))
+
     ward = wards[0]
     wardBoundary = InfoLayer([[ward.geom,"Boundary"]],{
                             'overlay_style': {
