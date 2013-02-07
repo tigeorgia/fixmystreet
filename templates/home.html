@@ -8,6 +8,9 @@
 	.block { text-align: left; }
 </style>-->
 {% endblock %}
+{% block script %}
+<script type="text/javascript" src="/media/js/geokbd.js"></script>
+{% endblock %}
 {% block content %}
 
 <div id="page_content_container">
@@ -20,16 +23,22 @@
   <div id="front-page">
 	<div id="intro_text">
 	  <h5>{% trans "Dear users, due to some server-side problems, some reports from 20-27th october were lost. Please look up your problem and if it doesn't exist, recreate it. Sorry for the inconvenience." %}</h5>
-	  <h3>{% block search_instructions %}{% trans "Click on your district to report a problem and get it fixed!" %}{% endblock %}</h3>
+	  <h3>{% block search_instructions %}{% trans "Type in an address to report a problem and get it fixed!" %}{% endblock %}</h3>
 	  <p>{% trans "(like potholes, excessive garbage, or street lighting)" %}</p>
 	</div>
 			
-	<div id="start_box"><div><div><div>
+	<div id="start_box">
      <form name="lookup" action="/search/"   method="post">
       <b>{% trans "Enter a nearby postal code, or street name and city:" %}</b>
       <input type="text" name="q">
       <input type="submit" name="submit" value="{% trans "Go" %}">
+      <br />
+      <label for="geo_kbd">{% trans "Georgian keyboard" %}</label>
+      <input type="checkbox" name="geo" id="geo_kbd" checked="checked" />
      </form> 
+     <script type="text/javascript">
+      GeoKBD.map({"form":'lookup'});
+     </script>	
         <!--<table>
         <tr>
         <td><a href="search/?q=8">{% trans "Isani-Samgori"%}</a></td>
@@ -44,7 +53,7 @@
         <td><a href="search/?q=13">{% trans "Old Tbilisi"%}</a></td>
         </tr>
         </table>-->	
-	</div></div></div></div>
+	</div>
 
 
 	<div id="supported_cities">
@@ -62,7 +71,7 @@
 			<div class='block'>
 				<h4>{% trans "How to report a Problem" %}</h4>
 			   <ol>
-				   <li>{% trans "Choose your district" %}</li>
+				   <li>{% trans "Enter an address near to where the problem is" %}</li>
    				   <li>{% trans "Locate the problem on a map of the area by clicking EDIT" %}</li>
    				   <li>{% trans "Enter details of the problem" %}</li>
    				   <li>{% trans "We send it to the city on your behalf" %}</li>
