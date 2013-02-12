@@ -46,7 +46,7 @@ class CCEmailMessage(EmailMessage):
 class Province(models.Model):
     __metaclass__ = TransMeta
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, verbose_name=_("Name"))
     abbrev = models.CharField(max_length=3)
 
     def __unicode__(self):
@@ -60,7 +60,7 @@ class City(models.Model):
     __metaclass__ = TransMeta
 
     province = models.ForeignKey(Province)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, verbose_name=_("Name"))
     # the city's 311 email, if it has one.
     email = models.EmailField(blank=True, null=True)    
 
@@ -79,8 +79,8 @@ class City(models.Model):
 class Councillor(models.Model):
     __metaclass__ = TransMeta
 
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100, verbose_name=_("First name"))
+    last_name = models.CharField(max_length=100, verbose_name=_("Last name"))
     
     # this email addr. is used to send reports to if there is no 311 email for the city.
     email = models.EmailField(blank=True, null=True)
@@ -97,7 +97,7 @@ class Councillor(models.Model):
 class Ward(models.Model):
     __metaclass__ = TransMeta
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, verbose_name=_("Name"))
     number = models.IntegerField()
     councillor = models.ForeignKey(Councillor)
     city = models.ForeignKey(City)
@@ -136,7 +136,7 @@ class Ward(models.Model):
 class ReportCategoryClass(models.Model):
     __metaclass__ = TransMeta
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, verbose_name=_("Title"))
 
     def __unicode__(self):      
         return self.name
@@ -148,8 +148,8 @@ class ReportCategoryClass(models.Model):
 class ReportCategory(models.Model):
     __metaclass__ = TransMeta
 
-    name = models.CharField(max_length=100)
-    hint = models.TextField(blank=True, null=True)
+    name = models.CharField(max_length=100, verbose_name=_("Title"))
+    hint = models.TextField(blank=True, null=True, verbose_name=_("Hint"))
     category_class = models.ForeignKey(ReportCategoryClass)
 
     def __unicode__(self):
