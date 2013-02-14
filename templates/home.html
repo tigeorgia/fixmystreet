@@ -30,9 +30,10 @@
 	<div id="start_box">
      <form name="lookup" action="/search/"   method="post">
       <b>{% trans "Enter a nearby postal code, or street name and city:" %}</b>
+      <br>
       <input type="text" name="q">
       <input type="submit" name="submit" value="{% trans "Go" %}">
-      <br />
+      <br>
       <label for="geo_kbd">{% trans "Georgian keyboard" %}</label>
       <input type="checkbox" name="geo" id="geo_kbd" checked="checked" />
      </form> 
