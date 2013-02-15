@@ -16,6 +16,7 @@ from django.utils.translation import ugettext_lazy, ugettext as _
 from contrib.transmeta import TransMeta
 from contrib.stdimage import StdImageField
 import libxml2
+import json
 from django.utils.encoding import iri_to_uri
 from south.modelsinspector import add_introspection_rules
 
@@ -439,7 +440,7 @@ class ReportMarker(GMarker):
         img = "/media/images/marker/%s/marker%s.png" %( color, icon_number )
         name = 'letteredIcon%s' %( icon_number )      
         gIcon = GIcon(name,image=img,iconsize=(20,34))
-        GMarker.__init__(self,geom=(report.point.x,report.point.y), title=report.title, icon=gIcon)
+        GMarker.__init__(self,geom=(report.point.x,report.point.y), title=json.dumps(report.title,ensure_ascii=False)[1:-1], icon=gIcon)
 
     def __unicode__(self):
         "The string representation is the JavaScript API call."
