@@ -8,7 +8,6 @@
 	<div id="leftcol">
 	<h3>{% trans "Problems near" %} {{ward.name}}, {{ward.city.name}}</h3>
 
-		<p>{% trans "Drag the marker to the correct location on the map." %}</p>
 		<ol>
 	{% if reports %}
 		{% for report in reports %}
@@ -27,6 +26,7 @@
 
 	<div id="rightcol">	
     <!--<textarea id="pnt" name="point">SRID=4326;{{pnt}}</textarea>-->
+		<p>{% trans "Click on the marker and drag it to the correct location on the map." %}</p>
      <div id="{{ google.dom_id }}" style="width:400px;height:400px;"></div>
     {#% if olMap %}{{ olMap }}{% endif #}
     </div>  

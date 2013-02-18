@@ -455,7 +455,10 @@ class FixMyStreetMap(GoogleMap):
     def __init__(self,pnt,draggable=False,nearby_reports = [] ):  
 #        self.icons = []
         markers = []
-        marker = GMarker(geom=(pnt.x,pnt.y), draggable=draggable)
+        gIcon = GIcon("dragme",
+                      image="/media/images/marker/default/blank_teal.png", 
+                      iconsize=(20,34))
+        marker = GMarker(geom=(pnt.x,pnt.y), draggable=draggable, icon=gIcon)
         if draggable:
             event = GEvent('dragend',
                            'function() { window.location.href = "/reports/new?" +"&lat="+geodjango.map_canvas_marker1.getPoint().lat().toString()+"&lon="+geodjango.map_canvas_marker1.getPoint().lng().toString(); }')        

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ChemiKucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-14 12:00+0400\n"
-"PO-Revision-Date: 2013-02-14 12:07+0400\n"
+"POT-Creation-Date: 2013-02-18 15:29+0400\n"
+"PO-Revision-Date: 2013-02-18 15:43+0400\n"
 "Last-Translator: Derek <derek@transparency.ge>\n"
 "Language-Team: TI Georgia <fixmystreet@transparency.ge>\n"
 "Language: \n"
@@ -19,17 +19,17 @@ msgstr ""
 "X-Poedit-Country: Georgia\n"
 
 #: mainapp/forms.py:11
-#: mainapp/models.py:49
-#: mainapp/models.py:63
-#: mainapp/models.py:100
-#: mainapp/models.py:246
-#: mainapp/models.py:298
-#: mainapp/models.py:418
+#: mainapp/models.py:50
+#: mainapp/models.py:64
+#: mainapp/models.py:101
+#: mainapp/models.py:247
+#: mainapp/models.py:299
+#: mainapp/models.py:419
 msgid "Name"
 msgstr "სახელი*"
 
 #: mainapp/forms.py:14
-#: mainapp/models.py:297
+#: mainapp/models.py:298
 msgid "Email"
 msgstr "ელ.ფოსტა*"
 
@@ -37,46 +37,46 @@ msgstr "ელ.ფოსტა*"
 msgid "Message"
 msgstr "შეტყობინება"
 
-#: mainapp/models.py:82
+#: mainapp/models.py:83
 msgid "First name"
 msgstr "სახელი"
 
-#: mainapp/models.py:83
+#: mainapp/models.py:84
 msgid "Last name"
 msgstr "გვარი"
 
-#: mainapp/models.py:139
-#: mainapp/models.py:151
+#: mainapp/models.py:140
+#: mainapp/models.py:152
 msgid "Title"
 msgstr "სათაური"
 
-#: mainapp/models.py:152
+#: mainapp/models.py:153
 msgid "Hint"
 msgstr "მინიშნება"
 
-#: mainapp/models.py:221
+#: mainapp/models.py:222
 msgid "Subject"
 msgstr "თემა"
 
-#: mainapp/models.py:225
+#: mainapp/models.py:226
 msgid "Street address"
 msgstr "ქუჩის მისამართი"
 
-#: mainapp/models.py:244
-#: mainapp/models.py:301
+#: mainapp/models.py:245
+#: mainapp/models.py:302
 msgid "* Photo"
 msgstr "ფოტო"
 
-#: mainapp/models.py:245
-#: mainapp/models.py:291
+#: mainapp/models.py:246
+#: mainapp/models.py:292
 msgid "Details"
 msgstr "დეტალები"
 
-#: mainapp/models.py:299
+#: mainapp/models.py:300
 msgid "Phone"
 msgstr "ტელეფონი*"
 
-#: mainapp/models.py:417
+#: mainapp/models.py:418
 msgid "Domain"
 msgstr "დომეინი"
 
@@ -313,21 +313,21 @@ msgstr "ბოლო განახლებები"
 msgid "Problems near"
 msgstr "ახლომდებარე პრობლემები"
 
-#: templates/search_result.html:11
-msgid "Drag the marker to the correct location on the map."
-msgstr "მიიყვანეთ მარკერი რუკაზე გამოსახულ სასურველ ადგილთან"
-
-#: templates/search_result.html:16
+#: templates/search_result.html:15
 msgid "fixed"
 msgstr "შეკეთებული"
 
-#: templates/search_result.html:20
+#: templates/search_result.html:19
 msgid "Zoom out to see more reports nearby."
 msgstr "გთხოვთ დააშოროთ, რათა იხილოთ უფრო მეტი ახლომდებარე შეტყობინება"
 
-#: templates/search_result.html:22
+#: templates/search_result.html:21
 msgid "No problems have been reported yet."
 msgstr "არცერთი პრობლემა არ ყოფილა განთავსებული ჯერჯერობით"
+
+#: templates/search_result.html:29
+msgid "Click on the marker and drag it to the correct location on the map."
+msgstr "დააკლიკეთ ცისფერ მარკერს და დასვით იგი რუკაზე სასურველ ადგილას."
 
 #: templates/ajax/category_description.html:2
 #: templates/reports/new.html:106

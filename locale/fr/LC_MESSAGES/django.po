@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-14 12:00+0400\n"
+"POT-Creation-Date: 2013-02-18 15:29+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,13 +17,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: mainapp/forms.py:11 mainapp/models.py:49 mainapp/models.py:63
-#: mainapp/models.py:100 mainapp/models.py:246 mainapp/models.py:298
-#: mainapp/models.py:418
+#: mainapp/forms.py:11 mainapp/models.py:50 mainapp/models.py:64
+#: mainapp/models.py:101 mainapp/models.py:247 mainapp/models.py:299
+#: mainapp/models.py:419
 msgid "Name"
 msgstr "Nom"
 
-#: mainapp/forms.py:14 mainapp/models.py:297
+#: mainapp/forms.py:14 mainapp/models.py:298
 msgid "Email"
 msgstr "Courriel"
 
@@ -31,43 +31,43 @@ msgstr "Courriel"
 msgid "Message"
 msgstr "Message"
 
-#: mainapp/models.py:82
+#: mainapp/models.py:83
 msgid "First name"
 msgstr ""
 
-#: mainapp/models.py:83
+#: mainapp/models.py:84
 msgid "Last name"
 msgstr ""
 
-#: mainapp/models.py:139 mainapp/models.py:151
+#: mainapp/models.py:140 mainapp/models.py:152
 msgid "Title"
 msgstr ""
 
-#: mainapp/models.py:152
+#: mainapp/models.py:153
 msgid "Hint"
 msgstr ""
 
-#: mainapp/models.py:221
+#: mainapp/models.py:222
 msgid "Subject"
 msgstr "Sujet"
 
-#: mainapp/models.py:225
+#: mainapp/models.py:226
 msgid "Street address"
 msgstr ""
 
-#: mainapp/models.py:244 mainapp/models.py:301
+#: mainapp/models.py:245 mainapp/models.py:302
 msgid "* Photo"
 msgstr "* Photo"
 
-#: mainapp/models.py:245 mainapp/models.py:291
+#: mainapp/models.py:246 mainapp/models.py:292
 msgid "Details"
 msgstr "Détails"
 
-#: mainapp/models.py:299
+#: mainapp/models.py:300
 msgid "Phone"
 msgstr "Téléphone"
 
-#: mainapp/models.py:417
+#: mainapp/models.py:418
 msgid "Domain"
 msgstr ""
 
@@ -338,24 +338,24 @@ msgstr "Derniers Rapports"
 msgid "Problems near"
 msgstr "Problèmes proche de"
 
-#: templates/search_result.html:11
-#, fuzzy
-msgid "Drag the marker to the correct location on the map."
-msgstr ""
-"Pour signaler un problème, il suffit de faire glisser le marqueur à "
-"l'emplacement sur la carte."
-
-#: templates/search_result.html:16
+#: templates/search_result.html:15
 msgid "fixed"
 msgstr "r�solu"
 
-#: templates/search_result.html:20
+#: templates/search_result.html:19
 msgid "Zoom out to see more reports nearby."
 msgstr "Zoom en arrière pour voir d'autres rapports en proximité."
 
-#: templates/search_result.html:22
+#: templates/search_result.html:21
 msgid "No problems have been reported yet."
 msgstr "Aucun problème n'a été signalé pour le moment."
+
+#: templates/search_result.html:29
+#, fuzzy
+msgid "Click on the marker and drag it to the correct location on the map."
+msgstr ""
+"Pour signaler un problème, il suffit de faire glisser le marqueur à "
+"l'emplacement sur la carte."
 
 #: templates/ajax/category_description.html:2 templates/reports/new.html:106
 msgid "Please Note"
