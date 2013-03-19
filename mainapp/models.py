@@ -573,10 +573,10 @@ class GoogleAddressLookup(object):
         return len(self.query_results) > 1 
         
     def lat(self, index ):
-        return self.query_results[index][1]
+        return str(self.query_results[index][1])
         
     def lon(self, index ):
-        return self.query_results[index][0]
+        return str(self.query_results[index][0])
                         
     def get_match_options(self):
         addr_list = []
