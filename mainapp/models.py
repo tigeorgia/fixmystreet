@@ -552,15 +552,16 @@ class GoogleAddressLookup(object):
         self.query_results = []
         self.match_coords = []
         self.xpathContext = None
-        self.url = iri_to_uri(u'http://maps.googleapis.com/maps/geo?q=%s&key=%s&sensor=false&output=xml' % (address, settings.GMAP_KEY) )
+        self.url = iri_to_uri(u'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false&region=ge' % (address) )
     
     def resolve(self):
         try:
             resp = urllib.urlopen(self.url).read()
-            doc = libxml2.parseDoc(resp)
-            self.xpathContext = doc.xpathNewContext()
-            self.xpathContext.xpathRegisterNs('google', 'http://earth.google.com/kml/2.0')
-            self.query_results = self.xpathContext.xpathEval("//google:coordinates")
+            doc = json.loads(resp)
+            self.query_results = []
+            for r in doc["results"]:
+                loc = r["geometry"]["location"]
+                self.query_results.append((loc["lng"],loc["lat"]))
             return( True )
         except:
             return( False )
@@ -572,14 +573,10 @@ class GoogleAddressLookup(object):
         return len(self.query_results) > 1 
         
     def lat(self, index ):
-        coord = self.query_results[index] 
-        coord_pair = coord.content.split(',')
-        return( coord_pair[1] ) 
+        return self.query_results[index][1]
         
     def lon(self, index ):
-        coord = self.query_results[index] 
-        coord_pair = coord.content.split(',')
-        return( coord_pair[0] ) 
+        return self.query_results[index][0]
                         
     def get_match_options(self):
         addr_list = []
