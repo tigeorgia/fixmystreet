@@ -552,7 +552,7 @@ class GoogleAddressLookup(object):
         self.query_results = []
         self.match_coords = []
         self.xpathContext = None
-        self.url = iri_to_uri(u'http://maps.google.ca/maps/geo?q=%s&output=xml&key=%s&oe=utf-8' % (address, settings.GMAP_KEY) )
+        self.url = iri_to_uri(u'http://maps.googleapis.com/maps/geo?q=%s&key=%s&sensor=false&output=xml' % (address, settings.GMAP_KEY) )
     
     def resolve(self):
         try:
