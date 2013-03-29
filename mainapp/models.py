@@ -580,8 +580,6 @@ class GoogleAddressLookup(object):
                         
     def get_match_options(self):
         addr_list = [r["formatted_address"] for r in self.json_context["results"]]
-        #for n in addr_nodes:
-        #    addr_list.append(n.content.decode('utf-8')) 
         return ( addr_list )
     
 class SqlQuery(object):
