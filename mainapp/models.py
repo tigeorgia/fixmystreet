@@ -437,7 +437,8 @@ class ReportMarker(GMarker):
         else:
             color = 'red'
         icon_number = icon_number
-        img = "/media/images/marker/%s/marker%s.png" %( color, icon_number )
+        #img = "/media/images/marker/%s/marker%s.png" %( color, icon_number )
+        img = "/media/images/marker/%s/blank.png" %( color)
         name = 'letteredIcon%s' %( icon_number )      
         gIcon = GIcon(name,image=img,iconsize=(20,34))
         GMarker.__init__(self,geom=(report.point.x,report.point.y), title=json.dumps(report.title,ensure_ascii=False)[1:-1], icon=gIcon)
