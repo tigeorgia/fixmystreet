@@ -551,15 +551,15 @@ class GoogleAddressLookup(object):
     def __init__(self,address ):
         self.query_results = []
         self.match_coords = []
-        self.xpathContext = None
+        self.json_context = None
         self.url = iri_to_uri(u'http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false&region=ge' % (address) )
     
     def resolve(self):
         try:
             resp = urllib.urlopen(self.url).read()
-            doc = json.loads(resp)
+            self.json_context = json.loads(resp)
             self.query_results = []
-            for r in doc["results"]:
+            for r in self.json_context["results"]:
                 loc = r["geometry"]["location"]
                 self.query_results.append((loc["lng"],loc["lat"]))
             return( True )
@@ -579,10 +579,9 @@ class GoogleAddressLookup(object):
         return str(self.query_results[index][0])
                         
     def get_match_options(self):
-        addr_list = []
-        addr_nodes = self.xpathContext.xpathEval("//google:address")
-        for n in addr_nodes:
-            addr_list.append(n.content.decode('utf-8')) 
+        addr_list = [r["formatted_address"] for r in self.json_context["results"]]
+        #for n in addr_nodes:
+        #    addr_list.append(n.content.decode('utf-8')) 
         return ( addr_list )
     
 class SqlQuery(object):
