@@ -4,7 +4,7 @@ from contrib.transmeta import canonical_fieldname
 
 admin.site.register(EmailRule)
 admin.site.register(City)
-#admin.site.register(Province)
+admin.site.register(Province)
 
 class ReportCategoryClassAdmin(admin.ModelAdmin):
     list_display = ('name',)
