@@ -1,121 +1,181 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load random_image %}
+{% load static from staticfiles %}
+{% load static_tags %}
+{% load reports_tags %}
 {% block css %}
-<!--<style type="text/css" media="screen">
-	#supported_cities { font-size: 80%; }
-	#front-page  { text-align: center; min-height:500px; width: 100%; }
-	#status  { text-align: center; min-height:450px; width: 100%; }
-	.block { text-align: left; }
-</style>-->
+    <!--<style type="text/css" media="screen">
+        #supported_cities { font-size: 80%; }
+        #front-page  { text-align: center; min-height:500px; width: 100%; }
+        #status  { text-align: center; min-height:450px; width: 100%; }
+        .block { text-align: left; }
+    </style>-->
 {% endblock %}
 {% block script %}
-<script type="text/javascript" src="/media/js/geokbd.js"></script>
 {% endblock %}
+{% block title %}{% trans "Home" %}{% endblock %}
 {% block content %}
+    <div class="row home-map">
+        <div class="container">
+            <div class="col-11">
+                <div class="choose-city home-left hidden-lg">
+                    <label id="home-step-1">{% trans "Step 1. Click on your city to report a problem" %}</label>
+                    <ul class="cities-home">
+                        <li class="button btn-default cities" data-city="Tbilisi">{% trans "Tbilisi" %}</li>
+                        <li class="button btn-default cities" data-city="Batumi">{% trans "Batumi" %}</li>
+                        <li class="button btn-default cities" data-city="Kutaisi">{% trans "Kutaisi" %}</li>
+                        <li class="button btn-default cities" data-city="Zugdidi">{% trans "Zugdidi" %}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-<div id="page_content_container">
-	{% if disambiguate %}
-		<div id='error-msg'>
-			<p>{% trans "That address returned more than one result.  Please try again, or select an option below:"%}</p>
-			{{disambiguate|safe}}
-		</div>
-	{% endif %}
-  <div id="front-page">
-	<div id="intro_text">
-	  <h5>{% trans "Dear users, due to some server-side problems, some reports from 20-27th october were lost. Please look up your problem and if it doesn't exist, recreate it. Sorry for the inconvenience." %}</h5>
-	  <h3>{% block search_instructions %}{% trans "Type in an address to report a problem and get it fixed!" %}{% endblock %}</h3>
-	  <p>{% trans "(like potholes, excessive garbage, or street lighting)" %}</p>
-	</div>
-			
-	<div id="start_box">
-     <form name="lookup" action="/search/"   method="post">
-      <b>{% trans "Enter a street name and city:" %}</b>
-      <br>
-      <input type="text" name="q">
-      <input type="submit" name="submit" value="{% trans "Go" %}">
-      <br>
-      <label for="geo_kbd">{% trans "Georgian keyboard" %}</label>
-      <input type="checkbox" name="geo" id="geo_kbd" checked="checked" />
-     </form> 
-     <script type="text/javascript">
-      GeoKBD.map({"form":'lookup'});
-     </script>	
-        <!--<table>
-        <tr>
-        <td><a href="search/?q=8">{% trans "Isani-Samgori"%}</a></td>
-        <td><a href="search/?q=11 ">{% trans "Didgori"%}</a></td>
-        </tr>
-        <tr>
-        <td><a href="search/?q=9">{% trans "Vake-Saburtalo"%}</a></td>
-        <td><a href="search/?q=12">{% trans "Didube-Chugureti"%}</a></td>
-        </tr>
-        <tr>
-        <td><a href="search/?q=10">{% trans "Gldani-Nadzaladevi"%}</a></td>
-        <td><a href="search/?q=13">{% trans "Old Tbilisi"%}</a></td>
-        </tr>
-        </table>-->	
-	</div>
+        <div id="deskt-city" class="col-12 col-lg-8 left-home">
+            <div class="visible-lg" id="left-image"
+                 style="background:url( {{ STATIC_URL }}{% random_image %}) no-repeat; height: 460px;"></div>
+
+            <div class="choose-city home-left visible-lg">
+                <div id="page-title-home" class="page-header-title "
+                     style="background:url({% static 'images/main/about-problem-'|add:LANGUAGE_CODE|add:'.png' %}) no-repeat"
+                        ></div>
+                <label>{% trans "Search your city to report a problem" %}</label>
+                <ul class="cities-home">
+                    <li id="home-search" class="btn btn-default btn-fixed">Search</li>
+                    <li class="cities btn btn-white" data-city="Tbilisi">{% trans "Tbilisi" %}</li>
+                    <li class="cities btn btn-white" data-city="Batumi">{% trans "Batumi" %}</li>
+                    <li class="cities btn btn-white" data-city="Kutaisi">{% trans "Kutaisi" %}</li>
+                    <li class="cities btn btn-white" data-city="Zugdidi">{% trans "Zugdidi" %}</li>
+                </ul>
+            </div>
+
+        </div>
+        <div id="map-home" class="col-sm-12 col-lg-4 right-home">
+            <div id="right-overlay" class="visible-lg col-6 col-lg-12"></div>
+            <div id="{{ google.dom_id }}" class="map-height"></div>
+        </div>
+
+        <div class="col-lg-4 col-sm-12 col-md-12" id="preform">
+
+            <div class="address-search-form-wrapper start-hidden hidden-lg">
+                <form action="#" method="POST" class="address-search-form" name="address-search"
+                      onsubmit="return false;">
+                    <fieldset>
+                        <input name="address_search" class="form-control" placeholder="Address"
+                               id="address_search-mobile">
+                        <input class="geocode-city" class="form-control" type="hidden" name="geocode-city" value="">
+                        <button type="submit" class="search-street btn btn-default" style="width:100%">
+                            {% trans "Search Street" %}</button>
+                    </fieldset>
+                </form>
+                <button class="add-marker btn btn-default btn-fixed" id="add-marker-mobile" onclick="addMarker()">
+                    {% trans "Add marker" %}</button>
+            </div>
+
+            <p class="start-hidden">
+                {% trans "Enter your address on the map, press search and drag marker to desired location. Then fill out this form and press continue" %}</p>
+
+            <form class="start-hidden" name="new-report" id="new-report"
+                  action="{% url 'mainapp.views.reports.main.new' %}" method="post">
+                <fieldset>
+                    <div class="checkbox">
+                        <label id="geokbd">
+                            {% trans "Georgian keyboard" %}
+                            <input type="checkbox" name="geo_kbd_report" id="geo_kbd_report"
+                                   checked="checked"/>
+                        </label>
+                    </div>
+
+                    {{ pre_form.title }}
+                    {{ pre_form.street }}
+                    {{ pre_form.author }}
+                    {{ pre_form.email }}
+                    {{ pre_form.phone }}
+                    <input type="hidden" name="step" id="id_step" value="1">
+                    <input type="hidden" name="city" id="id-city" value="">
+                    {{ pre_form.desc.as_hidden }}
+                    {{ pre_form.lon }}
+                    {{ pre_form.lat }}
 
 
-	<div id="supported_cities">
-		<div>
-		{% trans "Supported Cities" %}:
-		{% for city in cities %}
-			<b>{{ city.name }},</b>	
-		{% endfor %}
-			<a href="/about/add_city">{% trans "Add Your City" %}</a><br/>
-		</div>
-	</div>
+                    <button id="home-report" class="btn btn-default pull-right" type="submit"
+                            >{% trans "Submit" %}</button>
+                </fieldset>
+            </form>
+            <script type="text/javascript">
+                GeoKBD.map({
+                    "form": 'new-report',
+                    "switcher": 'geo_kbd_report',
+                    'excludeFields': ['email', 'address_search']
+                });
+            </script>
 
-	<div id="status" >
-		<div id=col1>
-			<div class='block'>
-				<h4>{% trans "How to report a Problem" %}</h4>
-			   <ol>
-				   <li>{% trans "Enter an address near to where the problem is" %}</li>
-   				   <li>{% trans "Locate the problem on a map of the area" %}</li>
-   				   <li>{% trans "Enter details of the problem" %}</li>
-   				   <li>{% trans "We send it to the city on your behalf" %}</li>
-				</ol>
-			</div>
-			<div class='block'>
-				<h4>{% block stats_title %}{% endblock %}{% trans "Stats" %}</h4>
-				<div id='stat-group'>
-					<div class='stat'><div class='top-right'><div class='bottom-left'><div class='bottom-right'><div class='content'>
-						<span>{{report_counts.recent_new}}</span><br/>{% trans "Reports Filed in the past year" %}
-					</div></div></div></div></div>
-					<div class='stat'><div class='top-right'><div class='bottom-left'><div class='bottom-right'><div class='content'>
-						<span>{{report_counts.recent_fixed}}</span><br/>{% trans "Reports Fixed" %}*
-					</div></div></div></div></div>
-					<div class='stat'><div class='top-right'><div class='bottom-left'><div class='bottom-right'><div class='content'>
-						<span>{{report_counts.recent_updated}}</span><br/>{% trans "Reports Updated" %}
-					</div></div></div></div></div>
-				</div>
-				<div class="fix-disclaimer">
-                <p>*{% trans "As reported by FixMyStreet.ge users." %}</p></div>
-			</div>
-		</div>
-		<div id=col2>
-		<div class='block'>
-			<h4>{% trans "Recent Photos" %}</h4>
-			<ul class='recent_photos'>
-			{% for report in reports_with_photos %}
-				<li><a href='/reports/{{report.id}}'><img src='{{report.photo.thumbnail.url }}' height=100 ></a></li>
-			{% endfor %}
-			</ul>
-		</div>
-		<br/>
-		<div class='block'>
-			<h4>{% trans "Recent Updates" %}</h4>
-			<ul>
-			{% for report in recent_reports %}
-				<li><a href='{{report.get_absolute_url}}'>{{report.title}}</a></li>
-			{% endfor %}
-			</ul>
-		</div>
 
-		</div>
-		</div>
-	</div>
-</div>
+            <div id="tig-overlay-logo" class="pull-right hidden-sm">
+                <img src="{% static 'images/main/tig-logo-'|add:LANGUAGE_CODE|add:'.png' %}"/>
+            </div>
+        </div>
+        <div class="address-search-form-wrapper start-hidden visible-lg">
+            <form action="#" method="POST" class="address-search-form" name="address-search" onsubmit="return false;">
+                <fieldset>
+                    <input name="address_search" class="form-control" placeholder="Address" id="address_search">
+                    <input class="geocode-city" class="form-control" type="hidden" name="geocode-city" value="">
+                    <button type="submit" id="search-street"></button>
+                </fieldset>
+            </form>
+            <button class="add-marker" onclick="addMarker()"></button>
+        </div>
+    </div>
+
+
+
+
+
+
+    <img id="box-transpar-logo" src="{% static 'images/main/tig-logo-'|add:LANGUAGE_CODE|add:'.png' %}"
+            />
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-8 col-lg-8">
+                <h4>{% trans "How to report a Problem" %}</h4>
+                <ol>
+                    <li>{% trans "Click on your city" %}</li>
+                    <li>{% trans "Type in your address" %}</li>
+                    <li>{% trans "Click on a marker button and drag it to desired location" %}</li>
+                    <li>{% trans "Fill in the details in the form" %}</li>
+                    <li>{% trans "We send it to the city on your behalf" %}</li>
+                </ol>
+                <div class="row">
+                    <div class="col-sm-4 col-lg-4 home-box">
+                        <div class="home-round">
+                            <div class="home-round-inner">
+                                <a href="{% url 'mainapp.views.reports.main.report_list' %}?created_after={{ last_year }}&is_fixed=2">
+                                    {{ report_counts.recent_fixed }}<br>
+                                    {% trans "Reports Fixed" %}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-lg-4 home-box">
+                        <div class="home-round">
+                            <div class="home-round-inner">
+                                <div class="home-count">
+                                    <a href="{% url 'mainapp.views.reports.main.report_list' %}?created_after={{ last_year }}">
+                                        {{ report_counts.recent_new }}<br>
+                                        {% trans "Reports Filed in the past year" %}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-4">
+                {% _about_us_sidebar %}
+                {% latest_reports 10 %}
+            </div>
+        </div>
+    </div>
+    <div class="fix-disclaimer"><p>*{% trans "As reported by FixMyStreet.ge users." %}</p></div>
 {% endblock %}
