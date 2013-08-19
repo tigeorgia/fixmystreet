@@ -1,51 +1,68 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load static %}
+{% block title %}{% trans "Contact" %}{% endblock %}
 
 {% block content %}
+    <div id="contact-page">
+        <div id="contact-content">
+            <div class="container">
+                <div class="row" id="content-main">
+                    <div class="col-12 col-sm-8 col-lg-6">
+                        <h2>{% trans "Contact Us" %}</h2>
 
-<div id="page_content_container">
-<h2>{% trans "Contact Us" %}</h2>
-{% blocktrans %}
-<p>
-	Please <strong>DO NOT</strong> report problems through this form.
-	Messages go to the team behind FixMyStreet.ge, not to city councillors.
-</p>
-<p>
-	To report a problem, please follow the instructions <a href="/">here</a>.
-</p>
-<p><a href="http://transparency.ge/en">Transparency International Georgia</a><br />
-26, Rustaveli Avenue<br />
-0108 Tbilisi,<br />
-Georgia<br />
-Email: <a href="mailto:fixmystreet@transparency.ge">fixmystreet@transparency.ge</a><br />
-Follow TI Georgia on <a href="https://www.facebook.com/TransparencyInternationalGeorgia">Facebook</a>
-and <a href="https://twitter.com/#!/TIGeorgiaEng">Twitter</a></p>
-<p>We'd love to get your feedback on this site:</p> 
-{% endblocktrans %}
-<form name="contact-form" action="/contact" method="POST">
-<table class="form">
-<tr>
-    <th><label>{% trans "Georgian keyboard" %}</label></th>
-    <td>
-        <input type="checkbox" name="geo" checked="checked"/>
-   
-    </td>
-</tr>
-{{contact_form}}
-<tr>
-	<td></td>
-	<td>
-		<input type="submit" name="Submit" value="{% trans "Send" %}">
-	</td>
-</tr>
-</table>
-</form>
-<script type="text/javascript">
-//var language = {{lang.0}}
-    //if( language == 'ka'){
-        GeoKBD.map('contact-form');
-        GeoKBD.setGlobalHandler(true,"geo");//}
-</script>
-</div>
-
+                        {% blocktrans %}
+                            <p>
+                                Please <strong>DO NOT</strong> report problems through this form.
+                                Messages go to the team behind FixMyStreet.ge, not to city councillors.
+                            </p>
+                            <p>
+                                To report a problem, please follow the instructions
+                                <a class="link-blue" href="/">here</a>.
+                            </p>
+                            <p id="contact-info"><a href="http://transparency.ge/en">Transparency International
+                                Georgia</a><br/>
+                                26, Rustaveli Avenue<br/>
+                                0108 Tbilisi,<br/>
+                                Georgia<br/>
+                                Email: <a
+                                        href="mailto:fixmystreet@transparency.ge">fixmystreet@transparency.ge</a><br/>
+                                Follow TI Georgia on <a
+                                        href="https://www.facebook.com/TransparencyInternationalGeorgia">Facebook</a>
+                                and <a href="https://twitter.com/#!/TIGeorgiaEng">Twitter</a></p>
+                        {% endblocktrans %}
+                    </div>
+                    <div class="col-12 col-sm-4 col-lg-6">
+                        <form id="contact-form" name="contact-form" action="{% url 'mainapp.views.contact.new' %}"
+                              method="POST">
+                            <div class="checkbox">
+                                <label id="geokbd">
+                                    {% trans "Georgian keyboard" %}
+                                    <input type="checkbox" name="geo_kbd_contact" id="geo_kbd_report"
+                                           checked="checked"/>
+                                </label>
+                            </div>
+                            {{ contact_form }}
+                            <button class="btn btn-default btn-fixed" type="submit" name="Submit"
+                                    style="float:right;">{% trans "Send" %}</button>
+                        </form>
+                        <script type="text/javascript">
+                            GeoKBD.map({
+                                "form": 'contact-form',
+                                "switcher": 'geo_kbd_contact',
+                                'excludeFields': ['email']
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12" id="contact-bottom">
+                        <div id="tig-logo-contact" class="pull-left">
+                            <img src="{% static 'images/main/tig-logo-'|add:LANGUAGE_CODE|add:'.png' %}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
