@@ -1,5 +1,5 @@
-from django.contrib.syndication.feeds import Feed
-from django.contrib.syndication.feeds import FeedDoesNotExist
+from django.contrib.syndication.views import Feed
+from django.contrib.syndication.views import FeedDoesNotExist
 from django.core.exceptions import ObjectDoesNotExist
 from mainapp.models import Report, ReportUpdate, City, Ward
 
