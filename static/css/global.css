@@ -1,0 +1,132 @@
+/*--------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------*/
+/*** CSS RESET ***/
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td
+	{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	/*font-weight: inherit;
+	font-style: inherit;	
+	font-family: inherit; */
+	vertical-align: baseline;
+}
+
+@font-face {
+	font-family: "BPG Ingiri Arial";
+	src: url(/static/fonts/bpg_ingiri_arial.ttf);
+}
+
+@font-face {
+	font-family: 'Trump Gothic East';
+	src: url(/static/fonts/trumpgothiceastmedium.ttf);
+	font-weight: bold;
+	font-style: normal;
+}
+
+:focus {
+	outline: 0;
+}
+
+html, body{
+	height:100%;
+}
+
+body {
+	line-height: 1.3;
+	background: #eeeeee;
+	font-size: 12px;
+	/** bc specific **/
+	font-family: "BPG Ingiri Arial", "Lucida Sans", "Trebuchet MS", Helvetica, Arial, sans-serif;
+	color: #323232;
+	overflow-x: hidden;
+}
+
+ol,ul {
+	list-style: none;
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+#start_box table {
+	color: #ffffff;
+	width: 100%;
+}
+
+caption,th,td {
+	text-align: left;
+	font-weight: normal;
+    vertical-align: middle;
+}
+
+
+textarea {
+	padding: 9px;
+	outline-offset: 0;
+	border: none;
+	background: #eee;
+}
+
+input[type="text"],input[type="email"] {
+	-webkit-appearance: none;
+	padding: 9px;
+	border: none;
+	background: #eee;
+	margin-bottom: 7px;
+}
+
+input[type="submit"] {
+	padding: 9px 23px;
+	border: none;
+	margin: 5px 0;
+	font-size: 13px;
+	font-family: "BPG Ingiri Arial";
+	background-color: #f8b526;
+	color: #fff;
+	cursor: pointer;
+}
+
+/*--------------------------------------------------------------------------------------------------------*/
+/**** GLOBAL STYLES ****/
+::-moz-selection {
+	background: #daecf0;
+	color: #4b8899;
+}
+
+::selection {
+	background: #daecf0;
+	color: #4b8899;
+}
+
+a::-moz-selection {
+	background: #d9f0d9;
+	color: #68a12d;
+}
+
+a::selection {
+	background: #d9f0d9;
+	color: #68a12d;
+}
+
+a {
+	text-decoration: none;
+}
+
+.float_wrapper {
+	width: 100%;
+	overflow: hidden;
+}
+
+.clearfloat {
+	clear: both;
+	display: block;
+}
+
+.unknown {
+	background-color: #ffcccc;
+	border: solid 2px #990000;
+}
