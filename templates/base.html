@@ -1,73 +1,119 @@
-﻿{% load i18n %}
-{% load analytics %}
-<html>
+﻿<!DOCTYPE html>
+{% load i18n %} {% load analytics %} {% get_current_language as LANGUAGE_CODE %}
+{% load static from staticfiles %}
+{% load compressed %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
-    <meta name="google-site-verification" content="xm9edHANmF2FStQkLknknSZM4Rz1TX6Q-0vG-59dy0c" />
-    <meta name="google-site-verification" content="dawDvNOnivoTMIZxLGQHzc4f-zhZs8D8fe4yY98Xy3E" />
-    <meta keywords="fix my street fixmystreet georgia chemi kucha chemikucha tbilisi repair streets pothole sidewalk street vandalism manhole trees trash collection trasffic streetlight sewage problem park electrical wires abandoned vehicle or and ჩემი ქუჩა საქართველო თბილისი შეაკეთე შეტყობინება შეტყობინებები შეკეთება ქუჩის გაფუჭებული დაზიანებული ქუჩები ორბო ორმოები ასფალტი დანგრეული ტროტუარი ვანდალიზმი თავახდილი ლუქი ხე ხეები ნაგავსაყრელი უკანონო ტრანსპორტი უსაფრთხოება ქვეითები საგზაო ნიშანი განათება დსუფთავება კანალიზაცია კანალიზაციის მილი მჟონავი დაზიანება პარკები მილები მილი პარკი ელექრტო სადენები სადენი ან და" />
-	<title>{% trans "FixMyStreet .ge" %} - {% block title %}{% trans "Home" %}{% endblock %}</title>
-	<link rel="stylesheet" type="text/css" href="/media/css/global.css" />
-	<link rel="stylesheet" type="text/css" href="/media/css/typography.css" />
-	<link rel="stylesheet" type="text/css" href="/media/css/layout-6.css" />
-	<link rel="stylesheet" type="text/css" href="/media/css/colors.css" />
-    <link rel="stylesheet" type="text/css" href="/media/css/fms-custom.css" />
-       {% block css %}{% endblock %}
-	{% block script %}{% endblock %}	
-    {% if google %}
-      {{ google.style }}
-      {{ google.scripts }}
-    {% endif %}
-</head>
-	<body {% if google %}{{ google.onload}} {{google.onunload}}{% endif %}>
-		<div id="content_container">
-			<div id="page_container">
-				<div id="header">
-					<div id="header_left">
-						<a href='/'><img src='/media/images/{% trans "fixmystreetlogo.png" %}'></a>
-					</div>
-					<div id="header_right">
-						<a href='http://www.transparency.ge'><img src='/media/images/{% trans "sitebyvg.png" %}'></a>
-					</div>
-				</div>
-				<div id="top_menu"><div id='top_menu_tr'><div id='top_menu_bl'><div id='top_menu_br'>
-					<div id="top_menu_links"><div>
-					<ul>
-						<li><a href="/" >{% trans "Home" %}</a></li>
-                        <!--Remember to switch back to /cities/ if we add some other city-->
-						<li><a href={% block all_reports_link %}"/cities/"{% endblock %}>{% trans "All Reports" %}</a></li>
-						<li><a href="/contact/">{% trans "Contact" %}</a></li>
-						<li><a href="/about/">{% trans "Questions" %}</a></li>
-					</ul>
-					</div></div>
-                    
-					<div id="language">
-						<form action="/i18n/setlang/" method="post">
-						<select name="language">
-						{% for lang in LANGUAGES %}
-						<option value="{{ lang.0 }}">{{ lang.1 }}</option>
-						{% endfor %}
-						</select>
-						<input type="submit" value="Go" />
-						</form>
-					</div>
-                <div id="fb-root" ></div><script src="http://connect.facebook.net/en_US/all.js#appId=182535501803546&amp;xfbml=1"></script><fb:like href="http://www.facebook.com/pages/%E1%83%A9%E1%83%94%E1%83%9B%E1%83%98-%E1%83%A5%E1%83%A3%E1%83%A9%E1%83%90-%E1%83%A1%E1%83%90%E1%83%A5%E1%83%90%E1%83%A0%E1%83%97%E1%83%95%E1%83%94%E1%83%9A%E1%83%9DFixMyStreet-Georgia/106051469489453" send="false" layout="button_count" width="100px" style="left:920px; position:absolute; top:107px;" show_faces="true" font=""></fb:like>
-                   </div>
+    <title>{% block title %}{% endblock %} | {% trans "FixMyStreet .ge" %}</title>
+    {% compressed_css 'main_css' %}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-				</div></div></div></div>
-				<div id="content">
-					{% if error_msg %}
-						<div id="error-msg">{{error_msg}}</div>
-					{% endif %}				
-					{% block content %}{% endblock %}
-				</div>
-				<div id="footer">
- 					<div><a href="{% trans "http://www.epfound.ge/" %}"><img src="/media/images/epf-logo.png" width="200px"></a></div>
-  					<div><a href="{% trans "http://transparency.ge/en" %}">{% trans "Transparency International Georgia" %}</a></div>
-					<div id='bugreport'>{% trans "Find a bug?" %} <a href="/contact/">{% trans "Tell us" %}</a>!</div>
-				</div>
-			</div><!--end page_container -->
-			</div><!-- end of content container -->
-		{% block endbody %}{% endblock %}
-		{% analytics "UA-19239335-1" %}
-    	</body>
+    <!--[if IE 8]>
+    {% compressed_js 'ie_js' %}
+    {% compressed_css 'ie' %}
+    <![endif]-->
+
+    <!--[if lt IE 8]>
+    {% compressed_css 'ie_deprecated' %}
+    <![endif]-->
+
+    <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
+    {% compressed_js 'main_js' %}
+
+    {% block css %}{% endblock %}
+
+    {% block script %}{% endblock %}
+
+    {% if google %}
+        {{ google.style }}
+        {{ google.api_script }}
+        <script type="text/javascript">
+            {{ google.js }}
+        </script>
+    {% endif %}
+
+</head>
+<body class="lang-{{ LANGUAGE_CODE }}" {% if google %}{{ google.onload }} {{ google.onunload }}{% endif %}>
+<!--[if lt IE 8]><div id="ie-deprecated"><div style='clear: both; height: 112px; padding:0; position: fixed; top:50%; left:50%;
+margin-left:-174px;margin-top:-56px'><a
+        href="http://www.theie7countdown.com/ie-users-info"><img src="http://www.theie7countdown.com/assets/badge_iecountdown.png" border="0" height="112" width="348" alt="" /></a></div></div>
+<![endif]-->
+<noscript>
+    <div class="noscript-pad"></div>
+    <div class="panel-warning noscript">
+        {% blocktrans %}
+            This site uses a lot of javascript (in fact, site is unusable without it - so please
+            <a href="http://www.enable-javascript.com/" target="_blank">enable it</a>)</div>
+        {% endblocktrans %}
+</noscript>
+<div class="navbar">
+    <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+        <a class="navbar-brand visible-sm" href="{% url 'mainapp.views.main.home' %}">
+            <img class="fms-logo" alt="Fixmystret Georgia" title="Fixmystret Georgia"
+                 src="{% static 'images/main/fms-logo-'|add:LANGUAGE_CODE|add:'.png' %}"/>
+        </a>
+
+        <div class="nav-collapse collapse navbar-responsive-collapse">
+
+            <ul class="nav navbar-nav nav-left">
+                <li><a href="{% url 'mainapp.views.reports.main.report_list' %}">{% trans "All Reports" %}</a></li>
+                <li><a href="{% url 'mainapp.views.main.about' %}">{% trans "Questions" %}</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav nav-logo hidden-sm">
+                <li><a class="navbar-brand" href="{% url 'mainapp.views.main.home' %}">
+                    <img class="fms-logo" alt="Fixmystreet Georgia" title="Fixmystret Georgia"
+                         src="{% static 'images/main/fms-logo-'|add:LANGUAGE_CODE|add:'.png' %}"/></a>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav pull-right">
+
+                <li class="contact-menu"><a id="menu-contact" href="/contact">{% trans "Contact" %}</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        {% trans "Language" %}
+                        <b class="caret"></b>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        {% for lang in LANGUAGES %}
+                            <li class="lang-choose"><a href="#" data-lang="{{ lang.0 }}">{{ lang.1 }}</a></li>
+                        {% endfor %}
+                    <span id="no-lang-path" data-next="{{request.session.no_lang_path}}"></span>
+                    </ul>
+
+                </li>
+            </ul>
+        </div>
+        <!-- /.nav-collapse -->
+    </div>
+    <!-- /.container -->
+</div>
+
+
+<div id="cut-container" class="container visible-lg">
+    <div id="cut"></div>
+</div>
+<div id="content">
+    {% if error_msg %}
+        <div id="error-msg">{{ error_msg }}</div>
+    {% endif %}
+
+    {% block content %}
+        {% block sidebar %}
+        {% endblock %}
+    {% endblock %}
+
+</div>
+{% block endbody %}{% endblock %}
+{% analytics "UA-19239335-1" %}
+</body>
 </html>
