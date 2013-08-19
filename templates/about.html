@@ -1,33 +1,69 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load static_tags %}
+{% load reports_tags %}
 {% block title %}
-	{% trans "Questions" %}
+    {% trans "Questions" %}
 {% endblock %}
 {% block content %}
-<div id="page_content_container">
+    <div class="container">
+    <div id="faq">
+        <div class="row">
+            <div class="col-12 col-sm-8 col-lg-8">
+                <h3>{% trans "About Chemikucha.ge - FixMyStreet Georgia" %}</h3>
 
-<h3>{% trans "About Chemikucha.ge - FixMyStreet Georgia" %}</h3>
-<div id="faq">
-    <ul id="faq-list">
-    {% for faq in faq_entries %}
-    <li><a href="#{{faq.q|urlencode}}">{{faq.q}}</a></li>
-    {%endfor%}
-    </ul>
-	{% for faq in faq_entries %}
-	<h4><a name="{{faq.q|urlencode}}" href="#{{faq.q|urlencode}}">{{faq.q}}</a></h4>
-	<p>{{faq.a|safe}}</p>
-	{% endfor %}
+                <div class="accordion" id="faq-accordion">
+                    {% for faq in faq_entries %}
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <h5><a class="accordion-toggle" data-toggle="collapse" data-parent="#faq-accordion"
+                                       href="#collapse-{{ forloop.counter }}"
+                                       name="{{ faq.q|urlencode }}"
+                                       href="#{{ faq.q|urlencode }}">{{ faq.q }}</a></h5>
+                            </div>
+                            <div id="collapse-{{ forloop.counter }}" class="accordion-body collapse">
+                                <div class="accordion-inner">{{ faq.a|safe }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
 
-<h4>{% trans "Credits" %}</h4>
-{% blocktrans %}
-<p>We would like to thank the <a href="http://www.tbilisi.gov.ge">City of Tbilisi</a> for being open and cooperative to this new idea.
-<p>Thank you to <a href="http://www.epfound.ge/">Eurasia Partnership Foundation</a> and their donors who have made this project possible and to <a href="http://omc.ge">OMC-Jumpstart International </a> for creating a great open-source map of Tbilisi.</p>
+                </div>
+                <div id="credits">
+                    <h4>{% trans "Credits" %}</h4>
+                    {% blocktrans %}
+                        <p>We would like to thank the <a target="_blank" href="http://www.tbilisi.gov.ge">City of
+                            Tbilisi</a> for being
+                            open
+                            and cooperative to this new idea.
+                        <p>Thank you to <a target="_blank" href="http://www.epfound.ge/">Eurasia Partnership
+                            Foundation</a>
+                            and their
+                            donors
+                            who have made this project possible.</p>
 
-<p>FixMyStreet Georgia is based on the code of <a href="http://fixmystreet.ca">FixMyStreet Canada</a>, developed by Chris Taggart for <a href="http://www.openottawa.org">Open Ottowa</a>.</p>
-<p>The FixMyStreet concept was created by <a href="http://www.mysociety.org/">MySociety</a> in the United Kingdom.</p>
+                        <p>FixMyStreet Georgia is based on the code of
+                            <a target="_blank" href="http://fixmystreet.ca">FixMyStreetCanada</a>,
+                            developed by Chris Taggart for
+                            <a target="_blank" href="http://www.openottawa.org">Open Ottowa</a>.
+                        </p>
+                        <p>The FixMyStreet concept was created by <a target="_blank" href="http://www.mysociety.org/">MySociety</a>
+                            in the
+                            United Kingdom.</p>
 
-<p>Derek Dohler and Nutsa Tughushi adapted the site for Georgia.</p>
-{% endblocktrans %}
-</div>
-</div>
+                        <p><a target="_blank" href="http://www.linkedin.com/pub/derek-dohler/4/567/923">Derek Dohler</a>
+                            and
+                            <a target="_blank" href="http://www.linkedin.com/profile/view?id=174821679">Nutsa
+                                Tughushi</a>
+                            adapted the site for Georgia and later it was updated to a new version by
+                            <a target="_blank" href="http://www.linkedin.com/in/georgelubaretsi">George Lubaretsi</a>.
+                        </p>
+                    {% endblocktrans %}
+                </div>
+            </div>
+            <div class="col-6 col-sm-4 col-lg-4">
+                {% _about_us_sidebar %}
+                {% latest_reports 8 %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
