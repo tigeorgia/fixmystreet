@@ -1,0 +1,561 @@
+/*!
+ * Bootstrap v3.0.0
+ *
+ * Copyright 2013 Twitter, Inc
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Designed and built with all the love in the world by @mdo and @fat.
+ */
+
+// Core variables and mixins
+@import "variables.less";
+@import "bootstrap/less/mixins.less";
+  // Reset
+@import "bootstrap/less/normalize.less";
+@import "bootstrap/less/print.less";
+  // Core CSS
+@import "bootstrap/less/scaffolding.less";
+@import "bootstrap/less/type.less";
+@import "bootstrap/less/code.less";
+@import "bootstrap/less/grid.less";
+@import "bootstrap/less/tables.less";
+@import "bootstrap/less/forms.less";
+@import "bootstrap/less/buttons.less";
+  // Components: common
+@import "bootstrap/less/component-animations.less";
+@import "bootstrap/less/input-groups.less";
+@import "bootstrap/less/dropdowns.less";
+@import "bootstrap/less/list-group.less";
+@import "bootstrap/less/panels.less";
+@import "bootstrap/less/wells.less";
+@import "bootstrap/less/close.less";
+  // Components: Nav
+@import "bootstrap/less/navs.less";
+@import "bootstrap/less/navbar.less";
+@import "bootstrap/less/button-groups.less";
+@import "bootstrap/less/breadcrumbs.less";
+@import "bootstrap/less/pagination.less";
+@import "bootstrap/less/pager.less";
+  // Components: Popovers
+@import "bootstrap/less/modals.less";
+@import "bootstrap/less/tooltip.less";
+@import "bootstrap/less/popovers.less";
+  // Components: Misc
+@import "bootstrap/less/alerts.less";
+@import "bootstrap/less/thumbnails.less";
+@import "bootstrap/less/media.less";
+@import "bootstrap/less/labels.less";
+@import "bootstrap/less/badges.less";
+@import "bootstrap/less/progress-bars.less";
+@import "bootstrap/less/accordion.less";
+@import "bootstrap/less/carousel.less";
+@import "bootstrap/less/jumbotron.less";
+  // Utility classes
+@import "bootstrap/less/utilities.less";
+  // Has to be last to override when necessary
+@import "bootstrap/less/responsive-utilities.less";
+
+//Custom
+
+/* RESPONSIVE TABLES */
+
+@media only screen and (max-width: 992px) {
+
+  /* Force table to not be like tables anymore */
+  .responsive-table table,
+  .responsive-table thead,
+  .responsive-table tbody,
+  .responsive-table th,
+  .responsive-table td,
+  .responsive-table tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  .responsive-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .responsive-table tr {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+
+  .responsive-table td {
+    /* Behave  like a "row" */
+    border: none !important;
+    border-bottom: 1px solid #eee !important;
+    position: relative !important;
+    padding-left: 50% !important;
+    white-space: normal !important;
+    text-align: left !important;
+  }
+
+  .responsive-table td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  /*
+  Label the data
+  */
+  .responsive-table td:before {
+    content: attr(data-title);
+  }
+}
+
+/* END Responsive tables */
+
+.btn-white {
+  background-color: #fff;
+  color: #555;
+}
+
+.btn-white:hover {
+  background-color: #f8b526;
+}
+
+button#home-search:hover {
+  cursor: default;
+}
+
+.nav.navbar-nav.nav-logo {
+  left: 50%;
+  position: absolute;
+  margin-left: -71px;
+}
+
+.nav.navbar-nav.nav-logo li {
+  border: none;
+}
+
+.navbar-nav {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.navbar-nav.pull-right > li > a {
+  text-align: center;
+}
+
+.row.home-map {
+  position: relative;
+  margin-right: 0;
+}
+
+.choose-city.visible-lg {
+  position: absolute;
+  bottom: 15%;
+  left: 20%;
+}
+
+.choose-city.hidden-lg {
+  position: relative;
+  text-align: center;
+}
+
+.cities-home .cities {
+  padding: 11px;
+}
+
+#right-overlay {
+  height: 100%;
+  position: absolute;
+  background: #3895d2;
+  z-index: 1;
+  opacity: 0.8;
+}
+
+#deskt-city, #map-home {
+  padding: 0;
+}
+
+.navbar-nav li:first-child, .nav-left li:nth-child(2), .contact-menu, .visible-sm.all-reports {
+  border-left: 1px solid #999999;
+}
+
+.contact-menu, li.visible-sm, .nav-left li:nth-child(2) {
+  border-right: 1px solid #999999;
+}
+
+@media (min-width: @screen-desktop) {
+  #preform {
+    position: absolute;
+    top: 27px;
+    right: 4px;
+    z-index: 999;
+    color: #fff;
+  }
+}
+
+@media (min-height: 500px) {
+  .map-height {
+    height: 460px;
+  }
+}
+
+@media (max-height: 500px), (max-width: 1005px) {
+  .map-height {
+    height: 220px;
+  }
+}
+
+.start-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#preform label {
+  display: none !important;
+}
+
+#preform label#geokbd {
+  display: block !important;
+}
+
+select, input {
+  margin-top: 3px;
+}
+
+#new-report input {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+#cut {
+  background: url(/static/images/assets/top-line.png) center no-repeat;
+  height: 2px;
+  width: 10px;
+  position: absolute;
+  left: 50%;
+  top: -2;
+  margin-left: -20px;
+}
+
+#cut-container {
+  position: relative;
+  z-index: 999;
+}
+
+#all-reports-head {
+  height: 200px;
+  position: relative;
+}
+
+#all-reports-overlay {
+  background-color: #57aae0;
+  height: 200px;
+  opacity: 0.8;
+}
+
+.page-header-title {
+  font-family: @font-family-bpg-trump;
+  font-size: 4em;
+  color: #fff;
+  width: 20px;
+  line-height: 1;
+}
+
+.lang-ka #page-title-home {
+  font-size: 3em;
+  line-height: 1.2;
+  width: 346px;
+  height: 131px;
+}
+
+.lang-en #page-title-home {
+  width: 212px;
+  height: 152px;
+  margin-bottom: 10px;
+}
+
+.page-header-description {
+  font-size: 12px;
+  color: #fff;
+}
+
+.page-header-description:before {
+  content: "- - - - - - - - - - - - - -";
+  display: block;
+}
+
+.page-head {
+  position: absolute;
+  top: 10%;
+  z-index: 999;
+  margin-left: 8%;
+}
+
+#report-list th {
+  font-size: 12px;
+}
+
+#tig-overlay-logo {
+  float: right;
+  position: absolute;
+  bottom: -68px;
+  right: 17px;
+}
+
+button#home-report {
+  margin-top: 6px;
+}
+
+@media (min-width: @screen-desktop) {
+  .address-search-form-wrapper {
+    position: absolute;
+    bottom: 30px;
+    left: 16%;
+    width: 400px;
+  }
+
+  .address-search-form-wrapper input#address_search {
+    display: inline-block;
+    vertical-align: top;
+    height: 44px;
+    width: 232px;
+    margin: 0;
+  }
+
+  .add-marker {
+    background: url(/static/images/assets/blue-pointer-button.jpg) no-repeat;
+    width: 44px;
+    height: 44px;
+    display: inline-block;
+    vertical-align: top;
+    position: absolute;
+    top: 0;
+    left: 280px;
+    border: none;
+  }
+
+  #search-street {
+    background: url(/static/images/assets/addres-search.jpg) no-repeat;
+    width: 44px;
+    height: 44px;
+    display: inline-block;
+    vertical-align: top;
+    border: none;
+    margin-left: -5px;
+  }
+}
+
+.choose-city label {
+  color: #fff;
+  font-weight: normal;
+}
+
+.cities-home .cities {
+  border-radius: 0;
+  margin-left: -4px;
+}
+
+.cities-home {
+  margin-left: -33px;
+  margin-top: 5px;
+}
+
+label#home-step-1 {
+  color: #555;
+}
+
+.noscript {
+  text-align: center;
+  background-color: #AE0000;
+  color: #fff;
+  padding: 17px;
+  font-size: 1.5em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.noscript a {
+  color: #F199EE;
+  text-decoration: underline;
+}
+
+.noscript-pad {
+  position: relative;
+  display: block;
+  padding: 34px;
+}
+
+#credits a {
+  color: #3895d2;
+}
+
+#faq h5 {
+  margin: 0;
+}
+
+#contact-page {
+  background: url(/static/images/bkgd/contact-bkgd.jpg) center no-repeat;
+}
+
+#contact-page .row#content-main {
+  background: #fff;
+}
+
+#contact-page #contact-bottom {
+  height: 70px;
+  background: #40aaea;
+  opacity: .85
+}
+
+#tig-logo-contact {
+  position: relative;
+  margin-top: 10px;
+}
+
+a.link-blue {
+  color: #4cade8;
+}
+
+#contact-info {
+  color: #747474;
+  font-size: 12px;
+}
+
+.btn-fixed {
+  border-radius: 0;
+  margin: 10px 0;
+  padding: 11px;
+}
+
+.form-margin-fix {
+  margin-top: 4px;
+}
+
+.report-updates ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 3px;
+}
+
+.report-updates ul li a {
+  color: #aaa;
+}
+
+.report-updates ul li a:hover {
+  color: #555;
+}
+
+.report-updates li:before {
+  content: "- ";
+}
+
+.all-reports-table .fixed, .status-color-fixed {
+  background: #82ae53;
+}
+
+.all-reports-table .not-fixed, .status-color-not-fixed {
+  background: #eb4048;
+}
+
+.status-color-not-fixed, .status-color-fixed {
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+}
+
+tr.all-reports-table {
+  cursor: pointer;
+}
+
+tr.all-reports-table:hover {
+  color: #8540AC;
+}
+
+tr.all-reports-table:hover a {
+  color: #8540AC;
+}
+
+.table-hover > tbody > tr:hover > td.fixed {
+  background: #82ae53;
+}
+
+.table-hover > tbody > tr:hover > td.not-fixed {
+  background: #eb4048;
+}
+
+.pagination > .active > a, .pagination > .active > span {
+  color: #999999;
+  cursor: pointer;
+}
+
+.disabled.current a {
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+.nolist ul {
+  list-style: none;
+  padding: 10px;
+}
+
+input#address_search {
+  width: 300px;
+}
+
+#add-marker-mobile {
+  width: 100%;
+}
+
+.home-box {
+  height: 175px;
+  text-align: center;
+  margin-top: 60px;
+  background: #e0e0e0;
+  margin-left: 16px;
+  position: relative;
+}
+
+.home-round {
+  width: 140px;
+  height: 140px;
+  background: #aaaaaa;
+  -moz-border-radius: 70px;
+  -webkit-border-radius: 65px;
+  border-radius: 70px;
+  margin: -70px;
+  padding: 0px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  color: #fff;
+}
+
+.home-round a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.home-round:hover {
+  background: #ffffff;
+  color: #54a9db;
+  cursor: pointer;
+}
+
+.home-round:hover a {
+  color: #54a9db;
+  text-decoration: none;
+}
+
+.home-round-inner {
+  padding: 32px 0;
+  font-size: 1em;
+}
