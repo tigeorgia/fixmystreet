@@ -85,7 +85,7 @@ class Migration(SchemaMigration):
             'is_confirmed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_fixed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_hate': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'photo': ('contrib.stdimage.fields.StdImageField', [], {'blank': 'True', 'max_length': '100', 'thumbnail_size': "{'width': 133, 'force': None, 'height': 100}", 'size': "{'width': 400, 'force': None, 'height': 400}"}),
+            'photo': ('stdimage.fields.StdImageField', [], {'blank': 'True', 'max_length': '100', 'thumbnail_size': "{'width': 133, 'force': None, 'height': 100}", 'size': "{'width': 400, 'force': None, 'height': 400}"}),
             'point': ('django.contrib.gis.db.models.fields.PointField', [], {'null': 'True'}),
             'reminded_at': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'sent_at': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
@@ -130,7 +130,7 @@ class Migration(SchemaMigration):
             'is_fixed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_verified_author': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'photo': ('contrib.stdimage.fields.StdImageField', [], {'blank': 'True', 'max_length': '100', 'thumbnail_size': "{'width': 133, 'force': None, 'height': 100}", 'size': "{'width': 200, 'force': None, 'height': 200}"}),
+            'photo': ('stdimage.fields.StdImageField', [], {'blank': 'True', 'max_length': '100', 'thumbnail_size': "{'width': 133, 'force': None, 'height': 100}", 'size': "{'width': 200, 'force': None, 'height': 200}"}),
             'report': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['mainapp.Report']"})
         },
         'mainapp.verifiedauthor': {
