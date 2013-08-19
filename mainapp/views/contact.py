@@ -12,7 +12,7 @@ def thanks(request):
 
 def new(request):
     if request.method == 'POST':
-        form = ContactForm(data=request.POST)
+        form = ContactForm(data=request.POST, auto_id=False)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect("/contact/thanks")
