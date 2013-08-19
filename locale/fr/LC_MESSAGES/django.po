@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-18 15:29+0400\n"
+"POT-Creation-Date: 2013-08-02 14:06+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,61 +17,102 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: mainapp/forms.py:11 mainapp/models.py:50 mainapp/models.py:64
-#: mainapp/models.py:101 mainapp/models.py:247 mainapp/models.py:299
-#: mainapp/models.py:419
+#: mainapp/forms.py:14 mainapp/models.py:56 mainapp/models.py:71
+#: mainapp/models.py:110 mainapp/models.py:258 mainapp/models.py:314
+#: mainapp/models.py:452
 msgid "Name"
 msgstr "Nom"
 
-#: mainapp/forms.py:14 mainapp/models.py:298
+#: mainapp/forms.py:17 mainapp/forms.py:73 mainapp/models.py:313
 msgid "Email"
 msgstr "Courriel"
 
-#: mainapp/forms.py:16
+#: mainapp/forms.py:22
 msgid "Message"
 msgstr "Message"
 
-#: mainapp/models.py:83
+#: mainapp/forms.py:67
+msgid "Name/Last name"
+msgstr ""
+
+#: mainapp/forms.py:79
+msgid "Phone Number"
+msgstr ""
+
+#: mainapp/models.py:91
 msgid "First name"
 msgstr ""
 
-#: mainapp/models.py:84
+#: mainapp/models.py:92
 msgid "Last name"
 msgstr ""
 
-#: mainapp/models.py:140 mainapp/models.py:152
+#: mainapp/models.py:149 mainapp/models.py:162
+#: templates/reports/report_filter.html:24
+#: templates/reports/report_filter.html:40
 msgid "Title"
 msgstr ""
 
-#: mainapp/models.py:153
+#: mainapp/models.py:163
 msgid "Hint"
 msgstr ""
 
-#: mainapp/models.py:222
+#: mainapp/models.py:231
 msgid "Subject"
 msgstr "Sujet"
 
-#: mainapp/models.py:226
+#: mainapp/models.py:232 templates/reports/report_filter.html:43
+#, fuzzy
+msgid "Category"
+msgstr "Catégorie:"
+
+#: mainapp/models.py:233 templates/reports/report_filter.html:42
+#: templates/wards/_info_box.html:7
+msgid "Ward"
+msgstr "Quartier"
+
+#: mainapp/models.py:236
 msgid "Street address"
 msgstr ""
 
-#: mainapp/models.py:245 mainapp/models.py:302
+#: mainapp/models.py:242
+#, fuzzy
+msgid "Fixed"
+msgstr "r�solu"
+
+#: mainapp/models.py:255 mainapp/models.py:317
 msgid "* Photo"
 msgstr "* Photo"
 
-#: mainapp/models.py:246 mainapp/models.py:292
+#: mainapp/models.py:257 mainapp/models.py:306
 msgid "Details"
 msgstr "Détails"
 
-#: mainapp/models.py:300
+#: mainapp/models.py:315
 msgid "Phone"
 msgstr "Téléphone"
 
-#: mainapp/models.py:418
+#: mainapp/models.py:451
 msgid "Domain"
 msgstr ""
 
-#: mainapp/views/main.py:45
+#: mainapp/templatetags/reports_tags.py:15
+#, fuzzy
+msgid "Recent updates"
+msgstr "Derniers Rapports"
+
+#: mainapp/templatetags/static_tags.py:11
+msgid ""
+"\n"
+"    <h3>About Us </h3>\n"
+"\n"
+"    FixMyStreet Georgia is run by Transparency International Georgia a "
+"Tbilisi-based NGO aiming to promote transparency\n"
+"    and accountability. TI Georgia is part of the global Transparency "
+"International movement.\n"
+msgstr ""
+
+#: mainapp/views/main.py:54
 #, fuzzy
 msgid ""
 "Sorry, we couldn't retrieve the coordinates of that location, please use the "
@@ -83,7 +124,7 @@ msgstr ""
 "chose de plus spécifique ou inclure le nom de la ville à la fin de votre "
 "recherche."
 
-#: mainapp/views/main.py:48
+#: mainapp/views/main.py:59
 msgid ""
 "Sorry, we couldn't find the address you entered.  Please try again with "
 "another intersection, address or postal code, or add the name of the city to "
@@ -93,7 +134,7 @@ msgstr ""
 "vous plaît essayer de nouveau avec une autre intersection, adresse ou le "
 "code postal."
 
-#: mainapp/views/main.py:71
+#: mainapp/views/main.py:84
 #, fuzzy
 msgid ""
 "Sorry, we don't yet have that area in our database.  Please have your area "
@@ -107,11 +148,11 @@ msgstr ""
 msgid "New Unresolved Problems"
 msgstr "Problèmes Pas Encore Résolu"
 
-#: mainapp/views/wards.py:46 templates/cities/_report_count_table.html:8
+#: mainapp/views/wards.py:46 templates/cities/_report_count_table.html:9
 msgid "Older Unresolved Problems"
 msgstr "Problèmes Pas Encore Résolu"
 
-#: mainapp/views/wards.py:46 templates/cities/_report_count_table.html:9
+#: mainapp/views/wards.py:46 templates/cities/_report_count_table.html:10
 msgid "Recently Fixed"
 msgstr "Résolu Récemment"
 
@@ -120,7 +161,7 @@ msgstr "Résolu Récemment"
 msgid "Older Fixed Problems"
 msgstr "Problèmes Pas Encore Résolu"
 
-#: mainapp/views/reports/main.py:42
+#: mainapp/views/reports/main.py:60
 msgid "Please select a category"
 msgstr "S'il vous plaît choisir une catégorie"
 
@@ -132,207 +173,229 @@ msgstr "Vous vous avez déjà abonné aux mises à jour de ce rapport."
 msgid "You have unsubscribed from updates to:"
 msgstr "Vous vous avez désabonné des mises à jour de:"
 
-#: templates/about.html:4 templates/base.html:39
+#: templates/about.html:6 templates/base.html:80
 msgid "Questions"
 msgstr ""
 
-#: templates/about.html:9
+#: templates/about.html:13
 msgid "About Chemikucha.ge - FixMyStreet Georgia"
 msgstr ""
 
-#: templates/about.html:21
+#: templates/about.html:32
 msgid "Credits"
 msgstr "Crédits"
 
-#: templates/about.html:22
+#: templates/about.html:33
 msgid ""
 "\n"
-"<p>We would like to thank the <a href=\"http://www.tbilisi.gov.ge\">City of "
-"Tbilisi</a> for being open and cooperative to this new idea.\n"
-"<p>Thank you to <a href=\"http://www.epfound.ge/\">Eurasia Partnership "
-"Foundation</a> and their donors who have made this project possible and to "
-"<a href=\"http://omc.ge\">OMC-Jumpstart International </a> for creating a "
-"great open-source map of Tbilisi.</p>\n"
+"                        <p>We would like to thank the <a target=\"_blank\" "
+"href=\"http://www.tbilisi.gov.ge\">City of\n"
+"                            Tbilisi</a> for being\n"
+"                            open\n"
+"                            and cooperative to this new idea.\n"
+"                        <p>Thank you to <a target=\"_blank\" href=\"http://"
+"www.epfound.ge/\">Eurasia Partnership\n"
+"                            Foundation</a>\n"
+"                            and their\n"
+"                            donors\n"
+"                            who have made this project possible.</p>\n"
 "\n"
-"<p>FixMyStreet Georgia is based on the code of <a href=\"http://fixmystreet."
-"ca\">FixMyStreet Canada</a>, developed by Chris Taggart for <a href=\"http://"
-"www.openottawa.org\">Open Ottowa</a>.</p>\n"
-"<p>The FixMyStreet concept was created by <a href=\"http://www.mysociety.org/"
-"\">MySociety</a> in the United Kingdom.</p>\n"
+"                        <p>FixMyStreet Georgia is based on the code of\n"
+"                            <a target=\"_blank\" href=\"http://fixmystreet.ca"
+"\">FixMyStreetCanada</a>,\n"
+"                            developed by Chris Taggart for\n"
+"                            <a target=\"_blank\" href=\"http://www."
+"openottawa.org\">Open Ottowa</a>.\n"
+"                        </p>\n"
+"                        <p>The FixMyStreet concept was created by <a target="
+"\"_blank\" href=\"http://www.mysociety.org/\">MySociety</a>\n"
+"                            in the\n"
+"                            United Kingdom.</p>\n"
 "\n"
-"<p>Derek Dohler and Nutsa Tughushi adapted the site for Georgia.</p>\n"
+"                        <p><a target=\"_blank\" href=\"http://www.linkedin."
+"com/pub/derek-dohler/4/567/923\">Derek Dohler</a>\n"
+"                            and\n"
+"                            <a target=\"_blank\" href=\"http://www.linkedin."
+"com/profile/view?id=174821679\">Nutsa\n"
+"                                Tughushi</a>\n"
+"                            adapted the site for Georgia and later it was "
+"updated to a new version by\n"
+"                            <a target=\"_blank\" href=\"http://www.linkedin."
+"com/in/georgelubaretsi\">George Lubaretsi</a>.\n"
+"                        </p>\n"
+"                    "
 msgstr ""
 
-#: templates/base.html:8
+#: templates/base.html:6
 #, fuzzy
 msgid "FixMyStreet .ge"
 msgstr "FixMyStreet (réparer ma rue) Canada"
 
-#: templates/base.html:8 templates/base.html.py:35
-msgid "Home"
-msgstr "Page d'accueil"
-
-#: templates/base.html:26
-msgid "fixmystreetlogo.png"
+#: templates/base.html:57
+msgid ""
+"\n"
+"            This site uses a lot of javascript (in fact, site is unusable "
+"without it - so please\n"
+"            <a href=\"http://www.enable-javascript.com/\" target=\"_blank"
+"\">enable it</a>)</div>\n"
+"        "
 msgstr ""
 
-#: templates/base.html:29
-msgid "sitebyvg.png"
-msgstr ""
-
-#: templates/base.html:37 templates/cities/index.html:3
-#: templates/cities/index.html.py:24
+#: templates/base.html:79 templates/cities/index.html:3
+#: templates/cities/index.html.py:24 templates/reports/report_filter.html:11
 msgid "All Reports"
 msgstr "Tous les Rapports"
 
-#: templates/base.html:38
+#: templates/base.html:91
 msgid "Contact"
 msgstr "Contact"
 
-#: templates/base.html:64
-msgid "http://www.epfound.ge/"
+#: templates/base.html:94
+msgid "Language"
 msgstr ""
 
-#: templates/base.html:65
-msgid "http://transparency.ge/en"
+#: templates/home.html:16
+msgid "Home"
+msgstr "Page d'accueil"
+
+#: templates/home.html:22
+msgid "Step 1. Click on your city to report a problem"
 msgstr ""
 
-#: templates/base.html:65
-msgid "Transparency International Georgia"
+#: templates/home.html:24 templates/home.html.py:44
+msgid "Tbilisi"
 msgstr ""
 
-#: templates/base.html:66
-msgid "Find a bug?"
-msgstr "Vous avez trouver un problème?"
+#: templates/home.html:25 templates/home.html.py:45
+msgid "Batumi"
+msgstr ""
 
-#: templates/base.html:66
-msgid "Tell us"
-msgstr "Laissez nous savoir"
+#: templates/home.html:26 templates/home.html.py:46
+msgid "Kutaisi"
+msgstr ""
 
-#: templates/home.html:19
+#: templates/home.html:27 templates/home.html.py:47
+msgid "Zugdidi"
+msgstr ""
+
+#: templates/home.html:41
+#, fuzzy
+msgid "Search your city to report a problem"
+msgstr "Signalez un Problème"
+
+#: templates/home.html:66
+msgid "Search Street"
+msgstr ""
+
+#: templates/home.html:73
 msgid ""
-"That address returned more than one result.  Please try again, or select an "
-"option below:"
+"Enter your address on the map, press search and drag marker to desired "
+"location. Then fill out this form and press continue"
 msgstr ""
 
-#: templates/home.html:25
-msgid ""
-"Dear users, due to some server-side problems, some reports from 20-27th "
-"october were lost. Please look up your problem and if it doesn't exist, "
-"recreate it. Sorry for the inconvenience."
+#: templates/home.html:79 templates/contact/new.html:38
+#: templates/reports/show.html:144
+msgid "Georgian keyboard"
 msgstr ""
 
-#: templates/home.html:26
+#: templates/home.html:94 templates/reports/new.html:90
+msgid "Select a Category"
+msgstr "Choisissez une Catégorie"
+
+#: templates/home.html:116 templates/reports/new.html:133
+#: templates/reports/show.html:163
+msgid "Submit"
+msgstr "Envoyez"
+
+#: templates/home.html:156
 msgid "Type in an address to report a problem and get it fixed!"
 msgstr ""
 
-#: templates/home.html:27
+#: templates/home.html:158
 #, fuzzy
 msgid "(like potholes, excessive garbage, or street lighting)"
 msgstr ""
 "(comme les graffitis, les nids de poule, trop de déchets, ou l'éclairage de "
 "rue)"
 
-#: templates/home.html:32
+#: templates/home.html:163
 #, fuzzy
 msgid "Enter a street name and city:"
 msgstr ""
 "Entrez un code postal à proximité, ou le nom de la rue et de la région:"
 
-#: templates/home.html:35
+#: templates/home.html:166
 msgid "Go"
 msgstr "Allez"
 
-#: templates/home.html:37 templates/contact/new.html:28
-#: templates/reports/new.html:67 templates/reports/show.html:130
-msgid "Georgian keyboard"
-msgstr ""
-
-#: templates/home.html:45
+#: templates/home.html:171
 msgid "Isani-Samgori"
 msgstr ""
 
-#: templates/home.html:46
+#: templates/home.html:172
 msgid "Didgori"
 msgstr ""
 
-#: templates/home.html:49
+#: templates/home.html:175
 msgid "Vake-Saburtalo"
 msgstr ""
 
-#: templates/home.html:50
+#: templates/home.html:176
 msgid "Didube-Chugureti"
 msgstr ""
 
-#: templates/home.html:53
+#: templates/home.html:179
 msgid "Gldani-Nadzaladevi"
 msgstr ""
 
-#: templates/home.html:54
+#: templates/home.html:180
 msgid "Old Tbilisi"
 msgstr ""
 
-#: templates/home.html:62
-msgid "Supported Cities"
-msgstr "Villes Incluses"
-
-#: templates/home.html:66
-msgid "Add Your City"
-msgstr "Ajoutez Votre Ville"
-
-#: templates/home.html:73
+#: templates/home.html:184
 msgid "How to report a Problem"
 msgstr "Signalez un Problème"
 
-#: templates/home.html:75
+#: templates/home.html:186
 #, fuzzy
 msgid "Enter an address near to where the problem is"
 msgstr "Entrez les détails du problème"
 
-#: templates/home.html:76
+#: templates/home.html:187
 #, fuzzy
 msgid "Locate the problem on a map of the area"
 msgstr "Localisez le problème sur une carte de la région"
 
-#: templates/home.html:77
+#: templates/home.html:188
 msgid "Enter details of the problem"
 msgstr "Entrez les détails du problème"
 
-#: templates/home.html:78
+#: templates/home.html:189
 #, fuzzy
 msgid "We send it to the city on your behalf"
 msgstr "Nous le rapporterons à la ville en votre nom"
 
-#: templates/home.html:82
+#: templates/home.html:193
 msgid "Stats"
 msgstr "Statistiques"
 
-#: templates/home.html:85
+#: templates/home.html:201
 #, fuzzy
 msgid "Reports Filed in the past year"
 msgstr "Rapports de le Mois Dernière"
 
-#: templates/home.html:88
+#: templates/home.html:212
 msgid "Reports Fixed"
 msgstr "Rapports Résolus"
 
-#: templates/home.html:91
+#: templates/home.html:223
 msgid "Reports Updated"
 msgstr "Rapports Mis à Jour"
 
-#: templates/home.html:95 templates/cities/_report_count_table.html:28
+#: templates/home.html:231 templates/cities/_report_count_table.html:34
 #, fuzzy
 msgid "As reported by FixMyStreet.ge users."
 msgstr "Comme indiqué par les utilisateurs de fixmystreet.ca."
-
-#: templates/home.html:100
-msgid "Recent Photos"
-msgstr "Dernières Photos"
-
-#: templates/home.html:109
-#, fuzzy
-msgid "Recent Updates"
-msgstr "Derniers Rapports"
 
 #: templates/search_result.html:9
 msgid "Problems near"
@@ -357,7 +420,7 @@ msgstr ""
 "Pour signaler un problème, il suffit de faire glisser le marqueur à "
 "l'emplacement sur la carte."
 
-#: templates/ajax/category_description.html:2 templates/reports/new.html:106
+#: templates/ajax/category_description.html:2 templates/reports/new.html:123
 msgid "Please Note"
 msgstr "Notez S'il Vous Plaît"
 
@@ -373,11 +436,11 @@ msgstr ""
 "S'il vous plaît contactez directement la ville en ce qui concerne les "
 "graffitis racistes ou haineux en appelant # 311."
 
-#: templates/cities/_report_count_table.html:7
+#: templates/cities/_report_count_table.html:8
 msgid "All new problems, last month"
 msgstr ""
 
-#: templates/cities/_report_count_table.html:10
+#: templates/cities/_report_count_table.html:11
 msgid "Old Fixed"
 msgstr "Résolu"
 
@@ -397,7 +460,7 @@ msgstr ""
 msgid "Fixed reports"
 msgstr "Nouveau Rapport"
 
-#: templates/cities/home.html:5
+#: templates/cities/home.html:6
 #, fuzzy
 msgid "Report, view, or discuss local problems in"
 msgstr "Signalez, examinez ou discutez des problèmes locaux"
@@ -431,35 +494,42 @@ msgstr "Rapports par Quartier"
 msgid "Categories"
 msgstr "Catégorie:"
 
-#: templates/contact/new.html:7
+#: templates/contact/new.html:11
 msgid "Contact Us"
 msgstr "Contactez Nous"
 
-#: templates/contact/new.html:8
+#: templates/contact/new.html:13
 msgid ""
 "\n"
-"<p>\n"
-"\tPlease <strong>DO NOT</strong> report problems through this form.\n"
-"\tMessages go to the team behind FixMyStreet.ge, not to city councillors.\n"
-"</p>\n"
-"<p>\n"
-"\tTo report a problem, please follow the instructions <a href=\"/\">here</"
-"a>.\n"
-"</p>\n"
-"<p><a href=\"http://transparency.ge/en\">Transparency International Georgia</"
-"a><br />\n"
-"26, Rustaveli Avenue<br />\n"
-"0108 Tbilisi,<br />\n"
-"Georgia<br />\n"
-"Email: <a href=\"mailto:fixmystreet@transparency.ge"
-"\">fixmystreet@transparency.ge</a><br />\n"
-"Follow TI Georgia on <a href=\"https://www.facebook.com/"
+"                            <p>\n"
+"                                Please <strong>DO NOT</strong> report "
+"problems through this form.\n"
+"                                Messages go to the team behind FixMyStreet."
+"ge, not to city councillors.\n"
+"                            </p>\n"
+"                            <p>\n"
+"                                To report a problem, please follow the "
+"instructions\n"
+"                                <a class=\"link-blue\" href=\"/\">here</a>.\n"
+"                            </p>\n"
+"                            <p id=\"contact-info\"><a href=\"http://"
+"transparency.ge/en\">Transparency International\n"
+"                                Georgia</a><br/>\n"
+"                                26, Rustaveli Avenue<br/>\n"
+"                                0108 Tbilisi,<br/>\n"
+"                                Georgia<br/>\n"
+"                                Email: <a\n"
+"                                        href=\"mailto:"
+"fixmystreet@transparency.ge\">fixmystreet@transparency.ge</a><br/>\n"
+"                                Follow TI Georgia on <a\n"
+"                                        href=\"https://www.facebook.com/"
 "TransparencyInternationalGeorgia\">Facebook</a>\n"
-"and <a href=\"https://twitter.com/#!/TIGeorgiaEng\">Twitter</a></p>\n"
-"<p>We'd love to get your feedback on this site:</p> \n"
+"                                and <a href=\"https://twitter.com/#!/"
+"TIGeorgiaEng\">Twitter</a></p>\n"
+"                        "
 msgstr ""
 
-#: templates/contact/new.html:38
+#: templates/contact/new.html:45
 msgid "Send"
 msgstr "Envoyez"
 
@@ -497,28 +567,20 @@ msgstr ""
 msgid "New Report"
 msgstr "Nouveau Rapport"
 
-#: templates/reports/new.html:60
+#: templates/reports/new.html:67
 msgid "Report a Problem"
 msgstr "Signalez un Problème"
 
-#: templates/reports/new.html:75
-msgid "* Optional"
-msgstr "* Facultatif"
-
-#: templates/reports/new.html:78 templates/reports/show.html:66
+#: templates/reports/new.html:82 templates/reports/show.html:76
 msgid "Category:"
 msgstr "Catégorie:"
 
-#: templates/reports/new.html:83
-msgid "Select a Category"
-msgstr "Choisissez une Catégorie"
-
-#: templates/reports/new.html:108
+#: templates/reports/new.html:125
 msgid "Please be polite, concise and to the point."
 msgstr ""
 "S'il vous plaît noter que les mises à jour ne sont pas envoyées à la Ville."
 
-#: templates/reports/new.html:109
+#: templates/reports/new.html:126
 msgid ""
 "Please do not be abusive - abusing the service devalues the service for all "
 "users."
@@ -526,7 +588,7 @@ msgstr ""
 "S'il vous plaît ne pas être abusif, ceci dévalue le service pour tous les "
 "utilisateurs"
 
-#: templates/reports/new.html:110
+#: templates/reports/new.html:127
 msgid ""
 "Writing your message entirely in block capitals makes it hard to read, as "
 "does a lack of punctuation."
@@ -534,7 +596,7 @@ msgstr ""
 "Écrire votre message entièrement en lettres majuscules ou sans ponctuation "
 "rend la lecture difficile."
 
-#: templates/reports/new.html:111
+#: templates/reports/new.html:128
 #, fuzzy
 msgid ""
 "Remember that FixMyStreet is primarily for reporting physical problems that "
@@ -545,10 +607,6 @@ msgstr ""
 "physiques qui peuvent être résolus. Si votre problème n'est pas approprié "
 "pour ce site, rappelez-vous que vous pouvez contacter directement les "
 "fonctionnaires municipaux en appelant # 311."
-
-#: templates/reports/new.html:119 templates/reports/show.html:139
-msgid "Submit"
-msgstr "Envoyez"
 
 #: templates/reports/poster.html:7
 #, fuzzy
@@ -563,11 +621,21 @@ msgstr ""
 msgid "Print this page"
 msgstr ""
 
-#: templates/reports/show.html:33 templates/reports/show.html.py:135
+#: templates/reports/report_filter.html:44
+#, fuzzy
+msgid "Subscribers"
+msgstr "Abonnés:"
+
+#: templates/reports/report_filter.html:45
+#, fuzzy
+msgid "Created"
+msgstr "Mise à Jour"
+
+#: templates/reports/show.html:40 templates/reports/show.html.py:152
 msgid "This problem has been fixed."
 msgstr "Ce problème a été résolu."
 
-#: templates/reports/show.html:37
+#: templates/reports/show.html:44
 #, fuzzy
 msgid ""
 "<p>Please check your email for a message from FixMyStreet.ge, which will "
@@ -580,72 +648,72 @@ msgstr ""
 "envoyé au département 311 de la Ville et ne sera pas visible aux autres "
 "visiteurs jusqu'à ce que vous l'avez fait."
 
-#: templates/reports/show.html:53
+#: templates/reports/show.html:61
 #, fuzzy
 msgid "Translate this report"
 msgstr "Identifiez ce Rapport"
 
-#: templates/reports/show.html:67
+#: templates/reports/show.html:77
 msgid "Street Address:"
 msgstr ""
 
-#: templates/reports/show.html:68
+#: templates/reports/show.html:78
 msgid "Filed by:"
 msgstr "Par:"
 
-#: templates/reports/show.html:71
+#: templates/reports/show.html:81
 #, fuzzy
 msgid "Sent to"
 msgstr "Envoyé à"
 
-#: templates/reports/show.html:72
+#: templates/reports/show.html:82
 msgid "On"
 msgstr ""
 
-#: templates/reports/show.html:79
+#: templates/reports/show.html:89
 msgid "Subscribers:"
 msgstr "Abonnés:"
 
-#: templates/reports/show.html:81 templates/reports/subscribers/new.html:12
+#: templates/reports/show.html:91 templates/reports/subscribers/new.html:12
 msgid "Subscribe"
 msgstr "Abonnez-vous"
 
-#: templates/reports/show.html:93
+#: templates/reports/show.html:105
 msgid "Print a flyer"
 msgstr ""
 
-#: templates/reports/show.html:93
+#: templates/reports/show.html:105
 msgid " to tell others about this problem."
 msgstr ""
 
-#: templates/reports/show.html:94
+#: templates/reports/show.html:108
 msgid "Offensive? Unsuitable? Tell us"
 msgstr "Offensif? Inappropriées? Dites-le-nous"
 
-#: templates/reports/show.html:98
+#: templates/reports/show.html:112
 msgid "Updates"
 msgstr "Mises à Jour"
 
-#: templates/reports/show.html:102
+#: templates/reports/show.html:116
 msgid "posted by"
 msgstr "signalé par"
 
-#: templates/reports/show.html:114
+#: templates/reports/show.html:128
 #, fuzzy
 msgid "This report's author has been verified"
 msgstr "Ce problème a été résolu."
 
-#: templates/reports/show.html:124
+#: templates/reports/show.html:138
 msgid "Provide an update"
 msgstr "Fournir une mise à jour"
 
-#: templates/reports/show.html:126
+#: templates/reports/show.html:140
 #, fuzzy
 msgid "Please note that updates are not sent to city officials."
 msgstr ""
 "S'il vous plaît noter que les mises à jour ne sont pas envoyées à la Ville."
 
-#: templates/reports/show.html:137
+#: templates/reports/show.html:158
 #, fuzzy
 msgid "This problem is still fixed."
 msgstr "Ce problème a été résolu."
@@ -729,10 +797,6 @@ msgstr ""
 msgid "Councillor"
 msgstr "Échevin"
 
-#: templates/wards/_info_box.html:7
-msgid "Ward"
-msgstr "Quartier"
-
 #: templates/wards/show.html:8
 msgid "All reports for"
 msgstr "Tous les Rapports pour"
@@ -751,6 +815,24 @@ msgid "Note: FixMyStreet.ge relies on users to report problems as fixed."
 msgstr ""
 "Note: fixmystreet.ca s'appuie sur les utilisateurs pour signaler les "
 "problèmes comme étant résolus."
+
+#~ msgid "Supported Cities"
+#~ msgstr "Villes Incluses"
+
+#~ msgid "Add Your City"
+#~ msgstr "Ajoutez Votre Ville"
+
+#~ msgid "Find a bug?"
+#~ msgstr "Vous avez trouver un problème?"
+
+#~ msgid "Tell us"
+#~ msgstr "Laissez nous savoir"
+
+#~ msgid "Recent Photos"
+#~ msgstr "Dernières Photos"
+
+#~ msgid "* Optional"
+#~ msgstr "* Facultatif"
 
 #, fuzzy
 #~ msgid ""
