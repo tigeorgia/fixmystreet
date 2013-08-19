@@ -4,5 +4,4 @@
 *.html.sw*
 media/photos
 apache
-settings.py
 local_settings.py
