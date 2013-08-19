@@ -1,154 +1,190 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load reports_tags %}
 
-{% block title %}{{report.ward.city.name}}: {{report.title}}{% endblock %}
+{% block title %}{{ report.ward.city.name }}: {{ report.title }}{% endblock %}
 {% block script %}
-<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js?pub=xa-4a620b09451f9502"></script>
-<script type="text/javascript" src="/media/js/geokbd.js"></script>
+    <script type="text/javascript"
+            src="http://s7.addthis.com/js/250/addthis_widget.js?pub=xa-4a620b09451f9502"></script>
+    <script type="text/javascript" src="/mainapp/static/js/geokbd.js"></script>
 {% endblock %}
 {% block css %}
-	<style type="text/css" media="screen">
-    #update-header {
-        float: left;
-        width: 100%;
-    }
-    
-    #update-title {
-        float: left;
-        width: 48%;
-    }
-    
-    #update-email-me {
-        float: right;
-        width: 48%;
-        text-align: right;
-        margin-top: 4px;
-    }
-	</style>
+    <style type="text/css" media="screen">
+        #update-header {
+            float: left;
+            width: 100%;
+        }
+
+        #update-title {
+            float: left;
+            width: 48%;
+        }
+
+        #update-email-me {
+            float: right;
+            width: 48%;
+            text-align: right;
+            margin-top: 4px;
+        }
+    </style>
 {% endblock %}
 {% block content %}
-<div id="page_content_container">
-	<div id="leftcol">    
-			{% if report.is_fixed %}
-			<div class='is_fixed'>{% trans "This problem has been fixed." %}</div>
-			{% endif %}
-				
-			{% if not report.is_confirmed %}
-				   <div class='is_fixed'>{% trans "<p>Please check your email for a message from FixMyStreet.ge, which will include a confirmation link.  Complete your submission by clicking on it.</p><p>Your report will not be sent to city officials or be visible to other visitors until you have done so.</p>" %}</div>
-			{% endif %}
-			<h3>{{report.title}}</h3>
-			{% if not report.is_fixed and report.is_confirmed %}
-			<!-- AddThis Button BEGIN -->
-			<div class="addthis_toolbox addthis_default_style">
-			<a href="http://www.addthis.com/bookmark.php?v=250&pub=xa-4a620b09451f9502" class="addthis_button_compact">Share</a>
-				<span class="addthis_separator">|</span>
-				<a class="addthis_button_facebook"></a>
-				<a class="addthis_button_myspace"></a>
-				<!--<a class="addthis_button_google"></a>-->
-				<a class="addthis_button_twitter"></a>
-			</div>
-			<!-- AddThis Button END -->
-            
-			{% endif %}
-			<div>{% trans "Translate this report" %}
-			<div id="google_translate_element"></div><script>
-				function googleTranslateElementInit() {
-					new google.translate.TranslateElement({
-						pageLanguage: 'en',
-						autoDisplay: false,
-						multilanguagePage: true
-					}, 'google_translate_element');
-				}
-        </script><script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <div id="content-top">
+        <div id="header-box" class="reports">
+            <div id="{{ google.dom_id }}" style="height:200px;margin-left:-40%"></div>
+        </div>
     </div>
-			<div id='report-header'>
-				<div id='report-status'>
-				{% trans "Category:" %}<b>{{report.category.name}}</b><br/>
-				{% trans "Street Address:" %}<b>{{report.street}}</b><br/>
-				{% trans "Filed by:" %}{{report.author}}<br/>				
-				<i>
-				{% if report.sent_at %}
-					{% trans "Sent to" %}: {{report.email_sent_to}}<br/>
-					{% trans "On" %}: {{report.sent_at|date}}.
-				{% endif %}
-                </i><br />
-				<br/>
-				</div>
-				{% if report.is_confirmed %}
-				<div id='report-subscribers'>
-				{% trans "Subscribers:" %} <b>{{subscribers}}</b><br/>					
-				{% if not report.is_fixed %}
-				<a href="/reports/{{report.id}}/subscribers/">{% trans "Subscribe" %}</a>
-				{% endif %}
-				</div>
-				{% endif %}
-			</div>
-			<br/>
-			<p>{{report.desc|linebreaks}}</p>
-			{% if report.photo  %}
-                   <img align='center' src='{{report.photo.url}}'>
-		    {% endif %}
-		    {% if report.is_confirmed %}
-				<div id="more-actions">
-                    <p><a href="/reports/{{report.id}}/poster">{% trans "Print a flyer" %}</a>{% trans " to tell others about this problem." %}</p>
-					<p><a href='/reports/{{report.id}}/flags'>{% trans "Offensive? Unsuitable? Tell us" %}</a></p>
-				</div>
-			
-				{% if updates %}
-					<h3>{% trans "Updates" %}</h3>
-                    <div id="updates">
-					{% for update in updates %}
-						<div class="update-info">
-                            {% trans "posted by" %} {{update.author}}, {{update.created_at|date}}
-                        </div>
-					    <div class="update-desc">
-						    {{update.desc}}
-                        </div>
-                        <div class="update-photo">
-                        {% if update.photo %}
-                           <img align='center' src='{{update.photo.url}}'>
-                        {% endif %}
-                        </div>
-                        {% if update.is_verified_author %}
-                            <div class="update-verified">
-                            <a href="/about/#How%20is%20a%20problem%20fixed%3F">{% trans "This report's author has been verified" %}</a>
-                           {# {% trans "<a href='/about/#How%20is%20a%20problem%20fixed%3F'> This update is from: </a>" %}{{verified_name}}#}
-                            </div>
-                        {% endif %}
-						<hr />
-					{% endfor %}
-                    </div>
-				{% endif %}
-				<hr/>
-				<div id="update-header">
-					<div id="update-title"><h3>{% trans "Provide an update" %} </h3></div>
-				</div>				
-				<p>{% trans "Please note that updates are not sent to city officials." %}</p>
-				<form enctype="multipart/form-data" action="/reports/{{report.id}}/updates/" method="post" name="my-form">
-				<table class="form">
-                <tr>
-                    <th><label>{% trans "Georgian keyboard" %}</label></th>
-                    <td><input type="checkbox" name="geo" checked="checked"></td>
-                </tr>
-					{{update_form.as_table}}					
-				{% if not report.is_fixed %}
-                <tr><td></td><td><input type="checkbox" id="is_fixed" name="is_fixed" value="1">{% trans "This problem has been fixed." %}</td></tr>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-8 col-lg-8">
+                {% if report.is_fixed %}
+                    <div class="status-color-fixed">{% trans "This problem has been fixed." %}</div>
                 {% else %}
-                <tr><td></td><td><input type="checkbox" id="un_fixed" name="is_fixed" value="1" checked="checked">{% trans "This problem is still fixed." %}</td></tr>
+                    <div class="status-color-not-fixed">{% trans "This problem has not been fixed." %}</div>
                 {% endif %}
-				<tr><td></td><td><input type ="submit" value= "{% trans "Submit" %}"></td></td>
-				</table>
-				</form>
-                <script type="text/javascript">
-                    GeoKBD.map('my-form');
-                </script>	
-		{% endif %}
-	</div>
-	<div id="rightcol">
-        {# if olMap %}{{ olMap }}{% endif #}
-     <div id="{{ google.dom_id }}" style="width:400px;height:400px;"></div>
-    	{% include "wards/_info_box.html" %}
-        
-</div>
-	
+
+                {% include "wards/_info_box.html" %}
+
+                {% if not report.is_confirmed %}
+                    <div class='is_fixed'>{% trans "<p>Please check your email for a message from FixMyStreet.ge, which will include a confirmation link.  Complete your submission by clicking on it.</p><p>Your report will not be sent to city officials or be visible to other visitors until you have done so.</p>" %}</div>
+                {% endif %}
+                <h3>{{ report.title }}</h3>
+
+                <p>{{ report.desc|linebreaks }}</p>
+
+                {% if not report.is_fixed and report.is_confirmed %}
+                    <!-- AddThis Button BEGIN -->
+                    <div class="addthis_toolbox addthis_default_style">
+                        <a href="http://www.addthis.com/bookmark.php?v=250&pub=xa-4a620b09451f9502"
+                           class="addthis_button_compact">Share</a>
+                        <span class="addthis_separator">|</span>
+                        <a class="addthis_button_facebook"></a>
+                        <a class="addthis_button_myspace"></a>
+                        <!--<a class="addthis_button_google"></a>-->
+                        <a class="addthis_button_twitter"></a>
+                    </div>
+                    <!-- AddThis Button END -->
+
+                {% endif %}
+                <div>{% trans "Translate this report" %}
+                    <div id="google_translate_element"></div>
+                    <script>
+                        function googleTranslateElementInit() {
+                            new google.translate.TranslateElement({
+                                pageLanguage: 'en',
+                                autoDisplay: false,
+                                multilanguagePage: true
+                            }, 'google_translate_element');
+                        }
+                    </script>
+                    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                </div>
+                <div id='report-header'>
+                    <div id='report-status'>
+                        {% trans "Category:" %}<b>{{ report.category.name }}</b><br/>
+                        {% trans "Street Address:" %}<b>{{ report.street }}</b><br/>
+                        {% trans "Filed by:" %}{{ report.author }}<br/>
+                        <i>
+                            {% if report.sent_at %}
+                                {% trans "Sent to" %}: {{ report.email_sent_to }}<br/>
+                                {% trans "On" %}: {{ report.sent_at|date }}.
+                            {% endif %}
+                        </i><br/>
+                        <br/>
+                    </div>
+                    {% if report.is_confirmed %}
+                        <div id='report-subscribers'>
+                            {% trans "Subscribers:" %} <b>{{ subscribers }}</b><br/>
+                            {% if not report.is_fixed %}
+                                <a href="{% url 'mainapp.views.reports.subscribers.new' report_id=report.id %}">{% trans "Subscribe" %}</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+                {% if report.photo %}
+                    <img align='center' src='{{ report.photo.url }}'>
+                {% endif %}
+                {% if report.is_confirmed %}
+                    <div id="more-actions">
+                        <p>
+                            <a href="/reports/{{ report.id }}/poster">{% trans "Print a flyer" %}</a>{% trans " to tell others about this problem." %}
+                        </p>
+
+                        <p><a href='/reports/{{ report.id }}/flags'>{% trans "Offensive? Unsuitable? Tell us" %}</a></p>
+                    </div>
+
+                    {% if updates %}
+                        <h3>{% trans "Updates" %}</h3>
+                        <div id="updates">
+                            {% for update in updates %}
+                                <div class="update-info">
+                                    {% trans "posted by" %} {{ update.author }}, {{ update.created_at|date }}
+                                </div>
+                                <div class="update-desc">
+                                    {{ update.desc }}
+                                </div>
+                                <div class="update-photo">
+                                    {% if update.photo %}
+                                        <img align='center' src='{{ update.photo.url }}'>
+                                    {% endif %}
+                                </div>
+                                {% if update.is_verified_author %}
+                                    <div class="update-verified">
+                                        <a href="/about/#How%20is%20a%20problem%20fixed%3F">{% trans "This report's author has been verified" %}</a>
+                                        {# {% trans "<a href='/about/#How%20is%20a%20problem%20fixed%3F'> This update is from: </a>" %}{{verified_name}}#}
+                                    </div>
+                                {% endif %}
+                                <hr/>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <hr/>
+                    <div id="update-header">
+                        <div id="update-title"><h3>{% trans "Provide an update" %} </h3></div>
+                    </div>
+                    <p>{% trans "Please note that updates are not sent to city officials." %}</p>
+                    <form enctype="multipart/form-data"
+                          action="{% url 'mainapp.views.reports.updates.new' report_id=report.id %}" method="post"
+                          name="my-form">
+                        <table class="form">
+                            <tr>
+                                <th><label>{% trans "Georgian keyboard" %}</label></th>
+                                <td><input type="checkbox" name="geo" checked="checked"></td>
+                            </tr>
+                            {{ update_form.as_table }}
+                            {% if not report.is_fixed %}
+                                <tr>
+                                    <td></td>
+                                    <td><input type="checkbox" id="is_fixed" name="is_fixed"
+                                               value="1">{% trans "This problem has been fixed." %}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td></td>
+                                    <td><input type="checkbox" id="un_fixed" name="is_fixed" value="1"
+                                               checked="checked">{% trans "This problem is still fixed." %}</td>
+                                </tr>
+                            {% endif %}
+                            <tr>
+                                <td></td>
+                                <td><input type="submit" value="{% trans "Submit" %}"></td>
+                            </tr>
+                        </table>
+                    </form>
+                {% endif %}
+            </div>
+
+            <div class="col-6 col-sm-4 col-lg-4">
+                {% latest_reports 8 %}
+                <h4>{% trans "How to report a Problem" %}</h4>
+                <ol>
+                    <li>{% trans "Click on your city on homepage" %}</li>
+                    <li>{% trans "Type in your address" %}</li>
+                    <li>{% trans "Click on a marker button and drag it to desired location" %}</li>
+                    <li>{% trans "Fill in the details in the form" %}</li>
+                    <li>{% trans "We send it to the city on your behalf" %}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
 {% endblock %}
