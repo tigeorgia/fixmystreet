@@ -1,11 +1,8 @@
 *.pyc
-media/*.png
-media/images/marker/*
 *.mo
 *.py.sw*
-media/photos
 *.html.sw*
-media-old
+media/photos
 apache
 settings.py
 local_settings.py
