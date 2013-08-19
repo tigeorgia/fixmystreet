@@ -1,6 +1,7 @@
-from fixmystreet.mainapp.models import EmailRule,Ward,ReportCategory,City, ReportCategoryClass, FaqEntry, Councillor,Province,Report,ReportUpdate,VerifiedAuthor
+from mainapp.models import EmailRule, Ward, ReportCategory,\
+    City, ReportCategoryClass, FaqEntry, Councillor, Province, Report, ReportUpdate, VerifiedAuthor
 from django.contrib import admin
-from contrib.transmeta import canonical_fieldname
+from transmeta import canonical_fieldname
 
 admin.site.register(EmailRule)
 admin.site.register(City)
