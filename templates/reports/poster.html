@@ -5,43 +5,49 @@
 <html>
 <head>
     <title>{% trans "FixMyStreet.ge" %} - {% block title %}{% trans "Print Poster" %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="/media/css/poster.css" media="print,screen" />
+    <link rel="stylesheet" type="text/css" href="/mainapp/static/css/poster.css" media="print,screen"/>
 </head>
-<body>    
+<body>
 <div id="instructions">
     <a href="javascript:window.print()">{% trans "Print this page" %}</a>
 </div>
-<center>
-	<div class="poster clearfix">
-		<div id="header">
-				<a href="/"><img src="/media/images/fixmystreetlogo_geo.png"></a>
-				<a href="http://www.transparency.ge"><img src="/media/images/sitebyvg_geo.png"></a>
-		</div>
-		<div class="intro_text">	
-			<h3>{% block search_instructions %}გაგზავნეთ შეტყობინება თბილისის ქუჩებში არსებულ დაზიანებებზე, რომ დროულად მოხდეს მათი შეკეთება{% endblock %}</h3>
-			<p>(როგორიცაა გრაფიტი, ორმოები, ზედმეტი ნაგავი, ან ქუჩის განათება)</p>
-		</div>
-		<h2>{{report.ward.city.name}}: {{report.title}}</h2>
-        <h2>გსურთ ამ დაზიანების შეკეთება?</h2>
-        <h2>გადადით ბმულზე: {{ url }}</h2>
-        <img class="qrcode" src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl={{ url }}&chld=M" width="200px" height="200px" />
-        <h2>ან ამოიკითხეთ კოდი თქვენი სმარტფონის საშუალებით</h2>
+<div class="poster clearfix">
+    <div id="header">
+        <a href="/"><img src="/static/images/main/fixmystreetlogo_geo.png"></a>
+        <a href="http://www.transparency.ge"><img src="/static/images/main/sitebyvg_geo.png"></a>
     </div>
-	<div class="poster clearfix">
-		<div id="header_en" class="clearfix">
-				<a href="/"><img src="/media/images/fixmystreetlogo.png" width="540px"></a>
-				<a href="http://www.transparency.ge"><img src="/media/images/sitebyvg.png"></a>
-		</div>
-        <h1>Want this problem fixed?</h1>
-        <h2>Go to: {{ url }}</h2>
-        <h2>Or read the code with your smartphone</h2>
-        </div>
+    <div class="intro_text">
+        <h3>{% block search_instructions %}გაგზავნეთ შეტყობინება თბილისის ქუჩებში არსებულ დაზიანებებზე, რომ დროულად
+            მოხდეს მათი შეკეთება{% endblock %}</h3>
 
+        <p>(როგორიცაა გრაფიტი, ორმოები, ზედმეტი ნაგავი, ან ქუჩის განათება)</p>
     </div>
+    <h2>{{ report.ward.city.name }}: {{ report.title }}</h2>
 
-	<div id="footer">
-		<a href="http://www.epfound.ge/"><img src="/media/images/epf-logo.png" width="100px" /></a>
-	</div>
-</center>
+    <h2>გსურთ ამ დაზიანების შეკეთება?</h2>
+
+    <h2>გადადით ბმულზე: {{ url }}</h2>
+    <img class="qrcode" src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl={{ url }}&chld=M" width="200px"
+         height="200px"/>
+
+    <h2>ან ამოიკითხეთ კოდი თქვენი სმარტფონის საშუალებით</h2>
+</div>
+<div class="poster clearfix">
+    <div id="header_en" class="clearfix">
+        <a href="/"><img src="/static/images/main/fixmystreetlogo.png" width="540"></a>
+        <a href="http://www.transparency.ge"><img src="/static/images/main/sitebyvg.png"></a>
+    </div>
+    <h1>Want this problem fixed?</h1>
+
+    <h2>Go to: {{ url }}</h2>
+
+    <h2>Or read the code with your smartphone</h2>
+</div>
+
+</div>
+
+<div id="footer">
+    <a href="http://www.epfound.ge/"><img src="/static/images/main/epf-logo.png" width="100px"/></a>
+</div>
 </body>
 

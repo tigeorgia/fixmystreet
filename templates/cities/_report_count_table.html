@@ -1,28 +1,34 @@
 {% load i18n %}
+{% load static from staticfiles %}
 <table width="100%">
-	<tr class ='table_heading'>
-		<th class='table-stat'></th>
-		<th class='table-rank'></th>
-		<th class='row-text' ></th>
-		<th class='table-stat'>{% trans "All new problems, last month" %}</th>
-		<th class='table-stat'>{% trans "Older Unresolved Problems" %}</th>
-		<th class='table-stat'>{% trans "Recently Fixed" %}*</th>
-		<th class='table-stat'>{% trans "Old Fixed" %}*</th>
-	</tr>
-{% for entry in report_counts.get_results %}
-	{% if report_counts.province_changed %}
-		<tr ><td colspan=7 class='section' >{{report_counts.province}}</td></tr>
-	{% endif %}
-	<tr class="{% cycle 'row-odd' 'row-even' %}">
-	<td><a href='/feeds{{report_counts.get_absolute_url}}'><img src="/media/images/rss25x26.png" /></a></td>
-	<td>{{report_counts.number}}</td>
-	<td><a href='{{report_counts.get_absolute_url}}'>{{report_counts.name}}</a></td>
-	<td>{{report_counts.recent_new}}</td>
-	<td>{{report_counts.old_unfixed}}</td>
-	<td>{{report_counts.recent_fixed}}</td>
-	<td>{{report_counts.old_fixed}}</td>
-	{% if report_counts.next %}{% endif %}
-	</tr>
-{% endfor %}
+    <tr class='table_heading'>
+        <th class='table-stat'></th>
+        <th class='table-rank'></th>
+        <th class='row-text'></th>
+        <th class='table-stat'>{% trans "All new problems, last month" %}</th>
+        <th class='table-stat'>{% trans "Older Unresolved Problems" %}</th>
+        <th class='table-stat'>{% trans "Recently Fixed" %}*</th>
+        <th class='table-stat'>{% trans "Old Fixed" %}*</th>
+    </tr>
+    {% for entry in report_counts.get_results %}
+
+        {% if report_counts.province_changed %}
+            <tr>
+                <td colspan=7 class='section'>{{ report_counts.province }}</td>
+            </tr>
+        {% endif %}
+
+        <tr class="{% cycle 'row-odd' 'row-even' %}">
+            <td><a href='/feeds{{ report_counts.get_absolute_url }}'>
+                <img src="{% static 'images/main/rss25x26.png' %}" /></a></td>
+            <td>{{ report_counts.number }}</td>
+            <td><a href='{{ report_counts.get_absolute_url }}'>{{ report_counts.name }}</a></td>
+            <td>{{ report_counts.recent_new }}</td>
+            <td>{{ report_counts.old_unfixed }}</td>
+            <td>{{ report_counts.recent_fixed }}</td>
+            <td>{{ report_counts.old_fixed }}</td>
+            {% if report_counts.next %}{% endif %}
+        </tr>
+    {% endfor %}
 </table>
 <div class="fix-disclaimer"><p>*{% trans "As reported by FixMyStreet.ge users." %}</p></div>
