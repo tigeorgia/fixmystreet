@@ -6,7 +6,7 @@ from django.utils import translation
 
 class LanguagePrefixMiddleware:
     def process_request(self, request):
-        LANG_BLACKLIST = ['i18n', 'jsi18n', 'media']
+        LANG_BLACKLIST = ['i18n', 'jsi18n', 'media', 'admin', 'rosetta']
         l_path = request.path.split('/')
         request.session['path_without_lang'] = request.path
         codes = []
