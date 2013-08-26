@@ -185,7 +185,7 @@ INSTALLED_APPS = (
     'south',
     'pipeline',
     'django_filters',
-    'django-fixmystreet',
+    'fixmystreet',
     'rosetta',
     'widget_tweaks',
 )
