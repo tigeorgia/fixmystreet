@@ -1,5 +1,6 @@
 from django.conf.urls import *
 from django.conf.urls.i18n import i18n_patterns
+from django.conf.urls.static import static
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.contrib import admin
@@ -8,6 +9,8 @@ from mainapp.feeds import LatestReports, LatestReportsByCity, LatestReportsByWar
 from mainapp.models import City, Report, ReportFilter
 from mainapp.sitemaps import MainSitemap
 import mainapp.views.cities as cities
+from mainapp.views.main import AboutView, HomeView
+from mainapp.views.ajax import latestReportsJson
 
 js_info_dict = {
     'packages': ('django-fixmystreet',),
@@ -33,73 +36,69 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('',
-    (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
+                        (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
 )
 
-
 urlpatterns += i18n_patterns('',
-                        url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps})
+                             url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps})
 )
 
 urlpatterns += i18n_patterns('mainapp.views.main',
-                        url(r'^$', 'home'),
-                        url(r'about/$', 'about')
-)
-
-urlpatterns += i18n_patterns('mainapp.views.faq',
-                        url(r'^about/(\S+)$', 'show'),
+                             url(r'^$', HomeView.as_view(), name='home'),
+                             url(r'about/$', AboutView.as_view(), name='about')
 )
 
 urlpatterns += i18n_patterns('mainapp.views.promotion',
-                        url(r'^promotions/(\w+)$', 'show'),
+                             url(r'^promotions/(\w+)$', 'show'),
 )
 
 urlpatterns += i18n_patterns('mainapp.views.wards',
-                        url(r'^wards/(?P<ward_id>\d+)', 'show'),
-                        url(r'^cities/(?P<city_id>\d+)/wards/(?P<ward_id>\d+)', 'show_by_number'),
+                             url(r'^wards/(?P<ward_id>\d+)', 'show'),
+                             url(r'^cities/(?P<city_id>\d+)/wards/(?P<ward_id>\d+)', 'show_by_number'),
 
 )
 
-
 urlpatterns += i18n_patterns('mainapp.views.reports.updates',
-                        (r'^reports/updates/confirm/(\S+)', 'confirm'),
-                        (r'^reports/updates/create/', 'create'),
-                        (r'^reports/(?P<report_id>\d+)/updates/', 'new'),
+                             (r'^reports/updates/confirm/(\S+)', 'confirm'),
+                             (r'^reports/updates/create/', 'create'),
+                             (r'^reports/(?P<report_id>\d+)/updates/', 'new'),
 )
 
 urlpatterns += i18n_patterns('mainapp.views.reports.subscribers',
-                        (r'^reports/subscribers/confirm/(\S+)', 'confirm'),
-                        (r'^reports/subscribers/unsubscribe/(\S+)', 'unsubscribe'),
-                        (r'^reports/subscribers/create/', 'create'),
-                        (r'^reports/(?P<report_id>\d+)/subscribers', 'new'),
+                             (r'^reports/subscribers/confirm/(\S+)', 'confirm'),
+                             (r'^reports/subscribers/unsubscribe/(\S+)', 'unsubscribe'),
+                             (r'^reports/subscribers/create/', 'create'),
+                             (r'^reports/(?P<report_id>\d+)/subscribers', 'new'),
 )
 
 urlpatterns += i18n_patterns('mainapp.views.reports.flags',
-                        (r'^reports/(?P<report_id>\d+)/flags/thanks', 'thanks'),
-                        (r'^reports/(?P<report_id>\d+)/flags', 'new'),
+                             (r'^reports/(?P<report_id>\d+)/flags/thanks', 'thanks'),
+                             (r'^reports/(?P<report_id>\d+)/flags', 'new'),
 )
 
 urlpatterns += i18n_patterns('mainapp.views.reports.main',
-                        (r'^reports/(?P<report_id>\d+)$', 'show'),
-                        (r'^reports/(?P<report_id>\d+)/$', 'show'),
-                        (r'^reports/(?P<report_id>\d+)/poster$', 'poster'),
-                        #(r'^reports/category/(\d+)$', 'category'),
-                        (r'^reports/', 'new'),
+                             (r'^reports/(?P<report_id>\d+)$', 'show'),
+                             (r'^reports/(?P<report_id>\d+)/$', 'show'),
+                             (r'^reports/(?P<report_id>\d+)/poster$', 'poster'),
+                             #(r'^reports/category/(\d+)$', 'category'),
+                             (r'^reports/', 'new'),
 )
 
 urlpatterns += i18n_patterns('mainapp.views.contact',
-                        (r'^contact/thanks', 'thanks'),
-                        (r'^contact', 'new'),
+                             (r'^contact/thanks', 'thanks'),
+                             (r'^contact', 'new'),
 )
 
 urlpatterns += i18n_patterns('mainapp.views.ajax',
-                        (r'^ajax/categories/(?P<cat_id>\d+)', 'category_desc'),
-                        (r'^ajax/address-search-form', 'address_search_form'),
-                        (r'^ajax/new-report$', 'new_report'),
+                             (r'^ajax/categories/(?P<cat_id>\d+)', 'category_desc'),
+                             (r'^ajax/address-search-form', 'address_search_form'),
+                             (r'^ajax/new-report$', 'new_report'),
+                             (r'^ajax/latest-reports$', 'latest_reports_json'),
+                             url(r'^ajax/l$', latestReportsJson.as_view())
 )
 
 urlpatterns += i18n_patterns('mainapp.views.reports',
-                             (r'^all-reports/', 'main.report_list'),
+                             (r'^all-reports/', 'main.report_list', ),
 )
 
 #The following is used to serve up local media files like images
@@ -108,14 +107,14 @@ if settings.LOCAL_DEV:
     urlpatterns += patterns('',
                             (baseurlregex, 'django.views.static.serve',
                              {'document_root': settings.MEDIA_ROOT}),
-    )
+    ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
     urlpatterns += patterns('django.contrib.staticfiles.views',
-        url(r'^static/(?P<path>.*)$', 'serve'),
-    )
+                            url(r'^static/(?P<path>.*)$', 'serve'),
+    ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if 'rosetta' in settings.INSTALLED_APPS:
     urlpatterns += patterns('',
-        url(r'^rosetta/', include('rosetta.urls')),
+                            url(r'^rosetta/', include('rosetta.urls')),
     )
