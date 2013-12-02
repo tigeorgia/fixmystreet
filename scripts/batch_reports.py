@@ -10,9 +10,9 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'fixmystreet.settings'
 
 import datetime
 from datetime import datetime as dt
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from fixmystreet.mainapp.models import Ward,Report
+from fixmystreet.mainapp.models import Report
 from fixmystreet import settings
 
 
@@ -38,22 +38,24 @@ councillor_email_count = 0
 
 # send old reports that have not been updated
 one_month_ago = dt.today() - datetime.timedelta(days=31)
-reminder_reports = Report.objects.filter(is_confirmed=True, is_fixed = False, reminded_at__lte=one_month_ago, updated_at__lte=one_month_ago ).order_by("ward","-created_at")  
+reminder_reports = Report.objects.filter(is_confirmed=True, is_fixed=False, reminded_at__lte=one_month_ago,
+                                         updated_at__lte=one_month_ago).order_by("ward", "-created_at")
 
 for report in reminder_reports:
-    subject = render_to_string("emails/batch_reports/reminders/subject.txt", 
-                               {'report': report })
-    message = render_to_string("emails/batch_reports/reminders/message.txt", 
-                               {'report': report })
+    subject = render_to_string("emails/batch_reports/reminders/subject.txt",
+                               {'report': report})
+    message = render_to_string("emails/batch_reports/reminders/message.txt",
+                               {'report': report})
 
-    send_mail(subject, message, settings.EMAIL_FROM_USER,[report.first_update().email], fail_silently=False)
+    send_mail(subject, message, settings.EMAIL_FROM_USER, [report.first_update().email], fail_silently=False)
 
     report.reminded_at = dt.now()
     report.save()
     reminder_email_count += 1
 
 # notify admin reports were run
-send_mail('Ward Summary Reports Run %s' % ( dt.now()  ), 
-          '%d Report Summaries Sent to Councillors\n%d Reminders Sent' %( councillor_email_count, reminder_email_count ), 
-              settings.EMAIL_FROM_USER,[settings.ADMIN_EMAIL], fail_silently=False)
+send_mail('Ward Summary Reports Run %s' % ( dt.now()  ),
+          '%d Report Summaries Sent to Councillors\n%d Reminders Sent' % (
+              councillor_email_count, reminder_email_count ),
+          settings.EMAIL_FROM_USER, [settings.ADMIN_EMAIL], fail_silently=False)
 
