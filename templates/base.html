@@ -2,6 +2,7 @@
 {% load i18n %} {% load analytics %} {% get_current_language as LANGUAGE_CODE %}
 {% load static from staticfiles %}
 {% load compressed %}
+{% load settings_in_templates %}
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
     <title>{% block title %}{% endblock %} | {% trans "FixMyStreet .ge" %}</title>
@@ -23,18 +24,14 @@
 
     {% block css %}{% endblock %}
 
-    {% block script %}{% endblock %}
+    {% block script %}
+    {% endblock %}
 
-    {% if google %}
-        {{ google.style }}
-        {{ google.api_script }}
-        <script type="text/javascript">
-            {{ google.js }}
-        </script>
-    {% endif %}
+   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={% settings_value "GMAP_KEY" %}&sensor=true&libraries=places"></script>
 
 </head>
-<body class="lang-{{ LANGUAGE_CODE }}" {% if google %}{{ google.onload }} {{ google.onunload }}{% endif %}>
+<body class="lang-{{ LANGUAGE_CODE }}" {% block body_tags %}{% endblock %}>
+{% block body_script %}{% endblock %}
 <!--[if lt IE 8]><div id="ie-deprecated"><div style='clear: both; height: 112px; padding:0; position: fixed; top:50%; left:50%;
 margin-left:-174px;margin-top:-56px'><a
         href="http://www.theie7countdown.com/ie-users-info"><img src="http://www.theie7countdown.com/assets/badge_iecountdown.png" border="0" height="112" width="348" alt="" /></a></div></div>
@@ -55,7 +52,7 @@ margin-left:-174px;margin-top:-56px'><a
             <span class="icon-bar"></span>
         </button>
 
-        <a class="navbar-brand visible-sm" href="{% url 'mainapp.views.main.home' %}">
+        <a class="navbar-brand visible-sm" href="{% url 'home' %}">
             <img class="fms-logo" alt="Fixmystret Georgia" title="Fixmystret Georgia"
                  src="{% static 'images/main/fms-logo-'|add:LANGUAGE_CODE|add:'.png' %}"/>
         </a>
@@ -64,11 +61,11 @@ margin-left:-174px;margin-top:-56px'><a
 
             <ul class="nav navbar-nav nav-left">
                 <li><a href="{% url 'mainapp.views.reports.main.report_list' %}">{% trans "All Reports" %}</a></li>
-                <li><a href="{% url 'mainapp.views.main.about' %}">{% trans "Questions" %}</a></li>
+                <li><a href="{% url 'about' %}">{% trans "Questions" %}</a></li>
             </ul>
 
             <ul class="nav navbar-nav nav-logo hidden-sm">
-                <li><a class="navbar-brand" href="{% url 'mainapp.views.main.home' %}">
+                <li><a class="navbar-brand" href="{% url 'home' %}">
                     <img class="fms-logo" alt="Fixmystreet Georgia" title="Fixmystret Georgia"
                          src="{% static 'images/main/fms-logo-'|add:LANGUAGE_CODE|add:'.png' %}"/></a>
                 </li>

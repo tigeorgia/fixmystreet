@@ -13,8 +13,63 @@
     </style>-->
 {% endblock %}
 {% block script %}
+    <script type="text/javascript">
+
+        function initialize() {
+            geocoder = new google.maps.Geocoder();
+            var mapOptions = {
+                center: new google.maps.LatLng(41.708484, 44.79847),
+                zoom: 17,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map_canvas"),
+                    mapOptions);
+            var input = /** @type {HTMLInputElement} */(document.getElementById('address_search'));
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo('bounds', map);
+            autocomplete.setComponentRestrictions({'country': 'GE'});
+
+
+            //START GOOGLE MAPS AUTOCOMPLETE
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                input.className = '';
+                var place = autocomplete.getPlace();
+                console.log(place);
+                if (!place.geometry) {
+                    // Inform the user that the place was not found and return.
+                    input.className = 'notfound';
+                    return;
+                }
+
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(17);
+                }
+
+                var address = '';
+                if (place.address_components) {
+                    address = [
+                        (place.address_components[0] && place.address_components[0].short_name || ''),
+                        (place.address_components[1] && place.address_components[1].short_name || ''),
+                        (place.address_components[2] && place.address_components[2].short_name || '')
+                    ].join(' ');
+                }
+            });
+
+            //END GOOGLE MAPS AUTOCOMPLETE
+
+            google.maps.event.addListenerOnce(map, 'idle', function () {
+                loadDivs();
+                populateMarkers();
+            });
+        }
+    </script>
 {% endblock %}
 {% block title %}{% trans "Home" %}{% endblock %}
+{% block body_tags %}onload='initialize()'{% endblock %}
+
 {% block content %}
     <div class="row home-map">
         <div class="container">
@@ -68,7 +123,7 @@
                             {% trans "Search Street" %}</button>
                     </fieldset>
                 </form>
-                <button class="add-marker btn btn-default btn-fixed" id="add-marker-mobile" onclick="addMarker()">
+                <button class="add-marker btn btn-default btn-fixed" id="add-marker-mobile" onclick="addressMarker()">
                     {% trans "Add marker" %}</button>
             </div>
 
@@ -123,7 +178,7 @@
                     <button type="submit" id="search-street"></button>
                 </fieldset>
             </form>
-            <button class="add-marker" onclick="addMarker()"></button>
+            <button class="add-marker" onclick="addressMarker()"></button>
         </div>
     </div>
 
@@ -173,9 +228,10 @@
             </div>
             <div class="col-6 col-sm-4 col-lg-4">
                 {% _about_us_sidebar %}
-                {% latest_reports 10 %}
+                <div class="report-updates"><h3>{% trans "Last Updates"%}</h3>
+                    {% latest_reports 10 %}
+                </div>
             </div>
         </div>
     </div>
-    <div class="fix-disclaimer"><p>*{% trans "As reported by FixMyStreet.ge users." %}</p></div>
 {% endblock %}
