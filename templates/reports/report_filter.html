@@ -23,10 +23,10 @@
                         <tr>
                             <th style="width:1px"></th>
                             <th>{% trans "Title" %}</th>
-                            <th>Region</th>
-                            <th>Category</th>
-                            <th>Subscribers</th>
-                            <th>Date Created</th>
+                            <th>{% trans "Region" %}</th>
+                            <th>{% trans "Category" %}</th>
+                            <th>{% trans "Subscribers" %}</th>
+                            <th>{% trans "Date Created" %}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -43,7 +43,7 @@
                                 <td data-title="{% trans "Ward" %}">{{ obj.ward }}</td>
                                 <td data-title="{% trans "Category" %}">{{ obj.category }}</td>
                                 <td data-title="{% trans "Subscribers" %}1">{{ obj.sub_count|add:+1 }}</td>
-                                <td data-title="{% trans "Created" %}">{{ obj.created_at|date:"m.d.y" }}</td>
+                                <td data-title="{% trans "Created" %}"><time itemprop="startDate" datetime="{{ obj.created_at|date:'c'}}">{{ obj.created_at|date:"d.m.y" }}</time></td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -79,7 +79,7 @@
             <div class="col-6 col-sm-4 col-lg-4">
                 <form action="" method="get">
                     <label><h5><b>{% trans "Ward" %}</b></h5></label>
-                    {{ filter.form.ward|attr:"class:form-control" }}
+                    {{ filter.form.ward__city|attr:"class:form-control" }}
                     <label><h5><b>{% trans "Fixed" %}</b></h5></label>
                     {{ filter.form.is_fixed|attr:"class:form-control" }}
                     <label><h5><b>{% trans "Sorting:" %}</b></h5></label>
@@ -98,7 +98,9 @@
                     <button class="btn btn-default btn-fixed" type="submit">
                         {% trans "Submit" %}</button>
                 </form>
-                {% latest_reports 5 %}
+                <div class="report-updates"><h3>{% trans "Last Updates"%}</h3>
+                    {% latest_reports 5 %}
+                </div>
             </div>
         </div>
     </div>

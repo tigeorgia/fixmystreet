@@ -7,6 +7,25 @@
     <script type="text/javascript"
             src="http://s7.addthis.com/js/250/addthis_widget.js?pub=xa-4a620b09451f9502"></script>
     <script type="text/javascript" src="/mainapp/static/js/geokbd.js"></script>
+    <script type="text/javascript">
+
+        function initialize() {
+            var LatLng = new google.maps.LatLng({{ google.center.1 }}, {{ google.center.0 }});
+            var mapOptions = {
+                center: LatLng,
+                zoom: 17,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map_canvas"),
+                    mapOptions);
+
+            google.maps.event.addListenerOnce(map, 'idle', function () {
+                addMarker("Marker", LatLng)
+            });
+        }
+
+
+    </script>
 {% endblock %}
 {% block css %}
     <style type="text/css" media="screen">
@@ -28,6 +47,7 @@
         }
     </style>
 {% endblock %}
+{% block body_tags %}onload='initialize()'{% endblock %}
 {% block content %}
     <div id="content-top">
         <div id="header-box" class="reports">
@@ -175,7 +195,9 @@
             </div>
 
             <div class="col-6 col-sm-4 col-lg-4">
-                {% latest_reports 8 %}
+                <div class="report-updates"><h3>{% trans "Last Updates"%}</h3>
+                    {% latest_reports 8 %}
+                </div>
                 <h4>{% trans "How to report a Problem" %}</h4>
                 <ol>
                     <li>{% trans "Click on your city on homepage" %}</li>

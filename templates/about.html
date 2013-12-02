@@ -62,7 +62,9 @@
             </div>
             <div class="col-6 col-sm-4 col-lg-4">
                 {% _about_us_sidebar %}
-                {% latest_reports 8 %}
+                <div class="report-updates"><h3>{% trans "Last Updates"%}</h3>
+                    {% latest_reports 8 %}
+                </div>
             </div>
         </div>
     </div>

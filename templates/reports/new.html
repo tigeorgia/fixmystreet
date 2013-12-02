@@ -69,7 +69,7 @@
                     {{ form_error }}
                 {% endif %}
                 <form enctype="multipart/form-data" method="post" id="my-form" name="my-form"
-                      action="{% url mainapp.views.reports.main.new %}">
+                      action="{% url 'mainapp.views.reports.main.new' %}">
 
                     <h4><b>{{ title }}</b></h4>
 
@@ -127,7 +127,11 @@
                     {% trans "Phone" %}: {{ phone }}<br>
                 </address>
             </div>
-            <div class="col-6 col-sm-4 col-lg-4">{% latest_reports 10 %}</div>
+            <div class="col-6 col-sm-4 col-lg-4">
+                <div class="report-updates"><h3>{% trans "Last Updates"%}</h3>
+                    {% latest_reports 10 %}
+                </div>
+            </div>
 
         </div>
     </div>
