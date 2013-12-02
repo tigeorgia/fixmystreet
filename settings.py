@@ -32,8 +32,14 @@ STATIC_URL = '/static/'
 
 RANDOM_IMAGE_DIR = 'images/header-images/' #random home images
 
+
+#GOOGLE MAPS SETTINGS
+GOOGLE_MAPS_URL = 'https://maps.googleapis.com/maps/api/js?sensor=true&v=%s&key='
+GOOGLE_MAPS_API_VERSION = 3
+
+
 # START Pipeline settings
-STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
 PIPELINE_COMPILERS = (
     'pipeline.compilers.less.LessCompiler',
@@ -191,7 +197,7 @@ INSTALLED_APPS = (
 )
 
 DEBUG = True
-LOCAL_DEV = True
+LOCAL_DEV = False
 
 try:
     from local_settings import *
