@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ChemiKucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-02 14:06+0400\n"
-"PO-Revision-Date: 2013-08-02 14:18+0400\n"
+"POT-Creation-Date: 2013-12-02 14:29+0400\n"
+"PO-Revision-Date: 2013-12-02 14:32+0400\n"
 "Last-Translator:   <gio@transparency.ge>\n"
 "Language-Team: TI Georgia <fixmystreet@transparency.ge>\n"
 "MIME-Version: 1.0\n"
@@ -19,13 +19,13 @@ msgstr ""
 "X-Poedit-Language: Georgian\n"
 "X-Translated-Using: django-rosetta 0.7.2\n"
 
-#: mainapp/forms.py:14 mainapp/models.py:56 mainapp/models.py:71
-#: mainapp/models.py:110 mainapp/models.py:258 mainapp/models.py:314
-#: mainapp/models.py:452
+#: mainapp/forms.py:14 mainapp/models.py:55 mainapp/models.py:70
+#: mainapp/models.py:109 mainapp/models.py:257 mainapp/models.py:313
+#: mainapp/models.py:444
 msgid "Name"
 msgstr "სახელი*"
 
-#: mainapp/forms.py:17 mainapp/forms.py:73 mainapp/models.py:313
+#: mainapp/forms.py:17 mainapp/forms.py:73 mainapp/models.py:312
 msgid "Email"
 msgstr "ელ.ფოსტა*"
 
@@ -33,74 +33,85 @@ msgstr "ელ.ფოსტა*"
 msgid "Message"
 msgstr "შეტყობინება"
 
+#: mainapp/forms.py:53
+msgid "Problem Title"
+msgstr "პრობლემის სახელწოდება"
+
+#: mainapp/forms.py:59 templates/reports/new.html:126
+msgid "Street"
+msgstr "ქუჩის მისამართი"
+
 #: mainapp/forms.py:67
-#, fuzzy
 msgid "Name/Last name"
-msgstr "გვარი"
+msgstr "სახელი და გვარი"
 
 #: mainapp/forms.py:79
 msgid "Phone Number"
-msgstr ""
+msgstr "ტელეფონის ნომერი"
 
-#: mainapp/models.py:91
+#: mainapp/forms.py:87
+msgid "Created descending"
+msgstr "უახლესიდან "
+
+#: mainapp/forms.py:87
+msgid "Created ascending"
+msgstr "უძველესიდან"
+
+#: mainapp/models.py:90
 msgid "First name"
 msgstr "სახელი"
 
-#: mainapp/models.py:92
+#: mainapp/models.py:91
 msgid "Last name"
 msgstr "გვარი"
 
-#: mainapp/models.py:149 mainapp/models.py:162
-#: templates/reports/report_filter.html:24
-#: templates/reports/report_filter.html:40
+#: mainapp/models.py:148 mainapp/models.py:161
+#: templates/reports/report_filter.html:25
+#: templates/reports/report_filter.html:41
 msgid "Title"
 msgstr "სათაური"
 
-#: mainapp/models.py:163
+#: mainapp/models.py:162
 msgid "Hint"
 msgstr "მინიშნება"
 
-#: mainapp/models.py:231
+#: mainapp/models.py:230
 msgid "Subject"
 msgstr "თემა"
 
-#: mainapp/models.py:232 templates/reports/report_filter.html:43
+#: mainapp/models.py:231 templates/reports/report_filter.html:27
+#: templates/reports/report_filter.html:44
 msgid "Category"
 msgstr "კატეგორია"
 
-#: mainapp/models.py:233 templates/reports/report_filter.html:42
-#: templates/wards/_info_box.html:7
+#: mainapp/models.py:232 templates/reports/report_filter.html:43
+#: templates/reports/report_filter.html:81 templates/wards/_info_box.html:7
 msgid "Ward"
 msgstr "უბანი"
 
-#: mainapp/models.py:236
+#: mainapp/models.py:235
 msgid "Street address"
 msgstr "ქუჩის მისამართი"
 
-#: mainapp/models.py:242
+#: mainapp/models.py:241 templates/reports/report_filter.html:83
 msgid "Fixed"
 msgstr "შეკეთებული"
 
-#: mainapp/models.py:255 mainapp/models.py:317
+#: mainapp/models.py:254 mainapp/models.py:316
 msgid "* Photo"
 msgstr "ფოტო"
 
-#: mainapp/models.py:257 mainapp/models.py:306
+#: mainapp/models.py:256 mainapp/models.py:305
 msgid "Details"
 msgstr "დეტალები"
 
-#: mainapp/models.py:315
+#: mainapp/models.py:314 templates/reports/new.html:129
 msgid "Phone"
 msgstr "ტელეფონი*"
 
-#: mainapp/models.py:451
+#: mainapp/models.py:443
 msgid "Domain"
 msgstr "დომეინი"
-
-#: mainapp/templatetags/reports_tags.py:15
-#, fuzzy
-msgid "Recent updates"
-msgstr "ბოლო განახლებები"
 
 #: mainapp/templatetags/static_tags.py:11
 msgid ""
@@ -110,35 +121,10 @@ msgid ""
 "    FixMyStreet Georgia is run by Transparency International Georgia a Tbilisi-based NGO aiming to promote transparency\n"
 "    and accountability. TI Georgia is part of the global Transparency International movement.\n"
 msgstr ""
-
-#: mainapp/views/main.py:54
-msgid ""
-"Sorry, we couldn't retrieve the coordinates of that location, please use the"
-" Back button on your browser and try something more specific or include the "
-"city name at the end of your search."
-msgstr ""
-"სამწუხაროდ, ვერ მოხერხდა მითითებული ადგილის კოორდინატების დადგენა, გთხოვთ, "
-"Back ღილაკის გამოყენებით დაბრუნდეთ უკან და შეიყვანოთ უფრო კონკრეტული "
-"მისამართი ან მიუთითოთ ქალაქის დასახელება ძიების ბოლოს."
-
-#: mainapp/views/main.py:59
-msgid ""
-"Sorry, we couldn't find the address you entered.  Please try again with "
-"another intersection, address or postal code, or add the name of the city to"
-" the end of the search."
-msgstr ""
-"უკაცრავად, აღნიშნული მისამართი ვერ მოიძებნა. გთხოვთ, სცადოთ კიდევ ერთხელ "
-"სხვა თანაკვეთა, მისამართი, ან საფოსტო კოდი, ან დაამატეთ ქალაქის სახელი "
-"ძიების ბოლოს."
-
-#: mainapp/views/main.py:84
-msgid ""
-"Sorry, we don't yet have that area in our database.  Please have your area "
-"councillor contact fixmystreet.ge."
-msgstr ""
-"სამწუხაროდ, ამ დროისათვის აღნიშნული მისამართი  არ არის შეტანილი ჩვენს "
-"ბაზაში. თუ შეიძლება, სთხოვეთ თქვენი უბნის მაჟორიტარს შეგვატყობინოს ამის "
-"შესახებ."
+"\n"
+"<h3>About Us </h3>\n"
+"\n"
+"პროექტს „ჩემი ქუჩა საქართველო“ მართავს თბილისში დაფუძნებული არასამთავრობო ორგანიზაცია - „საერთაშორისო გამჭვირვალობა – საქართველო“, რომელიც გამჭვირვალობისა და ანგარიშვალდებულების საკითხებზე მუშაობს. „საერთაშორისო გამჭვირვალობა – საქართველო“ გლობალური „საერთშორისო გამჭვირვალობის“ მოძრაობის წევრია.\n"
 
 #: mainapp/views/wards.py:46
 msgid "New Unresolved Problems"
@@ -150,13 +136,13 @@ msgstr "ძველი მოუგვარებელი პრობლე�
 
 #: mainapp/views/wards.py:46 templates/cities/_report_count_table.html:10
 msgid "Recently Fixed"
-msgstr "ახლახან შეკეთებული"
+msgstr "ახლახან მოგვარებული"
 
 #: mainapp/views/wards.py:46
 msgid "Older Fixed Problems"
 msgstr "ძველი მოგვარებული პრობლემები"
 
-#: mainapp/views/reports/main.py:60
+#: mainapp/views/reports/main.py:64
 msgid "Please select a category"
 msgstr "გთხოვთ აირჩიოთ კატეგორია"
 
@@ -166,15 +152,15 @@ msgstr "თქვენ უკვე გამოიწერეთ ეს შ�
 
 #: mainapp/views/reports/subscribers.py:50
 msgid "You have unsubscribed from updates to:"
-msgstr "თქვენ შეწყვიტეთ შეტყობინებების გამოწერა განახლებიდან:"
+msgstr "განახლებების შესახებ შეტყობინებების გამოწერა შეწყვეტილია:"
 
-#: templates/about.html:6 templates/base.html:80
+#: templates/about.html:6 templates/base.html:64
 msgid "Questions"
 msgstr "შეკითხვები"
 
 #: templates/about.html:13
 msgid "About Chemikucha.ge - FixMyStreet Georgia"
-msgstr "Chemikucha.ge–ის შესახებ"
+msgstr "Chemikucha.ge – „ჩემი ქუჩა საქართველოს“ შესახებ"
 
 #: templates/about.html:32
 msgid "Credits"
@@ -211,165 +197,145 @@ msgid ""
 "                        </p>\n"
 "                    "
 msgstr ""
+"\n"
+"<p>მადლობას ვუხდით <a target=\"_blank\" href=\"http://www.tbilisi.gov.ge\">თბილისის მერიას</a> ამ პროექტის ფარგლებში ჩვენთან თანამშრომლობისთვის.\n"
+"<p>ასევე მადლობა <a target=\"_blank\" href=\"http://www.epfound.ge/\">„ევრაზიის თანამშრომლობის ფონდს“</a>\n"
+"და ყველა იმ დონორ ორგანიზაციას, რომელთა მეშვეობითაც განხორციელდა ეს პროექტი.</p>\n"
+"\n"
+"<p>„ჩემი ქუჩა საქართველოს“ (FixMyStreet Georgia) პროგრამის კოდი დაფუძნებულია\n"
+"<a target=\"_blank\" href=\"http://fixmystreet.ca\">\"FixMyStreet კანადის\" კოდზე</a>,\n"
+"რომელიც კრის ტაგარტმა\n"
+"<a target=\"_blank\" href=\"http://www.openottawa.org\">\"Open Ottowa\"–სთვის შექმნა</a>.\n"
+"</p>\n"
+"<p>თავად FixMyStreet-ის კონცეფცია კი შექმნილია დიდ ბრიტანეთში <a target=\"_blank\" href=\"http://www.mysociety.org/\">MySociety</a>\n"
+"–ის მიერ.</p>\n"
+"\n"
+"<p>საქართველოსათვის საიტის ადაპტირება მოახდინეს <a target=\"_blank\" href=\"http://www.linkedin.com/pub/derek-dohler/4/567/923\">დერეკ დოლერმა</a>\n"
+"და\n"
+"<a target=\"_blank\" href=\"http://www.linkedin.com/profile/view?id=174821679\">ნუცა ტუღუშმა</a>\n"
+". მოგვიანებით, ვებგვერდის ახალი ვერსია შექმნა\n"
+"<a target=\"_blank\" href=\"http://www.linkedin.com/in/georgelubaretsi\">გიორგი ლუბარეციმ</a>.\n"
+"</p>"
 
-#: templates/base.html:6
+#: templates/about.html:65 templates/home.html:231
+#: templates/reports/new.html:133 templates/reports/report_filter.html:101
+#: templates/reports/show.html:198
+msgid "Last Updates"
+msgstr "ბოლო განახლებები"
+
+#: templates/base.html:8
 msgid "FixMyStreet .ge"
 msgstr "ChemiKucha.ge"
 
-#: templates/base.html:57
+#: templates/base.html:42
 msgid ""
 "\n"
 "            This site uses a lot of javascript (in fact, site is unusable without it - so please\n"
 "            <a href=\"http://www.enable-javascript.com/\" target=\"_blank\">enable it</a>)</div>\n"
 "        "
 msgstr ""
+"\n"
+"ვებგვერდი აქტიურად იყენებს javascript–ს (საიტის მის გარეშე გამოყენება შეუძლებელია), ამიტომ გთხოვთ –  <a href=\"http://www.enable-javascript.com/\" target=\"_blank\">გაააქტიუროთ იგი</a>)</div>"
 
-#: templates/base.html:79 templates/cities/index.html:3
-#: templates/cities/index.html.py:24 templates/reports/report_filter.html:11
+#: templates/base.html:63 templates/cities/index.html:3
+#: templates/cities/index.html.py:24 templates/reports/report_filter.html:7
+#: templates/reports/report_filter.html:12
 msgid "All Reports"
 msgstr "ყველა შეტყობინება"
 
-#: templates/base.html:91
+#: templates/base.html:76 templates/contact/new.html:4
 msgid "Contact"
 msgstr "კონტაქტი"
 
-#: templates/base.html:94
+#: templates/base.html:79
 msgid "Language"
-msgstr "ენა"
+msgstr "Language"
 
-#: templates/home.html:16
+#: templates/home.html:70
 msgid "Home"
 msgstr "მთავარი"
 
-#: templates/home.html:22
+#: templates/home.html:78
 msgid "Step 1. Click on your city to report a problem"
-msgstr "ნაბიჯი 1. მოძებნეთ თქვენი ქალაქი პრობლემის გასათავსებლად"
+msgstr "ნაბიჯი 1. პრობლემის განსათავსებლად აირჩიეთ ქალაქი "
 
-#: templates/home.html:24 templates/home.html.py:44
+#: templates/home.html:80 templates/home.html.py:100
 msgid "Tbilisi"
 msgstr "თბილისი"
 
-#: templates/home.html:25 templates/home.html.py:45
+#: templates/home.html:81 templates/home.html.py:101
 msgid "Batumi"
 msgstr "ბათუმი"
 
-#: templates/home.html:26 templates/home.html.py:46
+#: templates/home.html:82 templates/home.html.py:102
 msgid "Kutaisi"
 msgstr "ქუთაისი"
 
-#: templates/home.html:27 templates/home.html.py:47
+#: templates/home.html:83 templates/home.html.py:103
 msgid "Zugdidi"
 msgstr "ზუგდიდი"
 
-#: templates/home.html:41
+#: templates/home.html:97
 msgid "Search your city to report a problem"
-msgstr "მოძებნეთ თქვენი ქალაქი პრობლემის გასათავსებლად"
+msgstr "პრობლემის განსათავსებლად აირჩიეთ ქალაქი"
 
-#: templates/home.html:66
+#: templates/home.html:123
 msgid "Search Street"
-msgstr ""
+msgstr "ქუჩის ძიება"
 
-#: templates/home.html:73
+#: templates/home.html:127
+msgid "Add marker"
+msgstr "სანიშნის დამატება"
+
+#: templates/home.html:131
 msgid ""
 "Enter your address on the map, press search and drag marker to desired "
 "location. Then fill out this form and press continue"
 msgstr ""
-"შეიყვანეთ თქვენი ადგილმდებარეობა რუკაზე, დააკლიკეთ ძიებას, შემდეგ გადაიტანეთ"
-" მარკერი სასურველ ადგილზე და შეავსეთ ეს ფორმა"
+"შეიყვანეთ თქვენი ადგილმდებარეობა (ქუჩის დასახელება) რუკაზე, დააჭირეთ ძიებას,"
+" გადაიტანეთ მარკერი სასურველ ადგილზე და შეავსეთ ფორმა."
 
-#: templates/home.html:79 templates/contact/new.html:38
-#: templates/reports/show.html:144
+#: templates/home.html:138 templates/contact/new.html:40
+#: templates/reports/show.html:171
 msgid "Georgian keyboard"
 msgstr "ქართული კლავიატურა"
 
-#: templates/home.html:94 templates/reports/new.html:90
-msgid "Select a Category"
-msgstr "აირჩიეთ კატეგორია"
-
-#: templates/home.html:116 templates/reports/new.html:133
-#: templates/reports/show.html:163
+#: templates/home.html:157 templates/reports/new.html:116
+#: templates/reports/report_filter.html:99 templates/reports/show.html:190
 msgid "Submit"
-msgstr "გაგზავნა"
+msgstr "განთავსება"
 
-#: templates/home.html:156
-msgid "Type in an address to report a problem and get it fixed!"
-msgstr "ბლიად"
-
-#: templates/home.html:158
-msgid "(like potholes, excessive garbage, or street lighting)"
-msgstr "(როგორიცაა: ორმოები, ზედმეტი ნაგავი ან ქუჩის განათება)"
-
-#: templates/home.html:163
-msgid "Enter a street name and city:"
-msgstr "შეიყვანეთ ქუჩის დასახელება და ქალაქი:"
-
-#: templates/home.html:166
-msgid "Go"
-msgstr "ძებნა"
-
-#: templates/home.html:171
-msgid "Isani-Samgori"
-msgstr "ისანი-სამგორი"
-
-#: templates/home.html:172
-msgid "Didgori"
-msgstr "დიდგორი"
-
-#: templates/home.html:175
-msgid "Vake-Saburtalo"
-msgstr "ვაკე-საბურთალო"
-
-#: templates/home.html:176
-msgid "Didube-Chugureti"
-msgstr "დიდუბე-ჩუღურეთი"
-
-#: templates/home.html:179
-msgid "Gldani-Nadzaladevi"
-msgstr "გლდანი-ნაძალადედვი"
-
-#: templates/home.html:180
-msgid "Old Tbilisi"
-msgstr "ძველი თბილისი"
-
-#: templates/home.html:184
+#: templates/home.html:196 templates/reports/show.html:201
 msgid "How to report a Problem"
 msgstr "როგორ განვათავსოთ პრობლემა"
 
-#: templates/home.html:186
-msgid "Enter an address near to where the problem is"
-msgstr "შეიყვანეთ იმ ტერიტორიის მისამართი, სადაც არსებობს პრობლემა"
+#: templates/home.html:198
+msgid "Click on your city"
+msgstr "აირჩიეთ ქალაქი"
 
-#: templates/home.html:187
-msgid "Locate the problem on a map of the area"
-msgstr "რუკის გამოყენებით განათავსეთ პრობლემა შესაბამის ადგილზე"
+#: templates/home.html:199 templates/reports/show.html:204
+msgid "Type in your address"
+msgstr "შეიყვანეთ თქვენი მისამართი"
 
-#: templates/home.html:188
-msgid "Enter details of the problem"
+#: templates/home.html:200 templates/reports/show.html:205
+msgid "Click on a marker button and drag it to desired location"
+msgstr "დააჭირეთ ცისფერ მარკერს და დასვით იგი რუკაზე სასურველ ადგილას"
+
+#: templates/home.html:201 templates/reports/show.html:206
+msgid "Fill in the details in the form"
 msgstr "შეიყვანეთ პრობლემის დეტალები"
 
-#: templates/home.html:189
+#: templates/home.html:202 templates/reports/show.html:207
 msgid "We send it to the city on your behalf"
-msgstr "ჩვენ მას  ქალაქის ადმინისტრაციას ვუგზავნით თქვენი სახელით"
+msgstr "ჩვენ მას თქვენი სახელით ქალაქის ადმინისტრაციას ვუგზავნით "
 
-#: templates/home.html:193
-msgid "Stats"
-msgstr "სტატისტიკა"
+#: templates/home.html:210
+msgid "Reports Fixed"
+msgstr "მოგვარებული შეტყობინებები"
 
-#: templates/home.html:201
+#: templates/home.html:220
 msgid "Reports Filed in the past year"
 msgstr "გასულ წელს განთავსებული შეტყობინებები"
-
-#: templates/home.html:212
-msgid "Reports Fixed"
-msgstr "შეკეთებული შეტყობინებები"
-
-#: templates/home.html:223
-msgid "Reports Updated"
-msgstr "განახლებული შეტყობინებები"
-
-#: templates/home.html:231 templates/cities/_report_count_table.html:34
-msgid "As reported by FixMyStreet.ge users."
-msgstr "ChemiKucha.ge-ს მომხმარებლების შეტყობინებების მიხედვით."
 
 #: templates/search_result.html:9
 msgid "Problems near"
@@ -381,31 +347,31 @@ msgstr "შეკეთებული"
 
 #: templates/search_result.html:19
 msgid "Zoom out to see more reports nearby."
-msgstr "გთხოვთ დააშოროთ, რათა იხილოთ უფრო მეტი ახლომდებარე შეტყობინება"
+msgstr "გთხოვთ დააშოროთ, რათა იხილოთ უფრო მეტი ახლომდებარე შეტყობინება."
 
 #: templates/search_result.html:21
 msgid "No problems have been reported yet."
-msgstr "არცერთი პრობლემა არ ყოფილა განთავსებული ჯერჯერობით"
+msgstr "ჯერ არცერთი პრობლემა არ განთავსებულა."
 
 #: templates/search_result.html:29
 msgid "Click on the marker and drag it to the correct location on the map."
-msgstr "დააკლიკეთ ცისფერ მარკერს და დასვით იგი რუკაზე სასურველ ადგილას."
+msgstr "დააჭირეთ ცისფერ მარკერს და დასვით იგი რუკაზე სასურველ ადგილას."
 
-#: templates/ajax/category_description.html:2 templates/reports/new.html:123
+#: templates/ajax/category_description.html:2
 msgid "Please Note"
 msgstr "გთხოვთ გაითვალისწინოთ"
 
 #: templates/ajax/category_description.html:5
 msgid "Is it Hate Graffiti?"
-msgstr "არის თუ არა ეს შეურაცხმყოფელი გრაფიტი?"
+msgstr "არის თუ არა ეს შეურაცხმყოფელი?"
 
 #: templates/ajax/category_description.html:6
 msgid ""
 "Please contact the City directly regarding hate or racist graffiti by "
 "calling #311."
 msgstr ""
-"რასისტული ან შეურაცხმყოფელი გრაფიტის შემთხვევაში, გთხოვთ, დაუკავშირდეთ "
-"უშუალოდ ქალაქის ადმინისტრაციას"
+"შეურაცხმყოფელი წარწერის ან ნახატის შემთხვევაში დაუკავშირდით უშუალოდ ქალაქის "
+"ადმინისტრაციას."
 
 #: templates/cities/_report_count_table.html:8
 msgid "All new problems, last month"
@@ -414,6 +380,10 @@ msgstr "ბოლო თვის პრობლემები"
 #: templates/cities/_report_count_table.html:11
 msgid "Old Fixed"
 msgstr "ადრე შეკეთებული"
+
+#: templates/cities/_report_count_table.html:34
+msgid "As reported by FixMyStreet.ge users."
+msgstr "ChemiKucha.ge-ს მომხმარებლების შეტყობინებების მიხედვით."
 
 #: templates/cities/category.html:3 templates/cities/category.html.py:6
 #: templates/cities/show.html:4 templates/cities/show.html.py:8
@@ -424,11 +394,11 @@ msgstr "შეტყობინებები:"
 
 #: templates/cities/category.html:9
 msgid "Unfixed reports"
-msgstr "შეუკეთებელი შეტყობინებები"
+msgstr "მოუგვარებელი პრობლემები"
 
 #: templates/cities/category.html:15
 msgid "Fixed reports"
-msgstr "შეკეთებული შეტყობინებები"
+msgstr "მოგვარებული პრობლემები"
 
 #: templates/cities/home.html:6
 msgid "Report, view, or discuss local problems in"
@@ -452,22 +422,21 @@ msgstr "პრობლემა"
 
 #: templates/cities/show.html:16
 msgid "Number of Subscribers"
-msgstr "გამომწერების რაოდენობა"
+msgstr "გამომწერთა რაოდენობა"
 
 #: templates/cities/show.html:30
 msgid "Reports by Ward"
-msgstr "შეტყობინებები უბნების მიხედვით"
+msgstr "შეტყობინებები უბნის მიხედვით"
 
 #: templates/cities/show.html:36
 msgid "Categories"
 msgstr "კატეგორიები:"
 
-#: templates/contact/new.html:11
+#: templates/contact/new.html:12
 msgid "Contact Us"
 msgstr "კონტაქტი"
 
-#: templates/contact/new.html:13
-#, fuzzy
+#: templates/contact/new.html:14
 msgid ""
 "\n"
 "                            <p>\n"
@@ -491,9 +460,13 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"<p>გთხოვთ <strong>ნუ ეცდებით</strong> ამ ფორმის მეშვეობით პრობლემის ატვირთვას, რადგან ის გაეგზავნება chemikucha.ge– ს სამუშაო გუნდს და არა თბილისის მერიას.</p><p>იმისათვის რომ მოახდინოთ პრობლემის ატვირთვა, მიყევით <a href=\"/\">შემდეგ</a> ინსტრუქციას.</p><p>საერთაშორისო გამჭვირვალობა-საქართველო<br />რუსთაველის გამზ.26<br />0108 თბილისი, საქართველი<br />იმეილი: <a href=\"mailto:fixmystreet@transparency.ge\">fixmystreet@transparency.ge</a>"
+"<p>გთხოვთ <strong>ნუ ეცდებით</strong> ამ ფორმის მეშვეობით პრობლემის ატვირთვას, რადგან ის გაეგზავნება chemikucha.ge– ს სამუშაო გუნდს და არა თბილისის მერიას.</p>\n"
+"<p>პრობლემის ასატვირთად მიყევით <a href=\"/\">შემდეგ</a> ინსტრუქციას.</p>\n"
+"<p>„საერთაშორისო გამჭვირვალობა-საქართველო“<br />რუსთაველის გამზ.26<br />0108 თბილისი, საქართველი<br />იმეილი: <a href=\"mailto:fixmystreet@transparency.ge\">fixmystreet@transparency.ge</a><br/>\n"
+"გვეწვიეთ facebook-ის გვერდზეც: <a\n"
+"href=\"https://www.facebook.com/TransparencyInternationalGeorgia\">Facebook</a></p>"
 
-#: templates/contact/new.html:45
+#: templates/contact/new.html:47
 msgid "Send"
 msgstr "გაგზავნა"
 
@@ -525,46 +498,33 @@ msgid ""
 " "
 msgstr "პირველი 100 დადასტურებული შეტყობინებიდან მიენიჭა დაწინაურების კოდი"
 
-#: templates/reports/new.html:3
+#: templates/reports/new.html:4
 msgid "New Report"
 msgstr "ახალი შეტყობინება"
 
-#: templates/reports/new.html:67
-msgid "Report a Problem"
-msgstr "პრობლემის განთავსება"
-
-#: templates/reports/new.html:82 templates/reports/show.html:76
+#: templates/reports/new.html:83 templates/reports/show.html:104
 msgid "Category:"
 msgstr "კატეგორია:"
 
-#: templates/reports/new.html:125
-msgid "Please be polite, concise and to the point."
-msgstr "გთხოვთ დაიცვათ ცენზურა, იყოთ ლაკონური და არ გასცდეთ თემას."
+#: templates/reports/new.html:91
+msgid "Select a Category"
+msgstr "აირჩიეთ კატეგორია"
 
-#: templates/reports/new.html:126
-msgid ""
-"Please do not be abusive - abusing the service devalues the service for all "
-"users."
-msgstr ""
-"გთხოვთ ნუ გამოიყენებთ სერვისს ბოროტად, სერვისის ბოროტად გამოყენება მას იმიჯს"
-" ულახავს მომხმარებლების თვალში"
+#: templates/reports/new.html:100
+msgid "Upload Photo:"
+msgstr "ატვირთეთ ფოტო:"
+
+#: templates/reports/new.html:125
+msgid "City"
+msgstr "ქალაქი"
 
 #: templates/reports/new.html:127
-msgid ""
-"Writing your message entirely in block capitals makes it hard to read, as "
-"does a lack of punctuation."
-msgstr ""
-"შეტყობინების პუნქტუაციის წესების დაცვის გარეშე დაწერა აძნელებს მის წაკითხვას"
+msgid "Publisher"
+msgstr "შეტყობინების ავტორი"
 
 #: templates/reports/new.html:128
-msgid ""
-"Remember that FixMyStreet is primarily for reporting physical problems that "
-"can be fixed. If your problem is not appropriate for submission via this "
-"site please contact city officials directly."
-msgstr ""
-"გაითვალისწინეთ, რომ ChemiKucha.ge-ს მიზანია ფიზიკური სახით არსებული "
-"პრობლემების გადაჭრა. თუ თქვენი პრობლემა არ არის შესაფერისი ჩვენი "
-"ვებ–გვერდისათვის, გთხოვთ დაუკავშირდეთ უშუალოდ ქალაქის ადმინისტრაციას. "
+msgid "E-mail"
+msgstr "ელ.ფოსტა*"
 
 #: templates/reports/poster.html:7
 msgid "FixMyStreet.ge"
@@ -578,21 +538,44 @@ msgstr "პოსტერის დაბეჭდვა"
 msgid "Print this page"
 msgstr "გვერდის ამობეჭდვა"
 
-#: templates/reports/report_filter.html:44
-#, fuzzy
+#: templates/reports/report_filter.html:26
+msgid "Region"
+msgstr "რეგიონი"
+
+#: templates/reports/report_filter.html:28
+#: templates/reports/report_filter.html:45
 msgid "Subscribers"
 msgstr "გამომწერები"
 
-#: templates/reports/report_filter.html:45
-#, fuzzy
+#: templates/reports/report_filter.html:29
+msgid "Date Created"
+msgstr "განახლება შექმნილია"
+
+#: templates/reports/report_filter.html:46
 msgid "Created"
 msgstr "განახლება შექმნილია"
 
-#: templates/reports/show.html:40 templates/reports/show.html.py:152
+#: templates/reports/report_filter.html:85
+msgid "Sorting:"
+msgstr "სორტირება:"
+
+#: templates/reports/report_filter.html:91
+msgid "Created after:"
+msgstr "დან"
+
+#: templates/reports/report_filter.html:95
+msgid "Created Before:"
+msgstr "მდე"
+
+#: templates/reports/show.html:61 templates/reports/show.html.py:179
 msgid "This problem has been fixed."
 msgstr "ეს პრობლემა მოგვარებულია."
 
-#: templates/reports/show.html:44
+#: templates/reports/show.html:63
+msgid "This problem has not been fixed."
+msgstr "ეს პრობლემა მოგვარებული არ არის."
+
+#: templates/reports/show.html:69
 msgid ""
 "<p>Please check your email for a message from FixMyStreet.ge, which will "
 "include a confirmation link.  Complete your submission by clicking on "
@@ -600,75 +583,79 @@ msgid ""
 "other visitors until you have done so.</p>"
 msgstr ""
 "<p> გთხოვთ შეამოწმოთ თქვენი ელ.ფოსტა, რათა იხილოთ ChemiKucha.ge-ს "
-"შეტყობინების დამადასტურებელი ბმული. დაასრულეთ შეტყობინების ატვირთვა მასზე "
-"დაკლიკებით. </p><p> აღნიშნული  ინსტრუქციის ბოლომდე შეუსრულებლობის "
-"შემთხვევაში თქვენი შეტყობინება არ გაეგზავნება ქალაქის ადმინისტრაციას და არც "
-"ვებ-გვერდზე აისახება დანარჩენი მომხმარებლებისათვის."
+"შეტყობინების დამადასტურებელი ბმული. დაასრულეთ შეტყობინების ატვირთვა აღნიშნულ"
+" ბმულზე გადასვლით. </p><p> წინააღმდეგ შემთხვევაში შეტყობინება არ გაეგზავნება"
+" ქალაქის ადმინისტრაციას და არც ვებ-გვერდზე აისახება დანარჩენი "
+"მომხმარებლებისთვის."
 
-#: templates/reports/show.html:61
+#: templates/reports/show.html:89
 msgid "Translate this report"
 msgstr "თარგმნე ეს შეტყობინება"
 
-#: templates/reports/show.html:77
+#: templates/reports/show.html:105
 msgid "Street Address:"
 msgstr "ქუჩის მისამართი:"
 
-#: templates/reports/show.html:78
+#: templates/reports/show.html:106
 msgid "Filed by:"
 msgstr "ატვირთა:"
 
-#: templates/reports/show.html:81
+#: templates/reports/show.html:109
 msgid "Sent to"
 msgstr "გაეგზავნა"
 
-#: templates/reports/show.html:82
+#: templates/reports/show.html:110
 msgid "On"
 msgstr "თარიღი"
 
-#: templates/reports/show.html:89
+#: templates/reports/show.html:117
 msgid "Subscribers:"
 msgstr "გამომწერები"
 
-#: templates/reports/show.html:91 templates/reports/subscribers/new.html:12
+#: templates/reports/show.html:119 templates/reports/subscribers/new.html:12
 msgid "Subscribe"
 msgstr "გამოიწერე"
 
-#: templates/reports/show.html:105
+#: templates/reports/show.html:130
 msgid "Print a flyer"
 msgstr "ამობეჭდე ფლაერი"
 
-#: templates/reports/show.html:105
+#: templates/reports/show.html:130
 msgid " to tell others about this problem."
-msgstr " სხვებს რომ შეატყობინოთ ამ პრობლემის შესახებ."
+msgstr " რათა სხვებს შეატყობინოთ ამ პრობლემის შესახებ."
 
-#: templates/reports/show.html:108
+#: templates/reports/show.html:133
 msgid "Offensive? Unsuitable? Tell us"
 msgstr "შეურაცხმყოფელია? შეუფერებელია? შეგვატყობინეთ!"
 
-#: templates/reports/show.html:112
+#: templates/reports/show.html:137
 msgid "Updates"
 msgstr "განახლებები"
 
-#: templates/reports/show.html:116
+#: templates/reports/show.html:141
 msgid "posted by"
-msgstr "გამოქვეყნებული:"
+msgstr "გამოაქვეყნა:"
 
-#: templates/reports/show.html:128
+#: templates/reports/show.html:153
 msgid "This report's author has been verified"
-msgstr "ამ შეტყობინების ავტორი შემოწმებულია"
+msgstr "შეტყობინების ავტორი შემოწმებულია"
 
-#: templates/reports/show.html:138
+#: templates/reports/show.html:163
 msgid "Provide an update"
 msgstr "განახლების მიწოდება"
 
-#: templates/reports/show.html:140
+#: templates/reports/show.html:165
 msgid "Please note that updates are not sent to city officials."
 msgstr ""
 "გთხოვთ გაითვალისწინოთ, რომ განახლებები არ ეგზავნება ქალაქის ადმინისტრაციას"
 
-#: templates/reports/show.html:158
+#: templates/reports/show.html:185
 msgid "This problem is still fixed."
 msgstr "პრობლემა მოგვარებულია"
+
+#: templates/reports/show.html:203
+msgid "Click on your city on homepage"
+msgstr "მთავარ გვერდზე აირჩიეთ თქვენი ქალაქი"
 
 #: templates/reports/flags/new.html:6
 msgid "Flag an Offensive Report"
@@ -679,8 +666,8 @@ msgid ""
 "You are reporting the following problem report for being abusive, containing"
 " personal information, or similar to another report:"
 msgstr ""
-"თქვენ გვატყობინებთ ამ პრობლემის შესახებ, რადგან თვლით რომ იგი არის "
-"შეურაცხმყოფელი, შეიცავს პირად ინფორმაციას, ან მსგავსია სხვა შეტყობინებისა:"
+"თქვენ გვატყობინებთ ამ პრობლემის შესახებ, რადგან თვლით, რომ იგი არის "
+"შეურაცხმყოფელი, შეიცავს პირად ინფორმაციას, ან სხვა შეტყობინების მსგავსია:"
 
 #: templates/reports/flags/new.html:13
 msgid "Flag this Report"
@@ -694,7 +681,7 @@ msgid ""
 msgstr ""
 "\n"
 "<h2>გმადლობთ</h2>\n"
-"<p>გმადლობთ, თქვენი შეტყობინება მიღებულია. ჩვენ ვიმოქმედებთ საჭიროებისამებრ შეძლებისდაგვარად სწრაფად</p>\n"
+"<p>გმადლობთ, თქვენი შეტყობინება მიღებულია. ჩვენ შეძლებისდაგვარად სწრაფად მოვახდენთ რეაგირებას</p>\n"
 
 #: templates/reports/subscribers/confirm.html:5
 msgid "You have subscribed to updates to"
@@ -715,12 +702,12 @@ msgstr ""
 "\n"
 "<h2>თითქმის დასრულებულია! ახლა შეამოწმეთ თქვენი ელ.ფოსტა...</h2>\n"
 "\n"
-"<p>დადასტურების გზავნილს შესაძლებელია რამდენიმე წუთი დასჭირდეს ელ.ფოსტაზე მოსასვლელად. მადლობას გიხდით მოთმინებისთვის. </p>\n"
+"<p>დადასტურების შემცველი იმეილის მოსვლას შესაძლოა რამდენიმე წუთი დასჭირდეს. მადლობას გიხდით მოთმინებისთვის. </p>\n"
 "\n"
-"<p>თუ თქვენ იყენებთ ვებ-ფოსტას ან ჩართული გაქვთ სპამ-ფილტრი, შესაძლებელია მოგიწიოთ სპამის შემოწმება, რადგან ხანდახან ჩვენი წერილები იქ იგზავნება\n"
-"ახლა თქვენ უნდა დააჭიროთ ბმულს, რომელიც ჩვენ გამოგიგზავნეთ- წინააღმდეგ შემთხვევაში თქვენი შეტყობინება აქტივირებული არ იქნება.</p>\n"
+"<p>თუ თქვენ იყენებთ ვებ-ფოსტას ან ჩართული გაქვთ სპამ-ფილტრი, შესაძლოა მოგიწიოთ სპამის ფოლდერის შემოწმება, რადგან ხანდახან ჩვენი იმეილები იქ ხვდება.\n"
+"ახლა გთხოვთ დააჭიროთ ბმულს, რომელიც ჩვენ გამოგიგზავნეთ- წინააღმდეგ შემთხვევაში თქვენი შეტყობინება ვებგვერდზე არ განთავსდება.</p>\n"
 "\n"
-"<p>(არ იღელვოთ - ჩვენ დაგელოდებით სანამ თქვენ ამოწმებთ თქვენს ფოსტას.)</p>\n"
+"<p>(ნუ ღელავთ - ჩვენ დაგელოდებით სანამ თქვენ ამოწმებთ თქვენს ფოსტას.)</p>\n"
 
 #: templates/reports/subscribers/new.html:3
 msgid "Subscribe to a Report"
@@ -733,7 +720,7 @@ msgstr "გამოიწერეთ განახლებები შე�
 #: templates/reports/subscribers/new.html:9
 msgid "Enter your email address to subscribe to updates for this report:"
 msgstr ""
-"შეიყვანეთ თქვენი ელ. ფოსტა ამ შეტყობინების შესახებ განახლებათა მისაღებად"
+"შეიყვანეთ თქვენი ელ. ფოსტა ამ შეტყობინების შესახებ განახლებების მისაღებად"
 
 #: templates/reports/updates/create.html:4
 msgid "Update Created"
@@ -744,9 +731,8 @@ msgid ""
 "A confirmation email has been sent. You must confirm your update in order "
 "for your update to be displayed. Please check your email."
 msgstr ""
-"დამადასტურებელი ელექტრონული წერილი გაიგზავნა. თქვენ უნდა დაადასტუროთ თქვენი "
-"განახლება, იმისათვის რომ ის ვებ-გვერდზე აისახოს. გთხოვთ შეამოწმოთ თქვენი ელ."
-" ფოსტა"
+"დამადასტურებელი იმეილი გაიგზავნა. იმისათვის, რომ განახლება ვებგვერდზე "
+"აისახოს, თქვენ უნდა დაადასტუროთ იგი. გთხოვთ შეამოწმოთ ელ. ფოსტა."
 
 #: templates/wards/_info_box.html:6
 msgid "Councillor"
@@ -762,13 +748,112 @@ msgstr "უბანი"
 
 #: templates/wards/show.html:12
 msgid "No problems have been reported."
-msgstr "პრობლემები არ ყოფილა განთავსებული"
+msgstr "არცერთი პრობლემა არ ატვირთულა."
 
 #: templates/wards/show.html:25
 msgid "Note: FixMyStreet.ge relies on users to report problems as fixed."
 msgstr ""
-"შენიშვნა: ChemiKucha.ge მოგვარებული პრობლემების შესახებ ინფორმაციას თავად "
-"ვებ-გვერდის მომხმარებლებისგან იღებს."
+"შენიშვნა: ChemiKucha.ge პრობლემების მოგვარების შესახებ ინფორმაციას თავად "
+"ვებგვერდის მომხმარებლებისგან იღებს."
+
+#~ msgid ""
+#~ "Sorry, we couldn't retrieve the coordinates of that location, please use the"
+#~ " Back button on your browser and try something more specific or include the "
+#~ "city name at the end of your search."
+#~ msgstr ""
+#~ "სამწუხაროდ, ვერ მოხერხდა მითითებული ადგილის კოორდინატების დადგენა. გთხოვთ "
+#~ "„back“ ღილაკის გამოყენებით დაბრუნდეთ უკან და შეიყვანოთ უფრო კონკრეტული "
+#~ "მისამართი, ან ძიების ბოლოს მიუთითოთ ქალაქის დასახელება."
+
+#~ msgid ""
+#~ "Sorry, we couldn't find the address you entered.  Please try again with "
+#~ "another intersection, address or postal code, or add the name of the city to"
+#~ " the end of the search."
+#~ msgstr ""
+#~ "სამწუხაროდ, აღნიშნული მისამართი ვერ მოიძებნა. გთხოვთ კიდევ ერთხელ შეიყვანოთ "
+#~ "სხვა თანაკვეთა, მისამართი, ან საფოსტო კოდი, ან ძიების ბოლოს დაამატოთ ქალაქის"
+#~ " სახელი."
+
+#~ msgid ""
+#~ "Sorry, we don't yet have that area in our database.  Please have your area "
+#~ "councillor contact fixmystreet.ge."
+#~ msgstr ""
+#~ "სამწუხაროდ, ამ დროისათვის აღნიშნული მისამართი  არ არის შეტანილი ჩვენს "
+#~ "ბაზაში. თუ შეიძლება, სთხოვეთ თქვენი უბნის მაჟორიტარს შეგვატყობინოს ამის "
+#~ "შესახებ."
+
+#~ msgid "Recent updates"
+#~ msgstr "ბოლო განახლებები"
+
+#~ msgid "Type in an address to report a problem and get it fixed!"
+#~ msgstr "ბლიად"
+
+#~ msgid "(like potholes, excessive garbage, or street lighting)"
+#~ msgstr "(როგორიცაა: ორმოები, ზედმეტი ნაგავი ან ქუჩის განათება)"
+
+#~ msgid "Enter a street name and city:"
+#~ msgstr "შეიყვანეთ ქუჩის დასახელება და ქალაქი:"
+
+#~ msgid "Go"
+#~ msgstr "ძებნა"
+
+#~ msgid "Isani-Samgori"
+#~ msgstr "ისანი-სამგორი"
+
+#~ msgid "Didgori"
+#~ msgstr "დიდგორი"
+
+#~ msgid "Vake-Saburtalo"
+#~ msgstr "ვაკე-საბურთალო"
+
+#~ msgid "Didube-Chugureti"
+#~ msgstr "დიდუბე-ჩუღურეთი"
+
+#~ msgid "Gldani-Nadzaladevi"
+#~ msgstr "გლდანი-ნაძალადედვი"
+
+#~ msgid "Old Tbilisi"
+#~ msgstr "ძველი თბილისი"
+
+#~ msgid "Enter an address near to where the problem is"
+#~ msgstr "შეიყვანეთ იმ ტერიტორიის მისამართი, სადაც არსებობს პრობლემა"
+
+#~ msgid "Locate the problem on a map of the area"
+#~ msgstr "რუკის გამოყენებით განათავსეთ პრობლემა შესაბამის ადგილზე"
+
+#~ msgid "Stats"
+#~ msgstr "სტატისტიკა"
+
+#~ msgid "Reports Updated"
+#~ msgstr "განახლებული შეტყობინებები"
+
+#~ msgid "Report a Problem"
+#~ msgstr "პრობლემის განთავსება"
+
+#~ msgid "Please be polite, concise and to the point."
+#~ msgstr "გთხოვთ დაიცვათ ცენზურა, იყოთ ლაკონური და არ გასცდეთ თემას."
+
+#~ msgid ""
+#~ "Please do not be abusive - abusing the service devalues the service for all "
+#~ "users."
+#~ msgstr ""
+#~ "გთხოვთ ნუ გამოიყენებთ სერვისს ბოროტად, სერვისის ბოროტად გამოყენება მას იმიჯს"
+#~ " ულახავს მომხმარებლების თვალში"
+
+#~ msgid ""
+#~ "Writing your message entirely in block capitals makes it hard to read, as "
+#~ "does a lack of punctuation."
+#~ msgstr ""
+#~ "შეტყობინების პუნქტუაციის წესების დაცვის გარეშე დაწერა აძნელებს მის წაკითხვას"
+
+#~ msgid ""
+#~ "Remember that FixMyStreet is primarily for reporting physical problems that "
+#~ "can be fixed. If your problem is not appropriate for submission via this "
+#~ "site please contact city officials directly."
+#~ msgstr ""
+#~ "გაითვალისწინეთ, რომ ChemiKucha.ge-ს მიზანია ფიზიკური სახით არსებული "
+#~ "პრობლემების გადაჭრა. თუ თქვენი პრობლემა არ არის შესაფერისი ჩვენი "
+#~ "ვებ–გვერდისათვის, გთხოვთ დაუკავშირდეთ უშუალოდ ქალაქის ადმინისტრაციას. "
 
 #~ msgid "Write us about your problems"
 #~ msgstr "მოგვწერეთ თქვენი პრობლემების შესახებ"

@@ -6,7 +6,7 @@ from django.conf import settings
 from mainapp.models import Report, ReportUpdate, ReportSubscriber
 from django.utils.translation import ugettext_lazy
 from django.contrib.admin.widgets import AdminDateWidget
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy
 
 
 class ContactForm(forms.Form):
@@ -50,13 +50,13 @@ class ReportStart(forms.Form):
     title = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'required form-control input-small',
-            'placeholder': "Problem Title"
+            'placeholder': _("Problem Title")
         }))
 
     street = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'required form-control input-small',
-            'placeholder': "Street"
+            'placeholder': _("Street")
         }))
 
     desc = forms.CharField()
