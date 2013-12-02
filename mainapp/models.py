@@ -433,7 +433,7 @@ class ReportSubscriber(models.Model):
 class ReportFilter(django_filters.FilterSet):
     class Meta:
         model = Report
-        fields = ['ward', 'category', 'is_fixed']
+        fields = ['ward__city', 'category', 'is_fixed']
 
 
 
