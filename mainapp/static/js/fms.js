@@ -22,10 +22,6 @@ $(function () {
                 moveToCity(city);
             });
         });
-
-        window.infowindow = new google.maps.InfoWindow({
-            maxWidth: 300
-        });
     }
 });
 
@@ -264,7 +260,7 @@ function removeMarker(name) {
  * Initial loader of markers. Run when map is idle
  */
 function populateMarkers() {
-    var coords, LatLng, marker, description, icon;
+    var coords, LatLng, marker, icon;
     var reports = getLatestReports();
 
     var url = window.location.href;
@@ -282,16 +278,13 @@ function populateMarkers() {
         coords = reports[i]['point']['coordinates'];
         LatLng = new google.maps.LatLng(coords[1], coords[0]);
         marker = addMarker('id_marker_' + reports[i]['id'], LatLng, {icon: icon});
-        description = reports[i]['description'] + '<br><a href="' + protocol + domain + '/' +
+        marker.description = reports[i]['description'] + '<br><a href="' + protocol + domain + '/' +
             lang + '/reports/' + reports[i]['id'] + '">Read more...</a>';
 
-        google.maps.event.addListener(marker, 'click', (function (marker, i) {
-            return function () {
-                infowindow.setContent(description);
-                infowindow.open(map, marker);
-            }
-        })(marker, i));
-        i++;
+        google.maps.event.addListener(marker, 'click', function () {
+            infowindow.setContent(this.description);
+            infowindow.open(map, this);
+        })
     }
 }
 

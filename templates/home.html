@@ -28,6 +28,9 @@
             var autocomplete = new google.maps.places.Autocomplete(input);
             autocomplete.bindTo('bounds', map);
             autocomplete.setComponentRestrictions({'country': 'GE'});
+            window.infowindow = new google.maps.InfoWindow({
+                maxWidth: 300
+            });
 
 
             //START GOOGLE MAPS AUTOCOMPLETE
@@ -228,7 +231,7 @@
             </div>
             <div class="col-6 col-sm-4 col-lg-4">
                 {% _about_us_sidebar %}
-                <div class="report-updates"><h3>{% trans "Last Updates"%}</h3>
+                <div class="report-updates"><h3>{% trans "Last Updates" %}</h3>
                     {% latest_reports 10 %}
                 </div>
             </div>
