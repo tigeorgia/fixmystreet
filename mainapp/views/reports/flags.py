@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
 from mainapp.models import Report
 from django.template import Context, RequestContext
-from fixmystreet import settings
+from django.conf import settings
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 
