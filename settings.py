@@ -162,7 +162,7 @@ LANGUAGES = (
 )
 
 LOCALE_PATHS = (
-    os.path.join(PROJECT_PATH, 'locale')
+    os.path.join(PROJECT_PATH, 'locale'),
 )
 
 ROOT_URLCONF = 'urls'
