@@ -1,3 +1,6 @@
 [submodule "django-google-analytics"]
 	path = django-google-analytics
 	url = https://github.com/clintecker/django-google-analytics.git
+[submodule "mainapp/static/bootstrap"]
+	path = mainapp/static/bootstrap
+	url = https://github.com/twbs/bootstrap.git
