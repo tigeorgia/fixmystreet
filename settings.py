@@ -99,7 +99,7 @@ PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.yui.YUICompressor'
 PIPELINE_YUI_CSS_ARGUMENTS = ''
 PIPELINE_YUI_JS_ARGUMENTS = ''
 
-PIPELINE_ENABLED = True
+PIPELINE_ENABLED = False
 # END Pipeline settings
 
 #PREPEND_WWW = True
@@ -191,7 +191,6 @@ INSTALLED_APPS = (
     'south',
     'pipeline',
     'django_filters',
-    'fixmystreet',
     'rosetta',
     'widget_tweaks',
 )

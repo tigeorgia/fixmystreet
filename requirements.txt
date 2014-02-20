@@ -1,16 +1,20 @@
-Django==1.5.1
-South==0.8.1
-PIL
-django-stdimage==0.2.2
-django-transmeta==0.6.10
+Django==1.6.2
+PIL==1.1.7
+South==0.8.4
+argparse==1.2.1
+django-filter==0.7
+django-pagination==1.0.7
+django-pipeline==1.3.21
+django-rosetta==0.7.3
+django-stdimage==0.3.0
+django-transmeta==0.7.3
+django-widget-tweaks==1.3
+futures==2.1.6
+psycopg2==2.5.2
+requests==2.2.1
+six==1.5.2
 wsgiref==0.1.2
 yolk==0.4.3
-django-filter==0.6
-django-widget-tweaks==1.3
-django-pagination==1.0.7
-django-rosetta==0.7.2
-django-pipeline==1.3.17
-yuicompressor
-psycopg2
+yuicompressor==2.4.8
 #django-tracking==0.4.1 install this with "hg clone http://bitbucket.org/codekoala/django-tracking" & easy_install!
 #google_analytics install this with pip install git+git://github.com/clintecker/django-google-analytics.git
