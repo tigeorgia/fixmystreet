@@ -1,4 +1,4 @@
-from django.conf.urls import *
+from django.conf.urls import patterns, include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.conf import settings
@@ -29,13 +29,13 @@ sitemaps = {
 }
 
 admin.autodiscover()
-urlpatterns = patterns('',
+urlpatterns = i18n_patterns('',
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.Feed', {'feed_dict': feeds}),
                        url(r'^i18n/', include('django.conf.urls.i18n')),
 )
 
-urlpatterns += patterns('',
+urlpatterns += i18n_patterns('',
                         (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
 )
 
@@ -101,20 +101,12 @@ urlpatterns += i18n_patterns('mainapp.views.reports',
                              (r'^all-reports/', 'main.report_list', ),
 )
 
-#The following is used to serve up local media files like images
-if settings.LOCAL_DEV:
-    baseurlregex = r'^media/(?P<path>.*)$'
-    urlpatterns += patterns('',
-                            (baseurlregex, 'django.views.static.serve',
-                             {'document_root': settings.MEDIA_ROOT}),
-    ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+if 'rosetta' in settings.INSTALLED_APPS:
+    urlpatterns += i18n_patterns('',
+                            url(r'^rosetta/', include('rosetta.urls')),
+    )
 
 if settings.DEBUG:
-    urlpatterns += patterns('django.contrib.staticfiles.views',
-                            url(r'^static/(?P<path>.*)$', 'serve'),
-    ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-if 'rosetta' in settings.INSTALLED_APPS:
-    urlpatterns += patterns('',
-                            url(r'^rosetta/', include('rosetta.urls')),
+    urlpatterns += i18n_patterns('django.contrib.staticfiles.views',
+        url(r'^static/(?P<path>.*)$', 'serve'),
     )

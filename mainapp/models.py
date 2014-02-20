@@ -410,7 +410,7 @@ class ReportSubscriber(models.Model):
     report = models.ForeignKey(Report)
     confirm_token = models.CharField(max_length=255, null=True)
     is_confirmed = models.BooleanField(default=False)
-    email = models.EmailField()
+    email = models.EmailField(verbose_name=_('Email'))
 
     class Meta:
         db_table = u'report_subscribers'
