@@ -27,7 +27,8 @@
     {% block script %}
     {% endblock %}
 
-   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={% settings_value "GMAP_KEY" %}&sensor=true&libraries=places"></script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key={% settings_value "GMAP_KEY" %}&sensor=true&libraries=places"></script>
 
 </head>
 <body class="lang-{{ LANGUAGE_CODE }}" {% block body_tags %}{% endblock %}>
@@ -73,7 +74,8 @@ margin-left:-174px;margin-top:-56px'><a
 
             <ul class="nav navbar-nav pull-right">
 
-                <li class="contact-menu"><a id="menu-contact" href="{% url 'mainapp.views.contact.new' %}">{% trans "Contact" %}</a></li>
+                <li class="contact-menu"><a id="menu-contact"
+                                            href="{% url 'mainapp.views.contact.new' %}">{% trans "Contact" %}</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         {% trans "Language" %}
@@ -84,7 +86,7 @@ margin-left:-174px;margin-top:-56px'><a
                         {% for lang in LANGUAGES %}
                             <li class="lang-choose"><a href="#" data-lang="{{ lang.0 }}">{{ lang.1 }}</a></li>
                         {% endfor %}
-                    <span id="no-lang-path" data-next="{{request.session.no_lang_path}}"></span>
+                        <span id="no-lang-path" data-next="{{ request.session.no_lang_path }}"></span>
                     </ul>
 
                 </li>
@@ -110,6 +112,42 @@ margin-left:-174px;margin-top:-56px'><a
     {% endblock %}
 
 </div>
+<footer id="fms-footer">
+    {% block footer %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div id="donor-footer">
+                        <label>{% trans 'Our Donor:' %}</label>
+                        <a href="http://www.sida.se/english/"></a>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <ul class="social-links">
+                        <li>
+                            <iframe src="http://ghbtns.com/github-btn.html?user=tigeorgia&repo=fixmystreet&type=watch"
+                                    allowtransparency="true" frameborder="0" scrolling="0" width="62"
+                                    height="20"></iframe>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/share" class="twitter-share-button"
+                               data-url="http://www.chemikucha.ge" data-text="Fix your city problems!">Tweet</a>
+                            <script>!function (d, s, id) {
+                                var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                                if (!d.getElementById(id)) {
+                                    js = d.createElement(s);
+                                    js.id = id;
+                                    js.src = p + '://platform.twitter.com/widgets.js';
+                                    fjs.parentNode.insertBefore(js, fjs);
+                                }
+                            }(document, 'script', 'twitter-wjs');</script>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+</footer>
 {% block endbody %}{% endblock %}
 {% analytics "UA-19239335-1" %}
 </body>

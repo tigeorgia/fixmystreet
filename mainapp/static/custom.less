@@ -48,6 +48,17 @@
 
 //Custom
 
+html, body {
+  height: 100%;
+}
+
+#content {
+  min-height: 100%;
+  height: auto;
+  margin: 0 auto -100px;
+  padding: 0 0 130px;
+}
+
 /* RESPONSIVE TABLES */
 
 @media only screen and (max-width: 992px) {
@@ -553,4 +564,47 @@ input#address_search {
 
 .fms-form li {
   list-style: none;
+}
+
+#fms-footer {
+  height: 130px;
+  border-top: 1px solid #e5e5e5;
+  padding: 20px 0;
+  text-align: center;
+}
+
+#fms-footer .container {
+  position: relative;
+}
+
+#fms-footer p {
+  text-align: center;
+}
+
+#fms-footer .social-links {
+  list-style: none;
+}
+
+.social-links li {
+  display: inline-block;
+  padding: 1px 5px;
+}
+
+#donor-footer {
+  position: relative;
+  display: inline-block;
+}
+
+#donor-footer a {
+  background: url(images/main/sida_logo.png) no-repeat;
+  width: 64px;
+  height: 60px;
+  display: block;
+  padding: inherit;
+  position: absolute;
+}
+
+.footer-links {
+  margin-left: 170px;
+  display: inline-block;
 }
