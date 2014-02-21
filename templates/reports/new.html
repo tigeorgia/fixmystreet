@@ -1,13 +1,33 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load staticfiles %}
 {% load widget_tweaks %}
 {% block title %}{% trans "New Report" %}{% endblock %}
+{% block body_tags %}onload='initialize()'{% endblock %}
 {% block script %}
     {% load reports_tags %}
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/jquery.livequery.pack.js"></script>
-    <script type="text/javascript" src="/mainapp/static/js/geokbd.js"></script>
-    <script>
+    <script type="text/javascript" src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script type="text/javascript" src="/static/js/geokbd.js"></script>
+    <script type="text/javascript">
+
+
+        function initialize() {
+            var mapOptions = {
+                center: new google.maps.LatLng({{ lat }}, {{ lon }}),
+                zoom: 17,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map_canvas"),
+                    mapOptions);
+
+            var markerOptions = {
+                draggable: false
+            };
+
+            addMarker('address_marker', mapOptions.center, markerOptions)
+        }
+
+
         function updateNotes() {
             // updates entry notes
             var el_id = $('#category_select').val();
@@ -28,7 +48,7 @@
             }
 
 
-            $('.radiohate').livequery('click', function (event) {
+            $('.radiohate').bind('click', function (event) {
                 if ($(this)[0].value == 'yes') {
                     $('.ishate').show('slow');
                     // disable fields
@@ -68,7 +88,7 @@
                 {% if form_error %}
                     {{ form_error }}
                 {% endif %}
-                <form enctype="multipart/form-data" method="post" id="my-form" name="my-form"
+                <form enctype="multipart/form-data" method="post" id="my-form" class="fms-form" name="my-form"
                       action="{% url 'mainapp.views.reports.main.new' %}">
 
                     <h4><b>{{ title }}</b></h4>
@@ -81,11 +101,9 @@
 
                     <label for="strCategory">{% trans "Category:" %}</label>
                     {% if category_error %}
-                        <ul class='errorlist'>
-                            <li>{{ category_error }}</li>
-                        </ul>
+                        <p class="alert alert-danger alert-dismissable">
+                            <strong>{% trans 'Oh snap!' %}</strong> {{ category_error }}</p>
                     {% endif %}
-
                     <select class='input form-control' name="category_id" id='category_select'>
                         <option value="">{% trans "Select a Category" %}</option>
                         {% for category in categories %}
@@ -128,7 +146,7 @@
                 </address>
             </div>
             <div class="col-6 col-sm-4 col-lg-4">
-                <div class="report-updates"><h3>{% trans "Last Updates"%}</h3>
+                <div class="report-updates"><h3>{% trans "Last Updates" %}</h3>
                     {% latest_reports 10 %}
                 </div>
             </div>
