@@ -6,7 +6,7 @@ from django.conf import settings
 from mainapp.models import Report, ReportUpdate, ReportSubscriber
 from django.utils.translation import ugettext_lazy
 from django.contrib.admin.widgets import AdminDateWidget
-from django.utils.translation import ugettext as _, ugettext_lazy
+from django.utils.translation import ugettext_lazy as _
 
 
 class ContactForm(forms.Form):
@@ -84,7 +84,7 @@ class ReportStart(forms.Form):
 
 
 class sortingForm(forms.Form):
-    CHOICES = (('-created_at', _('Created descending'),), ('created_at', _('Created ascending',)))
+    CHOICES = (('-created_at', _('Created descending')), ('created_at', _('Created ascending')))
     sorting = forms.ChoiceField(widget=forms.RadioSelect(attrs={'class': ''}), choices=CHOICES)
     created_after = forms.DateField(widget=AdminDateWidget(attrs={'class': 'datepicker form-control'}))
     created_before = forms.DateField(widget=AdminDateWidget(attrs={'class': 'datepicker form-control'}))

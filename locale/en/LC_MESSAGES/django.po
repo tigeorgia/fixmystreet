@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-02 14:29+0400\n"
+"POT-Creation-Date: 2014-02-20 18:21+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,6 +24,7 @@ msgid "Name"
 msgstr ""
 
 #: mainapp/forms.py:17 mainapp/forms.py:73 mainapp/models.py:312
+#: mainapp/models.py:413
 msgid "Email"
 msgstr ""
 
@@ -35,7 +36,7 @@ msgstr ""
 msgid "Problem Title"
 msgstr ""
 
-#: mainapp/forms.py:59 templates/reports/new.html:126
+#: mainapp/forms.py:59 templates/reports/new.html:124
 msgid "Street"
 msgstr ""
 
@@ -103,7 +104,7 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
-#: mainapp/models.py:314 templates/reports/new.html:129
+#: mainapp/models.py:314 templates/reports/new.html:127
 msgid "Phone"
 msgstr ""
 
@@ -203,8 +204,8 @@ msgid ""
 "                    "
 msgstr ""
 
-#: templates/about.html:65 templates/home.html:231
-#: templates/reports/new.html:133 templates/reports/report_filter.html:101
+#: templates/about.html:65 templates/home.html:234
+#: templates/reports/new.html:131 templates/reports/report_filter.html:101
 #: templates/reports/show.html:198
 msgid "Last Updates"
 msgstr ""
@@ -237,87 +238,91 @@ msgstr ""
 msgid "Language"
 msgstr "ენა"
 
-#: templates/home.html:70
+#: templates/home.html:73
 msgid "Home"
 msgstr ""
 
-#: templates/home.html:78
+#: templates/home.html:81
 msgid "Step 1. Click on your city to report a problem"
 msgstr ""
 
-#: templates/home.html:80 templates/home.html.py:100
+#: templates/home.html:83 templates/home.html.py:103
 msgid "Tbilisi"
 msgstr ""
 
-#: templates/home.html:81 templates/home.html.py:101
+#: templates/home.html:84 templates/home.html.py:104
 msgid "Batumi"
 msgstr ""
 
-#: templates/home.html:82 templates/home.html.py:102
+#: templates/home.html:85 templates/home.html.py:105
 msgid "Kutaisi"
 msgstr ""
 
-#: templates/home.html:83 templates/home.html.py:103
+#: templates/home.html:86 templates/home.html.py:106
 msgid "Zugdidi"
 msgstr ""
 
-#: templates/home.html:97
+#: templates/home.html:100
 msgid "Search your city to report a problem"
 msgstr ""
 
-#: templates/home.html:123
+#: templates/home.html:102
+msgid "Search"
+msgstr ""
+
+#: templates/home.html:126
 msgid "Search Street"
 msgstr ""
 
-#: templates/home.html:127
+#: templates/home.html:130
 msgid "Add marker"
 msgstr ""
 
-#: templates/home.html:131
+#: templates/home.html:134
 msgid ""
 "Enter your address on the map, press search and drag marker to desired "
 "location. Then fill out this form and press continue"
 msgstr ""
 
-#: templates/home.html:138 templates/contact/new.html:40
+#: templates/home.html:141 templates/contact/new.html:40
 #: templates/reports/show.html:171
 msgid "Georgian keyboard"
 msgstr ""
 
-#: templates/home.html:157 templates/reports/new.html:116
-#: templates/reports/report_filter.html:99 templates/reports/show.html:190
+#: templates/home.html:160 templates/reports/new.html:114
+#: templates/reports/show.html:190
 msgid "Submit"
 msgstr ""
 
-#: templates/home.html:196 templates/reports/show.html:201
+#: templates/home.html:199 templates/reports/show.html:201
 msgid "How to report a Problem"
 msgstr ""
 
-#: templates/home.html:198
+#: templates/home.html:201
 msgid "Click on your city"
 msgstr ""
 
-#: templates/home.html:199 templates/reports/show.html:204
+#: templates/home.html:202 templates/reports/show.html:204
 msgid "Type in your address"
 msgstr ""
 
-#: templates/home.html:200 templates/reports/show.html:205
+#: templates/home.html:203 templates/reports/show.html:205
 msgid "Click on a marker button and drag it to desired location"
 msgstr ""
 
-#: templates/home.html:201 templates/reports/show.html:206
+#: templates/home.html:204 templates/reports/show.html:206
 msgid "Fill in the details in the form"
 msgstr ""
 
-#: templates/home.html:202 templates/reports/show.html:207
+#: templates/home.html:205 templates/reports/show.html:208
 msgid "We send it to the city on your behalf"
 msgstr ""
 
-#: templates/home.html:210
+#: templates/home.html:213
 msgid "Reports Fixed"
 msgstr ""
 
-#: templates/home.html:220
+#: templates/home.html:223
 msgid "Reports Filed in the past year"
 msgstr ""
 
@@ -485,23 +490,27 @@ msgstr ""
 msgid "Category:"
 msgstr ""
 
-#: templates/reports/new.html:91
+#: templates/reports/new.html:85
+msgid "Oh snap!"
+msgstr ""
+
+#: templates/reports/new.html:89
 msgid "Select a Category"
 msgstr ""
 
-#: templates/reports/new.html:100
+#: templates/reports/new.html:98
 msgid "Upload Photo:"
 msgstr ""
 
-#: templates/reports/new.html:125
+#: templates/reports/new.html:123
 msgid "City"
 msgstr ""
 
-#: templates/reports/new.html:127
+#: templates/reports/new.html:125
 msgid "Publisher"
 msgstr ""
 
-#: templates/reports/new.html:128
+#: templates/reports/new.html:126
 msgid "E-mail"
 msgstr ""
 
@@ -544,6 +553,10 @@ msgstr ""
 
 #: templates/reports/report_filter.html:95
 msgid "Created Before:"
+msgstr ""
+
+#: templates/reports/report_filter.html:99
+msgid "Filter"
 msgstr ""
 
 #: templates/reports/show.html:61 templates/reports/show.html.py:179
@@ -628,6 +641,10 @@ msgstr ""
 
 #: templates/reports/show.html:203
 msgid "Click on your city on homepage"
+msgstr ""
+
+#: templates/reports/show.html:207
+msgid "Upload an image (in case you have one)"
 msgstr ""
 
 #: templates/reports/flags/new.html:6
