@@ -1,6 +1,7 @@
 from mainapp.models import FixMyStreetMap, ReportCountQuery, FaqEntry, ReportCategory, GmapPoint
 from django.views.generic import TemplateView, CreateView
 from mainapp.forms import ReportStart
+from mainapp.utils import random_image
 import datetime
 
 
@@ -15,6 +16,7 @@ class HomeView(TemplateView):
         ctx['categories'] = ReportCategory.objects.all().order_by("category_class")
         ctx['pre_form'] = ReportStart()
         ctx['google'] = FixMyStreetMap(ctx['center'], True)
+        ctx['random_image'] = random_image()
         return ctx
 
 

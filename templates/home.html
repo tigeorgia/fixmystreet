@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load random_image %}
 {% load static from staticfiles %}
 {% load static_tags %}
 {% load reports_tags %}
@@ -91,7 +90,7 @@
 
         <div id="deskt-city" class="col-12 col-lg-8 left-home">
             <div class="visible-lg" id="left-image"
-                 style="background:url( {{ STATIC_URL }}{% random_image %}) no-repeat; height: 460px;"></div>
+                 style="background:url({% static random_image %}) no-repeat; height: 460px;"></div>
 
             <div class="choose-city home-left visible-lg">
                 <div id="page-title-home" class="page-header-title "
@@ -99,7 +98,7 @@
                         ></div>
                 <label>{% trans "Search your city to report a problem" %}</label>
                 <ul class="cities-home">
-                    <li id="home-search" class="btn btn-default btn-fixed">Search</li>
+                    <li id="home-search" class="btn btn-default btn-fixed">{% trans 'Search' %}</li>
                     <li class="cities btn btn-white" data-city="Tbilisi">{% trans "Tbilisi" %}</li>
                     <li class="cities btn btn-white" data-city="Batumi">{% trans "Batumi" %}</li>
                     <li class="cities btn btn-white" data-city="Kutaisi">{% trans "Kutaisi" %}</li>

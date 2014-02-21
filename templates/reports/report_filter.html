@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load staticfiles %}
 {% load append_to_get %}
 {% load widget_tweaks %}
-{% load random_image %}
 {% load reports_tags %}
 {% block title %}{% trans "All Reports" %}{% endblock %}
 {% block content %}
-    <div class="row" id="all-reports-head" style="background:url( {{ STATIC_URL }}{% random_image %}) no-repeat;
+    <div class="row" id="all-reports-head" style="background:url({% static random_image %}) no-repeat;
             height: 200px;">
         <div class="col-5 col-sm-5 col-lg-5 col-offset-1 page-head">
             <div class="page-header-title">{% trans "All Reports" %}</div>
@@ -96,7 +96,7 @@
                     </label>
                     {{ sortform.created_before }}
                     <button class="btn btn-default btn-fixed" type="submit">
-                        {% trans "Submit" %}</button>
+                        {% trans "Filter" %}</button>
                 </form>
                 <div class="report-updates"><h3>{% trans "Last Updates"%}</h3>
                     {% latest_reports 5 %}

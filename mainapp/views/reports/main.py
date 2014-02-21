@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
 from mainapp.models import Report, ReportUpdate, Ward, FixMyStreetMap, ReportCategory, ReportFilter
 from mainapp.forms import ReportForm, ReportUpdateForm, sortingForm
+from mainapp.utils import random_image
 from django.template import RequestContext
 from django.db.models import Count, connection
 from django.contrib.gis.geos import *
@@ -173,7 +174,8 @@ def report_list(request, extra_content=None):
 
     context = {'filter': filter_search,
                'reports': paged_reports,
-               'sortform': sortform
+               'sortform': sortform,
+               'random_image': random_image()
     }
 
     return render_to_response(template, context, context_instance=RequestContext(request))
