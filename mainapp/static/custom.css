@@ -2376,8 +2376,8 @@ input[type="button"].btn-block {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('../fonts/glyphicons-halflings-regular.eot');
-  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('bootstrap/fonts/glyphicons-halflings-regular.eot');
+  src: url('bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -6168,21 +6168,21 @@ input#address_search {
   width: 100%;
 }
 .home-box {
-  height: 175px;
+  height: 235px;
   text-align: center;
   margin-top: 60px;
-  background: #e0e0e0;
+  background: #428bca;
   margin-left: 16px;
   position: relative;
 }
 .home-round {
-  width: 140px;
-  height: 140px;
-  background: #aaaaaa;
+  width: 170px;
+  height: 170px;
+  background: #2a6496;
   -moz-border-radius: 70px;
-  -webkit-border-radius: 65px;
-  border-radius: 70px;
-  margin: -70px;
+  -webkit-border-radius: 90px;
+  border-radius: 90px;
+  margin: -90px;
   padding: 0px;
   position: absolute;
   left: 50%;
@@ -6192,6 +6192,7 @@ input#address_search {
 .home-round a {
   color: #fff;
   text-decoration: none;
+  font-size: 18px;
 }
 .home-round:hover {
   background: #ffffff;
@@ -6203,7 +6204,7 @@ input#address_search {
   text-decoration: none;
 }
 .home-round-inner {
-  padding: 32px 0;
+  padding: 46px 0;
   font-size: 1em;
 }
 .fms-form li {
