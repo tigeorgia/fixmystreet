@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load staticfiles %}
 {% load reports_tags %}
 
 {% block title %}{{ report.ward.city.name }}: {{ report.title }}{% endblock %}
 {% block script %}
     <script type="text/javascript"
             src="http://s7.addthis.com/js/250/addthis_widget.js?pub=xa-4a620b09451f9502"></script>
-    <script type="text/javascript" src="/mainapp/static/js/geokbd.js"></script>
+    <script type="text/javascript" src="{% static 'js/geokbd.js' %}"></script>
     <script type="text/javascript">
 
         function initialize() {
@@ -204,6 +205,7 @@
                     <li>{% trans "Type in your address" %}</li>
                     <li>{% trans "Click on a marker button and drag it to desired location" %}</li>
                     <li>{% trans "Fill in the details in the form" %}</li>
+                    <li>{% trans "Upload an image (in case you have one)" %}</li>
                     <li>{% trans "We send it to the city on your behalf" %}</li>
                 </ol>
             </div>
