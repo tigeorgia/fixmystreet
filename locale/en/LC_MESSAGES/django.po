@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-21 22:59+0400\n"
+"POT-Creation-Date: 2014-02-24 07:09+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: mainapp/forms.py:14 mainapp/models.py:56 mainapp/models.py:71
-#: mainapp/models.py:110 mainapp/models.py:258 mainapp/models.py:314
-#: mainapp/models.py:445
+#: mainapp/forms.py:14 mainapp/models.py:57 mainapp/models.py:72
+#: mainapp/models.py:111 mainapp/models.py:259 mainapp/models.py:315
+#: mainapp/models.py:446
 msgid "Name"
 msgstr ""
 
-#: mainapp/forms.py:17 mainapp/forms.py:73 mainapp/models.py:313
-#: mainapp/models.py:414
+#: mainapp/forms.py:17 mainapp/forms.py:73 mainapp/models.py:314
+#: mainapp/models.py:415
 msgid "Email"
 msgstr ""
 
@@ -56,59 +56,59 @@ msgstr ""
 msgid "Created ascending"
 msgstr ""
 
-#: mainapp/models.py:91
+#: mainapp/models.py:92
 msgid "First name"
 msgstr ""
 
-#: mainapp/models.py:92
+#: mainapp/models.py:93
 msgid "Last name"
 msgstr ""
 
-#: mainapp/models.py:149 mainapp/models.py:162
+#: mainapp/models.py:150 mainapp/models.py:163
 #: templates/reports/report_filter.html:41
 #: templates/reports/report_filter.html:57
 msgid "Title"
 msgstr ""
 
-#: mainapp/models.py:163
+#: mainapp/models.py:164
 msgid "Hint"
 msgstr ""
 
-#: mainapp/models.py:231
+#: mainapp/models.py:232
 msgid "Subject"
 msgstr ""
 
-#: mainapp/models.py:232 templates/reports/report_filter.html:43
+#: mainapp/models.py:233 templates/reports/report_filter.html:43
 #: templates/reports/report_filter.html:60
 msgid "Category"
 msgstr ""
 
-#: mainapp/models.py:233 templates/reports/report_filter.html:59
+#: mainapp/models.py:234 templates/reports/report_filter.html:59
 #: templates/reports/report_filter.html:100 templates/wards/_info_box.html:7
 msgid "Ward"
 msgstr ""
 
-#: mainapp/models.py:236
+#: mainapp/models.py:237
 msgid "Street address"
 msgstr ""
 
-#: mainapp/models.py:242 templates/reports/report_filter.html:102
+#: mainapp/models.py:243 templates/reports/report_filter.html:102
 msgid "Fixed"
 msgstr ""
 
-#: mainapp/models.py:255 mainapp/models.py:317
+#: mainapp/models.py:256 mainapp/models.py:318
 msgid "* Photo"
 msgstr ""
 
-#: mainapp/models.py:257 mainapp/models.py:306
+#: mainapp/models.py:258 mainapp/models.py:307
 msgid "Details"
 msgstr ""
 
-#: mainapp/models.py:315 templates/reports/new.html:147
+#: mainapp/models.py:316 templates/reports/new.html:147
 msgid "Phone"
 msgstr ""
 
-#: mainapp/models.py:444
+#: mainapp/models.py:445
 msgid "Domain"
 msgstr ""
 
@@ -159,7 +159,7 @@ msgstr ""
 msgid "About Chemikucha.ge - FixMyStreet Georgia"
 msgstr ""
 
-#: templates/about.html:34 templates/home.html:253
+#: templates/about.html:34 templates/home.html:254
 #: templates/reports/new.html:151 templates/reports/report_filter.html:120
 #: templates/reports/show.html:199
 msgid "Last Updates"
@@ -277,27 +277,31 @@ msgstr ""
 msgid "Fill in the details in the form"
 msgstr ""
 
-#: templates/home.html:203 templates/reports/show.html:209
+#: templates/home.html:203
+msgid "Upload a photo if you have one"
+msgstr ""
+
+#: templates/home.html:204 templates/reports/show.html:209
 msgid "We send it to the city on your behalf"
 msgstr ""
 
-#: templates/home.html:213
+#: templates/home.html:214
 msgid "Reports Fixed"
 msgstr ""
 
-#: templates/home.html:223
+#: templates/home.html:224
 msgid "Reports Filed in the past year"
 msgstr ""
 
-#: templates/home.html:233
+#: templates/home.html:234
 msgid "Latest report photos:"
 msgstr ""
 
-#: templates/home.html:236
+#: templates/home.html:237
 msgid "Not fixed:"
 msgstr ""
 
-#: templates/home.html:239
+#: templates/home.html:240
 msgid "Fixed:"
 msgstr ""
 
