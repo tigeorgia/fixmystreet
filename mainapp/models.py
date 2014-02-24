@@ -2,6 +2,7 @@
 from django.db import models, connection
 from django.contrib.gis.db import models
 from django.contrib.gis.maps.google import GoogleMap, GMarker, GEvent, GPolygon, GIcon
+from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 from django.conf import settings
 from django import forms
@@ -18,6 +19,7 @@ from stdimage import StdImageField
 import json
 import django_filters
 from django.utils.encoding import iri_to_uri
+from django.utils.translation import get_language
 from south.modelsinspector import add_introspection_rules
 
 # this is needed for south to recognize stdimage custom fields. Do not touch!
@@ -281,7 +283,7 @@ class Report(models.Model):
         return ReportUpdate.objects.get(report=self, first_update=True)
 
     def get_absolute_url(self):
-        return "/reports/" + str(self.id)
+        return reverse('report-show', args=[self.id])
 
     class Meta:
         db_table = u'reports'

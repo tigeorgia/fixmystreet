@@ -10,6 +10,7 @@ from mainapp.models import City, Report, ReportFilter
 from mainapp.sitemaps import MainSitemap
 import mainapp.views.cities as cities
 from mainapp.views.main import AboutView, HomeView
+from mainapp.views.reports.main import show as ReportShow
 from mainapp.views.ajax import latestReportsJson
 
 js_info_dict = {
@@ -77,8 +78,7 @@ urlpatterns += i18n_patterns('mainapp.views.reports.flags',
 )
 
 urlpatterns += i18n_patterns('mainapp.views.reports.main',
-                             (r'^reports/(?P<report_id>\d+)$', 'show'),
-                             (r'^reports/(?P<report_id>\d+)/$', 'show'),
+                             url(r'^reports/(?P<report_id>\d+)$', ReportShow, name='report-show'),
                              (r'^reports/(?P<report_id>\d+)/poster$', 'poster'),
                              #(r'^reports/category/(\d+)$', 'category'),
                              (r'^reports/', 'new'),
