@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ChemiKucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-24 07:17+0400\n"
-"PO-Revision-Date: 2014-02-24 07:17+0400\n"
+"POT-Creation-Date: 2014-02-24 07:19+0400\n"
+"PO-Revision-Date: 2014-02-24 07:19+0400\n"
 "Last-Translator:  <sandro@transparency.ge>\n"
 "Language-Team: TI Georgia <fixmystreet@transparency.ge>\n"
 "Language: ka_GE\n"
@@ -238,8 +238,8 @@ msgid "Let's fix our streets together"
 msgstr "ერთად შევაკეთოთ ჩვენი ქალაქის ქუჩები"
 
 #: templates/home.html:97
-msgid "Search your city to report a problem"
-msgstr "აირჩიეთ ქალაქი"
+msgid "Choose your city and report a problem"
+msgstr "აირჩიეთ ქალაქი და მოგვწერეთ პრობლემა"
 
 #: templates/home.html:99
 msgid "Search"

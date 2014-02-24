@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-24 07:17+0400\n"
+"POT-Creation-Date: 2014-02-24 07:19+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -226,7 +226,7 @@ msgid "Let's fix our streets together"
 msgstr ""
 
 #: templates/home.html:97
-msgid "Search your city to report a problem"
+msgid "Choose your city and report a problem"
 msgstr ""
 
 #: templates/home.html:99
