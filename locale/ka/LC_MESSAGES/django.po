@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ChemiKucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-24 07:09+0400\n"
-"PO-Revision-Date: 2014-02-24 07:10+0400\n"
+"POT-Creation-Date: 2014-02-24 07:17+0400\n"
+"PO-Revision-Date: 2014-02-24 07:17+0400\n"
 "Last-Translator:  <sandro@transparency.ge>\n"
 "Language-Team: TI Georgia <fixmystreet@transparency.ge>\n"
 "Language: ka_GE\n"
@@ -534,6 +534,10 @@ msgstr "პოსტერის დაბეჭდვა"
 #: templates/reports/poster.html:12
 msgid "Print this page"
 msgstr "გვერდის ამობეჭდვა"
+
+#: templates/reports/report_filter.html:29
+msgid "Select region and sort the data"
+msgstr "აირჩიეთ რეგიონი და დაალაგეთ ინფორმაცია"
 
 #: templates/reports/report_filter.html:42
 msgid "Region"
