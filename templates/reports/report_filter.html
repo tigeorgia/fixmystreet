@@ -5,6 +5,22 @@
 {% load widget_tweaks %}
 {% load reports_tags %}
 {% block title %}{% trans "All Reports" %}{% endblock %}
+{% block script %}
+    <script type="text/javascript">
+
+        function initialize() {
+            var LatLng = new google.maps.LatLng(41.708484, 44.79847);
+            var mapOptions = {
+                center: LatLng,
+                zoom: 17,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map_canvas"),
+                    mapOptions);
+        }
+    </script>
+{% endblock %}
+{% block body_tags %}onload='initialize()'{% endblock %}
 {% block content %}
     <div class="row" id="all-reports-head" style="background:url({% static random_image %}) no-repeat;
             height: 200px;">
@@ -43,7 +59,10 @@
                                 <td data-title="{% trans "Ward" %}">{{ obj.ward }}</td>
                                 <td data-title="{% trans "Category" %}">{{ obj.category }}</td>
                                 <td data-title="{% trans "Subscribers" %}1">{{ obj.sub_count|add:+1 }}</td>
-                                <td data-title="{% trans "Created" %}"><time itemprop="startDate" datetime="{{ obj.created_at|date:'c'}}">{{ obj.created_at|date:"d.m.y" }}</time></td>
+                                <td data-title="{% trans "Created" %}">
+                                    <time itemprop="startDate"
+                                          datetime="{{ obj.created_at|date:'c' }}">{{ obj.created_at|date:"d.m.y" }}</time>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -98,7 +117,7 @@
                     <button class="btn btn-default btn-fixed" type="submit">
                         {% trans "Filter" %}</button>
                 </form>
-                <div class="report-updates"><h3>{% trans "Last Updates"%}</h3>
+                <div class="report-updates"><h3>{% trans "Last Updates" %}</h3>
                     {% latest_reports 5 %}
                 </div>
             </div>
