@@ -262,6 +262,9 @@ function removeMarker(name) {
 function populateMarkers() {
     var coords, LatLng, marker, icon;
     var reports = getLatestReports();
+    var texts = {
+        readmore : gettext('Read more...'),
+    };
 
     var url = window.location.href;
     var urlArr = url.split("/");
@@ -279,7 +282,7 @@ function populateMarkers() {
         LatLng = new google.maps.LatLng(coords[1], coords[0]);
         marker = addMarker('id_marker_' + reports[i]['id'], LatLng, {icon: icon});
         marker.description = reports[i]['description'] + '<br><a href="' + protocol + domain + '/' +
-            lang + '/reports/' + reports[i]['id'] + '">Read more...</a>';
+            lang + '/reports/' + reports[i]['id'] + '">' + texts.readmore + '</a>';
 
         google.maps.event.addListener(marker, 'click', function () {
             infowindow.setContent(this.description);
@@ -330,7 +333,7 @@ function addressMarker() {
 
     //If marker is already there, remove it and make it again. Otherwise it won't work
     if (typeof GmapMarkers['address_marker'] == 'undefined') {
-        addMarker('address_marker', center, {draggable: true});
+        addMarker('address_marker', center, {draggable: true, animation: google.maps.Animation.BOUNCE});
     } else {
         removeMarker('address_marker');
         addMarker('address_marker', center, {draggable: true});
@@ -339,9 +342,14 @@ function addressMarker() {
     //Populate hidden input fields for problem reporting on homepage with lonlat data.
     //TODO: Change input to one field. I.e. not separate lat and lon, but one single POINT geom field.
     google.maps.event.addListener(GmapMarkers['address_marker'], "dragend", function () {
-        GmapMarkers['address_marker'].setAnimation(google.maps.Animation.DROP);
+        GmapMarkers['address_marker'].setAnimation(google.maps.Animation.BOUNCE);
+
         $('input[id=id_lat]').val(GmapMarkers['address_marker'].getPosition().lat().toString());
         $('input[id=id_lon]').val(GmapMarkers['address_marker'].getPosition().lng().toString());
+    });
+
+    google.maps.event.addListener(GmapMarkers['address_marker'], "drag", function () {
+        GmapMarkers['address_marker'].setAnimation();
     });
 
     //Fire dragend event to get initial values
