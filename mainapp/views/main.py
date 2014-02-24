@@ -1,4 +1,4 @@
-from mainapp.models import FixMyStreetMap, ReportCountQuery, FaqEntry, ReportCategory, GmapPoint
+from mainapp.models import Report, FixMyStreetMap, ReportCountQuery, FaqEntry, ReportCategory, GmapPoint
 from django.views.generic import TemplateView, CreateView
 from mainapp.forms import ReportStart
 from mainapp.utils import random_image
@@ -7,6 +7,19 @@ import datetime
 
 class HomeView(TemplateView):
     template_name = 'home.html'
+
+    def _reports_with_photos(self):
+        try:
+            problems_with_photo = Report.objects.filter(is_confirmed__exact=True).order_by(
+                '-created_at').exclude(photo__isnull=True).exclude(photo__iexact='')
+        except IndexError:
+            return
+
+        photos = {
+            'photos_fixed': problems_with_photo.filter(is_fixed__exact=True)[:10],
+            'photos_not_fixed': problems_with_photo.filter(is_fixed__exact=False)[:10]
+        }
+        return photos
 
     def get_context_data(self, **kwargs):
         ctx = super(HomeView, self).get_context_data(**kwargs)
@@ -17,6 +30,7 @@ class HomeView(TemplateView):
         ctx['pre_form'] = ReportStart()
         ctx['google'] = FixMyStreetMap(ctx['center'], True)
         ctx['random_image'] = random_image()
+        ctx['photos'] = self._reports_with_photos()
         return ctx
 
 
