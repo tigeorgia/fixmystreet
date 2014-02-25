@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-24 07:19+0400\n"
+"POT-Creation-Date: 2014-02-25 06:02+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,13 +18,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: mainapp/forms.py:14 mainapp/models.py:57 mainapp/models.py:72
-#: mainapp/models.py:111 mainapp/models.py:259 mainapp/models.py:315
-#: mainapp/models.py:446
+#: mainapp/models.py:115 mainapp/models.py:263 mainapp/models.py:319
+#: mainapp/models.py:450
 msgid "Name"
 msgstr ""
 
-#: mainapp/forms.py:17 mainapp/forms.py:73 mainapp/models.py:314
-#: mainapp/models.py:415
+#: mainapp/forms.py:17 mainapp/forms.py:73 mainapp/models.py:318
+#: mainapp/models.py:419
 msgid "Email"
 msgstr ""
 
@@ -56,59 +56,59 @@ msgstr ""
 msgid "Created ascending"
 msgstr ""
 
-#: mainapp/models.py:92
+#: mainapp/models.py:96
 msgid "First name"
 msgstr ""
 
-#: mainapp/models.py:93
+#: mainapp/models.py:97
 msgid "Last name"
 msgstr ""
 
-#: mainapp/models.py:150 mainapp/models.py:163
+#: mainapp/models.py:154 mainapp/models.py:167
 #: templates/reports/report_filter.html:41
 #: templates/reports/report_filter.html:57
 msgid "Title"
 msgstr ""
 
-#: mainapp/models.py:164
+#: mainapp/models.py:168
 msgid "Hint"
 msgstr ""
 
-#: mainapp/models.py:232
+#: mainapp/models.py:236
 msgid "Subject"
 msgstr ""
 
-#: mainapp/models.py:233 templates/reports/report_filter.html:43
+#: mainapp/models.py:237 templates/reports/report_filter.html:43
 #: templates/reports/report_filter.html:60
 msgid "Category"
 msgstr ""
 
-#: mainapp/models.py:234 templates/reports/report_filter.html:59
+#: mainapp/models.py:238 templates/reports/report_filter.html:59
 #: templates/reports/report_filter.html:100 templates/wards/_info_box.html:7
 msgid "Ward"
 msgstr ""
 
-#: mainapp/models.py:237
+#: mainapp/models.py:241
 msgid "Street address"
 msgstr ""
 
-#: mainapp/models.py:243 templates/reports/report_filter.html:102
+#: mainapp/models.py:247 templates/reports/report_filter.html:102
 msgid "Fixed"
 msgstr ""
 
-#: mainapp/models.py:256 mainapp/models.py:318
+#: mainapp/models.py:260 mainapp/models.py:322
 msgid "* Photo"
 msgstr ""
 
-#: mainapp/models.py:258 mainapp/models.py:307
+#: mainapp/models.py:262 mainapp/models.py:311
 msgid "Details"
 msgstr ""
 
-#: mainapp/models.py:316 templates/reports/new.html:147
+#: mainapp/models.py:320 templates/reports/new.html:147
 msgid "Phone"
 msgstr ""
 
-#: mainapp/models.py:445
+#: mainapp/models.py:449
 msgid "Domain"
 msgstr ""
 
@@ -159,7 +159,7 @@ msgstr ""
 msgid "About Chemikucha.ge - FixMyStreet Georgia"
 msgstr ""
 
-#: templates/about.html:34 templates/home.html:254
+#: templates/about.html:34 templates/home.html:291
 #: templates/reports/new.html:151 templates/reports/report_filter.html:120
 #: templates/reports/show.html:199
 msgid "Last Updates"
@@ -205,103 +205,111 @@ msgstr ""
 msgid "Step 1. Click on your city to report a problem"
 msgstr ""
 
-#: templates/home.html:82 templates/home.html.py:100
+#: templates/home.html:82 templates/home.html.py:135
 msgid "Tbilisi"
 msgstr ""
 
-#: templates/home.html:83 templates/home.html.py:101
+#: templates/home.html:83 templates/home.html.py:136
 msgid "Batumi"
 msgstr ""
 
-#: templates/home.html:84 templates/home.html.py:102
+#: templates/home.html:84 templates/home.html.py:137
 msgid "Kutaisi"
 msgstr ""
 
-#: templates/home.html:85 templates/home.html.py:103
+#: templates/home.html:85 templates/home.html.py:138
 msgid "Zugdidi"
 msgstr ""
 
-#: templates/home.html:96
-msgid "Let's fix our streets together"
+#: templates/home.html:105
+msgid "Choose city"
 msgstr ""
 
-#: templates/home.html:97
-msgid "Choose your city and report a problem"
-msgstr ""
-
-#: templates/home.html:99
-msgid "Search"
-msgstr ""
-
-#: templates/home.html:123
-msgid "Search Street"
-msgstr ""
-
-#: templates/home.html:127
-msgid "Add marker"
+#: templates/home.html:120
+msgid "Close"
 msgstr ""
 
 #: templates/home.html:131
+msgid "Let's fix our streets together"
+msgstr ""
+
+#: templates/home.html:132
+msgid "Choose your city and report a problem"
+msgstr ""
+
+#: templates/home.html:134
+msgid "Search"
+msgstr ""
+
+#: templates/home.html:158
+msgid "Search Street"
+msgstr ""
+
+#: templates/home.html:162
+msgid "Add marker"
+msgstr ""
+
+#: templates/home.html:166
 msgid ""
 "Enter your address on the map, press search and drag marker to desired "
 "location. Then fill out this form and press continue"
 msgstr ""
 
-#: templates/home.html:138 templates/contact/new.html:40
+#: templates/home.html:173 templates/contact/new.html:40
 #: templates/reports/show.html:172
 msgid "Georgian keyboard"
 msgstr ""
 
-#: templates/home.html:157 templates/reports/new.html:134
+#: templates/home.html:192 templates/reports/new.html:134
 #: templates/reports/show.html:191
 msgid "Submit"
 msgstr ""
 
-#: templates/home.html:197 templates/reports/show.html:202
+#: templates/home.html:232 templates/reports/show.html:202
 msgid "How to report a Problem"
 msgstr ""
 
-#: templates/home.html:199
+#: templates/home.html:234
 msgid "Click on your city"
 msgstr ""
 
-#: templates/home.html:200 templates/reports/show.html:205
+#: templates/home.html:235 templates/reports/show.html:205
 msgid "Type in your address"
 msgstr ""
 
-#: templates/home.html:201 templates/reports/show.html:206
+#: templates/home.html:236 templates/reports/show.html:206
 msgid "Click on a marker button and drag it to desired location"
 msgstr ""
 
-#: templates/home.html:202 templates/reports/show.html:207
+#: templates/home.html:237 templates/reports/show.html:207
 msgid "Fill in the details in the form"
 msgstr ""
 
-#: templates/home.html:203
+#: templates/home.html:238
 msgid "Upload a photo if you have one"
 msgstr ""
 
-#: templates/home.html:204 templates/reports/show.html:209
+#: templates/home.html:239 templates/reports/show.html:209
 msgid "We send it to the city on your behalf"
 msgstr ""
 
-#: templates/home.html:214
+#: templates/home.html:249
 msgid "Reports Fixed"
 msgstr ""
 
-#: templates/home.html:224
+#: templates/home.html:259
 msgid "Reports Filed in the past year"
 msgstr ""
 
-#: templates/home.html:234
+#: templates/home.html:269
 msgid "Latest report photos:"
 msgstr ""
 
-#: templates/home.html:237
+#: templates/home.html:272
 msgid "Not fixed:"
 msgstr ""
 
-#: templates/home.html:240
+#: templates/home.html:275
 msgid "Fixed:"
 msgstr ""
 

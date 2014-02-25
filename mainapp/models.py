@@ -81,6 +81,10 @@ class City(models.Model):
     def get_absolute_url(self):
         return "/cities/" + str(self.id)
 
+    @property
+    def get_all_cities(self):
+        return City.objects.all()
+
     class Meta:
         db_table = u'cities'
         translate = ('name',)

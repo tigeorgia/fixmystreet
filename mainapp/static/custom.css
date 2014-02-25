@@ -5895,6 +5895,23 @@ button#home-search:hover {
 #map-home {
   padding: 0;
 }
+#map-buttons {
+  position: relative;
+  height: 30px;
+  float: right;
+}
+#change-city {
+  position: relative;
+  left: -3px;
+  background: #98C1F5;
+  padding: 5px;
+  top: 3px;
+  overflow: visible;
+  z-index: 1041;
+}
+#change-city span:nth-child(1) {
+  -webkit-transform: scale(-1, 1);
+}
 .navbar-nav li:first-child,
 .navbar-left li:nth-child(2),
 .contact-menu,
@@ -5911,7 +5928,7 @@ li.visible-sm,
     position: absolute;
     top: 27px;
     right: 4px;
-    z-index: 999;
+    z-index: 1039;
     color: #fff;
   }
 }
@@ -5953,7 +5970,7 @@ input {
 }
 #cut-container {
   position: relative;
-  z-index: 999;
+  z-index: 1041;
 }
 #all-reports-head {
   height: 200px;
@@ -5995,7 +6012,7 @@ input {
 .page-head {
   position: absolute;
   top: 10%;
-  z-index: 999;
+  z-index: 1041;
   margin-left: 8%;
 }
 #report-list th {
@@ -6264,4 +6281,39 @@ input#address_search {
 #home-images ul li {
   display: inline-block;
   margin: 6px;
+}
+#city-boxes li {
+  display: inline-block;
+  text-align: center;
+  top: 50%;
+  opacity: 0.7;
+  position: relative;
+  -webkit-transition: opacity 300ms ease-in;
+  -moz-transition: opacity 300ms ease-in;
+  -ms-transition: opacity 300ms ease-in;
+  -o-transition: opacity 300ms ease-in;
+  transition: opacity 300ms ease-in;
+}
+#city-boxes li:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+#city-boxes li label {
+  margin: 0;
+  padding: 5px;
+  vertical-align: middle;
+  color: #fff;
+  font-size: 17px;
+  background: #f8b526;
+  width: 100%;
+  font-weight: 300;
+  position: absolute;
+  left: 0;
+}
+#city-boxes .city-image {
+  width: 120px;
+  height: 130px;
+}
+.modal-title {
+  text-align: center;
 }

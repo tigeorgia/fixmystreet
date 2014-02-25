@@ -89,13 +89,48 @@
         </div>
 
         <div id="deskt-city" class="col-12 col-lg-8 left-home">
+            <div id="map-buttons">
+                <div id="change-city" class="dropdown">
+                    <span data-toggle="modal" data-target="#changecityModal"
+                          class="btn glyphicon glyphicon-share-alt"></span>
+
+                    <div class="modal fade" id="changecityModal" tabindex="-1" role="dialog"
+                         aria-labelledby="changecityLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="changecityLabel">{% trans "Choose city" %}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <ul id="city-boxes" class="cities-moveto">
+                                        {% for city in cities %}
+                                            {% language 'en' %}
+                                                <li data-city="{{ city|lower }}">
+                                                <div style="background: url({% static 'images/choose-city/' %}{{ city|lower }}.jpg)" class="city-image"></div>
+                                            {% endlanguage %}
+                                            <label>{{ city }}</label>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Close' %}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="visible-lg" id="left-image"
                  style="background:url({% static random_image %}) no-repeat; height: 460px;"></div>
 
             <div class="choose-city home-left visible-lg">
                 <div id="page-title-home" class="page-header-title ">{% trans "Let's fix our streets together" %}</div>
-                <label>{% trans "Search your city to report a problem" %}</label>
-                <ul class="cities-home">
+                <label>{% trans "Choose your city and report a problem" %}</label>
+                <ul class="cities-home cities-moveto">
                     <li id="home-search" class="btn btn-default btn-fixed">{% trans 'Search' %}</li>
                     <li class="cities btn btn-white" data-city="Tbilisi">{% trans "Tbilisi" %}</li>
                     <li class="cities btn btn-white" data-city="Batumi">{% trans "Batumi" %}</li>
@@ -231,7 +266,7 @@
                 </div>
 
                 <div id="home-images">
-                <h3>{% trans 'Latest report photos:' %}</h3>
+                    <h3>{% trans 'Latest report photos:' %}</h3>
                     {% for key, values in photos.iteritems %}
                         {% if key == 'photos_not_fixed' %}
                             <h4>{% trans 'Not fixed:' %}</h4>
@@ -240,21 +275,23 @@
                             <h4>{% trans 'Fixed:' %}</h4>
                             <div id="fixed-reports">
                         {% endif %}
-                        <ul>
+                    <ul>
                         {% for value in values %}
-                            <li><a href="{{ value.get_absolute_url }}"><img width="133" height="100" src="{{ value.photo.thumbnail.url }}" /></a></li>
+                            <li><a href="{{ value.get_absolute_url }}"><img width="133" height="100"
+                                                                            src="{{ value.photo.thumbnail.url }}"/></a>
+                            </li>
                         {% endfor %}
-                        </ul>
-                            </div>
+                    </ul>
+                    </div>
                     {% endfor %}
+                    </div>
                 </div>
-            </div>
-            <div class="col-6 col-sm-4 col-lg-4">
-                {% _about_us_sidebar %}
-                <div class="report-updates"><h3>{% trans "Last Updates" %}</h3>
-                    {% latest_reports 10 %}
+                <div class="col-6 col-sm-4 col-lg-4">
+                    {% _about_us_sidebar %}
+                    <div class="report-updates"><h3>{% trans "Last Updates" %}</h3>
+                        {% latest_reports 10 %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 {% endblock %}

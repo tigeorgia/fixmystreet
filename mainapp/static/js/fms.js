@@ -16,10 +16,12 @@ $(function () {
         /**
          * Homepage function which monitors for click on cities on homepage and sends data to moveToCity function.
          */
-        $('.cities-home li.cities').each(function () {
+        $('.cities-moveto li').each(function () {
             $(this).click(function () {
-                var city = $(this).data('city');
-                moveToCity(city);
+                if ($(this).data('city')) {
+                    var city = $(this).data('city');
+                    moveToCity(city);
+                }
             });
         });
     }
@@ -53,6 +55,16 @@ $(function () {
         }
         return true;
     });
+
+
+    /**
+     * Monitor modal clicks on homepage to close modal automatically after city is clicked.
+     */
+    $('#city-boxes li').each(function(){
+        $(this).click(function(){
+            $('#changecityModal').modal('hide');
+        })
+    })
 });
 
 // Geocoding on homepage
@@ -263,7 +275,7 @@ function populateMarkers() {
     var coords, LatLng, marker, icon;
     var reports = getLatestReports();
     var texts = {
-        readmore : gettext('Read more...'),
+        readmore: gettext('Read more...'),
     };
 
     var url = window.location.href;
@@ -273,7 +285,7 @@ function populateMarkers() {
     var lang = urlArr[3];
 
     for (var i = 0; i < reports.length; i++) {
-        if (reports[i]['is_fixed']){
+        if (reports[i]['is_fixed']) {
             icon = GmapMarkerIcons['green'];
         } else {
             icon = GmapMarkerIcons['red'];
