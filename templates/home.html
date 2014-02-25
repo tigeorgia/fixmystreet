@@ -63,8 +63,8 @@
             //END GOOGLE MAPS AUTOCOMPLETE
 
             google.maps.event.addListenerOnce(map, 'idle', function () {
-                loadDivs();
-                populateMarkers();
+                FMS.loadDivs();
+                FMS.populateMarkers();
             });
         }
     </script>
@@ -158,7 +158,7 @@
                             {% trans "Search Street" %}</button>
                     </fieldset>
                 </form>
-                <button class="add-marker btn btn-default btn-fixed" id="add-marker-mobile" onclick="addressMarker()">
+                <button class="add-marker btn btn-default btn-fixed" id="add-marker-mobile" onclick="FMS.addressMarker()">
                     {% trans "Add marker" %}</button>
             </div>
 
@@ -213,7 +213,7 @@
                     <button type="submit" id="search-street"></button>
                 </fieldset>
             </form>
-            <button class="add-marker" onclick="addressMarker()"></button>
+            <button class="add-marker" onclick="FMS.addressMarker()"></button>
         </div>
     </div>
 
