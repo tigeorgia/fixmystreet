@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ChemiKucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-31 13:00+0400\n"
-"PO-Revision-Date: 2014-03-31 13:00+0400\n"
+"POT-Creation-Date: 2014-03-31 13:58+0400\n"
+"PO-Revision-Date: 2014-03-31 13:48+0400\n"
 "Last-Translator:  <sandro@transparency.ge>\n"
 "Language-Team: TI Georgia <fixmystreet@transparency.ge>\n"
 "Language: ka\n"
@@ -19,13 +19,13 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #: mainapp/forms.py:15 mainapp/models.py:57 mainapp/models.py:72
-#: mainapp/models.py:115 mainapp/models.py:273 mainapp/models.py:347
-#: mainapp/models.py:485
+#: mainapp/models.py:115 mainapp/models.py:273 mainapp/models.py:348
+#: mainapp/models.py:486
 msgid "Name"
 msgstr "სახელი*"
 
-#: mainapp/forms.py:18 mainapp/forms.py:93 mainapp/models.py:346
-#: mainapp/models.py:455
+#: mainapp/forms.py:18 mainapp/forms.py:93 mainapp/models.py:347
+#: mainapp/models.py:456
 msgid "Email"
 msgstr "ელ.ფოსტა*"
 
@@ -83,15 +83,15 @@ msgstr "სათაური"
 msgid "Hint"
 msgstr "მინიშნება"
 
-#: mainapp/models.py:240
+#: mainapp/models.py:240 mainapp/models.py:333
 msgid "Not Fixed"
 msgstr "შეუკეთებელი"
 
-#: mainapp/models.py:241
+#: mainapp/models.py:241 mainapp/models.py:334
 msgid "Fixed"
 msgstr "შეკეთებული"
 
-#: mainapp/models.py:242
+#: mainapp/models.py:242 mainapp/models.py:335
 msgid "In Progress"
 msgstr "პროცესშია"
 
@@ -113,11 +113,12 @@ msgstr "ქალაქი / უბანი"
 msgid "Street address"
 msgstr "ქუჩის მისამართი"
 
-#: mainapp/models.py:256
-msgid "Statusi"
+#: mainapp/models.py:256 mainapp/models.py:343
+#: templates/reports/report_filter.html:102
+msgid "Status"
 msgstr "სტატუსი"
 
-#: mainapp/models.py:270 mainapp/models.py:350
+#: mainapp/models.py:270 mainapp/models.py:351
 msgid "* Photo"
 msgstr "ფოტო"
 
@@ -125,11 +126,11 @@ msgstr "ფოტო"
 msgid "Details"
 msgstr "დეტალები"
 
-#: mainapp/models.py:348 templates/reports/new.html:147
+#: mainapp/models.py:349 templates/reports/new.html:147
 msgid "Phone"
 msgstr "ტელეფონი*"
 
-#: mainapp/models.py:484
+#: mainapp/models.py:485
 msgid "Domain"
 msgstr "დომეინი"
 
@@ -167,7 +168,7 @@ msgstr "ახლახან მოგვარებული"
 msgid "Older Fixed Problems"
 msgstr "ძველი მოგვარებული პრობლემები"
 
-#: mainapp/views/reports/main.py:66
+#: mainapp/views/reports/main.py:67
 msgid "Please select a category"
 msgstr "გთხოვთ აირჩიოთ კატეგორია!"
 
@@ -272,6 +273,10 @@ msgstr "აირჩიეთ ქალაქი და მოგვწერე
 #: templates/home.html:134
 msgid "Search"
 msgstr "ძიება"
+
+#: templates/home.html:154 templates/home.html.py:211
+msgid "Address"
+msgstr "მისამართი"
 
 #: templates/home.html:158
 msgid "Search Street"
@@ -584,10 +589,6 @@ msgstr "განახლება შექმნილია"
 msgid "Created"
 msgstr "განახლება შექმნილია"
 
-#: templates/reports/report_filter.html:102
-msgid "Status"
-msgstr "სტატუსი"
-
 #: templates/reports/report_filter.html:104
 msgid "Sorting:"
 msgstr "სორტირება:"
@@ -807,6 +808,9 @@ msgid "Note: FixMyStreet.ge relies on users to report problems as fixed."
 msgstr ""
 "შენიშვნა: ChemiKucha.ge პრობლემების მოგვარების შესახებ ინფორმაციას თავად "
 "ვებგვერდის მომხმარებლებისგან იღებს."
+
+#~ msgid "Statusi"
+#~ msgstr "სტატუსი"
 
 #~ msgid "This problem is still fixed."
 #~ msgstr "პრობლემა მოგვარებულია"

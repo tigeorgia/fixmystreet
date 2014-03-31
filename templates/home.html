@@ -151,7 +151,7 @@
                 <form action="#" method="POST" class="address-search-form" name="address-search"
                       onsubmit="return false;">
                     <fieldset>
-                        <input name="address_search" class="form-control" placeholder="Address"
+                        <input name="address_search" class="form-control" placeholder="{% trans 'Address' %}"
                                id="address_search-mobile">
                         <input class="geocode-city" class="form-control" type="hidden" name="geocode-city" value="">
                         <button type="submit" class="search-street btn btn-default" style="width:100%">
@@ -208,7 +208,7 @@
         <div class="address-search-form-wrapper start-hidden visible-lg">
             <form action="#" method="POST" class="address-search-form" name="address-search" onsubmit="return false;">
                 <fieldset>
-                    <input name="address_search" class="form-control" placeholder="Address" id="address_search">
+                    <input name="address_search" class="form-control" placeholder="{% trans 'Address' %}" id="address_search">
                     <input class="geocode-city" class="form-control" type="hidden" name="geocode-city" value="">
                     <button type="submit" id="search-street"></button>
                 </fieldset>
