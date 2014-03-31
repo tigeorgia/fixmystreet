@@ -40,12 +40,12 @@ class VerifiedAuthorAdmin(admin.ModelAdmin):
 admin.site.register(VerifiedAuthor, VerifiedAuthorAdmin)
 
 class ReportUpdateAdmin(admin.ModelAdmin):
-	list_display = ('title', 'author', 'is_confirmed', 'is_fixed', 'created_at')
+	list_display = ('title', 'author', 'is_confirmed', 'status', 'created_at')
 
 admin.site.register(ReportUpdate,ReportUpdateAdmin)
 
 class ReportAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category','ward', 'is_fixed','is_confirmed', 'created_at')
+    list_display = ('title', 'category','ward', 'status','is_confirmed', 'created_at')
 
 admin.site.register(Report,ReportAdmin)
 

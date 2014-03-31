@@ -111,6 +111,11 @@ button{
     background-color:#82ae53;
 }
 
+#report-list .in-progress{
+    background-color:#eeeb8d;
+}
+
+
 #report-list #list-fixed{
     width:3px;
 }

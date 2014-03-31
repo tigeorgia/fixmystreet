@@ -1,71 +1,67 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
 from mainapp.models import Report, ReportUpdate, Ward, FixMyStreetMap, ReportCategory
-from mainapp.forms import ReportForm,ReportUpdateForm
+from mainapp.forms import ReportForm, ReportUpdateForm
 from django.template import Context, RequestContext
 
-def new( request, report_id ):
+
+def new(request, report_id):
     report = get_object_or_404(Report, id=report_id)
-    if request.method == 'POST':    
-        update_form = ReportUpdateForm( request.POST, request.FILES )
+    if request.method == 'POST':
+        update_form = ReportUpdateForm(report_id=report_id, data=request.POST, files=request.FILES)
         if update_form.is_valid():
             update = update_form.save(commit=False)
-            #if request.POST.has_key('is_fixed')
-            #    update.is_fixed = request.POST['is_fixed']
-            #else:
-            #    update.is_fixed = False
-            update.is_fixed = request.POST.has_key('is_fixed')
-            update.report=report
-            update.save()    
-            # redirect after a POST       
-            return( HttpResponseRedirect( '/reports/updates/create/' ) )
+            update.report = report
+            update.save()
+            # redirect after a POST
+            return ( HttpResponseRedirect('/reports/updates/create/') )
     else:
         update_form = ReportUpdateForm()
-        
+
     return render_to_response("reports/show.html",
-                {   "report": report,
-                    "google":  FixMyStreetMap(report.point),
-                    "update_form": update_form,
-                 },
-                context_instance=RequestContext(request))    
+                              {"report": report,
+                               "google": FixMyStreetMap(report.point),
+                               "update_form": update_form,
+                              },
+                              context_instance=RequestContext(request))
 
-def create( request ):
-    return render_to_response("reports/updates/create.html",
-                {  },
-                context_instance=RequestContext(request))    
 
-def confirm( request, confirm_token ):
-    update = get_object_or_404(ReportUpdate, confirm_token = confirm_token )
-    
+def create(request):
+    return render_to_response("reports/updates/create.html", {}, context_instance=RequestContext(request))
+
+
+def confirm(request, confirm_token):
+    update = get_object_or_404(ReportUpdate, confirm_token=confirm_token)
+
     if update.is_confirmed:
-        return( HttpResponseRedirect( update.report.get_absolute_url() ))
-    
+        return HttpResponseRedirect(update.report.get_absolute_url())
+
     # is the update fixed?
-    
+
     # unfixed -> unfixed
     # unfixed -> fixed
     if update.is_fixed and not update.report.is_fixed:
-        update.report.is_fixed = True
+        update.report.status = 'fixed'
         update.report.fixed_at = update.created_at
     # fixed -> unfixed
     elif not update.is_fixed and update.report.is_fixed:
-        update.report.is_fixed = False
+        update.report.status = 'not-fixed'
         update.report.fixed_at = None
-    
-    update.is_confirmed = True    
+
+    update.is_confirmed = True
     update.save()
 
     # we track a last updated time in the report to make statistics 
     # (such as on the front page) easier.  
-    
+
     if not update.first_update:
         update.report.updated_at = update.created_at
     else:
         update.report.updated_at = update.report.created_at
         update.report.is_confirmed = True
- 
+
     update.report.save()
     update.send_emails()
-        
+
     # redirect to report    
-    return( HttpResponseRedirect( update.report.get_absolute_url() ))
+    return HttpResponseRedirect(update.report.get_absolute_url())

@@ -17,8 +17,8 @@ class HomeView(TemplateView):
             return
 
         photos = {
-            'photos_fixed': problems_with_photo.filter(is_fixed__exact=True)[:10],
-            'photos_not_fixed': problems_with_photo.filter(is_fixed__exact=False)[:10]
+            'photos_fixed': problems_with_photo.filter(status__exact='fixed')[:10],
+            'photos_not_fixed': problems_with_photo.filter(status__exact='not-fixed')[:10]
         }
         return photos
 

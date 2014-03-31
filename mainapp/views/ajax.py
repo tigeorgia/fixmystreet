@@ -23,7 +23,7 @@ def latest_reports_json(request):
                         'author': r.author,
                         'title': r.title,
                         'created_at': r.created_at.isoformat(),
-                        'is_fixed': r.is_fixed,
+                        'status': r.status,
                         'description': r.desc[:300] + '...',
                         'point': json.loads(r.point.json)} for r in reports], cls=DjangoJSONEncoder)
     return HttpResponse(data, 'json')

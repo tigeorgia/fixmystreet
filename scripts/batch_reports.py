@@ -38,7 +38,7 @@ councillor_email_count = 0
 
 # send old reports that have not been updated
 one_month_ago = dt.today() - datetime.timedelta(days=31)
-reminder_reports = Report.objects.filter(is_confirmed=True, is_fixed=False, reminded_at__lte=one_month_ago,
+reminder_reports = Report.objects.filter(is_confirmed=True, status='not-fixed', reminded_at__lte=one_month_ago,
                                          updated_at__lte=one_month_ago).order_by("ward", "-created_at")
 
 for report in reminder_reports:

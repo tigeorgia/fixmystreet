@@ -23,10 +23,10 @@ def show( request, ward_id ):
     ward = get_object_or_404(Ward, id=ward_id)
     reports = Report.objects.filter( ward = ward, is_confirmed = True ).extra( select = { 'status' : """
             CASE 
-            WHEN age( clock_timestamp(), created_at ) < interval '1 month' AND is_fixed = false THEN 'New Unresolved Problems'
-            WHEN age( clock_timestamp(), created_at ) > interval '1 month' AND is_fixed = false THEN 'Older Unresolved Problems'
-            WHEN age( clock_timestamp(), fixed_at ) < interval '1 month' AND is_fixed = true THEN 'Recently Fixed'
-            WHEN age( clock_timestamp(), fixed_at ) > interval '1 month' AND is_fixed = true THEN 'Old Fixed'
+            WHEN age( clock_timestamp(), created_at ) < interval '1 month' AND status = 'not-fixed' THEN 'New Unresolved Problems'
+            WHEN age( clock_timestamp(), created_at ) > interval '1 month' AND status = 'not-fixed' THEN 'Older Unresolved Problems'
+            WHEN age( clock_timestamp(), fixed_at ) < interval '1 month' AND status = 'fixed' THEN 'Recently Fixed'
+            WHEN age( clock_timestamp(), fixed_at ) > interval '1 month' AND status = 'fixed' THEN 'Old Fixed'
             ELSE 'Unknown Status'
             END """,
             'status_int' : """

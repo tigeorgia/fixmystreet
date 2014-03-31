@@ -3,10 +3,11 @@ from django.forms import extras
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.conf import settings
-from mainapp.models import Report, ReportUpdate, ReportSubscriber
+from mainapp.models import Report, ReportUpdate, ReportSubscriber, VerifiedAuthor
 from django.utils.translation import ugettext_lazy
 from django.contrib.admin.widgets import AdminDateWidget
 from django.utils.translation import ugettext_lazy as _
+from django.shortcuts import get_object_or_404
 
 
 class ContactForm(forms.Form):
@@ -29,9 +30,28 @@ class ContactForm(forms.Form):
 
 
 class ReportUpdateForm(forms.ModelForm):
+    def __init__(self, report_id=None, *args, **kwargs):
+        self.report_id = report_id
+        super(ReportUpdateForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = ReportUpdate
-        fields = ('desc', 'author', 'email', 'phone', 'photo')
+        fields = ('desc', 'author', 'email', 'phone', 'photo', 'status')
+
+    def clean(self):
+        clean_data = super(ReportUpdateForm, self).clean()
+        email = self.cleaned_data.get('email')
+        status = self.cleaned_data.get('status')
+
+        if self.report_id and email:
+            verified_author = VerifiedAuthor.objects.filter(domain=email.partition('@')[2])
+            report = get_object_or_404(Report, id=self.report_id)
+            first_update = get_object_or_404(ReportUpdate, report=report, first_update=True)
+            if status != report.status and not (email is first_update.email or verified_author):
+                raise forms.ValidationError(
+                    _("You can't edit problem status, unless you are reporter or city hall representative"))
+
+        return clean_data
 
 
 class ReportSubscriberForm(forms.ModelForm):

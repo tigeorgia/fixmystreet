@@ -30,8 +30,10 @@ def new(request):
         desc = POST['desc']
         city = POST['city']
 
-        update_form = ReportUpdateForm({'email': email, 'desc': desc, 'author': author, 'phone': phone}, request.FILES)
-        report_form = ReportForm({'title': title, 'street': street}, request.FILES)
+        update_form = ReportUpdateForm(
+            data={'email': email, 'desc': desc, 'author': author, 'phone': phone, 'status': 'not-fixed'} or None,
+            files=request.FILES or None)
+        report_form = ReportForm(data={'title': title, 'street': street} or None, files=request.FILES or None)
         if update_form.is_valid and report_form.is_valid:
             pass
         else:

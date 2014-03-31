@@ -16,7 +16,7 @@ def show(request, city_id):
     categories = ReportCategory.objects.all().order_by("category_class")
 
     #top problems
-    top_problems = Report.objects.filter(ward__city=city,is_fixed=False).annotate(subscriber_count=Count(
+    top_problems = Report.objects.filter(ward__city=city,status__exact='not-fixed').annotate(subscriber_count=Count(
         'reportsubscriber' ) ).filter(subscriber_count__gte=1).order_by('-subscriber_count')[:10]
     if request.GET.has_key('test'):
         google = CityMap(city)

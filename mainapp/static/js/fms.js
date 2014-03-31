@@ -2,7 +2,8 @@
 GmapMarkerIcons = {
     dragme: "/static/images/marker/default/marker.png",
     green: "/static/images/marker/default/green.png",
-    red: "/static/images/marker/default/red.png"
+    red: "/static/images/marker/default/red.png",
+    yellow: "/static/images/marker/default/yellow.png"
 };
 
 // Object which stores all markers
@@ -335,10 +336,12 @@ var FMS = ( function () {
             var lang = urlArr[3];
 
             for (var i = 0; i < reports.length; i++) {
-                if (reports[i]['is_fixed']) {
+                if (reports[i]['status'] == 'fixed') {
                     icon = GmapMarkerIcons['green'];
-                } else {
+                } else if (reports[i]['status'] == 'not-fixed') {
                     icon = GmapMarkerIcons['red'];
+                } else if (reports[i]['status'] == 'in-progress') {
+                    icon = GmapMarkerIcons['yellow'];
                 }
                 coords = reports[i]['point']['coordinates'];
                 LatLng = new google.maps.LatLng(coords[1], coords[0]);

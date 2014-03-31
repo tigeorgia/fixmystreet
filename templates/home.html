@@ -125,7 +125,7 @@
                 </div>
             </div>
             <div class="visible-lg" id="left-image"
-                 style="background:url({% static random_image %}) no-repeat; height: 460px;"></div>
+                 style="background:url({{ STATIC_URL }}{{ random_image }}) no-repeat; height: 460px;"></div>
 
             <div class="choose-city home-left visible-lg">
                 <div id="page-title-home" class="page-header-title ">{% trans "Let's fix our streets together" %}</div>
@@ -244,7 +244,7 @@
                     <div class="col-sm-4 col-lg-4 home-box">
                         <div class="home-round">
                             <div class="home-round-inner">
-                                <a href="{% url 'mainapp.views.reports.main.report_list' %}?created_after={{ last_year }}&is_fixed=2">
+                                <a href="{% url 'mainapp.views.reports.main.report_list' %}?created_after={{ last_year }}&status=fixed">
                                     {{ report_counts.recent_fixed }}<br>
                                     {% trans "Reports Fixed" %}</a>
                             </div>

@@ -60,8 +60,10 @@
             <div class="col-12 col-sm-8 col-lg-8">
                 {% if report.is_fixed %}
                     <div class="status-color-fixed">{% trans "This problem has been fixed." %}</div>
-                {% else %}
+                {% elif report.status == 'not-fixed' %}
                     <div class="status-color-not-fixed">{% trans "This problem has not been fixed." %}</div>
+                {% elif report.status == 'in-progress' %}
+                    <div class="status-color-in-progress">{% trans "This problem is being fixed." %}</div>
                 {% endif %}
 
                 {% include "wards/_info_box.html" %}
@@ -173,19 +175,6 @@
                                 <td><input type="checkbox" name="geo" checked="checked"></td>
                             </tr>
                             {{ update_form.as_table }}
-                            {% if not report.is_fixed %}
-                                <tr>
-                                    <td></td>
-                                    <td><input type="checkbox" id="is_fixed" name="is_fixed"
-                                               value="1">{% trans "This problem has been fixed." %}</td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td></td>
-                                    <td><input type="checkbox" id="un_fixed" name="is_fixed" value="1"
-                                               checked="checked">{% trans "This problem is still fixed." %}</td>
-                                </tr>
-                            {% endif %}
                             <tr>
                                 <td></td>
                                 <td><input type="submit" value="{% trans "Submit" %}"></td>

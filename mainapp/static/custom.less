@@ -489,7 +489,11 @@ a.link-blue {
   background: #eb4048;
 }
 
-.status-color-not-fixed, .status-color-fixed {
+.all-reports-table .in-progress, .status-color-in-progress {
+  background: #eeeb8d;
+}
+
+.status-color-not-fixed, .status-color-fixed, .status-color-in-progress {
   color: #fff;
   text-align: center;
   padding: 5px;
@@ -513,6 +517,10 @@ tr.all-reports-table:hover a {
 
 .table-hover > tbody > tr:hover > td.not-fixed {
   background: #eb4048;
+}
+
+.table-hover > tbody > tr:hover > td.in-progress {
+  background: #eeeb8d;
 }
 
 .pagination > .active > a, .pagination > .active > span {

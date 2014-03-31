@@ -13,7 +13,7 @@ import time
 from mainapp import emailrules
 from datetime import datetime as dt
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy, ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from transmeta import TransMeta
 from stdimage import StdImageField
 import json
@@ -233,18 +233,28 @@ class EmailRule(models.Model):
 
 
 class Report(models.Model):
-    title = models.CharField(max_length=100, verbose_name=ugettext_lazy("Subject"))
-    category = models.ForeignKey(ReportCategory, null=True, verbose_name=ugettext_lazy("Category"))
-    ward = models.ForeignKey(Ward, null=True, verbose_name=ugettext_lazy("Ward"))
+    NOT_FIXED = 'not-fixed'
+    FIXED = 'fixed'
+    IN_PROGRESS = 'in-progress'
+    REPORT_STATUS_CHOICES = (
+        (NOT_FIXED, _('Not Fixed')),
+        (FIXED, _('Fixed')),
+        (IN_PROGRESS, _('In Progress'))
+    )
+
+    title = models.CharField(max_length=100, verbose_name=_("Subject"))
+    category = models.ForeignKey(ReportCategory, null=True, verbose_name=_("Category"))
+    ward = models.ForeignKey(Ward, null=True, verbose_name=_("Ward"))
     ip = models.GenericIPAddressField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    street = models.CharField(max_length=255, verbose_name=ugettext_lazy("Street address"))
+    street = models.CharField(max_length=255, verbose_name=_("Street address"))
     # last time report was updated
     updated_at = models.DateTimeField(auto_now_add=True)
 
     # time report was marked as 'fixed'
     fixed_at = models.DateTimeField(null=True)
-    is_fixed = models.BooleanField(default=False, verbose_name=ugettext_lazy("Fixed"))
+    status = models.CharField(_('Status'), max_length=32, choices=REPORT_STATUS_CHOICES, default=NOT_FIXED, blank=False,
+                              null=False)
     is_hate = models.BooleanField(default=False)
 
     # last time report was sent to city
@@ -257,10 +267,10 @@ class Report(models.Model):
     reminded_at = models.DateTimeField(auto_now_add=True)
 
     point = models.PointField(null=True)
-    photo = StdImageField(upload_to="photos", blank=True, verbose_name=ugettext_lazy("* Photo"), size=(400, 400),
+    photo = StdImageField(upload_to="photos", blank=True, verbose_name=_("* Photo"), size=(400, 400),
                           thumbnail_size=(133, 100))
-    desc = models.TextField(blank=True, null=True, verbose_name=ugettext_lazy("Details"))
-    author = models.CharField(max_length=255, verbose_name=ugettext_lazy("Name"))
+    desc = models.TextField(blank=True, null=True, verbose_name=_("Details"))
+    author = models.CharField(max_length=255, verbose_name=_("Name"))
 
     # true if first update has been confirmed - redundant with
     # one in ReportUpdate, but makes aggregate SQL queries easier.
@@ -271,6 +281,15 @@ class Report(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    @property
+    def is_fixed(self):
+        if self.status is 'fixed':
+            return True
+
+    @property
+    def get_status(self):
+        return self.status
 
     def is_subscribed(self, email):
         if len(self.reportsubscriber_set.filter(email=email)) != 0:
@@ -300,28 +319,37 @@ class ReportCount(object):
     def dict(self):
         return ({
                     "recent_new": "count( case when age(clock_timestamp(), reports.created_at) < interval '%s' THEN 1 ELSE null end )" % self.interval,
-                    "recent_fixed": "count( case when age(clock_timestamp(), reports.fixed_at) < interval '%s' AND reports.is_fixed = True THEN 1 ELSE null end )" % self.interval,
-                    "recent_updated": "count( case when age(clock_timestamp(), reports.updated_at) < interval '%s' AND reports.is_fixed = False and reports.updated_at != reports.created_at THEN 1 ELSE null end )" % self.interval,
-                    "old_fixed": "count( case when age(clock_timestamp(), reports.fixed_at) > interval '%s' AND reports.is_fixed = True THEN 1 ELSE null end )" % self.interval,
-                    "old_unfixed": "count( case when age(clock_timestamp(), reports.fixed_at) > interval '%s' AND reports.is_fixed = False THEN 1 ELSE null end )" % self.interval} )
+                    "recent_fixed": "count( case when age(clock_timestamp(), reports.fixed_at) < interval '%s' AND reports.status = 'fixed' THEN 1 ELSE null end )" % self.interval,
+                    "recent_updated": "count( case when age(clock_timestamp(), reports.updated_at) < interval '%s' AND reports.status = 'not-fixed' and reports.updated_at != reports.created_at THEN 1 ELSE null end )" % self.interval,
+                    "old_fixed": "count( case when age(clock_timestamp(), reports.fixed_at) > interval '%s' AND reports.status = 'fixed' THEN 1 ELSE null end )" % self.interval,
+                    "old_unfixed": "count( case when age(clock_timestamp(), reports.fixed_at) > interval '%s' AND reports.status = 'not-fixed' THEN 1 ELSE null end )" % self.interval} )
 
 
 class ReportUpdate(models.Model):
+    NOT_FIXED = 'not-fixed'
+    FIXED = 'fixed'
+    IN_PROGRESS = 'in-progress'
+    REPORT_STATUS_CHOICES = (
+        (NOT_FIXED, _('Not Fixed')),
+        (FIXED, _('Fixed')),
+        (IN_PROGRESS, _('In Progress'))
+    )
+
     report = models.ForeignKey(Report)
-    desc = models.TextField(blank=True, null=True, verbose_name=ugettext_lazy("Details"))
+    desc = models.TextField(blank=True, null=True, verbose_name=_("Details"))
     ip = models.GenericIPAddressField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_confirmed = models.BooleanField(default=False)
-    is_fixed = models.BooleanField(default=False)
+    status = models.CharField(_('Status'), max_length=32, choices=REPORT_STATUS_CHOICES, default=NOT_FIXED, blank=False,
+                              null=False)
     is_verified_author = models.BooleanField(default=False)
     confirm_token = models.CharField(max_length=255, null=True)
-    email = models.EmailField(max_length=255, verbose_name=ugettext_lazy("Email"))
-    author = models.CharField(max_length=255, verbose_name=ugettext_lazy("Name"))
-    phone = models.CharField(max_length=255, verbose_name=ugettext_lazy("Phone"), )
+    email = models.EmailField(max_length=255, verbose_name=_("Email"))
+    author = models.CharField(max_length=255, verbose_name=_("Name"))
+    phone = models.CharField(max_length=255, verbose_name=_("Phone"), )
     first_update = models.BooleanField(default=False)
-    photo = StdImageField(upload_to="photos/updates", blank=True, verbose_name=ugettext_lazy("* Photo"),
+    photo = StdImageField(upload_to="photos/updates", blank=True, verbose_name=_("* Photo"),
                           size=(200, 200), thumbnail_size=(133, 100))
-
 
     def __unicode__(self):
         return self.report.title
@@ -331,6 +359,15 @@ class ReportUpdate(models.Model):
             self.notify_on_new()
         else:
             self.notify_on_update()
+
+    @property
+    def is_fixed(self):
+        if self.status is 'fixed':
+            return True
+
+    @property
+    def get_status(self):
+        return self.status
 
     def notify_on_new(self):
         # send to the city immediately.
@@ -356,7 +393,6 @@ class ReportUpdate(models.Model):
         self.report.email_sent_to = email_addr_str
         self.report.save()
 
-
     def notify_on_update(self):
         subject = render_to_string("emails/report_update/subject.txt",
                                    {'update': self})
@@ -376,8 +412,9 @@ class ReportUpdate(models.Model):
                   settings.EMAIL_FROM_USER,
                   [self.report.first_update().email], fail_silently=False)
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
 
-    def save(self):
         if not self.confirm_token or self.confirm_token == "":
             m = hashlib.md5()
             m.update(self.email)
@@ -439,15 +476,14 @@ class ReportSubscriber(models.Model):
 class ReportFilter(django_filters.FilterSet):
     class Meta:
         model = Report
-        fields = ['ward__city', 'category', 'is_fixed']
-
+        fields = ['ward__city', 'category', 'status']
 
 
 class VerifiedAuthor(models.Model):
     """ Email domains; report updates by authors from these email domains will be marked as verified."""
 
-    domain = models.CharField(max_length=255, verbose_name=ugettext_lazy("Domain"))
-    name = models.CharField(max_length=255, verbose_name=ugettext_lazy("Name"))
+    domain = models.CharField(max_length=255, verbose_name=_("Domain"))
+    name = models.CharField(max_length=255, verbose_name=_("Name"))
 
     def __unicode__(self):
         return self.name
@@ -465,10 +501,12 @@ class ReportMarker(GMarker):
     """
 
     def __init__(self, report, icon_number):
-        if report.is_fixed:
+        if report.status is 'fixed':
             color = 'green'
-        else:
+        elif report.status is 'not-fixed':
             color = 'red'
+        elif report.status is 'in-progress':
+            color = 'yellow'
         icon_number = icon_number
         #img = "/static/images/marker/%s/marker%s.png" %( color, icon_number )
         img = "/static/images/marker/%s/blank.png" % ( color)
@@ -498,7 +536,7 @@ class FixMyStreetMap(GoogleMap):
     """
 
     def __init__(self, pnt, draggable=False, nearby_reports=[]):
-    #        self.icons = []
+        #        self.icons = []
         version = settings.GOOGLE_MAPS_API_VERSION
         markers = []
         center = (pnt.x, pnt.y)
@@ -676,10 +714,10 @@ class ReportCountQuery(SqlQuery):
     def __init__(self, interval='1 month'):
         SqlQuery.__init__(self)
         self.base_query = """select count( case when age(clock_timestamp(), reports.created_at) < interval '%s' and reports.is_confirmed = True THEN 1 ELSE null end ) as recent_new,\
- count( case when age(clock_timestamp(), reports.fixed_at) < interval '%s' AND reports.is_fixed = True THEN 1 ELSE null end ) as recent_fixed,\
- count( case when age(clock_timestamp(), reports.updated_at) < interval '%s' AND reports.is_fixed = False AND reports.is_confirmed = True AND reports.updated_at != reports.created_at THEN 1 ELSE null end ) as recent_updated,\
- count( case when age(clock_timestamp(), reports.fixed_at) > interval '%s' AND reports.is_fixed = True AND reports.is_confirmed = True THEN 1 ELSE null end ) as old_fixed,\
- count( case when age(clock_timestamp(), reports.created_at) > interval '%s' AND reports.is_confirmed = True AND reports.is_fixed = False THEN 1 ELSE null end ) as old_unfixed
+ count( case when age(clock_timestamp(), reports.fixed_at) < interval '%s' AND reports.status = 'fixed' THEN 1 ELSE null end ) as recent_fixed,\
+ count( case when age(clock_timestamp(), reports.updated_at) < interval '%s' AND reports.status = 'not-fixed' AND reports.is_confirmed = True AND reports.updated_at != reports.created_at THEN 1 ELSE null end ) as recent_updated,\
+ count( case when age(clock_timestamp(), reports.fixed_at) > interval '%s' AND reports.status = 'fixed' AND reports.is_confirmed = True THEN 1 ELSE null end ) as old_fixed,\
+ count( case when age(clock_timestamp(), reports.created_at) > interval '%s' AND reports.is_confirmed = True AND reports.status = 'not-fixed' THEN 1 ELSE null end ) as old_unfixed
  """ % (interval, interval, interval, interval, interval)
         self.sql = self.base_query + " from reports where reports.is_confirmed = true"
 
@@ -699,7 +737,7 @@ class CityWardsTotals(ReportCountQuery):
         ReportCountQuery.__init__(self, "1 month")
         self.sql = self.base_query
         self.url_prefix = "/wards/"
-        self.sql += ", wards.name_%s, wards.id, wards.number from wards " % lang #Hack to link custom SQL with TransMeta
+        self.sql += ", wards.name_%s, wards.id, wards.number from wards " % lang  #Hack to link custom SQL with TransMeta
         self.sql += """left join reports on wards.id = reports.ward_id join cities on wards.city_id = cities.id join province on cities.province_id = province.id
         """
         self.sql += "and cities.id = " + str(city.id)
