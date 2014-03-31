@@ -3,56 +3,62 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Chemikucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-25 06:02+0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2014-03-31 13:00+0400\n"
+"PO-Revision-Date: 2014-03-31 13:02+0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: Chemikucha <gio@transparency.ge>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"Language: ka\n"
 
-#: mainapp/forms.py:14 mainapp/models.py:57 mainapp/models.py:72
-#: mainapp/models.py:115 mainapp/models.py:263 mainapp/models.py:319
-#: mainapp/models.py:450
+#: mainapp/forms.py:15 mainapp/models.py:57 mainapp/models.py:72
+#: mainapp/models.py:115 mainapp/models.py:273 mainapp/models.py:347
+#: mainapp/models.py:485
 msgid "Name"
 msgstr ""
 
-#: mainapp/forms.py:17 mainapp/forms.py:73 mainapp/models.py:318
-#: mainapp/models.py:419
+#: mainapp/forms.py:18 mainapp/forms.py:93 mainapp/models.py:346
+#: mainapp/models.py:455
 msgid "Email"
 msgstr ""
 
-#: mainapp/forms.py:22
+#: mainapp/forms.py:23
 msgid "Message"
 msgstr ""
 
-#: mainapp/forms.py:53
+#: mainapp/forms.py:52
+msgid ""
+"You can't edit problem status, unless you are reporter or city hall "
+"representative"
+msgstr ""
+
+#: mainapp/forms.py:73
 msgid "Problem Title"
 msgstr ""
 
-#: mainapp/forms.py:59 templates/reports/new.html:144
+#: mainapp/forms.py:79 templates/reports/new.html:144
 msgid "Street"
 msgstr ""
 
-#: mainapp/forms.py:67
+#: mainapp/forms.py:87
 msgid "Name/Last name"
 msgstr ""
 
-#: mainapp/forms.py:79
+#: mainapp/forms.py:99
 msgid "Phone Number"
 msgstr ""
 
-#: mainapp/forms.py:87
+#: mainapp/forms.py:107
 msgid "Created descending"
 msgstr ""
 
-#: mainapp/forms.py:87
+#: mainapp/forms.py:107
 msgid "Created ascending"
 msgstr ""
 
@@ -74,41 +80,53 @@ msgstr ""
 msgid "Hint"
 msgstr ""
 
-#: mainapp/models.py:236
+#: mainapp/models.py:240
+msgid "Not Fixed"
+msgstr ""
+
+#: mainapp/models.py:241
+msgid "Fixed"
+msgstr ""
+
+#: mainapp/models.py:242
+msgid "In Progress"
+msgstr ""
+
+#: mainapp/models.py:245
 msgid "Subject"
 msgstr ""
 
-#: mainapp/models.py:237 templates/reports/report_filter.html:43
+#: mainapp/models.py:246 templates/reports/report_filter.html:43
 #: templates/reports/report_filter.html:60
 msgid "Category"
 msgstr ""
 
-#: mainapp/models.py:238 templates/reports/report_filter.html:59
+#: mainapp/models.py:247 templates/reports/report_filter.html:59
 #: templates/reports/report_filter.html:100 templates/wards/_info_box.html:7
 msgid "Ward"
 msgstr ""
 
-#: mainapp/models.py:241
+#: mainapp/models.py:250
 msgid "Street address"
 msgstr ""
 
-#: mainapp/models.py:247 templates/reports/report_filter.html:102
-msgid "Fixed"
+#: mainapp/models.py:256
+msgid "Statusi"
 msgstr ""
 
-#: mainapp/models.py:260 mainapp/models.py:322
+#: mainapp/models.py:270 mainapp/models.py:350
 msgid "* Photo"
 msgstr ""
 
-#: mainapp/models.py:262 mainapp/models.py:311
+#: mainapp/models.py:272 mainapp/models.py:339
 msgid "Details"
 msgstr ""
 
-#: mainapp/models.py:320 templates/reports/new.html:147
+#: mainapp/models.py:348 templates/reports/new.html:147
 msgid "Phone"
 msgstr ""
 
-#: mainapp/models.py:449
+#: mainapp/models.py:484
 msgid "Domain"
 msgstr ""
 
@@ -139,7 +157,7 @@ msgstr ""
 msgid "Older Fixed Problems"
 msgstr ""
 
-#: mainapp/views/reports/main.py:65
+#: mainapp/views/reports/main.py:66
 msgid "Please select a category"
 msgstr ""
 
@@ -161,7 +179,7 @@ msgstr ""
 
 #: templates/about.html:34 templates/home.html:291
 #: templates/reports/new.html:151 templates/reports/report_filter.html:120
-#: templates/reports/show.html:199
+#: templates/reports/show.html:188
 msgid "Last Updates"
 msgstr ""
 
@@ -256,16 +274,16 @@ msgid ""
 msgstr ""
 
 #: templates/home.html:173 templates/contact/new.html:40
-#: templates/reports/show.html:172
+#: templates/reports/show.html:174
 msgid "Georgian keyboard"
 msgstr ""
 
 #: templates/home.html:192 templates/reports/new.html:134
-#: templates/reports/show.html:191
+#: templates/reports/show.html:180
 msgid "Submit"
 msgstr ""
 
-#: templates/home.html:232 templates/reports/show.html:202
+#: templates/home.html:232 templates/reports/show.html:191
 msgid "How to report a Problem"
 msgstr ""
 
@@ -273,15 +291,15 @@ msgstr ""
 msgid "Click on your city"
 msgstr ""
 
-#: templates/home.html:235 templates/reports/show.html:205
+#: templates/home.html:235 templates/reports/show.html:194
 msgid "Type in your address"
 msgstr ""
 
-#: templates/home.html:236 templates/reports/show.html:206
+#: templates/home.html:236 templates/reports/show.html:195
 msgid "Click on a marker button and drag it to desired location"
 msgstr ""
 
-#: templates/home.html:237 templates/reports/show.html:207
+#: templates/home.html:237 templates/reports/show.html:196
 msgid "Fill in the details in the form"
 msgstr ""
 
@@ -289,7 +307,7 @@ msgstr ""
 msgid "Upload a photo if you have one"
 msgstr ""
 
-#: templates/home.html:239 templates/reports/show.html:209
+#: templates/home.html:239 templates/reports/show.html:198
 msgid "We send it to the city on your behalf"
 msgstr ""
 
@@ -473,7 +491,7 @@ msgstr ""
 msgid "New Report"
 msgstr ""
 
-#: templates/reports/new.html:103 templates/reports/show.html:105
+#: templates/reports/new.html:103 templates/reports/show.html:107
 msgid "Category:"
 msgstr ""
 
@@ -534,6 +552,10 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
+#: templates/reports/report_filter.html:102
+msgid "Status"
+msgstr ""
+
 #: templates/reports/report_filter.html:104
 msgid "Sorting:"
 msgstr ""
@@ -550,7 +572,7 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: templates/reports/show.html:62 templates/reports/show.html.py:180
+#: templates/reports/show.html:62
 msgid "This problem has been fixed."
 msgstr ""
 
@@ -558,7 +580,11 @@ msgstr ""
 msgid "This problem has not been fixed."
 msgstr ""
 
-#: templates/reports/show.html:70
+#: templates/reports/show.html:66
+msgid "This problem is being fixed."
+msgstr ""
+
+#: templates/reports/show.html:72
 msgid ""
 "<p>Please check your email for a message from FixMyStreet.ge, which will "
 "include a confirmation link.  Complete your submission by clicking on it.</"
@@ -566,75 +592,71 @@ msgid ""
 "visitors until you have done so.</p>"
 msgstr ""
 
-#: templates/reports/show.html:90
+#: templates/reports/show.html:92
 msgid "Translate this report"
 msgstr ""
 
-#: templates/reports/show.html:106
+#: templates/reports/show.html:108
 msgid "Street Address:"
 msgstr ""
 
-#: templates/reports/show.html:107
+#: templates/reports/show.html:109
 msgid "Filed by:"
 msgstr ""
 
-#: templates/reports/show.html:110
+#: templates/reports/show.html:112
 msgid "Sent to"
 msgstr ""
 
-#: templates/reports/show.html:111
+#: templates/reports/show.html:113
 msgid "On"
 msgstr ""
 
-#: templates/reports/show.html:118
+#: templates/reports/show.html:120
 msgid "Subscribers:"
 msgstr ""
 
-#: templates/reports/show.html:120 templates/reports/subscribers/new.html:12
+#: templates/reports/show.html:122 templates/reports/subscribers/new.html:12
 msgid "Subscribe"
 msgstr ""
 
-#: templates/reports/show.html:131
+#: templates/reports/show.html:133
 msgid "Print a flyer"
 msgstr ""
 
-#: templates/reports/show.html:131
+#: templates/reports/show.html:133
 msgid " to tell others about this problem."
 msgstr ""
 
-#: templates/reports/show.html:134
+#: templates/reports/show.html:136
 msgid "Offensive? Unsuitable? Tell us"
 msgstr ""
 
-#: templates/reports/show.html:138
+#: templates/reports/show.html:140
 msgid "Updates"
 msgstr ""
 
-#: templates/reports/show.html:142
+#: templates/reports/show.html:144
 msgid "posted by"
 msgstr ""
 
-#: templates/reports/show.html:154
+#: templates/reports/show.html:156
 msgid "This report's author has been verified"
 msgstr ""
 
-#: templates/reports/show.html:164
+#: templates/reports/show.html:166
 msgid "Provide an update"
 msgstr ""
 
-#: templates/reports/show.html:166
+#: templates/reports/show.html:168
 msgid "Please note that updates are not sent to city officials."
 msgstr ""
 
-#: templates/reports/show.html:186
-msgid "This problem is still fixed."
-msgstr ""
-
-#: templates/reports/show.html:204
+#: templates/reports/show.html:193
 msgid "Click on your city on homepage"
 msgstr ""
 
-#: templates/reports/show.html:208
+#: templates/reports/show.html:197
 msgid "Upload an image (in case you have one)"
 msgstr ""
 
