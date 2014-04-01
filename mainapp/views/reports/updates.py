@@ -36,16 +36,11 @@ def confirm(request, confirm_token):
     if update.is_confirmed:
         return HttpResponseRedirect(update.report.get_absolute_url())
 
-    # is the update fixed?
-
-    # unfixed -> unfixed
-    # unfixed -> fixed
+    # Update main report model with status
+    update.report.status = update.status
     if update.is_fixed and not update.report.is_fixed:
-        update.report.status = 'fixed'
         update.report.fixed_at = update.created_at
-    # fixed -> unfixed
-    elif not update.is_fixed and update.report.is_fixed:
-        update.report.status = 'not-fixed'
+    else:
         update.report.fixed_at = None
 
     update.is_confirmed = True
