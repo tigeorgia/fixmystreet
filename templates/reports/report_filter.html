@@ -49,10 +49,12 @@
                         {% for obj in reports %}
 
                             <tr class="all-reports-table">
-                                {% if obj.is_fixed %}
+                                {% if obj.status == 'fixed' %}
                                     <td class="fixed"></td>
-                                {% else %}
+                                {% elif obj.status == 'not-fixed' %}
                                     <td class="not-fixed"></td>
+                                {% elif obj.status == 'in-progress' %}
+                                    <td class="in-progress"></td>
                                 {% endif %}
                                 <td data-title="{% trans "Title" %}"><a href="{{ obj.get_absolute_url }}"
                                         >{{ obj.title }}</a></td>

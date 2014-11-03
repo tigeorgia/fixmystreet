@@ -58,7 +58,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-8 col-lg-8">
-                {% if report.is_fixed %}
+                {% if report.status == 'fixed' %}
                     <div class="status-color-fixed">{% trans "This problem has been fixed." %}</div>
                 {% elif report.status == 'not-fixed' %}
                     <div class="status-color-not-fixed">{% trans "This problem has not been fixed." %}</div>
