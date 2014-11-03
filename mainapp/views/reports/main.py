@@ -120,9 +120,9 @@ def report_list(request, extra_content=None):
             pass
 
     sort = request.GET.get('sorting', '-created_at')
-    today = datetime.datetime.today().strftime('%Y-%m-%d')
+    today = datetime.datetime.combine(datetime.datetime.today(), datetime.time.max)
     fromstart = "1990-01-01"
-    last_month = (datetime.datetime.today() + datetime.timedelta(99)).strftime('%Y-%m-%d')
+    last_month = (today + datetime.timedelta(99))
 
     start_date = request.GET.get('created_after')
     end_date = request.GET.get('created_before')

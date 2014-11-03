@@ -26,7 +26,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super(HomeView, self).get_context_data(**kwargs)
-        ctx['report_counts'] = ReportCountQuery('1 year')
+        ctx['report_counts'] = ReportCountQuery('1 month')
         ctx['center'] = GmapPoint(point=(44.79847, 41.708484))
         ctx['last_year'] = (datetime.datetime.today() + datetime.timedelta(-365)).strftime('%Y-%m-%d')
         ctx['categories'] = ReportCategory.objects.all().order_by("category_class")
