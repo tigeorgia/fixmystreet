@@ -1,5 +1,5 @@
 Django==1.6.2
-PIL==1.1.7
+Pillow==2.6.1
 South==0.8.4
 argparse==1.2.1
 django-filter==0.7
@@ -16,5 +16,3 @@ six==1.5.2
 wsgiref==0.1.2
 yolk==0.4.3
 yuicompressor==2.4.8
-#django-tracking==0.4.1 install this with "hg clone http://bitbucket.org/codekoala/django-tracking" & easy_install!
-#google_analytics install this with pip install git+git://github.com/clintecker/django-google-analytics.git
