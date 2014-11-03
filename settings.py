@@ -41,6 +41,9 @@ GOOGLE_MAPS_API_VERSION = 3
 # START Pipeline settings
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
+#If javascript breaks, set this to true
+PIPELINE_DISABLE_WRAPPER = True
+
 PIPELINE_COMPILERS = (
     'pipeline.compilers.less.LessCompiler',
 )
@@ -99,7 +102,7 @@ PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.yui.YUICompressor'
 PIPELINE_YUI_CSS_ARGUMENTS = ''
 PIPELINE_YUI_JS_ARGUMENTS = ''
 
-PIPELINE_ENABLED = False
+PIPELINE_ENABLED = True
 # END Pipeline settings
 
 #PREPEND_WWW = True
@@ -184,7 +187,6 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
-    'google_analytics',
     'transmeta',
     'ignore_lang',
     'mainapp',
@@ -195,7 +197,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
 )
 
-DEBUG = True
+DEBUG = False
 LOCAL_DEV = False
 
 try:
