@@ -429,7 +429,8 @@ class ReportUpdate(models.Model):
             send_mail(subject, message,
                       settings.EMAIL_FROM_USER, [self.email], fail_silently=False)
 
-        if VerifiedAuthor.objects.filter(domain=self.email.partition('@')[2]):
+        if VerifiedAuthor.objects.filter(
+                domain=self.email.partition('@')[2]) or self.email is self.report.ward.councillor.email:
             self.is_verified_author = True
 
         super(ReportUpdate, self).save()
