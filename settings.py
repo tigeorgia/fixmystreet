@@ -37,6 +37,7 @@ RANDOM_IMAGE_DIR = 'images/header-images/' #random home images
 GOOGLE_MAPS_URL = 'https://maps.googleapis.com/maps/api/js?sensor=true&v=%s&key='
 GOOGLE_MAPS_API_VERSION = 3
 
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 # START Pipeline settings
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
@@ -139,6 +140,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.gzip.GZipMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'pipeline.middleware.MinifyHTMLMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -174,7 +176,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_PATH, 'templates')
+    os.path.join(PROJECT_PATH, 'templates'),
 )
 
 INSTALLED_APPS = (
@@ -193,6 +195,7 @@ INSTALLED_APPS = (
     'south',
     'pipeline',
     'django_filters',
+    'debug_toolbar',
     'rosetta',
     'widget_tweaks',
 )

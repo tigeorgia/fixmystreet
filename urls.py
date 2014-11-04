@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import admin
 from django.contrib.sitemaps import FlatPageSitemap, GenericSitemap
 from mainapp.feeds import LatestReports, LatestReportsByCity, LatestReportsByWard, LatestUpdatesByReport
-from mainapp.models import City, Report, ReportFilter
+from mainapp.models import City, Report
 from mainapp.sitemaps import MainSitemap
 import mainapp.views.cities as cities
 from mainapp.views.main import AboutView, HomeView
@@ -107,6 +107,11 @@ if 'rosetta' in settings.INSTALLED_APPS:
     )
 
 if settings.DEBUG:
+    import debug_toolbar
     urlpatterns += i18n_patterns('django.contrib.staticfiles.views',
         url(r'^static/(?P<path>.*)$', 'serve'),
+    )
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += patterns('',
+        url(r'^__debug__/', include(debug_toolbar.urls)),
     )

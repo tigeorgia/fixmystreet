@@ -6,7 +6,7 @@ from django.utils import translation
 
 class LanguagePrefixMiddleware:
     def __init__(self):
-        self.lang_blacklist = ['i18n', 'jsi18n', 'media', 'admin', 'rosetta', 'accounts', 'static']
+        self.lang_blacklist = ['i18n', 'jsi18n', 'media', 'admin', 'rosetta', 'accounts', 'static', '__debug__']
         self.codes = []
 
     def process_request(self, request):
