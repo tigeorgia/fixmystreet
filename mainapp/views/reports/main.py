@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
-from mainapp.models import Report, ReportUpdate, Ward, FixMyStreetMap, ReportCategory, ReportFilter
+from mainapp.models import Report, ReportUpdate, Ward, FixMyStreetMap, ReportCategory
 from mainapp.forms import ReportForm, ReportUpdateForm, sortingForm
+from mainapp.filters import ReportFilter
 from mainapp.utils import random_image
 from django.template import RequestContext
-from django.db.models import Count, connection
 from django.contrib.gis.geos import *
 from django.utils.translation import ugettext as _
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger

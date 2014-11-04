@@ -245,7 +245,7 @@
                         <div class="home-round">
                             <div class="home-round-inner">
                                 <a href="{% url 'mainapp.views.reports.main.report_list' %}?created_after={{ last_year }}&status=fixed">
-                                    {{ report_counts.recent_fixed }}<br>
+                                    {{ report_counts.fixed.get_counts }}<br>
                                     {% trans "Reports Fixed" %}</a>
                             </div>
                         </div>
@@ -255,7 +255,7 @@
                             <div class="home-round-inner">
                                 <div class="home-count">
                                     <a href="{% url 'mainapp.views.reports.main.report_list' %}?created_after={{ last_year }}">
-                                        {{ report_counts.recent_new }}<br>
+                                        {{ report_counts.get_counts }}<br>
                                         {% trans "Reports Filed in the past year" %}
                                     </a>
                                 </div>

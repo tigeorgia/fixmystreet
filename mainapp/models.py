@@ -473,13 +473,6 @@ class ReportSubscriber(models.Model):
                       settings.EMAIL_FROM_USER, [self.email], fail_silently=False)
         super(ReportSubscriber, self).save()
 
-
-class ReportFilter(django_filters.FilterSet):
-    class Meta:
-        model = Report
-        fields = ['ward__city', 'category', 'status']
-
-
 class VerifiedAuthor(models.Model):
     """ Email domains; report updates by authors from these email domains will be marked as verified."""
 

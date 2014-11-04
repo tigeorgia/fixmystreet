@@ -1,9 +1,8 @@
-from mainapp.models import Report, FixMyStreetMap, ReportCountQuery, FaqEntry, ReportCategory, GmapPoint, City
+from mainapp.models import Report, FixMyStreetMap, FaqEntry, ReportCategory, GmapPoint, City
 from django.views.generic import TemplateView, CreateView
 from mainapp.forms import ReportStart
-from mainapp.utils import random_image
+from mainapp.utils import random_image, ReportCount
 import datetime
-
 
 class HomeView(TemplateView):
     template_name = 'home.html'
@@ -26,7 +25,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super(HomeView, self).get_context_data(**kwargs)
-        ctx['report_counts'] = ReportCountQuery('1 month')
+        ctx['report_counts'] = ReportCount.by_interval('1 year')
         ctx['center'] = GmapPoint(point=(44.79847, 41.708484))
         ctx['last_year'] = (datetime.datetime.today() + datetime.timedelta(-365)).strftime('%Y-%m-%d')
         ctx['categories'] = ReportCategory.objects.all().order_by("category_class")
