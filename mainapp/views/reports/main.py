@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
+from django.db.models import Count
 from mainapp.models import Report, ReportUpdate, Ward, FixMyStreetMap, ReportCategory
 from mainapp.forms import ReportForm, ReportUpdateForm, sortingForm
 from mainapp.filters import ReportFilter
@@ -9,6 +10,7 @@ from django.template import RequestContext
 from django.contrib.gis.geos import *
 from django.utils.translation import ugettext as _
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic.list import ListView
 from time import strptime
 from utils import utils
 import datetime
@@ -181,3 +183,27 @@ def report_list(request, extra_content=None):
     }
 
     return render_to_response(template, context, context_instance=RequestContext(request))
+
+
+class ReportListView(ListView):
+    model = Report
+    template_name = 'reports/report_list.html'
+    template_name_suffix = None
+    context_object_name = 'report_list'
+    paginate_by = 30
+
+    def get_context_data(self, **kwargs):
+        ctx = super(ReportListView, self).get_context_data(**kwargs)
+        ctx['random_image'] = random_image()
+        return ctx
+
+    def get_queryset(self):
+        qs = Report.objects.all().prefetch_related('category', 'ward').extra(
+            select={
+                'sub_count': '''SELECT COUNT(*)
+                                FROM report_subscribers
+                                WHERE reports.id = report_subscribers.report_id'''
+            }
+        )
+
+        return qs
