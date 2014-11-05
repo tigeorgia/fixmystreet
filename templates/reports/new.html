@@ -89,7 +89,7 @@
                     {{ form_error }}
                 {% endif %}
                 <form enctype="multipart/form-data" method="post" id="my-form" class="fms-form" name="my-form"
-                      action="{% url 'mainapp.views.reports.main.new' %}">
+                      action="{% url "report_new" %}">
 
                     <h4><b>{{ title }}</b></h4>
 

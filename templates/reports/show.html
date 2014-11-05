@@ -119,7 +119,7 @@
                         <div id='report-subscribers'>
                             {% trans "Subscribers:" %} <b>{{ subscribers }}</b><br/>
                             {% if not report.is_fixed %}
-                                <a href="{% url 'mainapp.views.reports.subscribers.new' report_id=report.id %}">{% trans "Subscribe" %}</a>
+                                <a href="{% url "subscriber_new" report_id=report.id %}">{% trans "Subscribe" %}</a>
                             {% endif %}
                         </div>
                     {% endif %}
@@ -167,7 +167,7 @@
                     </div>
                     <p>{% trans "Please note that updates are not sent to city officials." %}</p>
                     <form enctype="multipart/form-data"
-                          action="{% url 'mainapp.views.reports.updates.new' report_id=report.id %}" method="post"
+                          action="{% url "report_update_new" report_id=report.id %}" method="post"
                           name="my-form">
                         <table class="form">
                             <tr>

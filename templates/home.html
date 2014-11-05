@@ -166,7 +166,7 @@
                 {% trans "Enter your address on the map, press search and drag marker to desired location. Then fill out this form and press continue" %}</p>
 
             <form class="start-hidden" name="new-report" id="new-report"
-                  action="{% url 'mainapp.views.reports.main.new' %}" method="post">
+                  action="{% url 'report_new' %}" method="post">
                 <fieldset>
                     <div class="checkbox">
                         <label id="geokbd">
@@ -244,7 +244,7 @@
                     <div class="col-sm-4 col-lg-4 home-box">
                         <div class="home-round">
                             <div class="home-round-inner">
-                                <a href="{% url 'mainapp.views.reports.main.report_list' %}?created_after={{ last_year }}&status=fixed">
+                                <a href="{% url 'report_list' %}?created_after={{ last_year }}&status=fixed">
                                     {{ report_counts.fixed.get_counts }}<br>
                                     {% trans "Reports Fixed" %}</a>
                             </div>
@@ -254,7 +254,7 @@
                         <div class="home-round">
                             <div class="home-round-inner">
                                 <div class="home-count">
-                                    <a href="{% url 'mainapp.views.reports.main.report_list' %}?created_after={{ last_year }}">
+                                    <a href="{% url 'report_list' %}?created_after={{ last_year }}">
                                         {{ report_counts.get_counts }}<br>
                                         {% trans "Reports Filed in the past year" %}
                                     </a>
