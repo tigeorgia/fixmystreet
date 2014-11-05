@@ -1,5 +1,4 @@
 from django.conf.urls import patterns, include, url
-from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.conf import settings
 from django.http import HttpResponseRedirect
@@ -12,6 +11,7 @@ import mainapp.views.cities as cities
 from mainapp.views.main import AboutView, HomeView
 from mainapp.views.reports.main import show as ReportShow
 from mainapp.views.ajax import latestReportsJson
+from mainapp.views.reports.main import ReportListView
 
 js_info_dict = {
     'packages': ('django-fixmystreet',),
@@ -30,88 +30,91 @@ sitemaps = {
 }
 
 admin.autodiscover()
-urlpatterns = i18n_patterns('',
-                       url(r'^admin/', include(admin.site.urls)),
-                       url(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.Feed', {'feed_dict': feeds}),
-                       url(r'^i18n/', include('django.conf.urls.i18n')),
+urlpatterns = patterns('',
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.Feed', {'feed_dict': feeds}),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 )
 
-urlpatterns += i18n_patterns('',
-                        (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),
+urlpatterns += patterns('django.views.i18n',
+    url(r'^jsi18n/$', 'javascript_catalog', js_info_dict),
 )
 
-urlpatterns += i18n_patterns('',
-                             url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps})
+urlpatterns += patterns('django.contrib.sitemaps.views',
+    url(r'^sitemap\.xml$', 'sitemap', {'sitemaps': sitemaps})
 )
 
-urlpatterns += i18n_patterns('mainapp.views.main',
-                             url(r'^$', HomeView.as_view(), name='home'),
-                             url(r'about/$', AboutView.as_view(), name='about')
+urlpatterns += patterns('',
+    url(r'^$', HomeView.as_view(), name='home'),
+    url(r'about/$', AboutView.as_view(), name='about')
 )
 
-urlpatterns += i18n_patterns('mainapp.views.promotion',
-                             url(r'^promotions/(\w+)$', 'show'),
+urlpatterns += patterns('mainapp.views.promotion',
+    url(r'^promotions/(\w+)$', 'show', name='promotions'),
 )
 
-urlpatterns += i18n_patterns('mainapp.views.wards',
-                             url(r'^wards/(?P<ward_id>\d+)', 'show'),
-                             url(r'^cities/(?P<city_id>\d+)/wards/(?P<ward_id>\d+)', 'show_by_number'),
+urlpatterns += patterns('mainapp.views.wards',
+    url(r'^wards/(?P<ward_id>\d+)', 'show', name='ward_detail'),
+    url(r'^cities/(?P<city_id>\d+)/wards/(?P<ward_id>\d+)', 'show_by_number', name='city_ward_detail'),
 
 )
 
-urlpatterns += i18n_patterns('mainapp.views.reports.updates',
-                             (r'^reports/updates/confirm/(\S+)', 'confirm'),
-                             (r'^reports/updates/create/', 'create'),
-                             (r'^reports/(?P<report_id>\d+)/updates/', 'new'),
+urlpatterns += patterns('mainapp.views.reports.updates',
+    url(r'^reports/updates/confirm/(\S+)', 'confirm', name='report_update_confirm'),
+    url(r'^reports/updates/create/', 'create', name='report_update_create'),
+    url(r'^reports/(?P<report_id>\d+)/updates/', 'new', name='report_update_new'),
 )
 
-urlpatterns += i18n_patterns('mainapp.views.reports.subscribers',
-                             (r'^reports/subscribers/confirm/(\S+)', 'confirm'),
-                             (r'^reports/subscribers/unsubscribe/(\S+)', 'unsubscribe'),
-                             (r'^reports/subscribers/create/', 'create'),
-                             (r'^reports/(?P<report_id>\d+)/subscribers', 'new'),
+urlpatterns += patterns('mainapp.views.reports.subscribers',
+    url(r'^reports/subscribers/confirm/(\S+)', 'confirm', name='subscriber_confirm'),
+    url(r'^reports/subscribers/unsubscribe/(\S+)', 'unsubscribe', name='subscriber_unsubscribe'),
+    url(r'^reports/subscribers/create/', 'create', name='subscriber_create'),
+    url(r'^reports/(?P<report_id>\d+)/subscribers', 'new', name='subscriber_new'),
 )
 
-urlpatterns += i18n_patterns('mainapp.views.reports.flags',
-                             (r'^reports/(?P<report_id>\d+)/flags/thanks', 'thanks'),
-                             (r'^reports/(?P<report_id>\d+)/flags', 'new'),
+urlpatterns += patterns('mainapp.views.reports.flags',
+    url(r'^reports/(?P<report_id>\d+)/flags/thanks', 'thanks', name='flag_thanks'),
+    url(r'^reports/(?P<report_id>\d+)/flags', 'new', name='flag_new'),
 )
 
-urlpatterns += i18n_patterns('mainapp.views.reports.main',
-                             url(r'^reports/(?P<report_id>\d+)$', ReportShow, name='report-show'),
-                             (r'^reports/(?P<report_id>\d+)/poster$', 'poster'),
-                             #(r'^reports/category/(\d+)$', 'category'),
-                             (r'^reports/', 'new'),
+urlpatterns += patterns('mainapp.views.reports.main',
+    url(r'^reports/(?P<report_id>\d+)$', ReportShow, name='report_show'),
+    url(r'^reports/(?P<report_id>\d+)/poster$', 'poster', name='poster'),
+    # (r'^reports/category/(\d+)$', 'category'),
+    url(r'^reports/', 'new', name='report_new'),
 )
 
-urlpatterns += i18n_patterns('mainapp.views.contact',
-                             (r'^contact/thanks', 'thanks'),
-                             (r'^contact', 'new'),
+urlpatterns += patterns('mainapp.views.contact',
+    url(r'^contact/thanks', 'thanks', name='contact_thanks'),
+    url(r'^contact/', 'new', name='contact_new'),
 )
 
-urlpatterns += i18n_patterns('mainapp.views.ajax',
-                             (r'^ajax/categories/(?P<cat_id>\d+)', 'category_desc'),
-                             (r'^ajax/address-search-form', 'address_search_form'),
-                             (r'^ajax/new-report$', 'new_report'),
-                             (r'^ajax/latest-reports$', 'latest_reports_json'),
-                             url(r'^ajax/l$', latestReportsJson.as_view())
+urlpatterns += patterns('mainapp.views.ajax',
+    url(r'^ajax/categories/(?P<cat_id>\d+)', 'category_desc', name='ajax_category_desc'),
+    url(r'^ajax/address-search-form', 'address_search_form', name='ajax_address_search'),
+    url(r'^ajax/new-report$', 'new_report', 'ajax_report_new'),
+    url(r'^ajax/latest-reports$', 'latest_reports_json', 'ajax_latest_reports'),
+    url(r'^ajax/l$', latestReportsJson.as_view(), name='ajax_latest_reports_json')
 )
 
-urlpatterns += i18n_patterns('mainapp.views.reports',
-                             (r'^all-reports/', 'main.report_list', ),
+urlpatterns += patterns('',
+    url(r'^all-reports/', ReportListView.as_view(), name='report_list'),
 )
 
 if 'rosetta' in settings.INSTALLED_APPS:
-    urlpatterns += i18n_patterns('',
-                            url(r'^rosetta/', include('rosetta.urls')),
+    urlpatterns += patterns('',
+        url(r'^rosetta/', include('rosetta.urls')),
     )
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns += i18n_patterns('django.contrib.staticfiles.views',
-        url(r'^static/(?P<path>.*)$', 'serve'),
+
+    urlpatterns += patterns('',
+        url(r'^static/(?P<path>.*)$', 'django.contrib.staticfiles.views.serve'),
     )
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
     urlpatterns += patterns('',
         url(r'^__debug__/', include(debug_toolbar.urls)),
-    )
+        )
+
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
