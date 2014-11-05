@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from mainapp.models import Report
 from mainapp.forms import ContactForm
@@ -15,7 +16,7 @@ def new(request):
         form = ContactForm(data=request.POST, auto_id=False)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect("/contact/thanks")
+            return HttpResponseRedirect(reverse('contact_thanks'))
     else:
         form = ContactForm()
 

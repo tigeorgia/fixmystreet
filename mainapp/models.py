@@ -306,7 +306,7 @@ class Report(models.Model):
         return ReportUpdate.objects.get(report=self, first_update=True)
 
     def get_absolute_url(self):
-        return reverse('report-show', args=[self.id])
+        return reverse('report_show', args=[self.id])
 
     class Meta:
         db_table = u'reports'
