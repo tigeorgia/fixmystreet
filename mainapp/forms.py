@@ -105,6 +105,6 @@ class ReportStart(forms.Form):
 
 class sortingForm(forms.Form):
     CHOICES = (('-created_at', _('Created descending')), ('created_at', _('Created ascending')))
-    sorting = forms.ChoiceField(widget=forms.RadioSelect(attrs={'class': ''}), choices=CHOICES)
-    created_after = forms.DateField(widget=AdminDateWidget(attrs={'class': 'datepicker form-control'}))
-    created_before = forms.DateField(widget=AdminDateWidget(attrs={'class': 'datepicker form-control'}))
+    sorting = forms.ChoiceField(required=False, widget=forms.RadioSelect(attrs={'class': ''}), choices=CHOICES)
+    created_after = forms.DateField(required=False, widget=AdminDateWidget(attrs={'class': 'datepicker form-control'}))
+    created_before = forms.DateField(required=False, widget=AdminDateWidget(attrs={'class': 'datepicker form-control'}))
