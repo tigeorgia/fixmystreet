@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
+import datetime
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.db.models import Count
+from django.template import RequestContext
+
+from django.contrib.gis.geos import *
+from django.utils.translation import ugettext as _
+from django_filters.views import FilterView
+
 from mainapp.models import Report, ReportUpdate, Ward, FixMyStreetMap, ReportCategory
 from mainapp.forms import ReportForm, ReportUpdateForm, sortingForm
 from mainapp.filters import ReportFilter
 from mainapp.utils import random_image
-from django.template import RequestContext
-from django.contrib.gis.geos import *
-from django.utils.translation import ugettext as _
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.generic.list import ListView
-from time import strptime
 from utils import utils
-import datetime
 
 
 def new(request):
@@ -110,83 +110,9 @@ def poster(request, report_id):
     return render_to_response("reports/poster.html", {'url': url, 'report': report})
 
 
-def report_list(request, extra_content=None):
-    template = 'reports/report_filter.html'
-    ajax_template = 'reports/report_filter_ajax.html'
-    sortform = sortingForm()
-
-    for key in request.GET:
-        try:
-            sortform.fields[key].initial = request.GET[key]
-        except KeyError:
-            pass
-
-    sort = request.GET.get('sorting', '-created_at')
-    today = datetime.datetime.combine(datetime.datetime.today(), datetime.time.max)
-    fromstart = "1990-01-01"
-    last_month = (today + datetime.timedelta(99))
-
-    start_date = request.GET.get('created_after')
-    end_date = request.GET.get('created_before')
-
-    if not start_date:
-        start_date = fromstart
-    if not end_date:
-        end_date = today
-
-    filter_search = ReportFilter(request.GET, queryset=Report.objects.filter(
-        created_at__gt=start_date,
-        created_at__lte=end_date,
-        is_confirmed__exact=True,
-    ).order_by(sort))
-
-    paginator = Paginator(filter_search, 30)
-    page = request.GET.get('page')
-    try:
-        paged_reports = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        paged_reports = paginator.page(1)
-
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        paged_reports = paginator.page(paginator.num_pages)
-
-    test = "a"
-
-    filtered_with_subs = filter_search.qs.extra(
-        select={
-            'sub_count': 'SELECT COUNT(*) FROM report_subscribers \
-                         WHERE report_subscribers.report_id = reports.id\
-                         AND report_subscribers.report_id IN %s \
-                        ' % "(%s)" % ",".join([str(r.id) for r in paged_reports.object_list])
-
-        },
-        order_by=[sort]
-    )
-
-    paginator = Paginator(filtered_with_subs, 30)
-    try:
-        paged_reports = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        paged_reports = paginator.page(1)
-
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        paged_reports = paginator.page(paginator.num_pages)
-
-    context = {'filter': filter_search,
-               'reports': paged_reports,
-               'sortform': sortform,
-               'random_image': random_image()
-    }
-
-    return render_to_response(template, context, context_instance=RequestContext(request))
-
-
-class ReportListView(ListView):
+class ReportListView(FilterView):
     model = Report
+    filterset_class = ReportFilter
     template_name = 'reports/report_list.html'
     template_name_suffix = None
     context_object_name = 'report_list'
@@ -194,15 +120,38 @@ class ReportListView(ListView):
 
     def get_context_data(self, **kwargs):
         ctx = super(ReportListView, self).get_context_data(**kwargs)
+        data = self.request.GET
+        today = datetime.datetime.combine(datetime.datetime.today(), datetime.time.max)
         ctx['random_image'] = random_image()
+        ctx['sortform'] = sortingForm(data={
+            'created_after': data.get('created_after'),
+            'created_before': data.get('created_before'),
+            'sorting': data.get('sorting', ),
+        })
         return ctx
 
     def get_queryset(self):
-        qs = Report.objects.all().prefetch_related('category', 'ward').extra(
+        data = self.request.GET
+        today = datetime.datetime.combine(datetime.datetime.today(), datetime.time.max)
+        form = sortingForm(data={
+            'created_after': data.get('created_after') or '1990-01-01',
+            'created_before': data.get('created_before') or today,
+            'sorting': data.get('sorting') or '-created_at',
+        })
+
+        if form.is_valid():
+            qs = Report.objects.filter(is_confirmed=True, created_at__range=(
+                form.cleaned_data['created_after'], form.cleaned_data['created_before']))
+        else:
+            qs = Report.objects.filter(is_confirmed=True)
+
+        qs = qs.prefetch_related('ward', 'category').order_by(form.cleaned_data['sorting'])
+
+        qs = qs.extra(
             select={
-                'sub_count': '''SELECT COUNT(*)
-                                FROM report_subscribers
-                                WHERE reports.id = report_subscribers.report_id'''
+                'sub_count': 'SELECT COUNT(*)\
+                                FROM report_subscribers\
+                                WHERE reports.id = report_subscribers.report_id'
             }
         )
 
