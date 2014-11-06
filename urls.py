@@ -1,17 +1,16 @@
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.conf import settings
-from django.http import HttpResponseRedirect
 from django.contrib import admin
-from django.contrib.sitemaps import FlatPageSitemap, GenericSitemap
+from django.contrib.sitemaps import FlatPageSitemap
+
 from mainapp.feeds import LatestReports, LatestReportsByCity, LatestReportsByWard, LatestUpdatesByReport
-from mainapp.models import City, Report
 from mainapp.sitemaps import MainSitemap
-import mainapp.views.cities as cities
 from mainapp.views.main import AboutView, HomeView
 from mainapp.views.reports.main import show as ReportShow
 from mainapp.views.ajax import latestReportsJson
 from mainapp.views.reports.main import ReportListView
+
 
 js_info_dict = {
     'packages': ('django-fixmystreet',),
@@ -98,8 +97,14 @@ urlpatterns += patterns('mainapp.views.ajax',
 )
 
 urlpatterns += patterns('',
-    url(r'^all-reports/', ReportListView.as_view(), name='report_list'),
+                        url(r'^all-reports/', ReportListView.as_view(), name='report_list'),
 )
+
+
+urlpatterns += patterns('',
+                        url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
+                        url(r'^api/', include('api.urls', namespace='api')),
+                        )
 
 if 'rosetta' in settings.INSTALLED_APPS:
     urlpatterns += patterns('',

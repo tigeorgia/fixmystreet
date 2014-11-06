@@ -31,7 +31,7 @@ MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 
 RANDOM_IMAGE_DIR = 'images/header-images/' #random home images
-
+LOGIN_REDIRECT_URL = 'api:login-redirect'
 
 #GOOGLE MAPS SETTINGS
 GOOGLE_MAPS_URL = 'https://maps.googleapis.com/maps/api/js?sensor=true&v=%s&key='
@@ -160,6 +160,17 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder'
 )
 
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'PAGINATE_BY': 30,
+    'PAGINATE_BY_PARAM': 'page_size',
+    'MAX_PAGINATE_BY': 100
+}
+
 LANGUAGES = (
     ('en', 'English'),
     ('ka', 'Georgian'),
@@ -191,12 +202,13 @@ INSTALLED_APPS = (
     'transmeta',
     'ignore_lang',
     'mainapp',
-    'south',
+    'api',
     'pipeline',
     'django_filters',
     'debug_toolbar',
     'rosetta',
     'widget_tweaks',
+    'rest_framework',
 )
 
 DEBUG = False
