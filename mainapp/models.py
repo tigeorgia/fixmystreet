@@ -1,31 +1,24 @@
 # -*- coding: utf-8 -*-
-from django.db import models, connection
+import hashlib
+import urllib
+import time
+from datetime import datetime as dt
+import json
+
+from django.db import connection
 from django.contrib.gis.db import models
 from django.contrib.gis.maps.google import GoogleMap, GMarker, GEvent, GPolygon, GIcon
 from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 from django.conf import settings
-from django import forms
 from django.core.mail import send_mail, EmailMessage
-import hashlib
-import urllib
-import time
-from mainapp import emailrules
-from datetime import datetime as dt
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from transmeta import TransMeta
 from stdimage import StdImageField
-import json
-import django_filters
 from django.utils.encoding import iri_to_uri
-from django.utils.translation import get_language
-from south.modelsinspector import add_introspection_rules
 
-# this is needed for south to recognize stdimage custom fields. Do not touch!
-add_introspection_rules([], ['^stdimage\.fields\.StdImageField'])
-
-# from here: http://www.djangosnippets.org/snippets/630/
+from mainapp import emailrules
 
 
 class CCEmailMessage(EmailMessage):
