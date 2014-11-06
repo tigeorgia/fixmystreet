@@ -1,6 +1,5 @@
 Django==1.7.1
 Pillow==2.6.1
-South==0.8.4
 argparse==1.2.1
 django-debug-toolbar==1.2.2
 django-filter==0.7
