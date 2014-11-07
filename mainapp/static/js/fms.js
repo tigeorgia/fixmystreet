@@ -76,6 +76,17 @@ $(function () {
             marginLeft: -415 + 'px'
         }, 1400);
     });
+
+
+    /**
+     * Home round box onclick
+     */
+    $(function () {
+        $('.home-round-inner').click(function () {
+            var link = $(this).find('a')[0]['href']
+            window.location.href = link
+        })
+    })
 });
 
 // Geocoding on homepage
