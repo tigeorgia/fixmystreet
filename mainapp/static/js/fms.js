@@ -83,8 +83,7 @@ $(function () {
      */
     $(function () {
         $('.home-round-inner').click(function () {
-            var link = $(this).find('a')[0]['href']
-            window.location.href = link
+            window.location.href = $(this).find('a')[0]['href'];
         })
     })
 });
