@@ -89,19 +89,6 @@
                     <!-- AddThis Button END -->
 
                 {% endif %}
-                <div>{% trans "Translate this report" %}
-                    <div id="google_translate_element"></div>
-                    <script>
-                        function googleTranslateElementInit() {
-                            new google.translate.TranslateElement({
-                                pageLanguage: 'en',
-                                autoDisplay: false,
-                                multilanguagePage: true
-                            }, 'google_translate_element');
-                        }
-                    </script>
-                    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-                </div>
                 <div id='report-header'>
                     <div id='report-status'>
                         {% trans "Category:" %}<b>{{ report.category.name }}</b><br/>
@@ -125,7 +112,7 @@
                     {% endif %}
                 </div>
                 {% if report.photo %}
-                    <img align='center' src='{{ report.photo.url }}'>
+                    <img align='center' src='{{ report.photo.thumbnail.url }}'>
                 {% endif %}
                 {% if report.is_confirmed %}
                     <div id="more-actions">
