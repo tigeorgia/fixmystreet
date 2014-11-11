@@ -2,17 +2,17 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
-from .models import ApiUser
+from .models import ChemikuchaUser
 
 
-class ApiUserInline(admin.StackedInline):
-    model = ApiUser
+class ChemikuchaUserInline(admin.StackedInline):
+    model = ChemikuchaUser
     can_delete = False
 
 
-class ApiUserAdmin(UserAdmin):
-    inlines = (ApiUserInline,)
+class ChemikuchaUserAdmin(UserAdmin):
+    inlines = (ChemikuchaUserInline,)
 
 
 admin.site.unregister(User)
-admin.site.register(User, ApiUserAdmin)
+admin.site.register(User, ChemikuchaUserAdmin)
