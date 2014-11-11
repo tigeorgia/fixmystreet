@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from django.http import Http404
 
-from mainapp.models import Report
+from mainapp.models import Report, ReportCategory, Ward
 from serializers import ReportSerializer
 
 
@@ -26,13 +26,41 @@ class LoginRedirectView(RedirectView):
         return redirect_url
 
 
-class ReportList(generics.ListCreateAPIView):
+class ReportListCreateView(generics.ListCreateAPIView):
+    """
+    List of all reports.
+
+    Advanced API description coming soon...
+    """
     queryset = Report.objects.all()
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = ReportSerializer
     paginate_by = 10
     paginate_by_param = 'page_size'
     max_paginate_by = 100
+
+    def _add_category_information(self):
+        """
+        Get all available categories. Used for OPTIONS request
+        @return: Dictionary of all available categories
+        @rtype: dict
+        """
+        data = {}
+        categories = ReportCategory.objects.all()
+        data['choices'] = [{'display_name_ka': cat.name_ka,
+                            'display_name_en': cat.name_en,
+                            'value': cat.id} for cat in categories]
+        data['type'] = 'integer'
+        return data
+
+    def metadata(self, request):
+        """
+        Extend OPTIONS data.
+        """
+        data = super(ReportListCreateView, self).metadata(request)
+        category_data = data['actions']['POST']['category']
+        data['actions']['POST']['category'].update(self._add_category_information())
+        return data
 
 
 class ReportDetail(APIView):
