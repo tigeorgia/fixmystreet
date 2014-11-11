@@ -1,34 +1,20 @@
+from collections import OrderedDict
+from decimal import Decimal
+
 from rest_framework import serializers
-
-
-class Point(object):
-    def __init__(self, lon, lat):
-        self.lon = lon
-        self.lat = lat
+from django.contrib.gis.geos import Point
 
 
 class PointField(serializers.WritableField):
-    point_type = None
-    points = {'lon': '', 'lat': ''}
 
-    def __init__(self, point_type, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+        self.points = OrderedDict([('longitude', None), ('latitude', None)])
         super(PointField, self).__init__(*args, **kwargs)
-        self.point_type = point_type
 
-    def get_point(self):
-        return self.points[self.point_type]
-
-    def set_point(self, lon, lat):
-        self.points['lon'] = lon
-        self.points['lat'] = lat
-
-    def to_native(self, value):
-        value = str(value).strip("POINT ()").split(" ")
-        lon, lat = value
-        self.set_point(lon, lat)
-        return self.get_point()
+    def to_native(self, obj):
+        self.points.update({'longitude': obj.x, 'latitude': obj.y})
+        return self.points
 
     def from_native(self, value):
-        value = value.strip("POINT ()").split(" ")
-        lon, lat = value
-        return Point(lon, lat)
+        lonlat = [Decimal(x.strip()) for x in value.split(',')]
+        return Point(lonlat)
