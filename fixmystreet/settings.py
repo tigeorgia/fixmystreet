@@ -30,10 +30,10 @@ USE_I18N = True
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 
-RANDOM_IMAGE_DIR = 'images/header-images/' #random home images
+RANDOM_IMAGE_DIR = 'images/header-images/'  # random home images
 LOGIN_REDIRECT_URL = 'api:login-redirect'
 
-#GOOGLE MAPS SETTINGS
+# GOOGLE MAPS SETTINGS
 GOOGLE_MAPS_URL = 'https://maps.googleapis.com/maps/api/js?sensor=true&v=%s&key='
 GOOGLE_MAPS_API_VERSION = 3
 
@@ -48,7 +48,6 @@ PIPELINE_DISABLE_WRAPPER = True
 PIPELINE_COMPILERS = (
     'pipeline.compilers.less.LessCompiler',
 )
-
 
 PIPELINE_CSS = {
     'main_css': {
@@ -109,17 +108,12 @@ PIPELINE_ENABLED = True
 #PREPEND_WWW = True
 
 ADMIN_MEDIA_ROOT = 'django.contrib.admin.media'
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/static/admin/'
-
-# ensure large uploaded files end up with correct permissions.  See
-# http://docs.djangoproject.com/en/dev/ref/settings/#file-upload-permissions
 
 FILE_UPLOAD_PERMISSIONS = 0644
 DATE_FORMAT = "l, F jS, Y"
 
+AUTH_USER_MODEL = 'users.FMSUser'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -207,6 +201,7 @@ INSTALLED_APPS = (
     'ignore_lang',
     'apps.mainapp',
     'apps.api',
+    'apps.users',
     'pipeline',
     'django_filters',
     'debug_toolbar',
