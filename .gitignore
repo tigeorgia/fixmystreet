@@ -4,5 +4,5 @@
 *.html.sw*
 media/photos
 apache
-local_settings.py
+fixmystreet/local_settings.py
 .idea
