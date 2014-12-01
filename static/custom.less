@@ -196,18 +196,19 @@ button#home-search:hover {
   padding: 5px;
   top: 3px;
   overflow: visible;
-  z-index: 1041;
+  z-index:1042;
+  display:none;
 }
 
 #change-city span:nth-child(1) {
   -webkit-transform: scale(-1, 1);
 }
 
-.navbar-nav li:first-child, .navbar-left li:nth-child(2), .contact-menu, .visible-sm.all-reports {
+.navbar-nav > li {
   border-left: 1px solid #999999;
 }
 
-.contact-menu, li.visible-sm, .navbar-left li:nth-child(2) {
+.navbar-nav > li:last-child{
   border-right: 1px solid #999999;
 }
 
@@ -266,7 +267,6 @@ select, input {
 
 #cut-container {
   position: relative;
-  z-index: 1041;
 }
 
 #all-reports-head {
@@ -688,4 +688,8 @@ input#address_search {
 
 .modal-title {
   text-align: center;
+}
+
+ul.dropdown-menu {
+  z-index: 1090;
 }

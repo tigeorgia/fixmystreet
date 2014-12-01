@@ -75,23 +75,30 @@ margin-left:-174px;margin-top:-56px'><a
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+                {% block navbar_right %}
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">{% trans 'Login or Register' %}</a>
+                        <ul class="dropdown-menu">
+                            <li>1</li>
+                        </ul>
+                    </li>
+                    <li class="contact-menu"><a id="menu-contact"
+                                                href="{% url 'contact_new' %}">{% trans "Contact" %}</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            {% trans "Language" %}
+                            <b class="caret"></b>
+                        </a>
 
-                <li class="contact-menu"><a id="menu-contact"
-                                            href="{% url 'contact_new' %}">{% trans "Contact" %}</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        {% trans "Language" %}
-                        <b class="caret"></b>
-                    </a>
+                        <ul class="dropdown-menu">
+                            {% for lang in LANGUAGES %}
+                                <li class="lang-choose"><a href="#" data-lang="{{ lang.0 }}">{{ lang.1 }}</a></li>
+                            {% endfor %}
+                            <span id="no-lang-path" data-next="{{ request.session.no_lang_path }}"></span>
+                        </ul>
 
-                    <ul class="dropdown-menu">
-                        {% for lang in LANGUAGES %}
-                            <li class="lang-choose"><a href="#" data-lang="{{ lang.0 }}">{{ lang.1 }}</a></li>
-                        {% endfor %}
-                        <span id="no-lang-path" data-next="{{ request.session.no_lang_path }}"></span>
-                    </ul>
-
-                </li>
+                    </li>
+                {% endblock %}
             </ul>
         </div>
         <!-- /.nav-collapse -->

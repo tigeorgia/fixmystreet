@@ -21,6 +21,7 @@ $(function () {
             $(this).click(function () {
                 if ($(this).data('city')) {
                     var city = $(this).data('city');
+                    $('#change-city').show();
                     FMS.moveToCity(city);
                 }
             });
