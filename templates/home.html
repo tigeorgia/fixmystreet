@@ -100,8 +100,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"
-                                            aria-hidden="true">&times;</button>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     <h4 class="modal-title" id="changecityLabel">{% trans "Choose city" %}</h4>
                                 </div>
                                 <div class="modal-body">
@@ -109,9 +108,10 @@
                                         {% for city in cities %}
                                             {% language 'en' %}
                                                 <li data-city="{{ city|lower }}">
-                                                <div style="background: url({% static 'images/choose-city/' %}{{ city|lower }}.jpg)" class="city-image"></div>
+                                                <div style="background: url(
+                                                        {% static 'images/choose-city/' %}{{ city|lower }}.jpg)" class="city-image"></div>
                                             {% endlanguage %}
-                                            <label>{{ city }}</label>
+                                        <label>{{ city }}</label>
                                         </li>
                                         {% endfor %}
                                     </ul>
@@ -148,11 +148,9 @@
         <div class="col-lg-4 col-sm-12 col-md-12" id="preform">
 
             <div class="address-search-form-wrapper start-hidden hidden-lg">
-                <form action="#" method="POST" class="address-search-form" name="address-search"
-                      onsubmit="return false;">
+                <form action="#" method="POST" class="address-search-form" name="address-search" onsubmit="return false;">
                     <fieldset>
-                        <input name="address_search" class="form-control" placeholder="{% trans 'Address' %}"
-                               id="address_search-mobile">
+                        <input name="address_search" class="form-control" placeholder="{% trans 'Address' %}" id="address_search-mobile">
                         <input class="geocode-city" class="form-control" type="hidden" name="geocode-city" value="">
                         <button type="submit" class="search-street btn btn-default" style="width:100%">
                             {% trans "Search Street" %}</button>
@@ -165,8 +163,7 @@
             <p class="start-hidden">
                 {% trans "Enter your address on the map, press search and drag marker to desired location. Then fill out this form and press continue" %}</p>
 
-            <form class="start-hidden" name="new-report" id="new-report"
-                  action="{% url 'report_new' %}" method="post">
+            <form class="start-hidden" name="new-report" id="new-report" action="{% url 'report_new' %}" method="post">
                 <fieldset>
                     <div class="checkbox">
                         <label id="geokbd">
@@ -187,9 +184,7 @@
                     {{ pre_form.lon }}
                     {{ pre_form.lat }}
 
-
-                    <button id="home-report" class="btn btn-default pull-right" type="submit"
-                            >{% trans "Submit" %}</button>
+                    <button id="home-report" class="btn btn-default pull-right" type="submit">{% trans "Submit" %}</button>
                 </fieldset>
             </form>
             <script type="text/javascript">

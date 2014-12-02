@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import django.utils.timezone
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
@@ -36,17 +37,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='FMSSettings',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('user', models.OneToOneField(primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
+                ('language', models.CharField(default=b'ka', max_length=2, verbose_name='language', choices=[(b'ka', 'Georgian'), (b'en', 'English')])),
             ],
             options={
             },
             bases=(models.Model,),
-        ),
-        migrations.AddField(
-            model_name='fmsuser',
-            name='fms_settings',
-            field=models.ForeignKey(to='users.FMSSettings'),
-            preserve_default=True,
         ),
         migrations.AddField(
             model_name='fmsuser',

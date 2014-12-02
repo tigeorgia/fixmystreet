@@ -98,6 +98,10 @@ urlpatterns += i18n_patterns('apps.mainapp.views.ajax',
     url(r'^ajax/l$', latestReportsJson.as_view(), name='ajax_latest_reports_json')
 )
 
+urlpatterns += i18n_patterns('',
+                              url(r'^user/', include('apps.users.urls', namespace='users', app_name='users')),
+                              )
+
 
 urlpatterns += patterns('',
                         url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),

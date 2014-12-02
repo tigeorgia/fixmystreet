@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
 from django.utils import timezone
+from apps.mainapp.models import Report
 
 from django.db import models
 
@@ -33,10 +34,6 @@ class FMSUserManager(BaseUserManager):
                                  **extra_fields)
 
 
-class FMSSettings(models.Model):
-    pass
-
-
 class FMSUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), max_length=254, unique=True)
     username = models.CharField(_('username'), max_length=20, unique=True)
@@ -45,7 +42,6 @@ class FMSUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     is_staff = models.BooleanField(_('staff'), default=False)
     is_active = models.BooleanField(_('active'), default=True)
-    fms_settings = models.ForeignKey(FMSSettings)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
@@ -77,4 +73,14 @@ class FMSUser(AbstractBaseUser, PermissionsMixin):
 
     def __unicode__(self):
         return " ".join([self.first_name, self.email])
+
+
+class FMSSettings(models.Model):
+    LANGUAGE_CHOICES = (
+        ('ka', _('Georgian')),
+        ('en', _('English'))
+    )  # ISO 639-1
+
+    user = models.OneToOneField(FMSUser, primary_key=True)
+    language = models.CharField(_('language'), max_length=2, choices=LANGUAGE_CHOICES, default='ka')
 

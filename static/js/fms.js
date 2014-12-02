@@ -462,6 +462,12 @@ var FMS = ( function () {
         }
     };
 
+    fn.emailExists = function (email){
+        $.get('/user/email-exists', {'email': email}, function(data, status){
+            return data.email_exists;
+        })
+    };
+
     return fn;
 
 }());

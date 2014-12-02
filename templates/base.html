@@ -77,9 +77,19 @@ margin-left:-174px;margin-top:-56px'><a
             <ul class="nav navbar-nav navbar-right">
                 {% block navbar_right %}
                     <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">{% trans 'Login or Register' %}</a>
-                        <ul class="dropdown-menu">
-                            <li>1</li>
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown">{% trans 'Login' %}</a>
+                        <ul class="dropdown-menu" id="login-dropdown">
+                            <li>
+                                <form role="form" action="">
+                                    <div class="form-group">
+                                        <input name="email" class="form-control" type="email" placeholder="{% trans 'Email' %}">
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="password" type="password" class="form-control" placeholder="{% trans 'Password' %}">
+                                    </div>
+                                    <button type="submit" class="btn btn-default btn-lg btn-block">Login</button>
+                                </form>
+                            </li>
                         </ul>
                     </li>
                     <li class="contact-menu"><a id="menu-contact"
