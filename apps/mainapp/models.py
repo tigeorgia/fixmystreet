@@ -236,38 +236,27 @@ class Report(models.Model):
     )
 
     title = models.CharField(max_length=100, verbose_name=_("Subject"))
+    desc = models.TextField(blank=True, null=True, verbose_name=_("Details"))
     category = models.ForeignKey(ReportCategory, null=True, verbose_name=_("Category"))
     ward = models.ForeignKey(Ward, null=True, verbose_name=_("Ward"))
     ip = models.GenericIPAddressField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     street = models.CharField(max_length=255, verbose_name=_("Street address"))
-    # last time report was updated
     updated_at = models.DateTimeField(auto_now_add=True)
-
-    # time report was marked as 'fixed'
     fixed_at = models.DateTimeField(null=True)
     status = models.CharField(_('Status'), max_length=32, choices=REPORT_STATUS_CHOICES, default=NOT_FIXED, blank=False,
                               null=False)
     is_hate = models.BooleanField(default=False)
-
     # last time report was sent to city
     sent_at = models.DateTimeField(null=True)
-
     # email where the report was sent
     email_sent_to = models.EmailField(null=True)
-
     # last time a reminder was sent to the person that filed the report.
     reminded_at = models.DateTimeField(auto_now_add=True)
-
     point = models.PointField(null=True)
-    photo = StdImageField(upload_to="photos", blank=True, verbose_name=_("* Photo"), size=(400, 400),
-                          thumbnail_size=(133, 100))
-    desc = models.TextField(blank=True, null=True, verbose_name=_("Details"))
-    author = models.CharField(max_length=255, verbose_name=_("Name"))
-
-    # true if first update has been confirmed - redundant with
-    # one in ReportUpdate, but makes aggregate SQL queries easier.
-
+    photo = StdImageField(upload_to="photos", blank=True, verbose_name=_("* Photo"),
+                          variations={'large': (640,480),'thumbnail': (133, 100)})
+    user = models.ForeignKey('users.FMSUser', related_name='reports')
     is_confirmed = models.BooleanField(default=False)
 
     objects = models.GeoManager()
@@ -342,7 +331,8 @@ class ReportUpdate(models.Model):
     phone = models.CharField(max_length=255, verbose_name=_("Phone"), )
     first_update = models.BooleanField(default=False)
     photo = StdImageField(upload_to="photos/updates", blank=True, verbose_name=_("* Photo"),
-                          size=(200, 200), thumbnail_size=(133, 100))
+                          variations={'large': (640,480),'thumbnail': (133, 100)})
+    user = models.ForeignKey('users.FMSUser', related_name='report_updates')
 
     def __unicode__(self):
         return self.report.title

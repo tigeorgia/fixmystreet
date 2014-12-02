@@ -2,20 +2,18 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
 from django.utils import timezone
+from django.db.utils import IntegrityError
 from apps.mainapp.models import Report
 
 from django.db import models
 
 
 class FMSUserManager(BaseUserManager):
-    def _create_user(self, username, email, password,
-                     is_staff, is_superuser, **extra_fields):
+    def _create_user(self, username, email, password, is_staff, is_superuser, **extra_fields):
         """
         Creates and saves a User with the given username, email and password.
         """
         now = timezone.now()
-        if not username:
-            raise ValueError('The given username must be set')
         email = self.normalize_email(email)
         user = self.model(username=username, email=email,
                           is_staff=is_staff, is_active=True,
@@ -26,8 +24,7 @@ class FMSUserManager(BaseUserManager):
         return user
 
     def create_user(self, username, email=None, password=None, **extra_fields):
-        return self._create_user(username, email, password, False, False,
-                                 **extra_fields)
+        return self._create_user(username, email, password, False, False, **extra_fields)
 
     def create_superuser(self, username, email, password, **extra_fields):
         return self._create_user(username, email, password, True, True,
@@ -36,21 +33,31 @@ class FMSUserManager(BaseUserManager):
 
 class FMSUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), max_length=254, unique=True)
-    username = models.CharField(_('username'), max_length=20, unique=True)
+    username = models.CharField(_('username'), max_length=20)
     first_name = models.CharField(_('first name'), max_length=35)
     last_name = models.CharField(_('last name'), max_length=35)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     is_staff = models.BooleanField(_('staff'), default=False)
     is_active = models.BooleanField(_('active'), default=True)
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+
+    USERNAME_ALLOWED_CHARS_REGEX = '^[\w\d_]+$'
 
     objects = FMSUserManager()
 
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
+
+    @classmethod
+    def username_exists(cls, username):
+        try:
+            user = cls.objects.get(username=username)
+            return True
+        except cls.DoesNotExist:
+            return False
 
     def get_full_name(self):
         """
