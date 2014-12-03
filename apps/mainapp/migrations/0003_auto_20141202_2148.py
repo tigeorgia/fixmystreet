@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 from django.conf import settings
+import datetime
 
 
 class Migration(migrations.Migration):
@@ -23,10 +24,28 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(related_name='reports', default=1, to=settings.AUTH_USER_MODEL),
             preserve_default=False,
         ),
+        migrations.AlterField(
+            model_name='report',
+            name='updated_at',
+            field=models.DateTimeField(auto_now=True),
+            preserve_default=True,
+        ),
         migrations.AddField(
             model_name='reportupdate',
             name='user',
             field=models.ForeignKey(related_name='report_updates', default=1, to=settings.AUTH_USER_MODEL),
             preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='reportupdate',
+            name='updated_at',
+            field=models.DateTimeField(default=datetime.datetime.now, auto_now=True),
+            preserve_default=False,
+        ),
+        migrations.AlterField(
+            model_name='reportupdate',
+            name='report',
+            field=models.ForeignKey(related_name='report_updates', to='mainapp.Report'),
+            preserve_default=True,
         ),
     ]

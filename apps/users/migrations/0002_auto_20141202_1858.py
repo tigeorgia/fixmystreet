@@ -17,4 +17,10 @@ class Migration(migrations.Migration):
             field=models.CharField(max_length=20, verbose_name='username'),
             preserve_default=True,
         ),
+        migrations.AddField(
+            model_name='fmsuser',
+            name='phone',
+            field=models.CharField(default='', max_length=255, verbose_name='phone'),
+            preserve_default=False,
+        ),
     ]

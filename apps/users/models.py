@@ -34,8 +34,9 @@ class FMSUserManager(BaseUserManager):
 class FMSUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), max_length=254, unique=True)
     username = models.CharField(_('username'), max_length=20)
-    first_name = models.CharField(_('first name'), max_length=35)
-    last_name = models.CharField(_('last name'), max_length=35)
+    first_name = models.CharField(_('first name'), max_length=70)
+    last_name = models.CharField(_('last name'), max_length=70)
+    phone = models.CharField(_('phone'), max_length=255)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     is_staff = models.BooleanField(_('staff'), default=False)
     is_active = models.BooleanField(_('active'), default=True)
@@ -54,7 +55,7 @@ class FMSUser(AbstractBaseUser, PermissionsMixin):
     @classmethod
     def username_exists(cls, username):
         try:
-            user = cls.objects.get(username=username)
+            cls.objects.get(username=username)
             return True
         except cls.DoesNotExist:
             return False

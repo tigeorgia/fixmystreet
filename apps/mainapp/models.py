@@ -235,29 +235,34 @@ class Report(models.Model):
         (IN_PROGRESS, _('In Progress'))
     )
 
-    title = models.CharField(max_length=100, verbose_name=_("Subject"))
-    desc = models.TextField(blank=True, null=True, verbose_name=_("Details"))
+    # ForeignKeys
     category = models.ForeignKey(ReportCategory, null=True, verbose_name=_("Category"))
+    user = models.ForeignKey('users.FMSUser', related_name='reports')
     ward = models.ForeignKey(Ward, null=True, verbose_name=_("Ward"))
-    ip = models.GenericIPAddressField(null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+
+    # CharFields
     street = models.CharField(max_length=255, verbose_name=_("Street address"))
-    updated_at = models.DateTimeField(auto_now_add=True)
-    fixed_at = models.DateTimeField(null=True)
-    status = models.CharField(_('Status'), max_length=32, choices=REPORT_STATUS_CHOICES, default=NOT_FIXED, blank=False,
-                              null=False)
-    is_hate = models.BooleanField(default=False)
-    # last time report was sent to city
+    status = models.CharField(_('Status'), max_length=32, choices=REPORT_STATUS_CHOICES,
+                              default=NOT_FIXED, blank=False, null=False)
     sent_at = models.DateTimeField(null=True)
-    # email where the report was sent
-    email_sent_to = models.EmailField(null=True)
-    # last time a reminder was sent to the person that filed the report.
+    title = models.CharField(max_length=100, verbose_name=_("Subject"))
+
+    # BooleanFields
+    is_active = models.BooleanField(default=True)
+
+    # DateTimeFields
+    created_at = models.DateTimeField(auto_now_add=True)
+    fixed_at = models.DateTimeField(null=True)
     reminded_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    # Other fields
+    desc = models.TextField(blank=True, null=True, verbose_name=_("Details"))
+    email_sent_to = models.EmailField(null=True)
+    ip = models.GenericIPAddressField(null=True)
     point = models.PointField(null=True)
     photo = StdImageField(upload_to="photos", blank=True, verbose_name=_("* Photo"),
                           variations={'large': (640,480),'thumbnail': (133, 100)})
-    user = models.ForeignKey('users.FMSUser', related_name='reports')
-    is_confirmed = models.BooleanField(default=False)
 
     objects = models.GeoManager()
 
@@ -284,7 +289,10 @@ class Report(models.Model):
         else:
             return self.sent_at - self.created_at
 
-    def first_update(self):
+    def get_last_update(self):
+        return self.report_updates.order_by('-created_at').first()
+
+    def get_first_update(self):
         return ReportUpdate.objects.get(report=self, first_update=True)
 
     def get_absolute_url(self):
@@ -317,22 +325,26 @@ class ReportUpdate(models.Model):
         (IN_PROGRESS, _('In Progress'))
     )
 
-    report = models.ForeignKey(Report)
-    desc = models.TextField(blank=True, null=True, verbose_name=_("Details"))
-    ip = models.GenericIPAddressField(null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_confirmed = models.BooleanField(default=False)
+    # ForeignKeys
+    report = models.ForeignKey(Report, related_name='report_updates')
+    user = models.ForeignKey('users.FMSUser', related_name='report_updates')
+
+    # CharFields
     status = models.CharField(_('Status'), max_length=32, choices=REPORT_STATUS_CHOICES, default=NOT_FIXED, blank=False,
                               null=False)
-    is_verified_author = models.BooleanField(default=False)
-    confirm_token = models.CharField(max_length=255, null=True)
-    email = models.EmailField(max_length=255, verbose_name=_("Email"))
-    author = models.CharField(max_length=255, verbose_name=_("Name"))
-    phone = models.CharField(max_length=255, verbose_name=_("Phone"), )
-    first_update = models.BooleanField(default=False)
+
+    # BooleanFields
+    is_active = models.BooleanField(default=True)
+
+    # DateTimeFields
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    # Other fields
+    desc = models.TextField(blank=True, null=True, verbose_name=_("Details"))
+    ip = models.GenericIPAddressField(null=True)
     photo = StdImageField(upload_to="photos/updates", blank=True, verbose_name=_("* Photo"),
                           variations={'large': (640,480),'thumbnail': (133, 100)})
-    user = models.ForeignKey('users.FMSUser', related_name='report_updates')
 
     def __unicode__(self):
         return self.report.title
