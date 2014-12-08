@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load bootstrap3 %}
 {% load static from staticfiles %}
 {% load static_tags %}
 {% load reports_tags %}
@@ -163,7 +164,21 @@
             <p class="start-hidden">
                 {% trans "Enter your address on the map, press search and drag marker to desired location. Then fill out this form and press continue" %}</p>
 
-            <form class="start-hidden" name="new-report" id="new-report" action="{% url 'report_new' %}" method="post">
+            <form action="" class="start-hidden-form" style="display:block;" id="check-email" name="check-email" method="get">
+                {% bootstrap_form check_email %}
+                <button class="btn btn-default pull-right" type="submit">{% trans "Submit" %}</button>
+            </form>
+
+            <form class="start-hidden-form" id="ajax-login" name="ajax-login" method="post">
+                <div class="error-container">
+
+                </div>
+                {% csrf_token %}
+                {% bootstrap_form ajax_login %}
+                <button class="btn btn-default btn-block btn-lg" type="submit">{% trans "Login" %}</button>
+            </form>
+
+            <form class="start-hidden-form" name="new-report" id="new-report" action="{% url 'report_new' %}" method="post">
                 <fieldset>
                     <div class="checkbox">
                         <label id="geokbd">
@@ -196,10 +211,11 @@
             </script>
 
 
-            <div id="tig-overlay-logo" class="pull-right hidden-sm">
+
+        </div>
+        <div id="tig-overlay-logo" class="pull-right hidden-sm">
                 <img src="{% static 'images/main/tig-logo-'|add:LANGUAGE_CODE|add:'.png' %}"/>
             </div>
-        </div>
         <div class="address-search-form-wrapper start-hidden visible-lg">
             <form action="#" method="POST" class="address-search-form" name="address-search" onsubmit="return false;">
                 <fieldset>

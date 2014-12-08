@@ -68,14 +68,14 @@
 
                 {% include "wards/_info_box.html" %}
 
-                {% if not report.is_confirmed %}
+                {% if not report.is_active %}
                     <div class='is_fixed'>{% trans "<p>Please check your email for a message from FixMyStreet.ge, which will include a confirmation link.  Complete your submission by clicking on it.</p><p>Your report will not be sent to city officials or be visible to other visitors until you have done so.</p>" %}</div>
                 {% endif %}
                 <h3>{{ report.title }}</h3>
 
                 <p>{{ report.desc|linebreaks }}</p>
 
-                {% if not report.is_fixed and report.is_confirmed %}
+                {% if not report.is_fixed and report.is_activeed %}
                     <!-- AddThis Button BEGIN -->
                     <div class="addthis_toolbox addthis_default_style">
                         <a href="http://www.addthis.com/bookmark.php?v=250&pub=xa-4a620b09451f9502"
@@ -102,7 +102,7 @@
                         </i><br/>
                         <br/>
                     </div>
-                    {% if report.is_confirmed %}
+                    {% if report.is_active %}
                         <div id='report-subscribers'>
                             {% trans "Subscribers:" %} <b>{{ subscribers }}</b><br/>
                             {% if not report.is_fixed %}
@@ -114,7 +114,7 @@
                 {% if report.photo %}
                     <img align='center' src='{{ report.photo.thumbnail.url }}'>
                 {% endif %}
-                {% if report.is_confirmed %}
+                {% if report.is_active %}
                     <div id="more-actions">
                         <p>
                             <a href="/reports/{{ report.id }}/poster">{% trans "Print a flyer" %}</a>{% trans " to tell others about this problem." %}

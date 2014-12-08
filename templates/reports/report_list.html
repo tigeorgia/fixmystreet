@@ -114,23 +114,19 @@
             </div>
             <div class="col-6 col-sm-4 col-lg-4">
                 <form action="" method="get">
-                    <label><h5><b>{% trans "Ward" %}</b></h5></label>
+                    <label><h5><b>{% trans "City" %}</b></h5></label>
                     {{ filter.form.ward__city|attr:"class:form-control" }}
                     <label><h5><b>{% trans "Status" %}</b></h5></label>
                     {{ filter.form.status|attr:"class:form-control" }}
+                    <label><h5><b>{% trans "Created After" %}</b></h5></label>
+                    {{ filter.form.from_date|attr:"class:datepicker form-control" }}
+                    <label><h5><b>{% trans "Created Before" %}</b></h5></label>
+                    {{ filter.form.to_date|attr:"class:datepicker form-control" }}
                     <label><h5><b>{% trans "Sorting:" %}</b></h5></label>
 
                     <div class="nolist">
                         {{ sortform.sorting }}
                     </div>
-                    <label>
-                        <h5><b>{% trans "Created after:" %}</b></h5>
-                    </label>
-                    {{ sortform.created_after }}
-                    <label>
-                        <h5><b>{% trans "Created Before:" %}</b></h5>
-                    </label>
-                    {{ sortform.created_before }}
                     <button class="btn btn-default btn-fixed" type="submit">
                         {% trans "Filter" %}</button>
                 </form>
