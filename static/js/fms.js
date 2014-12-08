@@ -129,24 +129,13 @@ $(function () {
         ignore: "",
         rules: {
             title: "required",
-            category_id: "required",
             street: "required",
-            author: "required",
-            email: {
-                required: true,
-                email: true
-            },
-            phone: "required",
             lon: "required",
             lat: "required"
         },
         messages: {
             title: gettext("Please enter problem title"),
-            category_id: gettext("Please enter category"),
             street: gettext("Enter street"),
-            author: gettext("Your name is required as well"),
-            email: gettext("You'll need this for verification"),
-            phone: gettext("We won't spam you! Promise!"),
             lon: "Set point on map!"
         },
         submitHandler: function (form) {
@@ -181,7 +170,7 @@ var FMS = ( function () {
      * Makes element visible with smooth transition
      */
     fn.makeVisible = function (selector) {
-        $(selector).css({'display': 'block', 'visibility': 'visible'}).animate({
+        $('#'+selector).css({'display': 'block', 'visibility': 'visible'}).animate({
             opacity: 1
         }, 1300);
     };
@@ -189,26 +178,36 @@ var FMS = ( function () {
 
     /**
      * Process forms on homepage
-     * @param next_form Next form to process. This makes step-forms possible
+     * @param form Form to process. This makes step-forms possible
      * @param other_data additional data to pass to form processors. Like email
      */
-    fn.processForms = function (next_form, other_data) {
+    fn.processForms = function (form, other_data) {
         var forms = {
-            'check_email_form': '#check-email',
-            'ajax_login_form': '#ajax-login'
+            'check_email_form': 'check-email',
+            'ajax_login_form': 'ajax-login',
+            'new_report_full': 'new-report-full',
+            'new_report_user': 'new-report-user'
         };
-        next_form = next_form || forms.check_email_form;
+        form = form || forms.check_email_form;
         other_data = other_data || {};
         console.log('processing forms');
 
-        switch (next_form) {
+        switch (form) {
             case forms.check_email_form:
-                $(forms.ajax_login_form).hide();
+                $('#'+forms.ajax_login_form).hide();
                 this.checkEmail(forms);
                 break;
             case forms.ajax_login_form:
-                $(forms.check_email_form).hide();
+                $('#'+forms.check_email_form).hide();
                 this.ajaxLogin(forms, other_data);
+                break;
+            case forms.new_report_full:
+                $('#'+forms.check_email_form).hide();
+                this.newReportFull(forms, other_data);
+                break;
+            case forms.new_report_user:
+                $('#'+forms.ajax_login_form).hide();
+                this.newReportUser(forms, other_data);
                 break;
         }
 
@@ -221,7 +220,7 @@ var FMS = ( function () {
     fn.checkEmail = function (forms) {
         this.makeVisible(forms.check_email_form);
 
-        $(forms.check_email_form).submit(function (event) {
+        $('#'+forms.check_email_form).submit(function (event) {
             event.preventDefault();
             var email = $(this).serializeArray()[0].value;
 
@@ -241,8 +240,9 @@ var FMS = ( function () {
      */
     fn._checkEmailCallback = function (data, forms, email) {
         if (data.email_exists) {
-            console.log('found email');
-            FMS.processForms(forms.ajax_login_form, data={'email':email});
+            FMS.processForms(forms.ajax_login_form, data={'email': email});
+        } else {
+            FMS.processForms(forms.new_report_full, data={'email': email})
         }
     };
 
@@ -251,7 +251,7 @@ var FMS = ( function () {
      */
     fn.ajaxLogin = function (forms, data) {
         this.makeVisible(forms.ajax_login_form);
-        var cached_form = $(forms.ajax_login_form);
+        var cached_form = $('#'+forms.ajax_login_form);
         if (data.email){
             cached_form.find('#login_email').val(data.email);
             cached_form.find('#id_password').focus();
@@ -278,7 +278,7 @@ var FMS = ( function () {
         var error_container = cached_form.find('.error-container');
 
         if (!data.errors){
-            console.log('success!')
+            FMS.processForms(forms.new_report_user, data)
         } else {
             $.each(data.errors, function(i, val){
                 error_container.append(
@@ -288,6 +288,20 @@ var FMS = ( function () {
             cached_form.css({'cursor': 'default'});
             cached_form.find('button').removeAttr('disabled');
         }
+    };
+
+    fn.newReportFull = function (forms, data) {
+        $('#new-report').css({'display': 'block', 'visibility': 'visible'}).animate({
+            opacity: 1
+        }, 1300);
+
+    };
+
+    fn.newReportUser = function (forms, data) {
+        $('#new-report').css({'display': 'block', 'visibility': 'visible'}).animate({
+            opacity: 1
+        }, 1300);
+        $('.user-hidden').css({'display': 'none'}).attr({'disabled': 'disabled', 'read-only': true})
     };
 
     /*
@@ -537,8 +551,8 @@ var FMS = ( function () {
         google.maps.event.addListener(GmapMarkers['address_marker'], "dragend", function () {
             GmapMarkers['address_marker'].setAnimation(google.maps.Animation.BOUNCE);
 
-            $('input[id=id_lat]').val(GmapMarkers['address_marker'].getPosition().lat().toString());
-            $('input[id=id_lon]').val(GmapMarkers['address_marker'].getPosition().lng().toString());
+            $('input[name=report_start-lat]').val(GmapMarkers['address_marker'].getPosition().lat().toString());
+            $('input[name=report_start-lon]').val(GmapMarkers['address_marker'].getPosition().lng().toString());
         });
 
         google.maps.event.addListener(GmapMarkers['address_marker'], "drag", function () {

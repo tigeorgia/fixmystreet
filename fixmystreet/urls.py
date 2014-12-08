@@ -93,7 +93,6 @@ urlpatterns += i18n_patterns('apps.mainapp.views.contact',
 urlpatterns += i18n_patterns('apps.mainapp.views.ajax',
     url(r'^ajax/categories/(?P<cat_id>\d+)/$', 'category_desc', name='ajax_category_desc'),
     url(r'^ajax/address-search-form/$', 'address_search_form', name='ajax_address_search'),
-    url(r'^ajax/new-report/$', 'new_report', name='ajax_report_new'),
     url(r'^ajax/latest-reports/$', 'latest_reports_json', name='ajax_latest_reports'),
     url(r'^ajax/l$', latestReportsJson.as_view(), name='ajax_latest_reports_json')
 )

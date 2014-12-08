@@ -202,6 +202,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
+    'django.contrib.formtools',
     'transmeta',
     'ignore_lang',
     'apps.mainapp',

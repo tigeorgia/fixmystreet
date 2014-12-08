@@ -50,58 +50,48 @@ class ReportSubscriberForm(forms.ModelForm):
         fields = ('email',)
 
 
-class ReportForm(forms.ModelForm):
-    longitude = forms.HiddenInput()
-    latitude = forms.HiddenInput()
-
+class ReportForm2(forms.ModelForm):
     class Meta:
         model = Report
-        fields = ('title', 'street', 'desc', 'photo')
-        widgets = {
-            'title': forms.TextInput(
-                attrs={'class': 'required form-control input-small user-hidden',
-                       'placeholder': _("Problem Title")}
-            ),
-            'street': forms.TextInput(
-                attrs={'class': 'required form-control input-small user-hidden',
-                       'placeholder': _("Street")}
-            )
-        }
+        fields = ('desc', 'photo')
 
 
-class ReportStart(forms.Form):
+class ReportForm1(forms.Form):
     title = forms.CharField(widget=forms.TextInput(
         attrs={
-            'class': 'required form-control input-small user-hidden',
+            'class': 'required form-control input-small',
             'placeholder': _("Problem Title")
         }))
 
     street = forms.CharField(widget=forms.TextInput(
         attrs={
-            'class': 'required form-control input-small user-hidden',
+            'class': 'required form-control input-small',
             'placeholder': _("Street")
         }))
 
-    desc = forms.CharField()
-
-    author = forms.CharField(widget=forms.TextInput(
+    first_name = forms.CharField(widget=forms.TextInput(
         attrs={
             'class': 'required form-control input-small user-hidden',
-            'placeholder': _("Name/Last name")
+            'placeholder': _("First Name")
         }))
 
-    email = forms.EmailField(widget=forms.TextInput(
+    last_name = forms.CharField(widget=forms.TextInput(
         attrs={
-            'class': 'required form-control input-small',
-            'placeholder': _("Email")
+            'class': 'required form-control input-small user-hidden',
+            'placeholder': _("Last Name")
         }))
 
     phone = forms.CharField(widget=forms.TextInput(
         attrs={
-            'class': 'required form-control input-small',
+            'class': 'required form-control input-small user-hidden',
             'placeholder': _("Phone Number")
         }))
-    step = forms.CharField(widget=forms.TextInput(attrs={'class': 'required form-control input-small'}))
+    email = forms.EmailField(widget=forms.TextInput(
+        attrs={
+            'class': 'required form-control input-small user-hidden',
+            'placeholder': _("Email"),
+            'type': 'hidden',
+        }))
     lon = forms.CharField(widget=forms.TextInput(attrs={'class': 'required', 'type': 'hidden'}))
     lat = forms.CharField(widget=forms.TextInput(attrs={'class': 'required', 'type': 'hidden'}))
 

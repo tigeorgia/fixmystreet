@@ -47,3 +47,4 @@ class FMSUserLoginForm(AuthenticationForm):
         self.fields['username'].label = _('Email')
         self.fields['username'].widget = forms.TextInput(attrs={'type': 'email', 'id': 'login_email',
                                                                 'readonly': True})
+        self.error_messages['invalid_login'] = _('Incorrect email address or password')

@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 from django_filters.views import FilterView
 
 from apps.mainapp.models import Report, ReportUpdate, Ward, FixMyStreetMap, ReportCategory
-from apps.mainapp.forms import ReportForm, ReportUpdateForm, sortingForm
+from apps.mainapp.forms import ReportForm2, ReportUpdateForm, sortingForm
 from apps.mainapp.filters import ReportFilter
 from apps.mainapp.utils import random_image
 from utils import utils

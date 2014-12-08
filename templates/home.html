@@ -178,7 +178,7 @@
                 <button class="btn btn-default btn-block btn-lg" type="submit">{% trans "Login" %}</button>
             </form>
 
-            <form class="start-hidden-form" name="new-report" id="new-report" action="{% url 'report_new' %}" method="post">
+            <form class="start-hidden-form" name="new-report" id="new-report" action="" method="post">
                 <fieldset>
                     <div class="checkbox">
                         <label id="geokbd">
@@ -187,21 +187,20 @@
                                    checked="checked"/>
                         </label>
                     </div>
-
-                    {{ pre_form.title }}
-                    {{ pre_form.street }}
-                    {{ pre_form.author }}
-                    {{ pre_form.email }}
-                    {{ pre_form.phone }}
-                    <input type="hidden" name="step" id="id_step" value="1">
-                    <input type="hidden" name="city" id="id-city" value="">
-                    {{ pre_form.desc.as_hidden }}
-                    {{ pre_form.lon }}
-                    {{ pre_form.lat }}
-
+                    {{ wizard.management_form }}
+                        {% if wizard.form.forms %}
+                            {{ wizard.form.management_form }}
+                            {% for form in wizard.form.forms %}
+                                {{ form }}
+                            {% endfor %}
+                        {% else %}
+                            {{ wizard.form }}
+                        {% endif %}
                     <button id="home-report" class="btn btn-default pull-right" type="submit">{% trans "Submit" %}</button>
                 </fieldset>
             </form>
+
+
             <script type="text/javascript">
                 GeoKBD.map({
                     "form": 'new-report',
