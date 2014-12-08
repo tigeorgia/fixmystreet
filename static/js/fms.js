@@ -40,7 +40,7 @@ $(function () {
     $(".lang-choose").click(function () {
         var lang = $(this).find('a').data('lang');
         var next = $('#no-lang-path').data('next');
-        $.post("/i18n/setlang/", { language: lang, next: next})
+        $.post("/i18n/setlang/", {language: lang, next: next})
             .done(function () {
                 location.href = '/' + lang + next;
             });
@@ -155,6 +155,7 @@ $(function () {
     });
 });
 
+
 $(function () {
     $('.datepicker').datepicker({
         format: 'yyyy-mm-dd'
@@ -165,6 +166,7 @@ $(function () {
 var FMS = ( function () {
 
     var fn = {};
+    current_lang = '/' + window.location.href.split('/')[3];
 
     /**
      * Loads problem submit form and changes map position. Called by event when map is idle.
@@ -173,6 +175,119 @@ var FMS = ( function () {
         var mapCanvas = $("#map_canvas");
         mapCanvas.append('<div id="blue-overlay-200"></div>');
         mapCanvas.after('<div id="box-reports-transpar-logo"></div>');
+    };
+
+    /**
+     * Makes element visible with smooth transition
+     */
+    fn.makeVisible = function (selector) {
+        $(selector).css({'display': 'block', 'visibility': 'visible'}).animate({
+            opacity: 1
+        }, 1300);
+    };
+
+
+    /**
+     * Process forms on homepage
+     * @param next_form Next form to process. This makes step-forms possible
+     * @param other_data additional data to pass to form processors. Like email
+     */
+    fn.processForms = function (next_form, other_data) {
+        var forms = {
+            'check_email_form': '#check-email',
+            'ajax_login_form': '#ajax-login'
+        };
+        next_form = next_form || forms.check_email_form;
+        other_data = other_data || {};
+        console.log('processing forms');
+
+        switch (next_form) {
+            case forms.check_email_form:
+                $(forms.ajax_login_form).hide();
+                this.checkEmail(forms);
+                break;
+            case forms.ajax_login_form:
+                $(forms.check_email_form).hide();
+                this.ajaxLogin(forms, other_data);
+                break;
+        }
+
+    };
+
+    /**
+     * Check if user email exists. Passes result to callback
+     * @param forms Forms object.
+     */
+    fn.checkEmail = function (forms) {
+        this.makeVisible(forms.check_email_form);
+
+        $(forms.check_email_form).submit(function (event) {
+            event.preventDefault();
+            var email = $(this).serializeArray()[0].value;
+
+            $.get(current_lang + '/user/email-exists', {'email': email}, function (data) {
+                FMS._checkEmailCallback(data, forms, email);
+            });
+        });
+    };
+
+    /**
+     * Process response and handle next step accordingly.
+     *
+     * @param data Response data from email existence checker
+     * @param forms Forms object
+     * @param email Email which was checked
+     * @private
+     */
+    fn._checkEmailCallback = function (data, forms, email) {
+        if (data.email_exists) {
+            console.log('found email');
+            FMS.processForms(forms.ajax_login_form, data={'email':email});
+        }
+    };
+
+    /**
+     * Ajax login form process
+     */
+    fn.ajaxLogin = function (forms, data) {
+        this.makeVisible(forms.ajax_login_form);
+        var cached_form = $(forms.ajax_login_form);
+        if (data.email){
+            cached_form.find('#login_email').val(data.email);
+            cached_form.find('#id_password').focus();
+        }
+        cached_form.submit(function(event){
+            cached_form.css({'cursor': 'progress'});
+            cached_form.find('button').attr({'disabled': 'disabled'});
+            event.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: current_lang + "/user/ajax/login/",
+                data: cached_form.serialize(),
+                success: function(data){
+                    FMS._ajaxLoginCallback(forms, data)
+                }
+            });
+        });
+
+    };
+
+    fn._ajaxLoginCallback = function (forms, data) {
+        var cached_form = $(forms.ajax_login_form);
+        var error_container = cached_form.find('.error-container');
+
+        if (!data.errors){
+            console.log('success!')
+        } else {
+            $.each(data.errors, function(i, val){
+                error_container.append(
+                    '<div class="alert alert-danger" role="alert">' + val + '</div>'
+                )
+            });
+            cached_form.css({'cursor': 'default'});
+            cached_form.find('button').removeAttr('disabled');
+        }
     };
 
     /*
@@ -276,6 +391,8 @@ var FMS = ( function () {
                 opacity: 1
             }, 1300);
 
+            FMS.processForms();
+
             left_img.animate({
                 opacity: 0,
                 marginLeft: -1600
@@ -358,7 +475,7 @@ var FMS = ( function () {
                 LatLng = new google.maps.LatLng(coords[1], coords[0]);
                 marker = FMS.addMarker('id_marker_' + reports[i]['id'], LatLng, {icon: icon});
                 marker.description = reports[i]['description'] + '<br><a href="' + protocol + domain + '/' +
-                    lang + '/reports/' + reports[i]['id'] + '">' + texts.readmore + '</a>';
+                lang + '/reports/' + reports[i]['id'] + '">' + texts.readmore + '</a>';
 
                 google.maps.event.addListener(marker, 'click', function () {
                     infowindow.setContent(this.description);
@@ -460,12 +577,6 @@ var FMS = ( function () {
             map.panTo(streetObj.geometry.location);
             this.fixCenter();
         }
-    };
-
-    fn.emailExists = function (email){
-        $.get('/user/email-exists', {'email': email}, function(data, status){
-            return data.email_exists;
-        })
     };
 
     return fn;
