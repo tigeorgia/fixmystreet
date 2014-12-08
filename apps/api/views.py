@@ -1,13 +1,15 @@
 from django.views.generic.base import RedirectView
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse as dj_reverse
 from rest_framework.views import APIView
-from rest_framework import generics
+from rest_framework import generics, permissions
 from rest_framework.response import Response
-from rest_framework import status, permissions
+from rest_framework.reverse import reverse as reverse
 from django.http import Http404
 
-from apps.mainapp.models import Report, ReportCategory
-from apps.api.serializers import ReportSerializer
+from apps.mainapp.models import Report, Ward
+from apps.mainapp.filters import ReportFilter
+from serializers import ReportSerializer, WardSerializer
+from metadata import ReportMetaData
 
 
 class LoginRedirectView(RedirectView):
@@ -16,8 +18,8 @@ class LoginRedirectView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         redirect_url = reverse('home')
 
-        if 'api' in self.request.path and self.request.user.apiuser.api_read:
-            redirect_url = reverse('api:reports')
+        if 'api' in self.request.path:
+            redirect_url = reverse('api:report-list')
 
         elif self.request.user.is_staff:
             redirect_url = reverse('admin')
@@ -25,44 +27,44 @@ class LoginRedirectView(RedirectView):
         return redirect_url
 
 
+class APIRootView(APIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get(self, request):
+        return Response({
+            'report-list': reverse('api:report-list'),
+        })
+
+
 class ReportListCreateView(generics.ListCreateAPIView):
     """
     List of all reports.
 
-    Advanced API description coming soon...
+    ##**Available filters**:
+
+    `status`  `category`  `from_date`  `to_date`
+
+    **Example**: [/api/reports/?category=25&status=fixed](/api/reports/?category=25&status=fixed)
+
+    ##**Sorting**:
+
+
+    -----
     """
-    queryset = Report.objects.all()
+    queryset = Report.active.all()
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = ReportSerializer
     paginate_by = 10
     paginate_by_param = 'page_size'
     max_paginate_by = 100
-
-    def _add_category_information(self):
-        """
-        Get all available categories. Used for OPTIONS request
-        @return: Dictionary of all available categories
-        @rtype: dict
-        """
-        data = {}
-        categories = ReportCategory.objects.all()
-        data['choices'] = [{'display_name_ka': cat.name_ka,
-                            'display_name_en': cat.name_en,
-                            'value': cat.id} for cat in categories]
-        data['type'] = 'integer'
-        return data
-
-    def metadata(self, request):
-        """
-        Extend OPTIONS data.
-        """
-        data = super(ReportListCreateView, self).metadata(request)
-        category_data = data['actions']['POST']['category']
-        data['actions']['POST']['category'].update(self._add_category_information())
-        return data
+    metadata_class = ReportMetaData
+    filter_class = ReportFilter
+    ordering_fields = ('created_at',)
 
 
-class ReportDetail(APIView):
+class ReportDetailView(APIView):
+    model = Report
+
     def get_object(self, pk):
         try:
             return Report.objects.get(pk=pk)
@@ -74,10 +76,17 @@ class ReportDetail(APIView):
         serializer = ReportSerializer(report)
         return Response(serializer.data)
 
-    def put(self, request, pk, format=None):
-        report = self.get_object(pk)
-        serializer = ReportSerializer(report, data=request.DATA)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class WardDetailView(APIView):
+    model = Ward
+
+    def get_object(self, pk):
+        try:
+            return Ward.objects.get(pk=pk)
+        except Ward.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        ward = self.get_object(pk)
+        serializer = WardSerializer(ward, context={'request': request})
+        return Response(serializer.data)
