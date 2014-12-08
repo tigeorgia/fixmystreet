@@ -1,6 +1,9 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from apps.users.models import FMSUser
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
 from django import forms
+from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth import authenticate
+
+from apps.users.models import FMSUser
 
 
 class FMSUserCreationForm(UserCreationForm):
@@ -32,3 +35,15 @@ class FMSUserChangeForm(UserChangeForm):
     class Meta:
         model = FMSUser
         fields = ('username', 'first_name', 'last_name', 'email')
+
+
+class FMSCheckEmailForm(forms.Form):
+    email = forms.EmailField(label=_('Email'))
+
+
+class FMSUserLoginForm(AuthenticationForm):
+    def __init__(self, request=None, *args, **kwargs):
+        super(FMSUserLoginForm, self).__init__(request, *args, **kwargs)
+        self.fields['username'].label = _('Email')
+        self.fields['username'].widget = forms.TextInput(attrs={'type': 'email', 'id': 'login_email',
+                                                                'readonly': True})
