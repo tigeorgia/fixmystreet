@@ -225,6 +225,15 @@ class EmailRule(models.Model):
         return "%s - %s (%s)" % (self.city.name, rule_behavior.describe(self), prefix)
 
 
+class ActiveManager(models.Manager):
+    """
+    Filtering out inactive items from QuerySet
+    """
+
+    def get_queryset(self):
+        return super(ActiveManager, self).get_queryset().filter(is_active=True, user__is_active=True)
+
+
 class Report(models.Model):
     NOT_FIXED = 'not-fixed'
     FIXED = 'fixed'
@@ -236,35 +245,37 @@ class Report(models.Model):
     )
 
     # ForeignKeys
-    category = models.ForeignKey(ReportCategory, null=True, verbose_name=_("Category"))
-    user = models.ForeignKey('users.FMSUser', related_name='reports')
-    ward = models.ForeignKey(Ward, null=True, verbose_name=_("Ward"))
+    category = models.ForeignKey(ReportCategory, verbose_name=_("category"), help_text=_('Report category'))
+    user = models.ForeignKey('users.FMSUser', related_name='reports', help_text=_('Author of the report'))
+    ward = models.ForeignKey(Ward, verbose_name=_("ward"), help_text=_('Ward associated with report'))
 
     # CharFields
-    street = models.CharField(max_length=255, verbose_name=_("Street address"))
-    status = models.CharField(_('Status'), max_length=32, choices=REPORT_STATUS_CHOICES,
-                              default=NOT_FIXED, blank=False, null=False)
-    sent_at = models.DateTimeField(null=True)
-    title = models.CharField(max_length=100, verbose_name=_("Subject"))
+    street = models.CharField(max_length=255, verbose_name=_("street address"), help_text="Address of the problem")
+    status = models.CharField(_('status'), max_length=32, choices=REPORT_STATUS_CHOICES,
+                              default=NOT_FIXED, help_text=_('Report status'))
+    sent_at = models.DateTimeField(null=True, help_text=_('Date when report was sent to city representative'))
+    title = models.CharField(max_length=100, verbose_name=_("title"), help_text=_('Report title'))
 
     # BooleanFields
     is_active = models.BooleanField(default=True)
 
     # DateTimeFields
-    created_at = models.DateTimeField(auto_now_add=True)
-    fixed_at = models.DateTimeField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True, help_text=_('Date when report was created'))
+    fixed_at = models.DateTimeField(null=True, help_text=_('Date when report was fixed'))
     reminded_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True, help_text=_('Date when report was updated'))
 
     # Other fields
-    desc = models.TextField(blank=True, null=True, verbose_name=_("Details"))
+    desc = models.TextField(verbose_name=_("details"), help_text=_('Report description'))
     email_sent_to = models.EmailField(null=True)
     ip = models.GenericIPAddressField(null=True)
+    # Postgis 1.5 is breaking migrations on this field. See https://code.djangoproject.com/ticket/23085
     point = models.PointField(null=True)
-    photo = StdImageField(upload_to="photos", blank=True, verbose_name=_("* Photo"),
-                          variations={'large': (640,480),'thumbnail': (133, 100)})
+    photo = StdImageField(upload_to="photos", blank=True, verbose_name=_("photo"),
+                          variations={'large': (800, 600), 'thumbnail': (133, 100)})
 
     objects = models.GeoManager()
+    active = ActiveManager()
 
     def __unicode__(self):
         return self.title
@@ -279,7 +290,7 @@ class Report(models.Model):
         return self.status
 
     def is_subscribed(self, email):
-        if len(self.reportsubscriber_set.filter(email=email)) != 0:
+        if len(self.subscribers.filter(email=email)) != 0:
             return True
         return self.first_update().email == email
 
@@ -288,6 +299,10 @@ class Report(models.Model):
             return ( None )
         else:
             return self.sent_at - self.created_at
+
+    @property
+    def subscriber_count(self):
+        return self.subscribers.count() + 1
 
     def get_last_update(self):
         return self.report_updates.order_by('-created_at').first()
@@ -300,6 +315,7 @@ class Report(models.Model):
 
     class Meta:
         db_table = u'reports'
+        ordering = ['-created_at']
 
 
 class ReportCount(object):
@@ -330,8 +346,7 @@ class ReportUpdate(models.Model):
     user = models.ForeignKey('users.FMSUser', related_name='report_updates')
 
     # CharFields
-    status = models.CharField(_('Status'), max_length=32, choices=REPORT_STATUS_CHOICES, default=NOT_FIXED, blank=False,
-                              null=False)
+    status = models.CharField(_('status'), max_length=32, choices=REPORT_STATUS_CHOICES, default=NOT_FIXED)
 
     # BooleanFields
     is_active = models.BooleanField(default=True)
@@ -341,10 +356,12 @@ class ReportUpdate(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # Other fields
-    desc = models.TextField(blank=True, null=True, verbose_name=_("Details"))
+    desc = models.TextField(verbose_name=_("details"))
     ip = models.GenericIPAddressField(null=True)
-    photo = StdImageField(upload_to="photos/updates", blank=True, verbose_name=_("* Photo"),
-                          variations={'large': (640,480),'thumbnail': (133, 100)})
+    photo = StdImageField(upload_to="photos/updates", blank=True, verbose_name=_("photo"),
+                          variations={'large': (800, 600), 'thumbnail': (133, 100)})
+
+    active = ActiveManager()
 
     def __unicode__(self):
         return self.report.title
@@ -393,7 +410,7 @@ class ReportUpdate(models.Model):
                                    {'update': self})
 
         # tell our subscribers there was an update.
-        for subscriber in self.report.reportsubscriber_set.all():
+        for subscriber in self.report.subscribers.all():
             unsubscribe_url = settings.SITE_URL + "/reports/subscribers/unsubscribe/" + subscriber.confirm_token
             message = render_to_string("emails/report_update/message.txt",
                                        {'update': self, 'unsubscribe_url': unsubscribe_url})
@@ -439,6 +456,7 @@ class ReportUpdate(models.Model):
 
     class Meta:
         db_table = u'report_updates'
+        ordering = ['-created_at']
 
 
 class ReportSubscriber(models.Model):
@@ -446,7 +464,7 @@ class ReportSubscriber(models.Model):
         Report Subscribers are notified when there's an update.
     """
 
-    report = models.ForeignKey(Report)
+    report = models.ForeignKey(Report, related_name='subscribers')
     confirm_token = models.CharField(max_length=255, null=True)
     is_confirmed = models.BooleanField(default=False)
     email = models.EmailField(verbose_name=_('Email'))
@@ -467,6 +485,7 @@ class ReportSubscriber(models.Model):
             send_mail('FixMyStreet.ge-ზე გამოწერილი შეტყობინების განახლებები', message,
                       settings.EMAIL_FROM_USER, [self.email], fail_silently=False)
         super(ReportSubscriber, self).save()
+
 
 class VerifiedAuthor(models.Model):
     """ Email domains; report updates by authors from these email domains will be marked as verified."""
@@ -497,7 +516,7 @@ class ReportMarker(GMarker):
         elif report.status is 'in-progress':
             color = 'yellow'
         icon_number = icon_number
-        #img = "/static/images/marker/%s/marker%s.png" %( color, icon_number )
+        # img = "/static/images/marker/%s/marker%s.png" %( color, icon_number )
         img = "/static/images/marker/%s/blank.png" % ( color)
         name = 'letteredIcon%s' % ( icon_number )
         gIcon = GIcon(name, image=img, iconsize=(20, 34))
@@ -525,7 +544,7 @@ class FixMyStreetMap(GoogleMap):
     """
 
     def __init__(self, pnt, draggable=False, nearby_reports=[]):
-        #        self.icons = []
+        # self.icons = []
         version = settings.GOOGLE_MAPS_API_VERSION
         markers = []
         center = (pnt.x, pnt.y)
@@ -575,7 +594,7 @@ class CityMap(GoogleMap):
         kml_url = 'http://localhost:8000/media/kml/' + city.name + '.kml'
 
         ward = Ward.objects.filter(city=city)[:1][0]
-        #for ward in Ward.objects.filter(city=city):
+        # for ward in Ward.objects.filter(city=city):
         #    for poly in ward.geom:
         #        polygons.append( GPolygon( poly ) )
         GoogleMap.__init__(self, center=ward.geom.centroid, zoom=13, key=settings.GMAP_KEY, polygons=polygons,
@@ -726,7 +745,7 @@ class CityWardsTotals(ReportCountQuery):
         ReportCountQuery.__init__(self, "1 month")
         self.sql = self.base_query
         self.url_prefix = "/wards/"
-        self.sql += ", wards.name_%s, wards.id, wards.number from wards " % lang  #Hack to link custom SQL with TransMeta
+        self.sql += ", wards.name_%s, wards.id, wards.number from wards " % lang  # Hack to link custom SQL with TransMeta
         self.sql += """left join reports on wards.id = reports.ward_id join cities on wards.city_id = cities.id join province on cities.province_id = province.id
         """
         self.sql += "and cities.id = " + str(city.id)

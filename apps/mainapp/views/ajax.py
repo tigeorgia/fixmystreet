@@ -17,7 +17,7 @@ class latestReportsJson(ListView):
 
 
 def latest_reports_json(request):
-    reports = Report.objects.all().filter(is_confirmed=True).order_by('-created_at')[:800]
+    reports = Report.active.order_by('-created_at')[:800]
 
     data = json.dumps([{'id': r.id,
                         'author': r.author,

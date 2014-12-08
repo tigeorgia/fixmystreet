@@ -294,7 +294,7 @@ class Command(NoArgsCommand):
 
     def handle_noargs(self, **options):
         stat_group = ReportRowGroup3()
-        reports = Report.objects.filter(is_confirmed=True)
+        reports = Report.active.all()
         for report in reports:
             stat_group.add_report(report)
         

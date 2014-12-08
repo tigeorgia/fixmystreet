@@ -90,12 +90,12 @@ def new(request):
 
 def show(request, report_id):
     report = get_object_or_404(Report, id=report_id)
-    subscribers = report.reportsubscriber_set.count() + 1
+    subscribers = report.subscriber_count
     return render_to_response("reports/show.html",
                               {"report": report,
                                "subscribers": subscribers,
                                "ward": report.ward,
-                               "updates": ReportUpdate.objects.filter(report=report, is_confirmed=True).order_by(
+                               "updates": ReportUpdate.active.filter(report=report).order_by(
                                    "created_at")[1:],
                                "update_form": ReportUpdateForm(),
                                "google": FixMyStreetMap(report.point)},
@@ -123,28 +123,16 @@ class ReportListView(FilterView):
         today = datetime.datetime.combine(datetime.datetime.today(), datetime.time.max)
         ctx['random_image'] = random_image()
         ctx['sortform'] = sortingForm(data={
-            'created_after': data.get('created_after'),
-            'created_before': data.get('created_before'),
             'sorting': data.get('sorting', ),
         })
         return ctx
 
     def get_queryset(self):
         data = self.request.GET
-        today = datetime.datetime.combine(datetime.datetime.today(), datetime.time.max)
         form = sortingForm(data={
-            'created_after': data.get('created_after') or '1990-01-01',
-            'created_before': data.get('created_before') or today,
             'sorting': data.get('sorting') or '-created_at',
         })
-
-        if form.is_valid():
-            qs = Report.objects.filter(is_confirmed=True, created_at__range=(
-                form.cleaned_data['created_after'], form.cleaned_data['created_before']))
-        else:
-            qs = Report.objects.filter(is_confirmed=True)
-
-        qs = qs.prefetch_related('ward', 'category').order_by(form.cleaned_data['sorting'])
+        qs = Report.active.all()
 
         qs = qs.extra(
             select={
@@ -153,5 +141,7 @@ class ReportListView(FilterView):
                                 WHERE reports.id = report_subscribers.report_id'
             }
         )
+        if form.is_valid():
+            qs = qs.prefetch_related('ward', 'category').order_by(form.cleaned_data['sorting'])
 
         return qs

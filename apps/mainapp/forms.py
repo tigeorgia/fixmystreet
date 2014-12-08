@@ -35,20 +35,11 @@ class ReportUpdateForm(forms.ModelForm):
 
     class Meta:
         model = ReportUpdate
-        fields = ('desc', 'author', 'email', 'phone', 'photo', 'status')
+        fields = ('desc', 'photo', 'status')
 
     def clean(self):
         clean_data = super(ReportUpdateForm, self).clean()
-        email = self.cleaned_data.get('email')
         status = self.cleaned_data.get('status')
-
-        if self.report_id and email:
-            verified_author = VerifiedAuthor.objects.filter(domain=email.partition('@')[2])
-            report = get_object_or_404(Report, id=self.report_id)
-            first_update = get_object_or_404(ReportUpdate, report=report, first_update=True)
-            if status != report.status and not (email is first_update.email or verified_author):
-                raise forms.ValidationError(
-                    _("You can't edit problem status, unless you are reporter or city hall representative"))
 
         return clean_data
 
@@ -60,21 +51,34 @@ class ReportSubscriberForm(forms.ModelForm):
 
 
 class ReportForm(forms.ModelForm):
+    longitude = forms.HiddenInput()
+    latitude = forms.HiddenInput()
+
     class Meta:
         model = Report
-        fields = ('title', 'street', 'photo')
+        fields = ('title', 'street', 'desc', 'photo')
+        widgets = {
+            'title': forms.TextInput(
+                attrs={'class': 'required form-control input-small user-hidden',
+                       'placeholder': _("Problem Title")}
+            ),
+            'street': forms.TextInput(
+                attrs={'class': 'required form-control input-small user-hidden',
+                       'placeholder': _("Street")}
+            )
+        }
 
 
 class ReportStart(forms.Form):
     title = forms.CharField(widget=forms.TextInput(
         attrs={
-            'class': 'required form-control input-small',
+            'class': 'required form-control input-small user-hidden',
             'placeholder': _("Problem Title")
         }))
 
     street = forms.CharField(widget=forms.TextInput(
         attrs={
-            'class': 'required form-control input-small',
+            'class': 'required form-control input-small user-hidden',
             'placeholder': _("Street")
         }))
 
@@ -82,7 +86,7 @@ class ReportStart(forms.Form):
 
     author = forms.CharField(widget=forms.TextInput(
         attrs={
-            'class': 'required form-control input-small',
+            'class': 'required form-control input-small user-hidden',
             'placeholder': _("Name/Last name")
         }))
 
@@ -103,7 +107,8 @@ class ReportStart(forms.Form):
 
 
 class sortingForm(forms.Form):
-    CHOICES = (('-created_at', _('Created descending')), ('created_at', _('Created ascending')))
+    CHOICES = (('-created_at', _('Created descending')),
+               ('created_at', _('Created ascending')),
+               ('-sub_count', _('Most subscribers')),
+    )
     sorting = forms.ChoiceField(required=False, widget=forms.RadioSelect(attrs={'class': ''}), choices=CHOICES)
-    created_after = forms.DateField(required=False, widget=AdminDateWidget(attrs={'class': 'datepicker form-control'}))
-    created_before = forms.DateField(required=False, widget=AdminDateWidget(attrs={'class': 'datepicker form-control'}))

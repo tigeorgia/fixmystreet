@@ -5,6 +5,7 @@ from django.views.generic import TemplateView
 from apps.mainapp.models import Report, FixMyStreetMap, FaqEntry, ReportCategory, GmapPoint, City
 from apps.mainapp.forms import ReportStart
 from apps.mainapp.utils import random_image, ReportCount
+from apps.users.forms import FMSUserLoginForm, FMSCheckEmailForm
 
 
 class HomeView(TemplateView):
@@ -13,7 +14,7 @@ class HomeView(TemplateView):
 
     def _reports_with_photos(self):
         try:
-            problems_with_photo = Report.objects.filter(is_confirmed__exact=True).order_by(
+            problems_with_photo = Report.active.order_by(
                 '-created_at').exclude(photo__isnull=True).exclude(photo__iexact='')
         except IndexError:
             return
@@ -24,14 +25,14 @@ class HomeView(TemplateView):
         }
         return photos
 
-
-
     def get_context_data(self, **kwargs):
         ctx = super(HomeView, self).get_context_data(**kwargs)
         ctx['report_counts'] = ReportCount.by_interval('1 year')
         ctx['center'] = GmapPoint(point=(44.79847, 41.708484))
         ctx['last_year'] = (datetime.datetime.today() + datetime.timedelta(-365)).strftime('%Y-%m-%d')
         ctx['categories'] = ReportCategory.objects.all().order_by("category_class")
+        ctx['check_email'] = FMSCheckEmailForm()
+        ctx['ajax_login'] = FMSUserLoginForm()
         ctx['pre_form'] = ReportStart()
         ctx['google'] = FixMyStreetMap(ctx['center'], True)
         ctx['random_image'] = random_image()

@@ -6,7 +6,7 @@ from apps.mainapp.models import Report
 
 def show(request, promo_code):
     matchstr = "author LIKE '%%" + promo_code + "%%'"
-    reports = Report.objects.filter(is_confirmed=True).extra(select={'match': matchstr }).order_by('created_at')[0:100]
+    reports = Report.active.extra(select={'match': matchstr }).order_by('created_at')[0:100]
     count = Report.objects.filter(author__contains=promo_code).count()
     return render_to_response("promotions/show.html",
                 {   "reports": reports,

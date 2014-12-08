@@ -34,7 +34,7 @@ def create(request):
 def confirm(request, confirm_token):
     update = get_object_or_404(ReportUpdate, confirm_token=confirm_token)
 
-    if update.is_confirmed:
+    if update.is_active:
         return HttpResponseRedirect(update.report.get_absolute_url())
 
     # Update main report model with status
@@ -44,7 +44,7 @@ def confirm(request, confirm_token):
     else:
         update.report.fixed_at = None
 
-    update.is_confirmed = True
+    update.is_active = True
     update.save()
 
     # we track a last updated time in the report to make statistics 
