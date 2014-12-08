@@ -78,6 +78,7 @@ PIPELINE_JS = {
             'js/jquery-ui.min.js',
             'js/jquery.easing.min.js',
             'js/jquery.validate.min.js',
+            'js/jquery.cookie.js',
             'bootstrap/dist/js/bootstrap.min.js',
             'js/bootstrap-datepicker.js',
             'js/jquery.qtip.min.js',
@@ -164,9 +165,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',
+                                'rest_framework.filters.OrderingFilter'),
     'PAGINATE_BY': 30,
     'PAGINATE_BY_PARAM': 'page_size',
-    'MAX_PAGINATE_BY': 100
+    'MAX_PAGINATE_BY': 100,
+    'ORDERING_PARAM': 'order_by',
+    'DEFAULT_MODEL_SERIALIZER_CLASS': 'rest_framework.serializers.ModelSerializer'
 }
 
 LANGUAGES = (
@@ -209,6 +214,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'rest_framework',
     'stdimage',
+    'bootstrap3',
 )
 
 DEBUG = False
