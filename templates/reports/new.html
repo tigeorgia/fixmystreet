@@ -1,5 +1,6 @@
-{% extends "base.html" %}
+{% extends "base_site.html" %}
 {% load i18n %}
+{% load bootstrap3 %}
 {% load staticfiles %}
 {% load widget_tweaks %}
 {% block title %}{% trans "New Report" %}{% endblock %}
@@ -88,44 +89,14 @@
                 {% if form_error %}
                     {{ form_error }}
                 {% endif %}
-                <form enctype="multipart/form-data" method="post" id="my-form" class="fms-form" name="my-form"
-                      action="{% url "report_new" %}">
-
-                    <h4><b>{{ title }}</b></h4>
-
-                    {{ update_form.desc.label_tag }}
-                    {{ update_form.desc.errors }}
-                    {{ update_form.desc|attr:"class:form-control"|attr:"cols:4" }}
-
-                    {% comment %}<div id="photo_note">{% trans "* Optional" %}</div>{% endcomment %}
-
-                    <label for="strCategory">{% trans "Category:" %}</label>
-                    {% if category_error %}
-                        <p class="alert alert-danger alert-dismissable">
-                            <strong>{% trans 'Oh snap!' %}</strong> {{ category_error }}</p>
-                    {% endif %}
-                    <select class='input form-control' name="category_id" id='category_select'>
-                        <option value="">{% trans "Select a Category" %}</option>
-                        {% for category in categories %}
-                            {% ifchanged category.category_class.name %}
-                                <optgroup label='{{ category.category_class.name }}'></optgroup>
-                            {% endifchanged %}
-                            <option value="{{ category.id }}">{{ category.name }}</option>
-                        {% endfor %}
-                    </select>
-
-                    <label for="id_photo"><h5><b>{% trans "Upload Photo:" %}</b></h5></label>
-                    <input type="file" name="photo" id="id_photo">
-
-                    {{ report_form.title.as_hidden }}
-                    {{ report_form.street.as_hidden }}
-                    {{ update_form.author.as_hidden }}
-                    {{ update_form.email.as_hidden }}
-                    {{ update_form.phone.as_hidden }}
-                    <input type="hidden" name="city" id="id_city" value="{{ city }}">
-                    <input type="hidden" name="step" id="id_step" value="2">
-                    <input type="hidden" name="lat" id="lat" value="{{ lat }}"/>
-                    <input type="hidden" name="lon" id="lon" value="{{ lon }}"/>
+                <form enctype="multipart/form-data" method="post" id="report-description" class="fms-form">
+                {% csrf_token %}
+                    {{ wizard.management_form }}
+                        {% if wizard.form.forms %}
+                            {{ wizard.form.management_form }}
+                        {% else %}
+                            {% bootstrap_form wizard.form %}
+                        {% endif %}
 
                     {% comment %}{{ update_form.as_table }}{% endcomment %}
 
