@@ -1,6 +1,8 @@
 from django.views.generic.base import RedirectView
 from django.core.urlresolvers import reverse as dj_reverse
 from rest_framework.views import APIView
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.reverse import reverse as reverse
@@ -8,7 +10,7 @@ from django.http import Http404
 
 from apps.mainapp.models import Report, Ward
 from apps.mainapp.filters import ReportFilter
-from serializers import ReportSerializer, WardSerializer
+from .serializers import ReportSerializer, WardSerializer, AuthTokenSerializer
 from metadata import ReportMetaData
 
 
@@ -32,7 +34,8 @@ class APIRootView(APIView):
 
     def get(self, request):
         return Response({
-            'report-list': reverse('api:report-list'),
+            'report-list': '/api/reports/',
+            'report-detail': '/api/reports/<pk>/',
         })
 
 
@@ -90,3 +93,12 @@ class WardDetailView(APIView):
         ward = self.get_object(pk)
         serializer = WardSerializer(ward, context={'request': request})
         return Response(serializer.data)
+
+class ObtainAuthTokenView(ObtainAuthToken):
+
+    def post(self, request):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({'token': token.key})

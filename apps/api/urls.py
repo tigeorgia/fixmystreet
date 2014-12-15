@@ -7,7 +7,8 @@ import views
 urlpatterns = patterns('',
                        url(r'^$', views.APIRootView.as_view(), name='root'),
                        url(r'^login-redirect/$', views.LoginRedirectView.as_view(), name='login-redirect'),
-)
+                       url(r'^get-token$', views.ObtainAuthTokenView.as_view(), name='login-redirect'),
+                       )
 
 urlpatterns += patterns('',
                         url(r'^reports/$', views.ReportListCreateView.as_view(), name='report-list'),
