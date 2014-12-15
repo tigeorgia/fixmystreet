@@ -122,29 +122,6 @@ $(function () {
 });
 
 
-//Forms
-
-$(function () {
-    $('#new-report').validate({
-        ignore: "",
-        rules: {
-            title: "required",
-            street: "required",
-            lon: "required",
-            lat: "required"
-        },
-        messages: {
-            title: gettext("Please enter problem title"),
-            street: gettext("Enter street"),
-            lon: "Set point on map!"
-        },
-        submitHandler: function (form) {
-            form.submit();
-        }
-    });
-});
-
-
 $(function () {
     $('.datepicker').datepicker({
         format: 'yyyy-mm-dd'
@@ -182,6 +159,8 @@ var FMS = ( function () {
      * @param other_data additional data to pass to form processors. Like email
      */
     fn.processForms = function (form, other_data) {
+
+        // All available forms.
         var forms = {
             'check_email_form': 'check-email',
             'ajax_login_form': 'ajax-login',
@@ -192,6 +171,7 @@ var FMS = ( function () {
         other_data = other_data || {};
         console.log('processing forms');
 
+        // Form strategy
         switch (form) {
             case forms.check_email_form:
                 $('#'+forms.ajax_login_form).hide();
@@ -290,18 +270,69 @@ var FMS = ( function () {
         }
     };
 
+    /**
+     * Full report form. I.e. user is not registered
+     * @param forms
+     * @param data
+     */
     fn.newReportFull = function (forms, data) {
-        $('#new-report').css({'display': 'block', 'visibility': 'visible'}).animate({
+        var cached_form = $('#new-report');
+        cached_form.css({'display': 'block', 'visibility': 'visible'}).animate({
             opacity: 1
         }, 1300);
 
+        cached_form.find('#id_report_start-email').val(data.email);
+
+        // Mark required fields
+       cached_form.validate({
+            ignore: "",
+            rules: {
+                title: "required",
+                street: "required",
+                first_name: "required",
+                last_name: "required",
+                phone: "required",
+                email: "required",
+                lon: "required",
+                lat: "required"
+            },
+            messages: {
+                title: gettext("Please enter problem title"),
+                street: gettext("Enter street"),
+                lon: "Set point on map!"
+            },
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
     };
 
+    /**
+     * User form. I.e. user is registered and only some fields are required
+     * @param forms
+     * @param data
+     */
     fn.newReportUser = function (forms, data) {
         $('#new-report').css({'display': 'block', 'visibility': 'visible'}).animate({
             opacity: 1
         }, 1300);
         $('.user-hidden').css({'display': 'none'}).attr({'disabled': 'disabled', 'read-only': true})
+
+        // Mark required fields
+        $('#new-report').validate({
+            ignore: "",
+            rules: {
+                title: "required",
+                street: "required"
+            },
+            messages: {
+                title: gettext("Please enter problem title"),
+                street: gettext("Enter street")
+            },
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
     };
 
     /*
