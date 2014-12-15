@@ -2,11 +2,10 @@ from django import forms
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.conf import settings
-from django.contrib.admin.widgets import AdminDateWidget
-from django.utils.translation import ugettext_lazy as _
-from django.shortcuts import get_object_or_404
+from django.utils.translation import get_language, ugettext_lazy as _
 
-from apps.mainapp.models import Report, ReportUpdate, ReportSubscriber, VerifiedAuthor
+from apps.mainapp.models import Report, ReportUpdate, ReportSubscriber, ReportCategory
+from apps.users.models import FMSUser
 
 
 class ContactForm(forms.Form):
@@ -51,9 +50,53 @@ class ReportSubscriberForm(forms.ModelForm):
 
 
 class ReportForm2(forms.ModelForm):
+    """
+    2nd step of form submission
+    """
+    category = forms.ModelChoiceField(queryset=ReportCategory.objects.all().order_by('name_' + get_language()))
+    error_messages = {
+        'password_insecure': _('Password should contain at least 8 characters, 1 alpha numeric and 1 digit'),
+        'duplicate_username': _("User with that username already exists."),
+    }
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(ReportForm2, self).__init__(*args, **kwargs)
+        # We don't need user creation fields if user is already logged in
+        if not self.user:
+            self.fields['username'] = forms.CharField()
+            self.fields['password_1'] = forms.CharField(widget=forms.PasswordInput)
+            self.fields['password_2'] = forms.CharField(widget=forms.PasswordInput)
+
+    def clean_username(self):
+        username = self.cleaned_data["username"]
+        try:
+            FMSUser.objects.get(username=username)
+        except FMSUser.DoesNotExist:
+            return username
+        raise forms.ValidationError(
+            self.error_messages['duplicate_username'],
+            code='duplicate_username',
+        )
+
+    def clean_password_2(self):
+        password_1 = self.cleaned_data.get('password_1')
+        password_2 = self.cleaned_data.get('password_2')
+
+        if password_1 != password_2:
+            raise forms.ValidationError(_("Passwords don't match!"))
+        if len(password_2) < 8:
+            raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
+        if not any(char.isdigit() for char in password_2):
+            raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
+        if not any(char.isalpha() for char in password_2):
+            raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
+
+        return password_2
+
     class Meta:
         model = Report
-        fields = ('desc', 'photo')
+        fields = ('desc', 'photo', 'category')
 
 
 class ReportForm1(forms.Form):
@@ -69,29 +112,33 @@ class ReportForm1(forms.Form):
             'placeholder': _("Street")
         }))
 
-    first_name = forms.CharField(widget=forms.TextInput(
-        attrs={
-            'class': 'required form-control input-small user-hidden',
-            'placeholder': _("First Name")
-        }))
+    first_name = forms.CharField(required=False,
+                                 widget=forms.TextInput(
+                                     attrs={
+                                         'class': 'required form-control input-small user-hidden',
+                                         'placeholder': _("First Name")
+                                     }))
 
-    last_name = forms.CharField(widget=forms.TextInput(
-        attrs={
-            'class': 'required form-control input-small user-hidden',
-            'placeholder': _("Last Name")
-        }))
+    last_name = forms.CharField(required=False,
+                                widget=forms.TextInput(
+                                    attrs={
+                                        'class': 'required form-control input-small user-hidden',
+                                        'placeholder': _("Last Name")
+                                    }))
 
-    phone = forms.CharField(widget=forms.TextInput(
-        attrs={
-            'class': 'required form-control input-small user-hidden',
-            'placeholder': _("Phone Number")
-        }))
-    email = forms.EmailField(widget=forms.TextInput(
-        attrs={
-            'class': 'required form-control input-small user-hidden',
-            'placeholder': _("Email"),
-            'type': 'hidden',
-        }))
+    phone = forms.CharField(required=False,
+                            widget=forms.TextInput(
+                                attrs={
+                                    'class': 'required form-control input-small user-hidden',
+                                    'placeholder': _("Phone Number")
+                                }))
+    email = forms.EmailField(required=False,
+                             widget=forms.TextInput(
+                                 attrs={
+                                     'class': 'required form-control input-small user-hidden',
+                                     'placeholder': _("Email"),
+                                     'type': 'hidden',
+                                 }))
     lon = forms.CharField(widget=forms.TextInput(attrs={'class': 'required', 'type': 'hidden'}))
     lat = forms.CharField(widget=forms.TextInput(attrs={'class': 'required', 'type': 'hidden'}))
 
