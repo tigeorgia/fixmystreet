@@ -52,7 +52,7 @@ PIPELINE_COMPILERS = (
 PIPELINE_CSS = {
     'main_css': {
         'source_filenames': (
-            'custom.less',
+            'app.less',
             'css/datepicker.css',
         ),
         'output_filename': 'css.min/style.min.css',
@@ -162,9 +162,12 @@ STATICFILES_DIRS = (
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
     'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',
                                 'rest_framework.filters.OrderingFilter'),
     'PAGINATE_BY': 30,
@@ -180,7 +183,7 @@ LANGUAGES = (
 )
 
 LOCALE_PATHS = (
-    os.path.join(PROJECT_PATH, '../locale'),
+    os.path.join(PROJECT_PATH, 'locale'),
 )
 
 ROOT_URLCONF = 'fixmystreet.urls'
@@ -214,6 +217,7 @@ INSTALLED_APPS = (
     'rosetta',
     'widget_tweaks',
     'rest_framework',
+    'rest_framework.authtoken',
     'stdimage',
     'bootstrap3',
 )
