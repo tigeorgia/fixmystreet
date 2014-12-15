@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.tokens import default_token_generator
 from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
 from django.utils import timezone
@@ -6,6 +7,8 @@ from django.db.utils import IntegrityError
 from apps.mainapp.models import Report
 
 from django.db import models
+import binascii
+import os
 
 
 class FMSUserManager(BaseUserManager):
@@ -16,7 +19,7 @@ class FMSUserManager(BaseUserManager):
         now = timezone.now()
         email = self.normalize_email(email)
         user = self.model(username=username, email=email,
-                          is_staff=is_staff, is_active=True,
+                          is_staff=is_staff, is_active=True, is_confirmed=True,
                           is_superuser=is_superuser, last_login=now,
                           date_joined=now, **extra_fields)
         user.set_password(password)
@@ -38,8 +41,10 @@ class FMSUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_('last name'), max_length=70)
     phone = models.CharField(_('phone'), max_length=255)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+    is_councillor = models.BooleanField(_('councillor'), default=False)
     is_staff = models.BooleanField(_('staff'), default=False)
-    is_active = models.BooleanField(_('active'), default=True)
+    is_confirmed = models.BooleanField(_('email confirmed'), default=False)
+    is_active = models.BooleanField(_('active'), default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
@@ -92,3 +97,12 @@ class FMSSettings(models.Model):
     user = models.OneToOneField(FMSUser, primary_key=True)
     language = models.CharField(_('language'), max_length=2, choices=LANGUAGE_CHOICES, default='ka')
 
+
+class FMSUserToken(models.Model):
+    user = models.OneToOneField(FMSUser, related_name='fms_user_token')
+    token = models.CharField(max_length=40)
+    created_at = models.DateTimeField(_('created at'), auto_now=True)
+
+    def save(self, *args, **kwargs):
+        self.token = binascii.hexlify(os.urandom(20)).decode()
+        return super(FMSUserToken, self).save(*args, **kwargs)
