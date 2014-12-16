@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ChemiKucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-15 06:17+0400\n"
-"PO-Revision-Date: 2014-03-31 13:48+0400\n"
+"POT-Creation-Date: 2014-12-15 12:26+0400\n"
+"PO-Revision-Date: 2014-12-15 12:26+0400\n"
 "Last-Translator:  <sandro@transparency.ge>\n"
 "Language-Team: TI Georgia <fixmystreet@transparency.ge>\n"
 "Language: ka\n"
@@ -26,67 +26,93 @@ msgstr ""
 
 #: apps/api/serializers.py:48
 msgid "User account is disabled."
-msgstr ""
+msgstr "მომხმარებლის ანგარიში გათიშულია."
 
 #: apps/api/serializers.py:51
 msgid "Unable to log in with provided credentials."
-msgstr ""
+msgstr "მოწოდებული ინფორმაციით შესვლა ვერ მოხერხდა."
 
 #: apps/api/serializers.py:54
 msgid "Must include \"email\" and \"password\""
-msgstr ""
+msgstr " \"email\" და \"password\" აუცილებელია"
 
-#: apps/mainapp/forms.py:12 apps/mainapp/models.py:50
+#: apps/mainapp/forms.py:13 apps/mainapp/models.py:50
 #: apps/mainapp/models.py:65 apps/mainapp/models.py:108
 #: apps/mainapp/models.py:494
 msgid "Name"
 msgstr "სახელი*"
 
-#: apps/mainapp/forms.py:15 apps/mainapp/forms.py:96
+#: apps/mainapp/forms.py:16 apps/mainapp/forms.py:140
 #: apps/mainapp/models.py:470 apps/users/forms.py:41 apps/users/forms.py:47
-#: templates/menu_profile.html:9
+#: templates/menu_profile.html:14
 msgid "Email"
 msgstr "ელ.ფოსტა*"
 
-#: apps/mainapp/forms.py:20
+#: apps/mainapp/forms.py:21
 msgid "Message"
 msgstr "შეტყობინება"
 
-#: apps/mainapp/forms.py:63
+#: apps/mainapp/forms.py:57 templates/reports/report_list.html:44
+#: templates/reports/report_list.html:63
+msgid "Category"
+msgstr "კატეგორია"
+
+#: apps/mainapp/forms.py:59
+msgid ""
+"Password should contain at least 8 characters, 1 alpha numeric and 1 digit"
+msgstr ""
+"პაროლი უნდა შეიცავდეს მინიმუმ 8 სიმბოლოს, მინიმუმ 1 ლათინურს და 1 ციფრს"
+
+#: apps/mainapp/forms.py:60
+msgid "User with that username already exists."
+msgstr "მოხმარებელი აღნიშნული ნიკით უკვე დარეგისტრირებულია."
+
+#: apps/mainapp/forms.py:68
+msgid "Username"
+msgstr "ნიკი"
+
+#: apps/mainapp/forms.py:69 templates/menu_profile.html:17
+msgid "Password"
+msgstr "პაროლი"
+
+#: apps/mainapp/forms.py:70
+#| msgid "Password"
+msgid "Repeat Password"
+msgstr "გაიმეორეთ პაროლი"
+
+#: apps/mainapp/forms.py:88
+msgid "Passwords don't match!"
+msgstr "პაროლები არ ემთხვევა!"
+
+#: apps/mainapp/forms.py:107
 msgid "Problem Title"
 msgstr "პრობლემის სახელწოდება"
 
-#: apps/mainapp/forms.py:69 templates/reports/new.html:113
+#: apps/mainapp/forms.py:113 templates/reports/new.html:114
 msgid "Street"
 msgstr "ქუჩის მისამართი"
 
-#: apps/mainapp/forms.py:76
-#, fuzzy
-#| msgid "First name"
+#: apps/mainapp/forms.py:120
 msgid "First Name"
 msgstr "სახელი"
 
-#: apps/mainapp/forms.py:83
-#, fuzzy
-#| msgid "Last name"
+#: apps/mainapp/forms.py:127
 msgid "Last Name"
 msgstr "გვარი"
 
-#: apps/mainapp/forms.py:90
+#: apps/mainapp/forms.py:134
 msgid "Phone Number"
 msgstr "ტელეფონის ნომერი"
 
-#: apps/mainapp/forms.py:104
+#: apps/mainapp/forms.py:148
 msgid "Created descending"
 msgstr "უახლესიდან "
 
-#: apps/mainapp/forms.py:105
+#: apps/mainapp/forms.py:149
 msgid "Created ascending"
 msgstr "უძველესიდან"
 
-#: apps/mainapp/forms.py:106
-#, fuzzy
-#| msgid "Subscribers"
+#: apps/mainapp/forms.py:150
 msgid "Most subscribers"
 msgstr "გამომწერები"
 
@@ -120,92 +146,70 @@ msgid "In Progress"
 msgstr "პროცესშია"
 
 #: apps/mainapp/models.py:248
-#, fuzzy
-#| msgid "Category"
 msgid "category"
 msgstr "კატეგორია"
 
 #: apps/mainapp/models.py:248
-#, fuzzy
-#| msgid "Reports for"
 msgid "Report category"
-msgstr "შეტყობინებები:"
+msgstr "პრობლემის კატეგორია"
 
 #: apps/mainapp/models.py:249
 msgid "Author of the report"
-msgstr ""
+msgstr "პრობლემის ავტორი"
 
 #: apps/mainapp/models.py:250 templates/wards/show.html:8
 msgid "ward"
 msgstr "უბანი"
 
 #: apps/mainapp/models.py:250
-#, fuzzy
-#| msgid "Translate this report"
 msgid "Ward associated with report"
-msgstr "თარგმნე ეს შეტყობინება"
+msgstr "პრობლემასთან დაკავშირებული რეგიონი"
 
 #: apps/mainapp/models.py:253
-#, fuzzy
-#| msgid "Street address"
 msgid "street address"
 msgstr "ქუჩის მისამართი"
 
 #: apps/mainapp/models.py:254 apps/mainapp/models.py:349
-#, fuzzy
-#| msgid "Status"
 msgid "status"
 msgstr "სტატუსი"
 
 #: apps/mainapp/models.py:255
-#, fuzzy
-#| msgid "Reports Updated"
 msgid "Report status"
-msgstr "განახლებული შეტყობინებები"
+msgstr "პრობლემის სტატუსი"
 
 #: apps/mainapp/models.py:256
 msgid "Date when report was sent to city representative"
 msgstr ""
 
 #: apps/mainapp/models.py:257
-#, fuzzy
-#| msgid "Title"
 msgid "title"
 msgstr "სათაური"
 
 #: apps/mainapp/models.py:257
-#, fuzzy
-#| msgid "Reports Fixed"
 msgid "Report title"
 msgstr "მოგვარებული პრობლემები"
 
 #: apps/mainapp/models.py:263
 msgid "Date when report was created"
-msgstr ""
+msgstr "პრობლემის შექმნის თარიღი"
 
 #: apps/mainapp/models.py:264
 msgid "Date when report was fixed"
-msgstr ""
+msgstr "პრობლემის მოგვარების თარიღი"
 
 #: apps/mainapp/models.py:266
-#, fuzzy
-#| msgid "Reports Updated"
 msgid "Date when report was updated"
-msgstr "განახლებული შეტყობინებები"
+msgstr "პრობლემის განახლების თარიღი"
 
 #: apps/mainapp/models.py:269 apps/mainapp/models.py:359
-#, fuzzy
-#| msgid "Details"
 msgid "details"
 msgstr "დეტალები"
 
 #: apps/mainapp/models.py:269
 msgid "Report description"
-msgstr ""
+msgstr "პრობლემის აღწერა"
 
 #: apps/mainapp/models.py:274 apps/mainapp/models.py:361
-#, fuzzy
-#| msgid "* Photo"
 msgid "photo"
 msgstr "ფოტო"
 
@@ -230,6 +234,10 @@ msgstr ""
 "„საერთაშორისო გამჭვირვალობა – საქართველო“, რომელიც გამჭვირვალობისა და "
 "ანგარიშვალდებულების საკითხებზე მუშაობს. „საერთაშორისო გამჭვირვალობა – "
 "საქართველო“ გლობალური „საერთშორისო გამჭვირვალობის“ მოძრაობის წევრია.\n"
+
+#: apps/mainapp/views/main.py:78
+msgid "Something went crazy here. Try again. We saved your data: "
+msgstr "მოხდა შეცდომა. თქვენი ინფორმაცია შენახულია: "
 
 #: apps/mainapp/views/reports/main.py:68
 msgid "Please select a category"
@@ -260,94 +268,76 @@ msgid "Older Fixed Problems"
 msgstr "ძველი მოგვარებული პრობლემები"
 
 #: apps/users/admin.py:15 apps/users/admin.py:22
-#, fuzzy
-#| msgid "Credits"
 msgid "Credentials"
 msgstr "მადლობას ვუხდით:"
 
 #: apps/users/admin.py:16
 msgid "Personal info"
-msgstr ""
+msgstr "პერსონალური ინფორმაცია"
 
 #: apps/users/admin.py:17
-#, fuzzy
-#| msgid "Promotions"
 msgid "Permissions"
-msgstr "დაწინაურებები"
+msgstr "უფლებები"
 
 #: apps/users/admin.py:19
-#, fuzzy
-#| msgid "Reports Updated"
 msgid "Important dates"
-msgstr "განახლებული შეტყობინებები"
+msgstr "მნიშვნელოვანი თარიღები"
 
 #: apps/users/forms.py:50
 msgid "Incorrect email address or password"
-msgstr ""
+msgstr "არასწორი ელ.ფოსტა ან პაროლი"
 
 #: apps/users/models.py:38
-#, fuzzy
-#| msgid "Street address"
 msgid "email address"
-msgstr "ქუჩის მისამართი"
+msgstr "ელ. ფოსტა"
 
 #: apps/users/models.py:39
 msgid "username"
-msgstr ""
+msgstr "ნიკი"
 
 #: apps/users/models.py:40
-#, fuzzy
-#| msgid "First name"
 msgid "first name"
 msgstr "სახელი"
 
 #: apps/users/models.py:41
-#, fuzzy
-#| msgid "Last name"
 msgid "last name"
 msgstr "გვარი"
 
 #: apps/users/models.py:42
-#, fuzzy
-#| msgid "Phone"
 msgid "phone"
-msgstr "ტელეფონი*"
+msgstr "ტელეფონი"
 
 #: apps/users/models.py:43
 msgid "date joined"
-msgstr ""
+msgstr "რეგისტრაციის თარიღი"
 
 #: apps/users/models.py:44
-#, fuzzy
-#| msgid "Councillor"
 msgid "councillor"
-msgstr "ადმინისტრაციის წარმომადგენელი"
+msgstr "ქალაქის წარმომადგენელი"
 
 #: apps/users/models.py:45
 msgid "staff"
-msgstr ""
+msgstr "სტაფი"
 
 #: apps/users/models.py:46
 msgid "email confirmed"
-msgstr ""
+msgstr "ელ.ფოსტა დადასტურებულია"
 
 #: apps/users/models.py:47
 msgid "active"
-msgstr ""
+msgstr "აქტიურია"
 
 #: apps/users/models.py:57
 msgid "user"
-msgstr ""
+msgstr "მომხმარებელი"
 
 #: apps/users/models.py:58
 msgid "users"
-msgstr ""
+msgstr "მომხმარებლები"
 
 #: apps/users/models.py:93
-#, fuzzy
-#| msgid "Georgian keyboard"
 msgid "Georgian"
-msgstr "ქართული კლავიატურა"
+msgstr "ქართული"
 
 #: apps/users/models.py:94
 msgid "English"
@@ -360,10 +350,8 @@ msgid "language"
 msgstr "Language"
 
 #: apps/users/models.py:104
-#, fuzzy
-#| msgid "Created after:"
 msgid "created at"
-msgstr "დან"
+msgstr "შექმნის თარიღი"
 
 #: templates/about.html:6 templates/base_site.html:67
 msgid "Questions"
@@ -374,7 +362,7 @@ msgid "About Chemikucha.ge - FixMyStreet Georgia"
 msgstr "Chemikucha.ge – „ჩემი ქუჩა საქართველოს“ შესახებ"
 
 #: templates/about.html:34 templates/home.html:301
-#: templates/reports/new.html:120 templates/reports/report_list.html:133
+#: templates/reports/new.html:121 templates/reports/report_list.html:133
 #: templates/reports/show.html:175
 msgid "Last Updates"
 msgstr "ბოლო შეტყობინებები"
@@ -628,13 +616,13 @@ msgstr ""
 "გადაიტანეთ მარკერი სასურველ ადგილზე და შეავსეთ ფორმა."
 
 #: templates/home.html:169 templates/home.html.py:199
-#: templates/reports/new.html:103 templates/reports/show.html:167
+#: templates/reports/new.html:104 templates/reports/show.html:167
 msgid "Submit"
 msgstr "განთავსება"
 
-#: templates/home.html:178 templates/menu_profile.html:4
+#: templates/home.html:178 templates/menu_profile.html:9
 msgid "Login"
-msgstr ""
+msgstr "შესვლა"
 
 #: templates/home.html:242 templates/reports/show.html:178
 msgid "How to report a Problem"
@@ -684,10 +672,6 @@ msgstr "შეუკეთებელი:"
 msgid "Fixed:"
 msgstr "შეკეთებული:"
 
-#: templates/menu_profile.html:12
-msgid "Password"
-msgstr ""
-
 #: templates/promotions/show.html:8
 msgid "First 100 Reports"
 msgstr "პირველი 100 შეტყობინება"
@@ -725,23 +709,23 @@ msgstr ""
 "<p>გმადლობთ, თქვენი შეტყობინება მიღებულია. ჩვენ შეძლებისდაგვარად სწრაფად "
 "მოვახდენთ რეაგირებას</p>\n"
 
-#: templates/reports/new.html:5
+#: templates/reports/new.html:6
 msgid "New Report"
 msgstr "ახალი შეტყობინება"
 
-#: templates/reports/new.html:112 templates/reports/report_list.html:117
+#: templates/reports/new.html:113 templates/reports/report_list.html:117
 msgid "City"
 msgstr "ქალაქი"
 
-#: templates/reports/new.html:114
+#: templates/reports/new.html:115
 msgid "Publisher"
 msgstr "შეტყობინების ავტორი"
 
-#: templates/reports/new.html:115
+#: templates/reports/new.html:116
 msgid "E-mail"
 msgstr "ელ.ფოსტა*"
 
-#: templates/reports/new.html:116
+#: templates/reports/new.html:117
 msgid "Phone"
 msgstr "ტელეფონი*"
 
@@ -765,10 +749,6 @@ msgstr "აირჩიეთ რეგიონი და დაალაგე
 msgid "Region"
 msgstr "ქალაქი / უბანი"
 
-#: templates/reports/report_list.html:44 templates/reports/report_list.html:63
-msgid "Category"
-msgstr "კატეგორია"
-
 #: templates/reports/report_list.html:45 templates/reports/report_list.html:64
 msgid "Subscribers"
 msgstr "გამომწერები"
@@ -790,14 +770,10 @@ msgid "Status"
 msgstr "სტატუსი"
 
 #: templates/reports/report_list.html:121
-#, fuzzy
-#| msgid "Created after:"
 msgid "Created After"
 msgstr "დან"
 
 #: templates/reports/report_list.html:123
-#, fuzzy
-#| msgid "Created Before:"
 msgid "Created Before"
 msgstr "მდე"
 
@@ -985,15 +961,15 @@ msgstr "დააჭირეთ ცისფერ მარკერს და
 
 #: templates/stdimage/admin_widget.html:4
 msgid "Current image"
-msgstr ""
+msgstr "სურათი"
 
 #: templates/stdimage/admin_widget.html:10
 msgid "Change"
-msgstr ""
+msgstr "შეცვლა"
 
 #: templates/stdimage/admin_widget.html:17
 msgid "Delete"
-msgstr ""
+msgstr "წაშლა"
 
 #: templates/wards/_info_box.html:6
 msgid "Councillor"

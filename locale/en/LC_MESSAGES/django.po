@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemikucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-15 06:17+0400\n"
+"POT-Creation-Date: 2014-12-15 12:26+0400\n"
 "PO-Revision-Date: 2014-03-31 13:02+0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chemikucha <gio@transparency.ge>\n"
@@ -35,51 +35,81 @@ msgstr ""
 msgid "Must include \"email\" and \"password\""
 msgstr ""
 
-#: apps/mainapp/forms.py:12 apps/mainapp/models.py:50
+#: apps/mainapp/forms.py:13 apps/mainapp/models.py:50
 #: apps/mainapp/models.py:65 apps/mainapp/models.py:108
 #: apps/mainapp/models.py:494
 msgid "Name"
 msgstr ""
 
-#: apps/mainapp/forms.py:15 apps/mainapp/forms.py:96
+#: apps/mainapp/forms.py:16 apps/mainapp/forms.py:140
 #: apps/mainapp/models.py:470 apps/users/forms.py:41 apps/users/forms.py:47
-#: templates/menu_profile.html:9
+#: templates/menu_profile.html:14
 msgid "Email"
 msgstr ""
 
-#: apps/mainapp/forms.py:20
+#: apps/mainapp/forms.py:21
 msgid "Message"
 msgstr ""
 
-#: apps/mainapp/forms.py:63
+#: apps/mainapp/forms.py:57 templates/reports/report_list.html:44
+#: templates/reports/report_list.html:63
+msgid "Category"
+msgstr ""
+
+#: apps/mainapp/forms.py:59
+msgid ""
+"Password should contain at least 8 characters, 1 alpha numeric and 1 digit"
+msgstr ""
+
+#: apps/mainapp/forms.py:60
+msgid "User with that username already exists."
+msgstr ""
+
+#: apps/mainapp/forms.py:68
+msgid "Username"
+msgstr ""
+
+#: apps/mainapp/forms.py:69 templates/menu_profile.html:17
+msgid "Password"
+msgstr ""
+
+#: apps/mainapp/forms.py:70
+msgid "Repeat Password"
+msgstr ""
+
+#: apps/mainapp/forms.py:88
+msgid "Passwords don't match!"
+msgstr ""
+
+#: apps/mainapp/forms.py:107
 msgid "Problem Title"
 msgstr ""
 
-#: apps/mainapp/forms.py:69 templates/reports/new.html:113
+#: apps/mainapp/forms.py:113 templates/reports/new.html:114
 msgid "Street"
 msgstr ""
 
-#: apps/mainapp/forms.py:76
+#: apps/mainapp/forms.py:120
 msgid "First Name"
 msgstr ""
 
-#: apps/mainapp/forms.py:83
+#: apps/mainapp/forms.py:127
 msgid "Last Name"
 msgstr ""
 
-#: apps/mainapp/forms.py:90
+#: apps/mainapp/forms.py:134
 msgid "Phone Number"
 msgstr ""
 
-#: apps/mainapp/forms.py:104
+#: apps/mainapp/forms.py:148
 msgid "Created descending"
 msgstr ""
 
-#: apps/mainapp/forms.py:105
+#: apps/mainapp/forms.py:149
 msgid "Created ascending"
 msgstr ""
 
-#: apps/mainapp/forms.py:106
+#: apps/mainapp/forms.py:150
 msgid "Most subscribers"
 msgstr ""
 
@@ -193,6 +223,10 @@ msgid ""
 "Tbilisi-based NGO aiming to promote transparency\n"
 "    and accountability. TI Georgia is part of the global Transparency "
 "International movement.\n"
+msgstr ""
+
+#: apps/mainapp/views/main.py:78
+msgid "Something went crazy here. Try again. We saved your data: "
 msgstr ""
 
 #: apps/mainapp/views/reports/main.py:68
@@ -318,7 +352,7 @@ msgid "About Chemikucha.ge - FixMyStreet Georgia"
 msgstr ""
 
 #: templates/about.html:34 templates/home.html:301
-#: templates/reports/new.html:120 templates/reports/report_list.html:133
+#: templates/reports/new.html:121 templates/reports/report_list.html:133
 #: templates/reports/show.html:175
 msgid "Last Updates"
 msgstr ""
@@ -550,11 +584,11 @@ msgid ""
 msgstr ""
 
 #: templates/home.html:169 templates/home.html.py:199
-#: templates/reports/new.html:103 templates/reports/show.html:167
+#: templates/reports/new.html:104 templates/reports/show.html:167
 msgid "Submit"
 msgstr ""
 
-#: templates/home.html:178 templates/menu_profile.html:4
+#: templates/home.html:178 templates/menu_profile.html:9
 msgid "Login"
 msgstr ""
 
@@ -606,10 +640,6 @@ msgstr ""
 msgid "Fixed:"
 msgstr ""
 
-#: templates/menu_profile.html:12
-msgid "Password"
-msgstr ""
-
 #: templates/promotions/show.html:8
 msgid "First 100 Reports"
 msgstr ""
@@ -641,23 +671,23 @@ msgid ""
 "soon as possible.</p>\n"
 msgstr ""
 
-#: templates/reports/new.html:5
+#: templates/reports/new.html:6
 msgid "New Report"
 msgstr ""
 
-#: templates/reports/new.html:112 templates/reports/report_list.html:117
+#: templates/reports/new.html:113 templates/reports/report_list.html:117
 msgid "City"
 msgstr ""
 
-#: templates/reports/new.html:114
+#: templates/reports/new.html:115
 msgid "Publisher"
 msgstr ""
 
-#: templates/reports/new.html:115
+#: templates/reports/new.html:116
 msgid "E-mail"
 msgstr ""
 
-#: templates/reports/new.html:116
+#: templates/reports/new.html:117
 msgid "Phone"
 msgstr ""
 
@@ -679,10 +709,6 @@ msgstr ""
 
 #: templates/reports/report_list.html:43
 msgid "Region"
-msgstr ""
-
-#: templates/reports/report_list.html:44 templates/reports/report_list.html:63
-msgid "Category"
 msgstr ""
 
 #: templates/reports/report_list.html:45 templates/reports/report_list.html:64
