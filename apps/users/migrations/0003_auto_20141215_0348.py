@@ -36,10 +36,4 @@ class Migration(migrations.Migration):
             field=models.BooleanField(default=False, verbose_name='councillor'),
             preserve_default=True,
         ),
-        migrations.AlterField(
-            model_name='fmsuser',
-            name='is_active',
-            field=models.BooleanField(default=False, verbose_name='active'),
-            preserve_default=True,
-        ),
     ]

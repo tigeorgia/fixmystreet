@@ -44,7 +44,7 @@ class FMSUser(AbstractBaseUser, PermissionsMixin):
     is_councillor = models.BooleanField(_('councillor'), default=False)
     is_staff = models.BooleanField(_('staff'), default=False)
     is_confirmed = models.BooleanField(_('email confirmed'), default=False)
-    is_active = models.BooleanField(_('active'), default=False)
+    is_active = models.BooleanField(_('active'), default=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']

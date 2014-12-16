@@ -272,7 +272,8 @@ class Report(models.Model):
     # Postgis 1.5 is breaking migrations on this field. See https://code.djangoproject.com/ticket/23085
     point = models.PointField(null=True)
     photo = StdImageField(upload_to="photos", blank=True, verbose_name=_("photo"),
-                          variations={'large': (800, 600), 'thumbnail': (133, 100)})
+                          variations={'large': (800, 600), 'thumbnail': (133, 100)},
+                          help_text=_('Please upload report photo'))
 
     objects = models.GeoManager()
     active = ActiveManager()

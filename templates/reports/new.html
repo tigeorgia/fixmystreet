@@ -91,6 +91,13 @@
                 {% endif %}
                 <form enctype="multipart/form-data" method="post" id="report-description" class="fms-form">
                 {% csrf_token %}
+                <div class="checkbox">
+                        <label id="geokbd">
+                            {% trans "Georgian keyboard" %}
+                            <input type="checkbox" name="geo_kbd_report" id="geo_kbd_report"
+                                   checked="checked"/>
+                        </label>
+                    </div>
                     {{ wizard.management_form }}
                         {% if wizard.form.forms %}
                             {{ wizard.form.management_form }}
@@ -106,15 +113,13 @@
                 </form>
 
                 <script type="text/javascript">
-                    GeoKBD.map('my-form');
+                    GeoKBD.map({
+                        'form': 'my-form',
+                        "switcher": 'geo_kbd_report',
+                        'excludeFields': ['report_description-username', 'report_description-password1',
+                                          'report_description-password2']
+                    });
                 </script>
-                <address>
-                    {% trans "City" %}: {{ city }}<br>
-                    {% trans "Street" %}: {{ street }}<br>
-                    {% trans "Publisher" %}: {{ author }}<br>
-                    {% trans "E-mail" %}: {{ email }}<br>
-                    {% trans "Phone" %}: {{ phone }}<br>
-                </address>
             </div>
             <div class="col-6 col-sm-4 col-lg-4">
                 <div class="report-updates"><h3>{% trans "Last Updates" %}</h3>

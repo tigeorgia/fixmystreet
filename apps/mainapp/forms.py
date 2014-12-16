@@ -53,7 +53,8 @@ class ReportForm2(forms.ModelForm):
     """
     2nd step of form submission
     """
-    category = forms.ModelChoiceField(queryset=ReportCategory.objects.all().order_by('name_' + get_language()))
+    category = forms.ModelChoiceField(queryset=ReportCategory.objects.all().order_by('name_' + get_language()),
+                                      label=_('Category'))
     error_messages = {
         'password_insecure': _('Password should contain at least 8 characters, 1 alpha numeric and 1 digit'),
         'duplicate_username': _("User with that username already exists."),
@@ -63,10 +64,10 @@ class ReportForm2(forms.ModelForm):
         self.user = kwargs.pop('user', None)
         super(ReportForm2, self).__init__(*args, **kwargs)
         # We don't need user creation fields if user is already logged in
-        if not self.user:
-            self.fields['username'] = forms.CharField()
-            self.fields['password_1'] = forms.CharField(widget=forms.PasswordInput)
-            self.fields['password_2'] = forms.CharField(widget=forms.PasswordInput)
+        if not self.user.is_authenticated():
+            self.fields['username'] = forms.CharField(label=_('Username'), max_length=30)
+            self.fields['password1'] = forms.CharField(widget=forms.PasswordInput, label=_('Password'),)
+            self.fields['password2'] = forms.CharField(widget=forms.PasswordInput, label=_('Repeat Password'))
 
     def clean_username(self):
         username = self.cleaned_data["username"]
@@ -80,19 +81,19 @@ class ReportForm2(forms.ModelForm):
         )
 
     def clean_password_2(self):
-        password_1 = self.cleaned_data.get('password_1')
-        password_2 = self.cleaned_data.get('password_2')
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
 
-        if password_1 != password_2:
+        if password1 != password2:
             raise forms.ValidationError(_("Passwords don't match!"))
-        if len(password_2) < 8:
+        if len(password2) < 8:
             raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
-        if not any(char.isdigit() for char in password_2):
+        if not any(char.isdigit() for char in password2):
             raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
-        if not any(char.isalpha() for char in password_2):
+        if not any(char.isalpha() for char in password2):
             raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
 
-        return password_2
+        return password2
 
     class Meta:
         model = Report

@@ -254,13 +254,15 @@ var FMS = ( function () {
     };
 
     fn._ajaxLoginCallback = function (forms, data) {
-        var cached_form = $(forms.ajax_login_form);
+        var cached_form = $('#' + forms.ajax_login_form);
         var error_container = cached_form.find('.error-container');
 
         if (!data.errors){
             FMS.processForms(forms.new_report_user, data)
         } else {
+            error_container.html('');
             $.each(data.errors, function(i, val){
+                console.log(data);
                 error_container.append(
                     '<div class="alert alert-danger" role="alert">' + val + '</div>'
                 )

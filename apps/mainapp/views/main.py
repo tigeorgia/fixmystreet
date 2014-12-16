@@ -16,6 +16,7 @@ from apps.mainapp.forms import ReportForm1, ReportForm2
 from apps.mainapp.utils import random_image, ReportCount
 from apps.users.forms import FMSUserLoginForm, FMSCheckEmailForm
 from apps.users.models import FMSUser
+from apps.users.forms import FMSUserCreationForm
 
 
 class HomeView(SessionWizardView):
@@ -45,7 +46,7 @@ class HomeView(SessionWizardView):
         Separate user and report data
         """
         report_fields = Report._meta.get_all_field_names()
-        user_fields = FMSUser._meta.get_all_field_names()
+        user_fields = FMSUser._meta.get_all_field_names() + ['password1', 'password2']
         self.report_data = {field: self.form_data[field] for field in self.form_data.keys() if field in report_fields}
         self.user_data = {field: self.form_data.get(field) for field in self.form_data.keys() if field in user_fields}
 
@@ -58,13 +59,22 @@ class HomeView(SessionWizardView):
     def get_point(self):
         return self.report_data.get('point', None)
 
+    def _create_user(self):
+        form = FMSUserCreationForm(data=self.user_data)
+        if form.is_valid():
+            user = form.save()
+            return user
+
     def _create_report(self):
         report = Report(**self.get_report_data())
-        if self.request.user:
+        if self.request.user.is_authenticated():
             report.user = self.request.user
-            report.ip = get_client_ip(self.request)
-            report.ward = Ward.objects.get(geom__contains=self.get_point())
-            report.save()
+        else:
+            report.user = self._create_user()
+
+        report.ip = get_client_ip(self.request)
+        report.ward = Ward.objects.get(geom__contains=self.get_point())
+        report.save()
         return report
 
     def done(self, form_list, **kwargs):
@@ -75,7 +85,7 @@ class HomeView(SessionWizardView):
         self._fix_data()
         report = self._create_report()
         if not report:
-            return HttpResponse(_('Something went crazy here. Try again. We saved your data: {0}').format(self.report_data))
+            return HttpResponse(_('Something went crazy here. Try again. We saved your data: ') + self.report_data)
         return HttpResponseRedirect(report.get_absolute_url())
 
     def get_template_names(self):
