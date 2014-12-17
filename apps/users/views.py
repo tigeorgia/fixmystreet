@@ -1,9 +1,10 @@
-from django.views.generic import View, FormView
+from django.views.generic import View, FormView, TemplateView
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.contrib.auth import views, login as auth_login
 from django.views.decorators.csrf import csrf_protect
 import json
+from django.utils.translation import ugettext_lazy as _
 
 from .models import FMSUser
 from .forms import FMSUserLoginForm
@@ -38,3 +39,20 @@ class AjaxLoginView(View):
         else:
             errors = {'errors': [e for e in form.errors['__all__']]}
             return JsonResponse(errors)
+
+class TokenConfirmationView(TemplateView):
+    template_name = 'users/email_confirm.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TokenConfirmationView, self).get_context_data(**kwargs)
+        try:
+            user = FMSUser.objects.get(fms_user_token__token=kwargs['token'])
+        except FMSUser.DoesNotExist:
+            context['message'] = _('Invalid confirmation link')
+        else:
+            user.is_confirmed=True
+            user.fms_user_token.delete()
+            user.save()
+            context['message'] = _('Confirmation successful! You can now login')
+
+        return context

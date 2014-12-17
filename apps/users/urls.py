@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = patterns('',
                        url(r'^email-exists$', views.EmailExistsView.as_view()),
+                       url(r'^confirm/(?P<token>\w+)/$', views.TokenConfirmationView.as_view(), name='confirm'),
                        url(r'^ajax/login/$', views.AjaxLoginView.as_view()),
                        url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout')
 )

@@ -1,14 +1,18 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.contrib.auth.tokens import default_token_generator
+
 from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.db.utils import IntegrityError
 from apps.mainapp.models import Report
+from django.conf import settings
+from django.core.urlresolvers import reverse_lazy
 
 from django.db import models
 import binascii
 import os
+
 
 
 class FMSUserManager(BaseUserManager):
@@ -100,9 +104,26 @@ class FMSSettings(models.Model):
 
 class FMSUserToken(models.Model):
     user = models.OneToOneField(FMSUser, related_name='fms_user_token')
-    token = models.CharField(max_length=40)
+    token = models.CharField(max_length=40, )
     created_at = models.DateTimeField(_('created at'), auto_now=True)
 
     def save(self, *args, **kwargs):
-        self.token = binascii.hexlify(os.urandom(20)).decode()
-        return super(FMSUserToken, self).save(*args, **kwargs)
+        if not self.token:
+            self.token = self._generate_token()
+        super(FMSUserToken, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        url = ''.join(settings.SITE_URL + str(reverse_lazy('users:confirm', kwargs={'token': self.token})))
+        return url
+
+    @staticmethod
+    def _generate_token():
+        return binascii.hexlify(os.urandom(20)).decode()
+
+    def generate_new(self):
+        self.token = self._generate_token()
+        return self
+
+
+
+from .receivers import *

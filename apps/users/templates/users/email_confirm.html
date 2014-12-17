@@ -1,0 +1,14 @@
+{% extends 'users/base.html' %}
+{% load i18n %}
+{% block head %}
+    <meta http-equiv="refresh" content="2;/">
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row text-center">
+            <h3>{{ message }}</h3>
+            <p>{% trans 'Redirecting...' %}</p>
+        </div>
+    </div>
+{{ block.super }}
+{% endblock %}

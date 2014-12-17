@@ -1,0 +1,6 @@
+{% load i18n %}
+{% trans 'Hello' %}, {{ email.username }}
+
+{% trans 'Please click the following link to confirm your account' %}:
+{{ confirmation_url }}
+
