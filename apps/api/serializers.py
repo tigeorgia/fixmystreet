@@ -22,14 +22,15 @@ class WardSerializer(serializers.ModelSerializer):
 
 class ReportSerializer(serializers.ModelSerializer):
     coordinates = fields.PointField(source='point',)
+    ward__city = serializers.IntegerField(source='ward.city.id', read_only=True)
     # TODO convert photo to stdimagefield
 
     class Meta:
         model = Report
-        fields = ('id', 'title', 'category', 'ward', 'created_at', 'updated_at', 'status', 'street', 'fixed_at',
+        fields = ('id', 'title', 'category', 'ward', 'ward__city', 'created_at', 'updated_at', 'status', 'street', 'fixed_at',
                   'sent_at', 'email_sent_to', 'coordinates', 'desc',
         )
-        read_only_fields = ('id', 'sent_at', 'created_at', 'updated_at', 'fixed_at', 'email_sent_to',)
+        read_only_fields = ('id', 'sent_at', 'ward', 'created_at', 'updated_at', 'fixed_at', 'email_sent_to',)
 
 
 class AuthTokenSerializer(serializers.Serializer):

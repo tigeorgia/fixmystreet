@@ -45,7 +45,11 @@ class ReportListCreateView(generics.ListCreateAPIView):
 
     ##**Available filters**:
 
-    `status`  `category`  `from_date`  `to_date`
+    `status` \n
+    `category` \n
+    `from_date` \n
+    `to_date` \n
+    `ward__city` \n
 
     **Example**: [/api/reports/?category=25&status=fixed](/api/reports/?category=25&status=fixed)
 
