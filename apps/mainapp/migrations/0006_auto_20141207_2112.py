@@ -94,6 +94,12 @@ class Migration(migrations.Migration):
             preserve_default=True,
         ),
         migrations.AlterField(
+            model_name='report',
+            name='photo',
+            field=stdimage.models.StdImageField(help_text='Please upload report photo', upload_to=b'photos', verbose_name='photo', blank=True),
+            preserve_default=True,
+        ),
+        migrations.AlterField(
             model_name='reportsubscriber',
             name='report',
             field=models.ForeignKey(related_name='subscribers', to='mainapp.Report'),

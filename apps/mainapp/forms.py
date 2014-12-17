@@ -53,7 +53,7 @@ class ReportForm2(forms.ModelForm):
     """
     2nd step of form submission
     """
-    category = forms.ModelChoiceField(queryset=ReportCategory.objects.all().order_by('name_' + get_language()),
+    category = forms.ModelChoiceField(queryset=ReportCategory.objects.all().order_by('name_' + get_language()[:2]),
                                       label=_('Category'))
     error_messages = {
         'password_insecure': _('Password should contain at least 8 characters, 1 alpha numeric and 1 digit'),

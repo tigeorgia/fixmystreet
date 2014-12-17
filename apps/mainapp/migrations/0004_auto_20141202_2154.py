@@ -2,9 +2,12 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.db.models import signals
 from django.conf import settings
-from apps.users.models import FMSUser
+from apps.users.models import FMSUser, FMSUserToken
+from apps.users.receivers import token_changed
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.translation import ugettext_lazy as _, ugettext
 import random
 import time
 import sys
@@ -79,9 +82,17 @@ def _create_user(apps, report_update):
     if FMSUser.username_exists(username):
         username += ''.join(random.choice('0123456789') for i in range(2))
 
+    # We don't want to send confirmation email to existing users.
+    signals.post_save.disconnect(token_changed, sender=FMSUserToken)
     fms_user = FMSUser.objects.create_user(username=username, email=email, password=password, first_name=first_name,
                                            last_name=last_name, phone=phone)
-
+    subject = u'Chemikucha.ge ანგარიში შექმნილია Chemikucha.ge account has been created'
+    message_ka = u"გამარჯობა, \n\nგვინდა გაცნობოთ, რომ თქვენი ანგარიში http://chemikucha.ge-ზე შექმნილია.\n\nშესვლა შესაძლებელია შემდეგი მონაცემებით:\n{0}\n{1}\n\n\n"
+    message_en = u"Hello, \n\nWe want to let you know that your account at http://chemikucha.ge has been created.\n\nYou can login with this credentials:\n{0}\n{1}"
+    message = message_ka + message_en
+    message = message.format(email, password)
+    fms_user.email_user(subject=subject, message=message)
+    signals.post_save.connect(token_changed, sender=FMSUserToken)
     frozen_user = FrozenUser.objects.get(email=email)
     return frozen_user
 

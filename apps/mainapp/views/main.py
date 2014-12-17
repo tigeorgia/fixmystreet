@@ -124,7 +124,7 @@ class HomeView(SessionWizardView):
         ctx['report_counts'] = ReportCount.by_interval('1 year')
         ctx['center'] = GmapPoint(point=center)
         ctx['last_year'] = (datetime.datetime.today() + datetime.timedelta(-365)).strftime('%Y-%m-%d')
-        ctx['categories'] = ReportCategory.objects.all().order_by("name_" + get_language())
+        ctx['categories'] = ReportCategory.objects.all().order_by("name_" + get_language()[:2])
         ctx['check_email'] = FMSCheckEmailForm()
         ctx['ajax_login'] = FMSUserLoginForm()
         ctx['google'] = FixMyStreetMap(pnt=pnt, draggable=True)
