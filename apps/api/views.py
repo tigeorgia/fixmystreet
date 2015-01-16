@@ -7,11 +7,12 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.reverse import reverse as reverse
 from django.http import Http404
+from collections import OrderedDict
 
 from apps.mainapp.models import Report, Ward
 from apps.mainapp.filters import ReportFilter
 from .serializers import ReportSerializer, WardSerializer, AuthTokenSerializer
-from metadata import ReportMetaData
+from metadata import ReportMetaData, AuthTokenMetaData
 
 
 class LoginRedirectView(RedirectView):
@@ -30,13 +31,34 @@ class LoginRedirectView(RedirectView):
 
 
 class APIRootView(APIView):
+    """
+    This is chemikucha API root.
+
+    For full access, you'll need to get authentication token.
+
+    Clients should authenticate by passing the token key in the "Authorization"
+    HTTP header, prepended with the string "Token ".  For example:
+
+    `Authorization: Token 401f7ac837da42b97f613d789819ff93537bee6a`
+
+    # Endpoints:
+    ## Authorization:
+    Obtain token: [/api/get-token/](/api/get-token/)
+
+    ## Reports:
+    List: [/api/reports/](/api/reports/)
+
+    Detail: [/api/reports/<id\>/](/api/reports/<id>/)
+
+
+    """
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def get(self, request):
-        return Response({
-            'report-list': '/api/reports/',
-            'report-detail': '/api/reports/<pk>/',
+        data = Response({
         })
+
+        return data
 
 
 class ReportListCreateView(generics.ListCreateAPIView):
@@ -99,6 +121,12 @@ class WardDetailView(APIView):
         return Response(serializer.data)
 
 class ObtainAuthTokenView(ObtainAuthToken):
+    """
+    Obtain authentication token.
+
+    Make sure to clear session cookies if you have them, otherwise authentication will fail and you'll get an CSRF error.
+    """
+    metadata_class = AuthTokenMetaData
 
     def post(self, request):
         serializer = AuthTokenSerializer(data=request.data)

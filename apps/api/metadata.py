@@ -1,4 +1,4 @@
-from rest_framework.metadata import SimpleMetadata
+from rest_framework.metadata import SimpleMetadata, BaseMetadata
 from rest_framework.utils.field_mapping import ClassLookupDict
 from rest_framework import serializers
 import fields
@@ -25,3 +25,23 @@ class ReportMetaData(SimpleMetadata):
         serializers.ImageField: 'image upload',
         fields.PointField: "string",
     })
+
+class AuthTokenMetaData(BaseMetadata):
+
+    def determine_metadata(self, request, view):
+        return {
+            'name': view.get_view_name(),
+            'description': view.get_view_description(),
+            'actions': {
+                'POST' : {
+                    'email': {
+                        'type': 'string',
+                        'help_text': 'User email'
+                    },
+                    'password': {
+                        'type': 'string',
+                        'help_text': 'Password'
+                    }
+                }
+            }
+        }
