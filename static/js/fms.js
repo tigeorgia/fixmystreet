@@ -35,15 +35,22 @@ $(function () {
 $(function () {
     /**
      * Language switch.
-     * TODO: It's not really obvious that dropdown stands for language. Change template to more intuitive way
      */
     $(".lang-choose").click(function () {
         var lang = $(this).find('a').data('lang');
         var next = $('#no-lang-path').data('next');
-        $.post("/i18n/setlang/", {language: lang, next: next})
-            .done(function () {
-                location.href = '/' + lang + next;
-            });
+        var csrftoken = $.cookie('csrftoken');
+
+        $.ajax({
+            url: '/i18n/setlang/',
+            data: {language: lang, next: next},
+            headers: {
+                "X-CSRFToken": csrftoken
+            }
+        }).done(function(result){
+            console.log(result);
+            location.href = '/' + lang + next;
+        });
     });
 
     /**
@@ -134,6 +141,8 @@ var FMS = ( function () {
     var fn = {};
     current_lang = '/' + window.location.href.split('/')[3];
 
+    fn.is_authenticated = false;
+
     /**
      * Loads problem submit form and changes map position. Called by event when map is idle.
      */
@@ -167,12 +176,14 @@ var FMS = ( function () {
             'new_report_full': 'new-report-full',
             'new_report_user': 'new-report-user'
         };
-        form = form || forms.check_email_form;
+        form = form || 'startFormCheck';
         other_data = other_data || {};
-        console.log('processing forms');
 
         // Form strategy
         switch (form) {
+            case 'startFormCheck':
+                this.startFormCheck(forms);
+                break;
             case forms.check_email_form:
                 $('#'+forms.ajax_login_form).hide();
                 this.checkEmail(forms);
@@ -186,11 +197,20 @@ var FMS = ( function () {
                 this.newReportFull(forms, other_data);
                 break;
             case forms.new_report_user:
+                $('#'+forms.check_email_form).hide();
                 $('#'+forms.ajax_login_form).hide();
                 this.newReportUser(forms, other_data);
                 break;
         }
 
+    };
+
+    fn.startFormCheck = function(forms){
+        if (this.is_authenticated){
+            FMS.processForms(forms.new_report_user);
+        } else {
+            FMS.processForms(forms.check_email_form);
+        }
     };
 
     /**
@@ -233,7 +253,7 @@ var FMS = ( function () {
         this.makeVisible(forms.ajax_login_form);
         var cached_form = $('#'+forms.ajax_login_form);
         if (data.email){
-            cached_form.find('#login_email').val(data.email);
+            cached_form.find('#login_email').val(data.email).attr({'readonly':'True'});
             cached_form.find('#id_password').focus();
         }
         cached_form.submit(function(event){
