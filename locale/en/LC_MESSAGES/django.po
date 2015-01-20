@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemikucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-15 12:26+0400\n"
+"POT-Creation-Date: 2015-01-20 18:46+0400\n"
 "PO-Revision-Date: 2014-03-31 13:02+0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chemikucha <gio@transparency.ge>\n"
@@ -23,27 +23,26 @@ msgid ""
 "'44.7965081557,41.708484'"
 msgstr ""
 
-#: apps/api/serializers.py:48
+#: apps/api/serializers.py:49
 msgid "User account is disabled."
 msgstr ""
 
-#: apps/api/serializers.py:51
+#: apps/api/serializers.py:52
 msgid "Unable to log in with provided credentials."
 msgstr ""
 
-#: apps/api/serializers.py:54
+#: apps/api/serializers.py:55
 msgid "Must include \"email\" and \"password\""
 msgstr ""
 
 #: apps/mainapp/forms.py:13 apps/mainapp/models.py:50
 #: apps/mainapp/models.py:65 apps/mainapp/models.py:108
-#: apps/mainapp/models.py:494
+#: apps/mainapp/models.py:475
 msgid "Name"
 msgstr ""
 
-#: apps/mainapp/forms.py:16 apps/mainapp/forms.py:140
-#: apps/mainapp/models.py:470 apps/users/forms.py:41 apps/users/forms.py:47
-#: templates/menu_profile.html:14
+#: apps/mainapp/forms.py:16 apps/mainapp/forms.py:146
+#: apps/mainapp/models.py:451 apps/users/forms.py:62 apps/users/forms.py:68
 msgid "Email"
 msgstr ""
 
@@ -51,65 +50,73 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: apps/mainapp/forms.py:57 templates/reports/report_list.html:44
+#: apps/mainapp/forms.py:32
+msgid "You need to be logged in to post an update"
+msgstr ""
+
+#: apps/mainapp/forms.py:62 templates/reports/report_list.html:44
 #: templates/reports/report_list.html:63
 msgid "Category"
 msgstr ""
 
-#: apps/mainapp/forms.py:59
+#: apps/mainapp/forms.py:64 apps/users/forms.py:12
 msgid ""
 "Password should contain at least 8 characters, 1 alpha numeric and 1 digit"
 msgstr ""
 
-#: apps/mainapp/forms.py:60
+#: apps/mainapp/forms.py:65 apps/users/forms.py:13
 msgid "User with that username already exists."
 msgstr ""
 
-#: apps/mainapp/forms.py:68
+#: apps/mainapp/forms.py:66 apps/users/forms.py:14
+msgid "Account is not confirmed. Confirmation email has been resent"
+msgstr ""
+
+#: apps/mainapp/forms.py:74
 msgid "Username"
 msgstr ""
 
-#: apps/mainapp/forms.py:69 templates/menu_profile.html:17
+#: apps/mainapp/forms.py:75
 msgid "Password"
 msgstr ""
 
-#: apps/mainapp/forms.py:70
+#: apps/mainapp/forms.py:76
 msgid "Repeat Password"
 msgstr ""
 
-#: apps/mainapp/forms.py:88
+#: apps/mainapp/forms.py:94 apps/users/forms.py:36
 msgid "Passwords don't match!"
 msgstr ""
 
-#: apps/mainapp/forms.py:107
+#: apps/mainapp/forms.py:113
 msgid "Problem Title"
 msgstr ""
 
-#: apps/mainapp/forms.py:113 templates/reports/new.html:114
+#: apps/mainapp/forms.py:119
 msgid "Street"
 msgstr ""
 
-#: apps/mainapp/forms.py:120
+#: apps/mainapp/forms.py:126
 msgid "First Name"
 msgstr ""
 
-#: apps/mainapp/forms.py:127
+#: apps/mainapp/forms.py:133
 msgid "Last Name"
 msgstr ""
 
-#: apps/mainapp/forms.py:134
+#: apps/mainapp/forms.py:140
 msgid "Phone Number"
 msgstr ""
 
-#: apps/mainapp/forms.py:148
+#: apps/mainapp/forms.py:154
 msgid "Created descending"
 msgstr ""
 
-#: apps/mainapp/forms.py:149
+#: apps/mainapp/forms.py:155
 msgid "Created ascending"
 msgstr ""
 
-#: apps/mainapp/forms.py:150
+#: apps/mainapp/forms.py:156
 msgid "Most subscribers"
 msgstr ""
 
@@ -130,15 +137,15 @@ msgstr ""
 msgid "Hint"
 msgstr ""
 
-#: apps/mainapp/models.py:242 apps/mainapp/models.py:339
+#: apps/mainapp/models.py:242 apps/mainapp/models.py:340
 msgid "Not Fixed"
 msgstr ""
 
-#: apps/mainapp/models.py:243 apps/mainapp/models.py:340
+#: apps/mainapp/models.py:243 apps/mainapp/models.py:341
 msgid "Fixed"
 msgstr ""
 
-#: apps/mainapp/models.py:244 apps/mainapp/models.py:341
+#: apps/mainapp/models.py:244 apps/mainapp/models.py:342
 msgid "In Progress"
 msgstr ""
 
@@ -166,7 +173,7 @@ msgstr ""
 msgid "street address"
 msgstr ""
 
-#: apps/mainapp/models.py:254 apps/mainapp/models.py:349
+#: apps/mainapp/models.py:254 apps/mainapp/models.py:350
 msgid "status"
 msgstr ""
 
@@ -198,7 +205,7 @@ msgstr ""
 msgid "Date when report was updated"
 msgstr ""
 
-#: apps/mainapp/models.py:269 apps/mainapp/models.py:359
+#: apps/mainapp/models.py:269 apps/mainapp/models.py:360
 msgid "details"
 msgstr ""
 
@@ -206,11 +213,15 @@ msgstr ""
 msgid "Report description"
 msgstr ""
 
-#: apps/mainapp/models.py:274 apps/mainapp/models.py:361
+#: apps/mainapp/models.py:274 apps/mainapp/models.py:362
 msgid "photo"
 msgstr ""
 
-#: apps/mainapp/models.py:493
+#: apps/mainapp/models.py:276
+msgid "Please upload report photo"
+msgstr ""
+
+#: apps/mainapp/models.py:474
 msgid "Domain"
 msgstr ""
 
@@ -225,12 +236,8 @@ msgid ""
 "International movement.\n"
 msgstr ""
 
-#: apps/mainapp/views/main.py:78
+#: apps/mainapp/views/main.py:92
 msgid "Something went crazy here. Try again. We saved your data: "
-msgstr ""
-
-#: apps/mainapp/views/reports/main.py:68
-msgid "Please select a category"
 msgstr ""
 
 #: apps/mainapp/views/reports/subscribers.py:20
@@ -273,77 +280,107 @@ msgstr ""
 msgid "Important dates"
 msgstr ""
 
-#: apps/users/forms.py:50
+#: apps/users/forms.py:70
 msgid "Incorrect email address or password"
 msgstr ""
 
-#: apps/users/models.py:38
+#: apps/users/models.py:42
 msgid "email address"
 msgstr ""
 
-#: apps/users/models.py:39
+#: apps/users/models.py:43
 msgid "username"
 msgstr ""
 
-#: apps/users/models.py:40
+#: apps/users/models.py:44
 msgid "first name"
 msgstr ""
 
-#: apps/users/models.py:41
+#: apps/users/models.py:45
 msgid "last name"
 msgstr ""
 
-#: apps/users/models.py:42
+#: apps/users/models.py:46
 msgid "phone"
 msgstr ""
 
-#: apps/users/models.py:43
+#: apps/users/models.py:47
 msgid "date joined"
 msgstr ""
 
-#: apps/users/models.py:44
+#: apps/users/models.py:48
 msgid "councillor"
 msgstr ""
 
-#: apps/users/models.py:45
+#: apps/users/models.py:49
 msgid "staff"
 msgstr ""
 
-#: apps/users/models.py:46
+#: apps/users/models.py:50
 msgid "email confirmed"
 msgstr ""
 
-#: apps/users/models.py:47
+#: apps/users/models.py:51
 msgid "active"
 msgstr ""
 
-#: apps/users/models.py:57
+#: apps/users/models.py:61
 msgid "user"
 msgstr ""
 
-#: apps/users/models.py:58
+#: apps/users/models.py:62
 msgid "users"
 msgstr ""
 
-#: apps/users/models.py:93
+#: apps/users/models.py:97
 msgid "Georgian"
 msgstr ""
 
-#: apps/users/models.py:94
+#: apps/users/models.py:98
 msgid "English"
 msgstr ""
 
-#: apps/users/models.py:98
+#: apps/users/models.py:102
 #, fuzzy
 #| msgid "Language"
 msgid "language"
 msgstr "ენა"
 
-#: apps/users/models.py:104
+#: apps/users/models.py:108
 msgid "created at"
 msgstr ""
 
-#: templates/about.html:6 templates/base_site.html:67
+#: apps/users/receivers.py:15
+msgid "Veify Email"
+msgstr ""
+
+#: apps/users/templates/users/email_confirm.html:10
+msgid "Redirecting..."
+msgstr ""
+
+#: apps/users/templates/users/email_confirm.txt:2
+msgid "Hello"
+msgstr ""
+
+#: apps/users/templates/users/email_confirm.txt:4
+msgid "Please click the following link to confirm your account"
+msgstr ""
+
+#: apps/users/templates/users/login.html:4
+#: apps/users/templates/users/login.html:12 templates/home.html:182
+#: templates/menu_profile.html:10 templates/menu_profile.html.py:21
+msgid "Login"
+msgstr ""
+
+#: apps/users/views.py:62
+msgid "Invalid confirmation link"
+msgstr ""
+
+#: apps/users/views.py:67
+msgid "Confirmation successful! You can now login"
+msgstr ""
+
+#: templates/about.html:6 templates/base_site.html:70
 msgid "Questions"
 msgstr ""
 
@@ -351,9 +388,9 @@ msgstr ""
 msgid "About Chemikucha.ge - FixMyStreet Georgia"
 msgstr ""
 
-#: templates/about.html:34 templates/home.html:301
-#: templates/reports/new.html:121 templates/reports/report_list.html:133
-#: templates/reports/show.html:175
+#: templates/about.html:34 templates/home.html:306
+#: templates/reports/new.html:126 templates/reports/report_list.html:133
+#: templates/reports/show.html:168
 msgid "Last Updates"
 msgstr ""
 
@@ -375,7 +412,7 @@ msgstr ""
 msgid "FixMyStreet .ge"
 msgstr ""
 
-#: templates/base_site.html:43
+#: templates/base_site.html:46
 msgid ""
 "\n"
 "            This site uses a lot of javascript (in fact, site is unusable "
@@ -385,21 +422,21 @@ msgid ""
 "        "
 msgstr ""
 
-#: templates/base_site.html:66 templates/cities/index.html:3
+#: templates/base_site.html:69 templates/cities/index.html:3
 #: templates/cities/index.html.py:24 templates/reports/report_list.html:8
 #: templates/reports/report_list.html:29
 msgid "All Reports"
 msgstr ""
 
-#: templates/base_site.html:81 templates/contact/new.html:4
+#: templates/base_site.html:84 templates/contact/new.html:4
 msgid "Contact"
 msgstr ""
 
-#: templates/base_site.html:84
+#: templates/base_site.html:87
 msgid "Language"
 msgstr "ენა"
 
-#: templates/base_site.html:125
+#: templates/base_site.html:128
 msgid "Our Donor:"
 msgstr ""
 
@@ -497,8 +534,8 @@ msgid ""
 "                        "
 msgstr ""
 
-#: templates/contact/new.html:40 templates/home.html:185
-#: templates/reports/show.html:161
+#: templates/contact/new.html:40 templates/home.html:190
+#: templates/reports/new.html:96 templates/reports/show.html:157
 msgid "Georgian keyboard"
 msgstr ""
 
@@ -521,122 +558,118 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: templates/home.html:73
+#: templates/home.html:77
 msgid "Home"
 msgstr ""
 
-#: templates/home.html:81
+#: templates/home.html:85
 msgid "Step 1. Click on your city to report a problem"
 msgstr ""
 
-#: templates/home.html:83 templates/home.html.py:136
+#: templates/home.html:87 templates/home.html.py:140
 msgid "Tbilisi"
 msgstr ""
 
-#: templates/home.html:84 templates/home.html.py:137
+#: templates/home.html:88 templates/home.html.py:141
 msgid "Batumi"
 msgstr ""
 
-#: templates/home.html:85 templates/home.html.py:138
+#: templates/home.html:89 templates/home.html.py:142
 msgid "Kutaisi"
 msgstr ""
 
-#: templates/home.html:86 templates/home.html.py:139
+#: templates/home.html:90 templates/home.html.py:143
 msgid "Zugdidi"
 msgstr ""
 
-#: templates/home.html:105
+#: templates/home.html:109
 msgid "Choose city"
 msgstr ""
 
-#: templates/home.html:121
+#: templates/home.html:125
 msgid "Close"
 msgstr ""
 
-#: templates/home.html:132
+#: templates/home.html:136
 msgid "Let's fix our streets together"
 msgstr ""
 
-#: templates/home.html:133
+#: templates/home.html:137
 msgid "Choose your city and report a problem"
 msgstr ""
 
-#: templates/home.html:135
+#: templates/home.html:139
 msgid "Search"
 msgstr ""
 
-#: templates/home.html:154 templates/home.html.py:221
+#: templates/home.html:158 templates/home.html.py:226
 msgid "Address"
 msgstr ""
 
-#: templates/home.html:157
+#: templates/home.html:161
 msgid "Search Street"
 msgstr ""
 
-#: templates/home.html:161
+#: templates/home.html:165
 msgid "Add marker"
 msgstr ""
 
-#: templates/home.html:165
+#: templates/home.html:169
 msgid ""
 "Enter your address on the map, press search and drag marker to desired "
 "location. Then fill out this form and press continue"
 msgstr ""
 
-#: templates/home.html:169 templates/home.html.py:199
-#: templates/reports/new.html:104 templates/reports/show.html:167
+#: templates/home.html:173 templates/home.html.py:204
+#: templates/reports/new.html:111
 msgid "Submit"
 msgstr ""
 
-#: templates/home.html:178 templates/menu_profile.html:9
-msgid "Login"
-msgstr ""
-
-#: templates/home.html:242 templates/reports/show.html:178
+#: templates/home.html:247 templates/reports/show.html:171
 msgid "How to report a Problem"
 msgstr ""
 
-#: templates/home.html:244
+#: templates/home.html:249
 msgid "Click on your city"
 msgstr ""
 
-#: templates/home.html:245 templates/reports/show.html:181
+#: templates/home.html:250 templates/reports/show.html:174
 msgid "Type in your address"
 msgstr ""
 
-#: templates/home.html:246 templates/reports/show.html:182
+#: templates/home.html:251 templates/reports/show.html:175
 msgid "Click on a marker button and drag it to desired location"
 msgstr ""
 
-#: templates/home.html:247 templates/reports/show.html:183
+#: templates/home.html:252 templates/reports/show.html:176
 msgid "Fill in the details in the form"
 msgstr ""
 
-#: templates/home.html:248
+#: templates/home.html:253
 msgid "Upload a photo if you have one"
 msgstr ""
 
-#: templates/home.html:249 templates/reports/show.html:185
+#: templates/home.html:254 templates/reports/show.html:178
 msgid "We send it to the city on your behalf"
 msgstr ""
 
-#: templates/home.html:259
+#: templates/home.html:264
 msgid "Reports Fixed"
 msgstr ""
 
-#: templates/home.html:269
+#: templates/home.html:274
 msgid "Reports Filed in the past year"
 msgstr ""
 
-#: templates/home.html:279
+#: templates/home.html:284
 msgid "Latest report photos:"
 msgstr ""
 
-#: templates/home.html:282
+#: templates/home.html:287
 msgid "Not fixed:"
 msgstr ""
 
-#: templates/home.html:285
+#: templates/home.html:290
 msgid "Fixed:"
 msgstr ""
 
@@ -675,22 +708,6 @@ msgstr ""
 msgid "New Report"
 msgstr ""
 
-#: templates/reports/new.html:113 templates/reports/report_list.html:117
-msgid "City"
-msgstr ""
-
-#: templates/reports/new.html:115
-msgid "Publisher"
-msgstr ""
-
-#: templates/reports/new.html:116
-msgid "E-mail"
-msgstr ""
-
-#: templates/reports/new.html:117
-msgid "Phone"
-msgstr ""
-
 #: templates/reports/poster.html:5
 msgid "FixMyStreet.ge"
 msgstr ""
@@ -727,6 +744,10 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
+#: templates/reports/report_list.html:117
+msgid "City"
+msgstr ""
+
 #: templates/reports/report_list.html:119
 msgid "Status"
 msgstr ""
@@ -747,91 +768,87 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: templates/reports/show.html:62
+#: templates/reports/show.html:63
 msgid "This problem has been fixed."
 msgstr ""
 
-#: templates/reports/show.html:64
+#: templates/reports/show.html:65
 msgid "This problem has not been fixed."
 msgstr ""
 
-#: templates/reports/show.html:66
+#: templates/reports/show.html:67
 msgid "This problem is being fixed."
 msgstr ""
 
-#: templates/reports/show.html:72
-msgid ""
-"<p>Please check your email for a message from FixMyStreet.ge, which will "
-"include a confirmation link.  Complete your submission by clicking on it.</"
-"p><p>Your report will not be sent to city officials or be visible to other "
-"visitors until you have done so.</p>"
-msgstr ""
-
-#: templates/reports/show.html:94
+#: templates/reports/show.html:91
 msgid "Category:"
 msgstr ""
 
-#: templates/reports/show.html:95
+#: templates/reports/show.html:92
 msgid "Street Address:"
 msgstr ""
 
-#: templates/reports/show.html:96
+#: templates/reports/show.html:93
 msgid "Filed by:"
 msgstr ""
 
-#: templates/reports/show.html:99
+#: templates/reports/show.html:96
 msgid "Sent to"
 msgstr ""
 
-#: templates/reports/show.html:100
+#: templates/reports/show.html:97
 msgid "On"
 msgstr ""
 
-#: templates/reports/show.html:107
+#: templates/reports/show.html:104
 msgid "Subscribers:"
 msgstr ""
 
-#: templates/reports/show.html:109 templates/reports/subscribers/new.html:12
+#: templates/reports/show.html:106 templates/reports/subscribers/new.html:12
 msgid "Subscribe"
 msgstr ""
 
-#: templates/reports/show.html:120
+#: templates/reports/show.html:117
 msgid "Print a flyer"
 msgstr ""
 
-#: templates/reports/show.html:120
+#: templates/reports/show.html:117
 msgid " to tell others about this problem."
 msgstr ""
 
-#: templates/reports/show.html:123
+#: templates/reports/show.html:120
 msgid "Offensive? Unsuitable? Tell us"
 msgstr ""
 
-#: templates/reports/show.html:127
+#: templates/reports/show.html:124
 msgid "Updates"
 msgstr ""
 
-#: templates/reports/show.html:131
+#: templates/reports/show.html:128
 msgid "posted by"
 msgstr ""
 
-#: templates/reports/show.html:143
+#: templates/reports/show.html:140
 msgid "This report's author has been verified"
 msgstr ""
 
-#: templates/reports/show.html:153
+#: templates/reports/show.html:149
 msgid "Provide an update"
 msgstr ""
 
-#: templates/reports/show.html:155
+#: templates/reports/show.html:151
 msgid "Please note that updates are not sent to city officials."
 msgstr ""
 
-#: templates/reports/show.html:180
+#: templates/reports/show.html:162
+msgid "You must be logged in to provide an update"
+msgstr ""
+
+#: templates/reports/show.html:173
 msgid "Click on your city on homepage"
 msgstr ""
 
-#: templates/reports/show.html:184
+#: templates/reports/show.html:177
 msgid "Upload an image (in case you have one)"
 msgstr ""
 
