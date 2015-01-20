@@ -1,6 +1,6 @@
 ﻿სათაური:        {{update.report.title|safe}}
 კატეგორია:     {{update.report.category.name}}
-ავტორი: {{update.author|safe}}	
+ავტორი: {{update.user.username|safe}}
 ტელეფონი:        {{update.phone}}
 ელ.ფოსტა:        {{update.email}}
 Address: {{update.report.street}}

@@ -19,7 +19,7 @@ def latest_reports_json(request):
     reports = Report.active.order_by('-created_at')[:800]
 
     data = json.dumps([{'id': r.id,
-                        'author': r.author,
+                        'user': r.user.username,
                         'title': r.title,
                         'created_at': r.created_at.isoformat(),
                         'status': r.status,

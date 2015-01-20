@@ -1,4 +1,4 @@
-﻿{% if update.author %}მოგესალმებით {{update.author|safe}}{% endif %}
+﻿{% if update.user %}მოგესალმებით {{update.user.username|safe}}{% endif %}
 
 {% if update.first_update %}მადლობას გიხდით ChemiKucha.ge-ზე თქვენი შეტყობინებისთვის: '{{update.report.title|safe}}'.  
 {% else %}მადლობას გიხდით ChemiKucha.ge-ზე შეტყობინების განახლებისთვის '{{update.report.title|safe}}'.

@@ -18,7 +18,7 @@
 			<tr {% if report.match %} class='row-highlight' {% endif %} >
 				<td>{{forloop.counter}}</td>
 				<td><a href='{{report.get_absolute_url}}'>{{report.title}}</a></td>
-				<td>{{report.author}}</td>
+				<td>{{report.user.username}}</td>
 				<td>
 				{% if report.match %}
 				**

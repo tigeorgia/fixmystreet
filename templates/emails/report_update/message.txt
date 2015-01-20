@@ -1,5 +1,5 @@
 ﻿ChemiKucha.ge-ს შეტყობინება: '{{update.report.title|safe}}' 
-განახლებულია {{update.author|safe}}-ს მიერ, {{update.created_at|date}}:
+განახლებულია {{update.user.username|safe}}-ს მიერ, {{update.created_at|date}}:
 
 {% if update.is_fixed %}ეს პრობლემა გამოსწორებულია. {% endif %}
 -----------------------------------------------------------------------------
