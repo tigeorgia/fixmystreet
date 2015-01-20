@@ -1,30 +1,34 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
+from django.views.generic.edit import FormView, CreateView
 
 from apps.mainapp.models import Report, ReportUpdate, FixMyStreetMap
 from apps.mainapp.forms import ReportUpdateForm
 
 
-def new(request, report_id):
-    report = get_object_or_404(Report, id=report_id)
-    if request.method == 'POST':
-        update_form = ReportUpdateForm(report_id=report_id, data=request.POST, files=request.FILES)
-        if update_form.is_valid():
-            update = update_form.save(commit=False)
-            update.report = report
-            update.save()
-            # redirect after a POST
-            return ( HttpResponseRedirect('/reports/updates/create/') )
-    else:
-        update_form = ReportUpdateForm()
+class CreateReportUpdateView(CreateView):
+    form_class = ReportUpdateForm
+    template_name = 'reports/show.html'
+    model = ReportUpdate
+    object = None
 
-    return render_to_response("reports/show.html",
-                              {"report": report,
-                               "google": FixMyStreetMap(report.point),
-                               "update_form": update_form,
-                              },
-                              context_instance=RequestContext(request))
+    def get_form_kwargs(self):
+        kwargs = super(CreateReportUpdateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        report = Report.objects.get(pk=self.kwargs.get('pk'))
+        self.object = form.save(commit=False)
+        self.object.report = report
+        self.object.user = self.request.user
+        self.object.save()
+
+        return super(CreateReportUpdateView, self).form_valid(form)
+
+    def form_invalid(self, form):
+        pass
 
 
 def create(request):
