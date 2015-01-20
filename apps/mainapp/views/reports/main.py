@@ -25,9 +25,9 @@ class ReportDetailView(DetailView):
         return context
 
 
-def poster(request, report_id):
+def poster(request, pk):
     # Build URL
-    report = get_object_or_404(Report, id=report_id)
+    report = get_object_or_404(Report, pk=pk)
     url = request.get_host() + request.path[:-7]  # Hard-coded value to trim "/poster" off the end. Sorry.
     return render_to_response("reports/poster.html", {'url': url, 'report': report})
 
