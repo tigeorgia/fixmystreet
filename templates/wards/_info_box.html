@@ -1,8 +1,8 @@
 {% load i18n %}
 <div id='ward_box'>
-   	{% if ward.councillor.photo %}
-      		<img src='{{ward.councillor.photo}}' align='left'>
+    {% if report.ward.councillor.photo %}
+        <img src='{{ report.ward.councillor.photo }}' align='left'>
     {% endif %}
-	       {% trans "Councillor" %}: {{ward.councillor.first_name}} {{ward.councillor.last_name}}<br/>
-           {% trans "Ward" %}: {{ward.name}}<br/>
+    {% trans "Councillor" %}: {{ report.ward.councillor.first_name }} {{ report.ward.councillor.last_name }}<br/>
+    {% trans "Ward" %}: {{ report.ward.name }}<br/>
 </div>

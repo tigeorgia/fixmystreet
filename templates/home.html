@@ -15,6 +15,10 @@
 {% block script %}
     <script type="text/javascript">
 
+        {% if user.is_authenticated %}
+            FMS.is_authenticated = true;
+        {% endif %}
+
         function initialize() {
             geocoder = new google.maps.Geocoder();
             var mapOptions = {
@@ -170,15 +174,16 @@
             </form>
 
             <form class="start-hidden-form" id="ajax-login" name="ajax-login" method="post">
+                {% csrf_token %}
                 <div class="error-container">
 
                 </div>
-                {% csrf_token %}
                 {% bootstrap_form ajax_login %}
                 <button class="btn btn-default btn-block btn-lg" type="submit">{% trans "Login" %}</button>
             </form>
 
             <form class="start-hidden-form" name="new-report" id="new-report" action="" method="post">
+            {% csrf_token %}
                 <fieldset>
                     <div class="checkbox">
                         <label id="geokbd">

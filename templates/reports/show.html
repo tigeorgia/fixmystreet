@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load staticfiles %}
 {% load reports_tags %}
+{% load bootstrap3 %}
 
 {% block title %}{{ report.ward.city.name }}: {{ report.title }}{% endblock %}
 {% block script %}
@@ -67,10 +68,6 @@
                 {% endif %}
 
                 {% include "wards/_info_box.html" %}
-
-                {% if not report.is_active %}
-                    <div class='is_fixed'>{% trans "<p>Please check your email for a message from FixMyStreet.ge, which will include a confirmation link.  Complete your submission by clicking on it.</p><p>Your report will not be sent to city officials or be visible to other visitors until you have done so.</p>" %}</div>
-                {% endif %}
                 <h3>{{ report.title }}</h3>
 
                 <p>{{ report.desc|linebreaks }}</p>
@@ -93,7 +90,7 @@
                     <div id='report-status'>
                         {% trans "Category:" %}<b>{{ report.category.name }}</b><br/>
                         {% trans "Street Address:" %}<b>{{ report.street }}</b><br/>
-                        {% trans "Filed by:" %}{{ report.author }}<br/>
+                        {% trans "Filed by:" %} {{ report.user.username }}<br/>
                         <i>
                             {% if report.sent_at %}
                                 {% trans "Sent to" %}: {{ report.email_sent_to }}<br/>
@@ -104,7 +101,7 @@
                     </div>
                     {% if report.is_active %}
                         <div id='report-subscribers'>
-                            {% trans "Subscribers:" %} <b>{{ subscribers }}</b><br/>
+                            {% trans "Subscribers:" %} <b>{{ report.subscriber_count }}</b><br/>
                             {% if not report.is_fixed %}
                                 <a href="{% url "subscriber_new" report_id=report.id %}">{% trans "Subscribe" %}</a>
                             {% endif %}
@@ -128,7 +125,7 @@
                         <div id="updates">
                             {% for update in updates %}
                                 <div class="update-info">
-                                    {% trans "posted by" %} {{ update.author }}, {{ update.created_at|date }}
+                                    {% trans "posted by" %} <strong>{{ update.user.username }}</strong>, {{ update.created_at|date }}
                                 </div>
                                 <div class="update-desc">
                                     {{ update.desc }}
@@ -141,7 +138,6 @@
                                 {% if update.is_verified_author %}
                                     <div class="update-verified">
                                         <a href="/about/#How%20is%20a%20problem%20fixed%3F">{% trans "This report's author has been verified" %}</a>
-                                        {# {% trans "<a href='/about/#How%20is%20a%20problem%20fixed%3F'> This update is from: </a>" %}{{verified_name}}#}
                                     </div>
                                 {% endif %}
                                 <hr/>
@@ -153,21 +149,18 @@
                         <div id="update-title"><h3>{% trans "Provide an update" %} </h3></div>
                     </div>
                     <p>{% trans "Please note that updates are not sent to city officials." %}</p>
-                    <form enctype="multipart/form-data"
-                          action="{% url "report_update_new" report_id=report.id %}" method="post"
-                          name="my-form">
-                        <table class="form">
-                            <tr>
-                                <th><label>{% trans "Georgian keyboard" %}</label></th>
-                                <td><input type="checkbox" name="geo" checked="checked"></td>
-                            </tr>
-                            {{ update_form.as_table }}
-                            <tr>
-                                <td></td>
-                                <td><input type="submit" value="{% trans "Submit" %}"></td>
-                            </tr>
-                        </table>
-                    </form>
+                    {% if user.is_authenticated %}
+                        <form enctype="multipart/form-data"
+                              action="{% url "create-report-update" pk=report.pk %}" method="post"
+                              name="create-report-update-form">
+                        {% csrf_token %}
+                            <label>{% trans "Georgian keyboard" %}</label>
+                            <input type="checkbox" name="geo" checked="checked">
+                            {% bootstrap_form update_form%}
+                        </form>
+                    {% else %}
+                        <p>{% trans "You must be logged in to provide an update" %}</p>
+                    {% endif %}
                 {% endif %}
             </div>
 
