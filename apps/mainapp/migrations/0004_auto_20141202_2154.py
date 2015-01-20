@@ -87,11 +87,11 @@ def _create_user(apps, report_update):
     fms_user = FMSUser.objects.create_user(username=username, email=email, password=password, first_name=first_name,
                                            last_name=last_name, phone=phone)
     subject = u'Chemikucha.ge ანგარიში შექმნილია Chemikucha.ge account has been created'
-    message_ka = u"გამარჯობა, \n\nგვინდა გაცნობოთ, რომ თქვენი ანგარიში http://chemikucha.ge-ზე შექმნილია.\n\nშესვლა შესაძლებელია შემდეგი მონაცემებით:\n{0}\n{1}\n\n\n"
-    message_en = u"Hello, \n\nWe want to let you know that your account at http://chemikucha.ge has been created.\n\nYou can login with this credentials:\n{0}\n{1}"
+    message_ka = u"გამარჯობა, \n\nგვინდა გაცნობოთ, რომ თქვენი ანგარიში https://www.chemikucha.ge -ზე შექმნილია.\n\nშესვლა შესაძლებელია შემდეგი მონაცემებით:\nE-mail: {0}\nპაროლი: {1}\n\n\n"
+    message_en = u"Hello, \n\nWe want to let you know that your account at http://www.chemikucha.ge has been created.\n\nYou can login with this credentials:\nEmail: {0}\nPassword: {1}"
     message = message_ka + message_en
     message = message.format(email, password)
-    fms_user.email_user(subject=subject, message=message)
+    #fms_user.email_user(from_email=settings.EMAIL_FROM_USER, subject=subject, message=message)
     signals.post_save.connect(token_changed, sender=FMSUserToken)
     frozen_user = FrozenUser.objects.get(email=email)
     return frozen_user
