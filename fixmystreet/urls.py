@@ -8,9 +8,9 @@ from django.contrib.sitemaps import FlatPageSitemap
 from apps.mainapp.feeds import LatestReports, LatestReportsByCity, LatestReportsByWard, LatestUpdatesByReport
 from apps.mainapp.sitemaps import MainSitemap
 from apps.mainapp.views.main import AboutView, HomeView
-from apps.mainapp.views.reports.main import show as ReportShow
 from apps.mainapp.views.ajax import latestReportsJson
-from apps.mainapp.views.reports.main import ReportListView
+from apps.mainapp.views.reports.main import ReportListView, ReportDetailView
+from apps.mainapp.views.reports.updates import CreateReportUpdateView
 
 
 js_info_dict = {
@@ -59,10 +59,8 @@ urlpatterns += i18n_patterns('apps.mainapp.views.wards',
 
 )
 
-urlpatterns += i18n_patterns('apps.mainapp.views.reports.updates',
-    url(r'^reports/updates/confirm/(\S+)/$', 'confirm', name='report_update_confirm'),
-    url(r'^reports/updates/create/$', 'create', name='report_update_create'),
-    url(r'^reports/(?P<report_id>\d+)/updates/$', 'new', name='report_update_new'),
+urlpatterns += i18n_patterns('',
+    url(r'^reports/(?P<pk>\d+)/updates/$', CreateReportUpdateView.as_view(), name='create-report-update'),
 )
 
 urlpatterns += i18n_patterns('apps.mainapp.views.reports.subscribers',
@@ -78,10 +76,8 @@ urlpatterns += i18n_patterns('apps.mainapp.views.reports.flags',
 )
 
 urlpatterns += i18n_patterns('apps.mainapp.views.reports.main',
-    url(r'^reports/(?P<report_id>\d+)/$', ReportShow, name='report_show'),
-    url(r'^reports/(?P<report_id>\d+)/poster/$', 'poster', name='poster'),
-    # (r'^reports/category/(\d+)$', 'category'),
-    url(r'^reports/new/$', 'new', name='report_new'),
+    url(r'^reports/(?P<pk>\d+)/$', ReportDetailView.as_view(), name='report_detail'),
+    url(r'^reports/(?P<pk>\d+)/poster/$', 'poster', name='poster'),
     url(r'^reports/$', ReportListView.as_view(), name='report_list'),
 )
 
