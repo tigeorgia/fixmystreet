@@ -28,8 +28,12 @@ class ContactForm(forms.Form):
 
 
 class ReportUpdateForm(forms.ModelForm):
-    def __init__(self, report_id=None, *args, **kwargs):
-        self.report_id = report_id
+    error_messages = {
+        'login_required': _('You need to be logged in to post an update'),
+    }
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
         super(ReportUpdateForm, self).__init__(*args, **kwargs)
 
     class Meta:
@@ -39,7 +43,8 @@ class ReportUpdateForm(forms.ModelForm):
     def clean(self):
         clean_data = super(ReportUpdateForm, self).clean()
         status = self.cleaned_data.get('status')
-
+        if not self.user.is_authenticated():
+            raise forms.ValidationError(self.error_messages['login_required'], code='login_required')
         return clean_data
 
 
@@ -58,6 +63,7 @@ class ReportForm2(forms.ModelForm):
     error_messages = {
         'password_insecure': _('Password should contain at least 8 characters, 1 alpha numeric and 1 digit'),
         'duplicate_username': _("User with that username already exists."),
+        'not_confirmed': _("Account is not confirmed. Confirmation email has been resent")
     }
 
     def __init__(self, *args, **kwargs):
@@ -80,7 +86,7 @@ class ReportForm2(forms.ModelForm):
             code='duplicate_username',
         )
 
-    def clean_password_2(self):
+    def clean_password2(self):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
 

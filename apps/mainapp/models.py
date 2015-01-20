@@ -312,7 +312,7 @@ class Report(models.Model):
         return ReportUpdate.objects.get(report=self, first_update=True)
 
     def get_absolute_url(self):
-        return reverse('report_show', args=[self.id])
+        return reverse('report_detail', args=[self.id])
 
     class Meta:
         db_table = u'reports'
@@ -366,6 +366,9 @@ class ReportUpdate(models.Model):
 
     def __unicode__(self):
         return self.report.title
+
+    def get_absolute_url(self):
+        return reverse('report_detail', kwargs={'pk': self.report_id})
 
     def send_emails(self):
         if self.first_update:
@@ -424,29 +427,6 @@ class ReportUpdate(models.Model):
         send_mail(subject, message,
                   settings.EMAIL_FROM_USER,
                   [self.report.first_update().email], fail_silently=False)
-
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-
-        if not self.confirm_token or self.confirm_token == "":
-            m = hashlib.md5()
-            m.update(self.email)
-            m.update(str(time.time()))
-            self.confirm_token = m.hexdigest()
-            confirm_url = settings.SITE_URL + "/reports/updates/confirm/" + self.confirm_token
-            message = render_to_string("emails/confirm/message.txt",
-                                       {'confirm_url': confirm_url, 'update': self})
-            subject = render_to_string("emails/confirm/subject.txt",
-                                       {'update': self})
-
-            send_mail(subject, message,
-                      settings.EMAIL_FROM_USER, [self.email], fail_silently=False)
-
-        if VerifiedAuthor.objects.filter(
-                domain=self.email.partition('@')[2]) or self.email is self.report.ward.councillor.email:
-            self.is_verified_author = True
-
-        super(ReportUpdate, self).save()
 
     def title(self):
         if self.first_update:
