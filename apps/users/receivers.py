@@ -8,6 +8,9 @@ from rest_framework.authtoken.models import Token
 
 @receiver(post_save, sender=FMSUserToken)
 def token_changed(sender, instance, created, **kwargs):
+    """
+    Email user to confirm their email after token is changed.
+    """
     url = instance.get_absolute_url()
     subject = _('Veify Email')
     message = render_to_string('users/email_confirm.txt',
