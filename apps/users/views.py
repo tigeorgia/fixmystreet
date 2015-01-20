@@ -1,6 +1,7 @@
 from django.views.generic import View, FormView, TemplateView
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response
 from django.contrib.auth import views, login as auth_login
 from django.views.decorators.csrf import csrf_protect
 import json
@@ -39,6 +40,16 @@ class AjaxLoginView(View):
         else:
             errors = {'errors': [e for e in form.errors['__all__']]}
             return JsonResponse(errors)
+
+class LoginView(FormView):
+    template_name = 'users/login.html'
+    form_class = FMSUserLoginForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        auth_login(self.request, form.get_user())
+        return super(LoginView, self).form_valid(form)
+
 
 class TokenConfirmationView(TemplateView):
     template_name = 'users/email_confirm.html'
