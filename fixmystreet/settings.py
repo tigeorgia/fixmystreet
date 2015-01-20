@@ -189,8 +189,6 @@ LOCALE_PATHS = (
     os.path.join(PROJECT_PATH, 'locale'),
 )
 
-ROOT_URLCONF = 'fixmystreet.urls'
-
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
@@ -229,7 +227,7 @@ DEBUG = False
 LOCAL_DEV = False
 
 try:
-    from fixmystreet.local_settings import *
+    from local_settings import *
 except ImportError:
     try:
         from mod_python import apache
@@ -240,4 +238,3 @@ except ImportError:
 
         sys.stderr.write("local_settings.py not set; using default settings\n")
 
-MANAGERS = ADMINS

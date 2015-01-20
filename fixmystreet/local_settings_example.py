@@ -25,6 +25,7 @@ STATIC_ROOT = ""
 PIPELINE_LESS_BINARY = (
     '/usr/local/bin/lessc'
 )
+ROOT_URLCONF = 'fixmystreet.urls'
 
 # Path to YUI binary
 PIPELINE_YUI_BINARY = '/bin/yuicompressor'
@@ -40,6 +41,9 @@ DEBUG = True
 PIPELINE_ENABLED = not DEBUG
 LOCAL_DEV = 'http://127.0.0.1:8000'
 SITE_URL = 'http://mysite.com'
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+PREPEND_WWW = False
 
 # Google maps API key. Learn how to obtain here:
 # https://developers.google.com/maps/documentation/javascript/tutorial#api_key
