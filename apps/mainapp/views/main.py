@@ -6,6 +6,7 @@ from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.contrib.gis.geos import fromstr
+from django.contrib.auth import authenticate, login
 from django.utils.translation import get_language, ugettext_lazy as _
 from django.http import HttpResponseRedirect, HttpResponse
 
@@ -63,6 +64,9 @@ class HomeView(SessionWizardView):
         form = FMSUserCreationForm(data=self.user_data)
         if form.is_valid():
             user = form.save()
+            user = authenticate(username=self.user_data['email'],
+                                password=self.user_data['password2'])
+            login(self.request, user)
             return user
 
     def _create_report(self):
