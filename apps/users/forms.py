@@ -8,6 +8,12 @@ from apps.users.models import FMSUser
 
 class FMSUserCreationForm(UserCreationForm):
 
+    error_messages = {
+        'password_insecure': _('Password should contain at least 8 characters, 1 alpha numeric and 1 digit'),
+        'duplicate_username': _("User with that username already exists."),
+        'not_confirmed': _("Account is not confirmed. Confirmation email has been resent")
+    }
+
     def __init__(self, *args, **kwargs):
         super(FMSUserCreationForm, self).__init__(*args, **kwargs)
 
@@ -22,9 +28,24 @@ class FMSUserCreationForm(UserCreationForm):
             code='duplicate_username',
         )
 
+    def clean_password2(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+
+        if password1 != password2:
+            raise forms.ValidationError(_("Passwords don't match!"))
+        if len(password2) < 8:
+            raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
+        if not any(char.isdigit() for char in password2):
+            raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
+        if not any(char.isalpha() for char in password2):
+            raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
+
+        return password2
+
     class Meta:
         model = FMSUser
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email', 'phone')
 
 
 class FMSUserChangeForm(UserChangeForm):
@@ -34,7 +55,7 @@ class FMSUserChangeForm(UserChangeForm):
 
     class Meta:
         model = FMSUser
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email', 'phone')
 
 
 class FMSCheckEmailForm(forms.Form):
@@ -45,10 +66,8 @@ class FMSUserLoginForm(AuthenticationForm):
     def __init__(self, request=None, *args, **kwargs):
         super(FMSUserLoginForm, self).__init__(request, *args, **kwargs)
         self.fields['username'].label = _('Email')
-        self.fields['username'].widget = forms.TextInput(attrs={'type': 'email', 'id': 'login_email',
-                                                                'readonly': True})
+        self.fields['username'].widget = forms.TextInput(attrs={'type': 'email', 'id': 'login_email'})
         self.error_messages['invalid_login'] = _('Incorrect email address or password')
-        self.error_messages['not_confirmed'] = _('This account is not confirmed.')
 
     def confirm_login_allowed(self, user):
         """
