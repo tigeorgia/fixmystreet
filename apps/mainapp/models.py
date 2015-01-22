@@ -231,7 +231,8 @@ class ActiveManager(models.Manager):
     """
 
     def get_queryset(self):
-        return super(ActiveManager, self).get_queryset().filter(is_active=True, user__is_active=True)
+        return super(ActiveManager, self).get_queryset().filter(is_active=True, user__is_active=True,
+                                                                user__is_confirmed=True)
 
 
 class Report(models.Model):

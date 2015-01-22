@@ -3,59 +3,44 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate
 
-from apps.users.models import FMSUser
-
+from apps.users.models import FMSUser, FMSUserValidators
 
 class FMSUserCreationForm(UserCreationForm):
 
-    error_messages = {
-        'password_insecure': _('Password should contain at least 8 characters, 1 alpha numeric and 1 digit'),
-        'duplicate_username': _("User with that username already exists."),
-        'not_confirmed': _("Account is not confirmed. Confirmation email has been resent")
-    }
-
     def __init__(self, *args, **kwargs):
+        self.user_validators = FMSUserValidators()
         super(FMSUserCreationForm, self).__init__(*args, **kwargs)
-
-    def clean_username(self):
-        username = self.cleaned_data["username"]
-        try:
-            FMSUser.objects.get(username=username)
-        except FMSUser.DoesNotExist:
-            return username
-        raise forms.ValidationError(
-            self.error_messages['duplicate_username'],
-            code='duplicate_username',
-        )
-
-    def clean_password2(self):
-        password1 = self.cleaned_data.get('password1')
-        password2 = self.cleaned_data.get('password2')
-
-        if password1 != password2:
-            raise forms.ValidationError(_("Passwords don't match!"))
-        if len(password2) < 8:
-            raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
-        if not any(char.isdigit() for char in password2):
-            raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
-        if not any(char.isalpha() for char in password2):
-            raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
-
-        return password2
 
     class Meta:
         model = FMSUser
         fields = ('username', 'first_name', 'last_name', 'email', 'phone')
+
+    def clean(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+        username = self.cleaned_data.get('username')
+        self.user_validators.validate_passwords(password1, password2)
+        self.user_validators.validate_username(username)
+        return self.cleaned_data
 
 
 class FMSUserChangeForm(UserChangeForm):
 
     def __init__(self, *args, **kwargs):
+        self.user_validators = FMSUserValidators()
         super(FMSUserChangeForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = FMSUser
         fields = ('username', 'first_name', 'last_name', 'email', 'phone')
+
+    def clean(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+        username = self.cleaned_data.get('username')
+        self.user_validators.validate_passwords(password1, password2)
+        self.user_validators.validate_username(username)
+        return self.cleaned_data
 
 
 class FMSCheckEmailForm(forms.Form):

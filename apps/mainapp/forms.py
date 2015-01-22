@@ -5,8 +5,7 @@ from django.conf import settings
 from django.utils.translation import get_language, ugettext_lazy as _
 
 from apps.mainapp.models import Report, ReportUpdate, ReportSubscriber, ReportCategory
-from apps.users.models import FMSUser
-
+from apps.users.models import FMSUser, FMSUserValidators
 
 class ContactForm(forms.Form):
     name = forms.CharField(max_length=100,
@@ -60,14 +59,10 @@ class ReportForm2(forms.ModelForm):
     """
     category = forms.ModelChoiceField(queryset=ReportCategory.objects.all().order_by('name_' + get_language()[:2]),
                                       label=_('Category'))
-    error_messages = {
-        'password_insecure': _('Password should contain at least 8 characters, 1 alpha numeric and 1 digit'),
-        'duplicate_username': _("User with that username already exists."),
-        'not_confirmed': _("Account is not confirmed. Confirmation email has been resent")
-    }
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
+        self.user_validators = FMSUserValidators()
         super(ReportForm2, self).__init__(*args, **kwargs)
         # We don't need user creation fields if user is already logged in
         if not self.user.is_authenticated():
@@ -75,31 +70,13 @@ class ReportForm2(forms.ModelForm):
             self.fields['password1'] = forms.CharField(widget=forms.PasswordInput, label=_('Password'),)
             self.fields['password2'] = forms.CharField(widget=forms.PasswordInput, label=_('Repeat Password'))
 
-    def clean_username(self):
-        username = self.cleaned_data["username"]
-        try:
-            FMSUser.objects.get(username=username)
-        except FMSUser.DoesNotExist:
-            return username
-        raise forms.ValidationError(
-            self.error_messages['duplicate_username'],
-            code='duplicate_username',
-        )
-
-    def clean_password2(self):
+    def clean(self):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
-
-        if password1 != password2:
-            raise forms.ValidationError(_("Passwords don't match!"))
-        if len(password2) < 8:
-            raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
-        if not any(char.isdigit() for char in password2):
-            raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
-        if not any(char.isalpha() for char in password2):
-            raise forms.ValidationError(self.error_messages['password_insecure'], code='password_insecure')
-
-        return password2
+        username = self.cleaned_data.get('username')
+        self.user_validators.validate_passwords(password1, password2)
+        self.user_validators.validate_username(username)
+        return self.cleaned_data
 
     class Meta:
         model = Report
