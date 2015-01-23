@@ -45,7 +45,8 @@ class FMSUserValidators(object):
             'password_insecure': _('Password should contain at least 8 characters, 1 alpha numeric and 1 digit'),
             'not_confirmed': _("Account is not confirmed. Confirmation email has been resent")
         }
-
+        if not password1 or not password2:
+            raise ValidationError(_("Please provide the password"))
         if password1 != password2:
             raise ValidationError(_("Passwords don't match!"))
         if len(password2) < 8:
@@ -61,7 +62,7 @@ class FMSUserValidators(object):
         try:
             FMSUser.objects.get(username=username)
         except FMSUser.DoesNotExist:
-            pass
+            return username
         raise ValidationError(
             _("User with that username already exists."),
             code='duplicate_username',
@@ -69,10 +70,8 @@ class FMSUserValidators(object):
 
 
 class FMSUser(AbstractBaseUser, PermissionsMixin):
-    validators = FMSUserValidators()
-
     email = models.EmailField(_('email address'), max_length=254, unique=True)
-    username = models.CharField(_('username'), max_length=20, validators=([validators.validate_username]))
+    username = models.CharField(_('username'), max_length=20)
     first_name = models.CharField(_('first name'), max_length=70)
     last_name = models.CharField(_('last name'), max_length=70)
     phone = models.CharField(_('phone'), max_length=255)
@@ -114,7 +113,7 @@ class FMSUser(AbstractBaseUser, PermissionsMixin):
         """
         return self.first_name
 
-    def email_user(self, subject, message, from_email=None, **kwargs):
+    def email_user(self, subject, message, from_email=settings.EMAIL_FROM_USER, **kwargs):
         """
         Sends an email to this User.
         """

@@ -5,7 +5,13 @@ from django.contrib.auth import authenticate
 
 from apps.users.models import FMSUser, FMSUserValidators
 
-class FMSUserCreationForm(UserCreationForm):
+class FMSUserCreationForm(forms.ModelForm):
+
+    password1 = forms.CharField(label=_("Password"),
+        widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_("Password confirmation"),
+        widget=forms.PasswordInput,
+        help_text=_("Enter the same password as above, for verification."))
 
     def __init__(self, *args, **kwargs):
         self.user_validators = FMSUserValidators()
@@ -13,7 +19,7 @@ class FMSUserCreationForm(UserCreationForm):
 
     class Meta:
         model = FMSUser
-        fields = ('username', 'first_name', 'last_name', 'email', 'phone')
+        fields = ('username', 'first_name', 'password1', 'password2', 'last_name', 'email', 'phone')
 
     def clean(self):
         password1 = self.cleaned_data.get('password1')
@@ -23,23 +29,37 @@ class FMSUserCreationForm(UserCreationForm):
         self.user_validators.validate_username(username)
         return self.cleaned_data
 
+    def save(self, commit=True):
+        user = super(FMSUserCreationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
 
-class FMSUserChangeForm(UserChangeForm):
+
+class FMSUserChangeForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.user_validators = FMSUserValidators()
         super(FMSUserChangeForm, self).__init__(*args, **kwargs)
+        f = self.fields.get('user_permissions', None)
+        if f is not None:
+            f.queryset = f.queryset.select_related('content_type')
 
     class Meta:
         model = FMSUser
         fields = ('username', 'first_name', 'last_name', 'email', 'phone')
 
+    def clean_password(self):
+        # Regardless of what the user provides, return the initial value.
+        # This is done here, rather than on the field, because the
+        # field does not have access to the initial value
+        return self.initial["password"]
+
     def clean(self):
-        password1 = self.cleaned_data.get('password1')
-        password2 = self.cleaned_data.get('password2')
         username = self.cleaned_data.get('username')
-        self.user_validators.validate_passwords(password1, password2)
-        self.user_validators.validate_username(username)
+        if self.instance.username != username:
+            self.user_validators.validate_username(username)
         return self.cleaned_data
 
 

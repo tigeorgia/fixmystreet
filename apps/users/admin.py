@@ -12,7 +12,7 @@ class FMSSettingsInline(admin.TabularInline):
 class FMSUserAdmin(UserAdmin):
     inlines = [FMSSettingsInline,]
     fieldsets = (
-        (_('Credentials'), {'fields': ('username', 'password')}),
+        (_('Credentials'), {'fields': ('username',)}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
@@ -21,7 +21,7 @@ class FMSUserAdmin(UserAdmin):
     add_fieldsets = (
         (_('Credentials'), {
             'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2'),
+            'fields': ('username', 'email', 'password1', 'password2'),
         }),
     )
 
