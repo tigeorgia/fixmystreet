@@ -32,6 +32,11 @@ class ReportSerializer(serializers.ModelSerializer):
         )
         read_only_fields = ('id', 'sent_at', 'ward', 'created_at', 'updated_at', 'fixed_at', 'email_sent_to',)
 
+    def create(self, validated_attrs):
+        point = validated_attrs.get('point')
+        ward = Ward.objects.get(geom__contains=point)
+        user = self.context['request'].user
+        return Report.objects.create(user=user, ward=ward, **validated_attrs)
 
 class AuthTokenSerializer(serializers.Serializer):
     email = serializers.CharField()
