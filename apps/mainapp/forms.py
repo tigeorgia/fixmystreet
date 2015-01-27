@@ -29,10 +29,12 @@ class ContactForm(forms.Form):
 class ReportUpdateForm(forms.ModelForm):
     error_messages = {
         'login_required': _('You need to be logged in to post an update'),
+        'no_permissions': _('Only city councillors and report creators can update report status')
     }
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
+        self.report = kwargs.pop('report', None)
         super(ReportUpdateForm, self).__init__(*args, **kwargs)
 
     class Meta:
@@ -41,9 +43,12 @@ class ReportUpdateForm(forms.ModelForm):
 
     def clean(self):
         clean_data = super(ReportUpdateForm, self).clean()
-        status = self.cleaned_data.get('status')
+        status = clean_data['status']
         if not self.user.is_authenticated():
             raise forms.ValidationError(self.error_messages['login_required'], code='login_required')
+        if status != self.report.status:
+            if not (self.user.is_councillor or self.user == self.report.user):
+                raise forms.ValidationError(self.error_messages['no_permissions'], code='no_permissions')
         return clean_data
 
 

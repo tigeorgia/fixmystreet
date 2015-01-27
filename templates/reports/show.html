@@ -150,13 +150,14 @@
                     </div>
                     <p>{% trans "Please note that updates are not sent to city officials." %}</p>
                     {% if user.is_authenticated %}
-                        <form enctype="multipart/form-data"
-                              action="{% url "create-report-update" pk=report.pk %}" method="post"
-                              name="create-report-update-form">
+                        <form id="create-report-update" enctype="multipart/form-data" action="#" data-action="{% url "create-report-update" pk=report.pk %}" method="post"
+                              name="create-report-update">
                         {% csrf_token %}
+                            <div class="error-container"></div>
                             <label>{% trans "Georgian keyboard" %}</label>
                             <input type="checkbox" name="geo" checked="checked">
                             {% bootstrap_form update_form%}
+                        <button class="btn btn-default btn-block btn-lg" type="submit">{% trans 'Submit' %}</button>
                         </form>
                     {% else %}
                         <p>{% trans "You must be logged in to provide an update" %}</p>

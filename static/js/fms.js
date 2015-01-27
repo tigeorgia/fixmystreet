@@ -1,3 +1,41 @@
+$(function () {
+    $('#create-report-update').submit(function () {
+        var form = $('#create-report-update');
+        var form_inputs = $('#create-report-update :input');
+        var form_errors = form.find('.error-container');
+        var action = form.data('action');
+
+        $.ajax({
+            url: action,
+            type: 'POST',
+            data: form.serialize(),
+            beforeSend: function () {
+                form_inputs.prop('disabled', true);
+                form_errors.empty();
+            },
+            success: function (data) {
+                form_inputs.prop('disabled', true);
+                document.location = "#";
+                window.location.reload();
+            },
+            error: function (xhr) {
+                form_inputs.prop('disabled', false);
+                errors = $.parseJSON(xhr.responseText).errors;
+                console.log(errors);
+                for (var error in errors) {
+                    form.find('.error-container').prepend(
+                        '<div class="alert alert-dismissible alert-danger" role="alert">' + errors[error] + '</div>'
+                    )
+                }
+            },
+            complete: function (data) {
+            }
+        });
+        return false;
+    })
+
+});
+
 //Icons for markers
 GmapMarkerIcons = {
     dragme: "/static/images/marker/default/marker.png",
@@ -47,7 +85,7 @@ $(function () {
             headers: {
                 "X-CSRFToken": csrftoken
             }
-        }).done(function(result){
+        }).done(function (result) {
             console.log(result);
             location.href = '/' + lang + next;
         });
@@ -156,7 +194,7 @@ var FMS = ( function () {
      * Makes element visible with smooth transition
      */
     fn.makeVisible = function (selector) {
-        $('#'+selector).css({'display': 'block', 'visibility': 'visible'}).animate({
+        $('#' + selector).css({'display': 'block', 'visibility': 'visible'}).animate({
             opacity: 1
         }, 1300);
     };
@@ -185,28 +223,28 @@ var FMS = ( function () {
                 this.startFormCheck(forms);
                 break;
             case forms.check_email_form:
-                $('#'+forms.ajax_login_form).hide();
+                $('#' + forms.ajax_login_form).hide();
                 this.checkEmail(forms);
                 break;
             case forms.ajax_login_form:
-                $('#'+forms.check_email_form).hide();
+                $('#' + forms.check_email_form).hide();
                 this.ajaxLogin(forms, other_data);
                 break;
             case forms.new_report_full:
-                $('#'+forms.check_email_form).hide();
+                $('#' + forms.check_email_form).hide();
                 this.newReportFull(forms, other_data);
                 break;
             case forms.new_report_user:
-                $('#'+forms.check_email_form).hide();
-                $('#'+forms.ajax_login_form).hide();
+                $('#' + forms.check_email_form).hide();
+                $('#' + forms.ajax_login_form).hide();
                 this.newReportUser(forms, other_data);
                 break;
         }
 
     };
 
-    fn.startFormCheck = function(forms){
-        if (this.is_authenticated){
+    fn.startFormCheck = function (forms) {
+        if (this.is_authenticated) {
             FMS.processForms(forms.new_report_user);
         } else {
             FMS.processForms(forms.check_email_form);
@@ -220,7 +258,7 @@ var FMS = ( function () {
     fn.checkEmail = function (forms) {
         this.makeVisible(forms.check_email_form);
 
-        $('#'+forms.check_email_form).submit(function (event) {
+        $('#' + forms.check_email_form).submit(function (event) {
             event.preventDefault();
             var email = $(this).serializeArray()[0].value;
 
@@ -240,9 +278,9 @@ var FMS = ( function () {
      */
     fn._checkEmailCallback = function (data, forms, email) {
         if (data.email_exists) {
-            FMS.processForms(forms.ajax_login_form, data={'email': email});
+            FMS.processForms(forms.ajax_login_form, data = {'email': email});
         } else {
-            FMS.processForms(forms.new_report_full, data={'email': email})
+            FMS.processForms(forms.new_report_full, data = {'email': email})
         }
     };
 
@@ -251,12 +289,12 @@ var FMS = ( function () {
      */
     fn.ajaxLogin = function (forms, data) {
         this.makeVisible(forms.ajax_login_form);
-        var cached_form = $('#'+forms.ajax_login_form);
-        if (data.email){
-            cached_form.find('#login_email').val(data.email).attr({'readonly':'True'});
+        var cached_form = $('#' + forms.ajax_login_form);
+        if (data.email) {
+            cached_form.find('#login_email').val(data.email).attr({'readonly': 'True'});
             cached_form.find('#id_password').focus();
         }
-        cached_form.submit(function(event){
+        cached_form.submit(function (event) {
             cached_form.css({'cursor': 'progress'});
             cached_form.find('button').attr({'disabled': 'disabled'});
             event.preventDefault();
@@ -265,7 +303,7 @@ var FMS = ( function () {
                 type: "POST",
                 url: current_lang + "/user/ajax/login/",
                 data: cached_form.serialize(),
-                success: function(data){
+                success: function (data) {
                     FMS._ajaxLoginCallback(forms, data)
                 }
             });
@@ -277,11 +315,11 @@ var FMS = ( function () {
         var cached_form = $('#' + forms.ajax_login_form);
         var error_container = cached_form.find('.error-container');
 
-        if (!data.errors){
+        if (!data.errors) {
             FMS.processForms(forms.new_report_user, data)
         } else {
             error_container.html('');
-            $.each(data.errors, function(i, val){
+            $.each(data.errors, function (i, val) {
                 console.log(data);
                 error_container.append(
                     '<div class="alert alert-danger" role="alert">' + val + '</div>'
@@ -306,7 +344,7 @@ var FMS = ( function () {
         cached_form.find('#id_report_start-email').val(data.email);
 
         // Mark required fields
-       cached_form.validate({
+        cached_form.validate({
             ignore: "",
             rules: {
                 title: "required",
