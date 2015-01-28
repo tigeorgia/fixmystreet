@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ChemiKucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-28 19:36+0400\n"
-"PO-Revision-Date: 2015-01-28 19:36+0400\n"
+"POT-Creation-Date: 2015-01-28 20:02+0400\n"
+"PO-Revision-Date: 2015-01-28 20:02+0400\n"
 "Last-Translator:  <sandro@transparency.ge>\n"
 "Language-Team: TI Georgia <fixmystreet@transparency.ge>\n"
 "Language: ka\n"
@@ -280,7 +280,7 @@ msgstr "უფლებები"
 msgid "Important dates"
 msgstr "მნიშვნელოვანი თარიღები"
 
-#: apps/users/forms.py:13 apps/users/forms.py:134 apps/users/views.py:92
+#: apps/users/forms.py:13 apps/users/forms.py:134 apps/users/views.py:97
 msgid "Password confirmation"
 msgstr "პაროლის დადასტურება"
 
@@ -406,14 +406,8 @@ msgid "Login"
 msgstr "შესვლა"
 
 #: apps/users/templates/users/login.html:13 templates/menu_profile.html:22
-#| msgid "Repeat Password"
 msgid "Recover password"
 msgstr "პაროლის აღდგენა"
-
-#: apps/users/templates/users/reset.html:8
-#| msgid "Please provide the password"
-msgid "Please enter your new password"
-msgstr "გთხოვთ, შეიყვანოთ ახალი პაროლი"
 
 #: apps/users/templates/users/reset.html:12
 msgid "submit"
@@ -431,15 +425,24 @@ msgstr "არასწორი დადასტურების ლინ�
 msgid "Confirmation successful! You can now login"
 msgstr "დადასტურება წარმატებით დასრულდა!"
 
-#: apps/users/views.py:107
+#: apps/users/views.py:92
+#| msgid "Please enter your new password"
+msgid "Please enter your email"
+msgstr "შეიყვანეთ თქვენი ელ. ფოსტა"
+
+#: apps/users/views.py:112
 msgid "Please check email associated with the account for password reset link"
 msgstr "გთხოვთ შეამოწმოთ ანგარიშთან ასოცირებული ელ.ფოსტა პაროლის აღსადგენად"
 
-#: apps/users/views.py:127 apps/users/views.py:129
+#: apps/users/views.py:132 apps/users/views.py:134
 msgid "Incorrect reset link"
 msgstr "არასწორი აღდგენის ლინკი"
 
-#: apps/users/views.py:142
+#: apps/users/views.py:140
+msgid "Please enter your new password"
+msgstr "გთხოვთ, შეიყვანოთ ახალი პაროლი"
+
+#: apps/users/views.py:152
 msgid "Password updated. You can log in now."
 msgstr "პაროლი განახლებულია. შეგიძლიათ შეხვიდეთ"
 

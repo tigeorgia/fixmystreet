@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemikucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-28 19:36+0400\n"
+"POT-Creation-Date: 2015-01-28 20:02+0400\n"
 "PO-Revision-Date: 2014-03-31 13:02+0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chemikucha <gio@transparency.ge>\n"
@@ -268,7 +268,7 @@ msgstr ""
 msgid "Important dates"
 msgstr ""
 
-#: apps/users/forms.py:13 apps/users/forms.py:134 apps/users/views.py:92
+#: apps/users/forms.py:13 apps/users/forms.py:134 apps/users/views.py:97
 msgid "Password confirmation"
 msgstr ""
 
@@ -398,10 +398,6 @@ msgstr ""
 msgid "Recover password"
 msgstr ""
 
-#: apps/users/templates/users/reset.html:8
-msgid "Please enter your new password"
-msgstr ""
-
 #: apps/users/templates/users/reset.html:12
 msgid "submit"
 msgstr ""
@@ -418,15 +414,23 @@ msgstr ""
 msgid "Confirmation successful! You can now login"
 msgstr ""
 
-#: apps/users/views.py:107
+#: apps/users/views.py:92
+msgid "Please enter your email"
+msgstr ""
+
+#: apps/users/views.py:112
 msgid "Please check email associated with the account for password reset link"
 msgstr ""
 
-#: apps/users/views.py:127 apps/users/views.py:129
+#: apps/users/views.py:132 apps/users/views.py:134
 msgid "Incorrect reset link"
 msgstr ""
 
-#: apps/users/views.py:142
+#: apps/users/views.py:140
+msgid "Please enter your new password"
+msgstr ""
+
+#: apps/users/views.py:152
 msgid "Password updated. You can log in now."
 msgstr ""
 

@@ -87,6 +87,11 @@ class PasswordResetView(FormView):
     model = FMSPasswordResetToken
     success_url = '/'
 
+    def get_context_data(self, **kwargs):
+        context = super(PasswordResetView, self).get_context_data(**kwargs)
+        context['message'] = _('Please enter your email')
+        return context
+
     def send_email(self):
         url = self.object.get_absolute_url()
         subject = _('Password confirmation')
@@ -129,6 +134,11 @@ class PasswordResetConfirmView(FormView):
             raise Http404(_("Incorrect reset link"))
         else:
             self.object = token_obj
+
+    def get_context_data(self, **kwargs):
+        context = super(PasswordResetConfirmView, self).get_context_data(**kwargs)
+        context['message'] = _('Please enter your new password')
+        return context
 
     def get(self, request, *args, **kwargs):
         self.check_token()
