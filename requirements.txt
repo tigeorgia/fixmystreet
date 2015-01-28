@@ -21,3 +21,4 @@ sqlparse==0.1.13
 wsgiref==0.1.2
 yolk==0.4.3
 yuicompressor==2.4.8
+django-recaptcha

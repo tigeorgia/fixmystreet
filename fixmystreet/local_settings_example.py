@@ -49,6 +49,9 @@ PREPEND_WWW = False
 # https://developers.google.com/maps/documentation/javascript/tutorial#api_key
 GMAP_KEY = ''
 GOOGLE_MAPS_API_VERSION = '2.0'
+RECAPTCHA_PUBLIC_KEY = ''
+RECAPTCHA_PRIVATE_KEY = ''
+RECAPTCHA_USE_SSL = True
 
 # Set this or Django won't run
 SECRET_KEY = ''

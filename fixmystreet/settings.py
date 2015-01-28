@@ -221,6 +221,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'stdimage',
     'bootstrap3',
+    'captcha'
 )
 
 DEBUG = False
