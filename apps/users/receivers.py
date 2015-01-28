@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.template.loader import render_to_string
-from models import FMSUser, FMSSettings, FMSUserToken
+from models import FMSUser, FMSSettings, FMSUserToken, FMSPasswordResetToken
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.authtoken.models import Token
 
@@ -18,7 +18,6 @@ def token_changed(sender, instance, created, **kwargs):
     )
 
     instance.user.email_user(subject=subject, message=message)
-
 
 @receiver(pre_save, sender=FMSUser)
 def generate_new_tokens(sender, instance, **kwargs):
@@ -38,9 +37,8 @@ def generate_new_tokens(sender, instance, **kwargs):
             token.save()
         # Change rest API auth token when password changes
         if not current_user.password == instance.password:
-            auth_token = current_user.auth_token
-            auth_token.key = auth_token.generate_key()
-            auth_token.save()
+            new_key = current_user.auth_token.generate_key()
+            auth_token = Token.objects.filter(user=current_user).update(key=new_key)
 
 
 @receiver(post_save, sender=FMSUser)
