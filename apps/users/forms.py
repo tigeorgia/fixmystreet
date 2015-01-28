@@ -2,16 +2,17 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm, Authenti
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate
+from captcha.fields import ReCaptchaField
 
-from apps.users.models import FMSUser, FMSUserValidators
+from apps.users.models import FMSUser, FMSUserValidators, FMSPasswordResetToken
+
 
 class FMSUserCreationForm(forms.ModelForm):
-
     password1 = forms.CharField(label=_("Password"),
-        widget=forms.PasswordInput)
+                                widget=forms.PasswordInput)
     password2 = forms.CharField(label=_("Password confirmation"),
-        widget=forms.PasswordInput,
-        help_text=_("Enter the same password as above, for verification."))
+                                widget=forms.PasswordInput,
+                                help_text=_("Enter the same password as above, for verification."))
 
     def __init__(self, *args, **kwargs):
         self.user_validators = FMSUserValidators()
@@ -38,7 +39,6 @@ class FMSUserCreationForm(forms.ModelForm):
 
 
 class FMSUserChangeForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         self.user_validators = FMSUserValidators()
         super(FMSUserChangeForm, self).__init__(*args, **kwargs)
@@ -110,3 +110,37 @@ class FMSUserLoginForm(AuthenticationForm):
         return self.cleaned_data
 
 
+class PasswordResetStart(forms.Form):
+    email = forms.EmailField(label=(_('Email')))
+    captcha = ReCaptchaField(attrs={'theme': 'clean'})
+
+    def __init__(self, *args, **kwargs):
+        super(PasswordResetStart, self).__init__(*args, **kwargs)
+        self.validators = FMSUserValidators()
+        self.user = None
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        user = FMSUser.get_user_by_email(email)
+        if not user:
+            raise forms.ValidationError(_('User with provided email not found'))
+        else:
+            self.user = user
+        return self.cleaned_data
+
+class PasswordResetConfirm(forms.Form):
+    password1 = forms.CharField(label=_("Password"),
+                                widget=forms.PasswordInput)
+    password2 = forms.CharField(label=_("Password confirmation"),
+                                widget=forms.PasswordInput,
+                                help_text=_("Enter the same password as above, for verification."))
+
+    def __init__(self, *args, **kwargs):
+        super(PasswordResetConfirm, self).__init__(*args, **kwargs)
+        self.user_validators = FMSUserValidators()
+
+    def clean(self):
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+        self.user_validators.validate_passwords(password1, password2)
+        return self.cleaned_data

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ChemiKucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-27 20:17+0400\n"
-"PO-Revision-Date: 2015-01-27 20:17+0400\n"
+"POT-Creation-Date: 2015-01-28 19:36+0400\n"
+"PO-Revision-Date: 2015-01-28 19:36+0400\n"
 "Last-Translator:  <sandro@transparency.ge>\n"
 "Language-Team: TI Georgia <fixmystreet@transparency.ge>\n"
 "Language: ka\n"
@@ -46,6 +46,7 @@ msgstr "სახელი*"
 
 #: apps/mainapp/forms.py:15 apps/mainapp/forms.py:128
 #: apps/mainapp/models.py:452 apps/users/forms.py:67 apps/users/forms.py:73
+#: apps/users/forms.py:114
 msgid "Email"
 msgstr "ელ.ფოსტა*"
 
@@ -72,7 +73,7 @@ msgstr "კატეგორია"
 msgid "Username"
 msgstr "ნიკი"
 
-#: apps/mainapp/forms.py:75 apps/users/forms.py:10
+#: apps/mainapp/forms.py:75 apps/users/forms.py:11 apps/users/forms.py:132
 msgid "Password"
 msgstr "პაროლი"
 
@@ -279,17 +280,21 @@ msgstr "უფლებები"
 msgid "Important dates"
 msgstr "მნიშვნელოვანი თარიღები"
 
-#: apps/users/forms.py:12
+#: apps/users/forms.py:13 apps/users/forms.py:134 apps/users/views.py:92
 msgid "Password confirmation"
 msgstr "პაროლის დადასტურება"
 
-#: apps/users/forms.py:14
+#: apps/users/forms.py:15 apps/users/forms.py:136
 msgid "Enter the same password as above, for verification."
 msgstr "შეიყვანეთ პაროლი ხელახლა"
 
 #: apps/users/forms.py:75
 msgid "Incorrect email address or password"
 msgstr "არასწორი ელ.ფოსტა ან პაროლი"
+
+#: apps/users/forms.py:126
+msgid "User with provided email not found"
+msgstr "მომხმარებელი აღნიშნული ელ.ფოსტით ნაპოვნი არ არის"
 
 #: apps/users/models.py:45
 msgid ""
@@ -361,19 +366,19 @@ msgstr "მომხმარებელი"
 msgid "users"
 msgstr "მომხმარებლები"
 
-#: apps/users/models.py:128
+#: apps/users/models.py:136
 msgid "Georgian"
 msgstr "ქართული"
 
-#: apps/users/models.py:129
+#: apps/users/models.py:137
 msgid "English"
 msgstr ""
 
-#: apps/users/models.py:133
+#: apps/users/models.py:141
 msgid "language"
 msgstr "Language"
 
-#: apps/users/models.py:139
+#: apps/users/models.py:166 apps/users/models.py:176
 msgid "created at"
 msgstr "შექმნის თარიღი"
 
@@ -386,6 +391,7 @@ msgid "Redirecting..."
 msgstr "გადამისამართება..."
 
 #: apps/users/templates/users/email_confirm.txt:2
+#: apps/users/templates/users/reset_confirm.txt:2
 msgid "Hello"
 msgstr "გამარჯობა"
 
@@ -399,13 +405,43 @@ msgstr "გთხოვთ დააკლიკოთ აღნიშნულ 
 msgid "Login"
 msgstr "შესვლა"
 
-#: apps/users/views.py:62
+#: apps/users/templates/users/login.html:13 templates/menu_profile.html:22
+#| msgid "Repeat Password"
+msgid "Recover password"
+msgstr "პაროლის აღდგენა"
+
+#: apps/users/templates/users/reset.html:8
+#| msgid "Please provide the password"
+msgid "Please enter your new password"
+msgstr "გთხოვთ, შეიყვანოთ ახალი პაროლი"
+
+#: apps/users/templates/users/reset.html:12
+msgid "submit"
+msgstr "განთავსება"
+
+#: apps/users/templates/users/reset_confirm.txt:4
+msgid "Please click the following link to update your password"
+msgstr "გთხოვთ დააკლიკოთ აღნიშნულ ბმულს პაროლის აღსადგენად"
+
+#: apps/users/views.py:74
 msgid "Invalid confirmation link"
 msgstr "არასწორი დადასტურების ლინკი"
 
-#: apps/users/views.py:67
+#: apps/users/views.py:79
 msgid "Confirmation successful! You can now login"
 msgstr "დადასტურება წარმატებით დასრულდა!"
+
+#: apps/users/views.py:107
+msgid "Please check email associated with the account for password reset link"
+msgstr "გთხოვთ შეამოწმოთ ანგარიშთან ასოცირებული ელ.ფოსტა პაროლის აღსადგენად"
+
+#: apps/users/views.py:127 apps/users/views.py:129
+msgid "Incorrect reset link"
+msgstr "არასწორი აღდგენის ლინკი"
+
+#: apps/users/views.py:142
+msgid "Password updated. You can log in now."
+msgstr "პაროლი განახლებულია. შეგიძლიათ შეხვიდეთ"
 
 #: templates/about.html:6 templates/base_site.html:71
 msgid "Questions"
@@ -442,13 +478,6 @@ msgid "FixMyStreet .ge"
 msgstr "ChemiKucha.ge"
 
 #: templates/base_site.html:46
-#| msgid ""
-#| "\n"
-#| "            This site uses a lot of javascript (in fact, site is unusable "
-#| "without it - so please\n"
-#| "            <a href=\"http://www.enable-javascript.com/\" target=\"_blank"
-#| "\">enable it</a>\n"
-#| "        "
 msgid ""
 "\n"
 "            This site uses a lot of javascript (in fact, site is unusable "
@@ -728,6 +757,10 @@ msgstr "შეუკეთებელი:"
 #: templates/home.html:290
 msgid "Fixed:"
 msgstr "შეკეთებული:"
+
+#: templates/menu_profile.html:7
+msgid "Logout"
+msgstr "გამოსვლა"
 
 #: templates/promotions/show.html:8
 msgid "First 100 Reports"

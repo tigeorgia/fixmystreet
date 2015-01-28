@@ -100,6 +100,14 @@ class FMSUser(AbstractBaseUser, PermissionsMixin):
         except cls.DoesNotExist:
             return False
 
+    @classmethod
+    def get_user_by_email(cls, email):
+        try:
+            user = cls.objects.get(email=email)
+            return user
+        except cls.DoesNotExist:
+            return False
+
     def get_full_name(self):
         """
         Returns the first_name plus the last_name, with a space in between.
@@ -133,19 +141,15 @@ class FMSSettings(models.Model):
     language = models.CharField(_('language'), max_length=2, choices=LANGUAGE_CHOICES, default='ka')
 
 
-class FMSUserToken(models.Model):
-    user = models.OneToOneField(FMSUser, related_name='fms_user_token')
-    token = models.CharField(max_length=40, )
-    created_at = models.DateTimeField(_('created at'), auto_now=True)
+class AbstractToken(models.Model):
+
+    class Meta:
+        abstract = True
 
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = self._generate_token()
-        super(FMSUserToken, self).save(*args, **kwargs)
-
-    def get_absolute_url(self):
-        url = ''.join(settings.SITE_URL + str(reverse_lazy('users:confirm', kwargs={'token': self.token})))
-        return url
+        super(AbstractToken, self).save(*args, **kwargs)
 
     @staticmethod
     def _generate_token():
@@ -156,5 +160,34 @@ class FMSUserToken(models.Model):
         return self
 
 
+class FMSUserToken(AbstractToken):
+    user = models.OneToOneField(FMSUser, related_name='fms_user_token')
+    token = models.CharField(max_length=40, unique=True, primary_key=True)
+    created_at = models.DateTimeField(_('created at'), auto_now=True)
+
+    def get_absolute_url(self):
+        url = ''.join(settings.SITE_URL + str(reverse_lazy('users:confirm', kwargs={'token': self.token})))
+        return url
+
+
+class FMSPasswordResetToken(AbstractToken):
+    user = models.ForeignKey(FMSUser, related_name='password_reset_token')
+    token = models.CharField(max_length=40, unique=True, primary_key=True)
+    created_at = models.DateTimeField(_('created at'), auto_now=True)
+    ip = models.GenericIPAddressField(null=True)
+    used = models.BooleanField(default=False)
+    used_ip = models.GenericIPAddressField(help_text="IP of request which used the token", null=True)
+
+    def get_absolute_url(self):
+        url = ''.join(settings.SITE_URL + str(reverse_lazy('users:reset_confirm', kwargs={'token': self.token})))
+        return url
+
+    @classmethod
+    def get_unused_token(cls, user):
+        try:
+            token = cls.objects.filter(user=user, used=False).latest('created_at')
+            return Token
+        except cls.DoesNotExist:
+            return None
 
 from .receivers import *

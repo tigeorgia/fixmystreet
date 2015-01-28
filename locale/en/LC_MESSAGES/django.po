@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemikucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-27 20:17+0400\n"
+"POT-Creation-Date: 2015-01-28 19:36+0400\n"
 "PO-Revision-Date: 2014-03-31 13:02+0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chemikucha <gio@transparency.ge>\n"
@@ -43,6 +43,7 @@ msgstr ""
 
 #: apps/mainapp/forms.py:15 apps/mainapp/forms.py:128
 #: apps/mainapp/models.py:452 apps/users/forms.py:67 apps/users/forms.py:73
+#: apps/users/forms.py:114
 msgid "Email"
 msgstr ""
 
@@ -67,7 +68,7 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: apps/mainapp/forms.py:75 apps/users/forms.py:10
+#: apps/mainapp/forms.py:75 apps/users/forms.py:11 apps/users/forms.py:132
 msgid "Password"
 msgstr ""
 
@@ -267,16 +268,20 @@ msgstr ""
 msgid "Important dates"
 msgstr ""
 
-#: apps/users/forms.py:12
+#: apps/users/forms.py:13 apps/users/forms.py:134 apps/users/views.py:92
 msgid "Password confirmation"
 msgstr ""
 
-#: apps/users/forms.py:14
+#: apps/users/forms.py:15 apps/users/forms.py:136
 msgid "Enter the same password as above, for verification."
 msgstr ""
 
 #: apps/users/forms.py:75
 msgid "Incorrect email address or password"
+msgstr ""
+
+#: apps/users/forms.py:126
+msgid "User with provided email not found"
 msgstr ""
 
 #: apps/users/models.py:45
@@ -348,21 +353,21 @@ msgstr ""
 msgid "users"
 msgstr ""
 
-#: apps/users/models.py:128
+#: apps/users/models.py:136
 msgid "Georgian"
 msgstr ""
 
-#: apps/users/models.py:129
+#: apps/users/models.py:137
 msgid "English"
 msgstr ""
 
-#: apps/users/models.py:133
+#: apps/users/models.py:141
 #, fuzzy
 #| msgid "Language"
 msgid "language"
 msgstr "ენა"
 
-#: apps/users/models.py:139
+#: apps/users/models.py:166 apps/users/models.py:176
 msgid "created at"
 msgstr ""
 
@@ -375,6 +380,7 @@ msgid "Redirecting..."
 msgstr ""
 
 #: apps/users/templates/users/email_confirm.txt:2
+#: apps/users/templates/users/reset_confirm.txt:2
 msgid "Hello"
 msgstr ""
 
@@ -388,12 +394,40 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: apps/users/views.py:62
+#: apps/users/templates/users/login.html:13 templates/menu_profile.html:22
+msgid "Recover password"
+msgstr ""
+
+#: apps/users/templates/users/reset.html:8
+msgid "Please enter your new password"
+msgstr ""
+
+#: apps/users/templates/users/reset.html:12
+msgid "submit"
+msgstr ""
+
+#: apps/users/templates/users/reset_confirm.txt:4
+msgid "Please click the following link to update your password"
+msgstr ""
+
+#: apps/users/views.py:74
 msgid "Invalid confirmation link"
 msgstr ""
 
-#: apps/users/views.py:67
+#: apps/users/views.py:79
 msgid "Confirmation successful! You can now login"
+msgstr ""
+
+#: apps/users/views.py:107
+msgid "Please check email associated with the account for password reset link"
+msgstr ""
+
+#: apps/users/views.py:127 apps/users/views.py:129
+msgid "Incorrect reset link"
+msgstr ""
+
+#: apps/users/views.py:142
+msgid "Password updated. You can log in now."
 msgstr ""
 
 #: templates/about.html:6 templates/base_site.html:71
@@ -687,6 +721,10 @@ msgstr ""
 
 #: templates/home.html:290
 msgid "Fixed:"
+msgstr ""
+
+#: templates/menu_profile.html:7
+msgid "Logout"
 msgstr ""
 
 #: templates/promotions/show.html:8

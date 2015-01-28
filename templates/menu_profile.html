@@ -4,7 +4,7 @@
     {% if user.is_authenticated %}
         <a class="dropdown-toggle" href="#" data-toggle="dropdown">{{ user.username }}</a>
         <ul class="dropdown-menu" id="login-dropdown">
-            <li><a href="{% url 'users:logout' %}">Logout</a></li>
+            <li><a href="{% url 'users:logout' %}">{% trans 'Logout' %}</a></li>
         </ul>
     {% else %}
         <a class="dropdown-toggle" href="#" data-toggle="dropdown">{% trans 'Login' %}</a>
@@ -19,6 +19,7 @@
                         <input class="form-control" id="id_password" name="password" placeholder="Password" required="required" title="" type="password">
                     </div>
                     <button class="btn btn-default btn-block btn-lg" type="submit">{% trans "Login" %}</button>
+                    <a href="{% url 'users:reset' %}">{% trans 'Recover password' %}</a>
                 </form>
             </li>
         </ul>
