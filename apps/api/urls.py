@@ -13,6 +13,7 @@ urlpatterns = patterns('',
 urlpatterns += patterns('',
                         url(r'^reports/$', views.ReportListCreateView.as_view(), name='report-list'),
                         url(r'^reports/(?P<pk>\d+)/$', views.ReportDetailView.as_view(), name='report-detail'),
+                        url(r'^reports/counts/$', views.ReportCountView.as_view(), name='report-counts'),
                         url(r'^reports/(?P<pk>\d+)/updates$', views.ReportListCreateView.as_view(),
                             name='report-updates'),
                         )

@@ -10,9 +10,10 @@ from django.http import Http404
 from collections import OrderedDict
 
 from apps.mainapp.models import Report, Ward
+from apps.mainapp.utils import ReportCount
 from apps.mainapp.filters import ReportFilter
 from .serializers import ReportSerializer, WardSerializer, AuthTokenSerializer
-from metadata import ReportMetaData, AuthTokenMetaData
+from metadata import ReportMetaData, AuthTokenMetaData, ReportCountMetadata
 
 
 class LoginRedirectView(RedirectView):
@@ -50,6 +51,8 @@ class APIRootView(APIView):
 
     Detail: [/api/reports/<id\>/](/api/reports/<id>/)
 
+    Counts: [/api/reports/counts/](/api/reports/counts/)
+
 
     """
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
@@ -81,7 +84,7 @@ class ReportListCreateView(generics.ListCreateAPIView):
     -----
     """
     queryset = Report.active.all()
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     serializer_class = ReportSerializer
     paginate_by = 10
     paginate_by_param = 'page_size'
@@ -134,3 +137,18 @@ class ObtainAuthTokenView(ObtainAuthToken):
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
         return Response({'token': token.key})
+
+
+class ReportCountView(APIView):
+    permission_classes = (permissions.AllowAny,)
+    metadata_class = ReportCountMetadata
+
+    def get(self, request):
+        report_count = ReportCount.by_interval('1 year')
+        counts = OrderedDict({
+            'total': report_count.get_counts(),
+            'fixed': report_count.fixed().get_counts(),
+            'not-fixed': report_count.not_fixed().get_counts(),
+            'in-progress': report_count.in_progress().get_counts()
+        })
+        return Response(counts)
