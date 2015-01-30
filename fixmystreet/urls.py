@@ -98,7 +98,7 @@ urlpatterns += i18n_patterns('',
                               )
 
 
-urlpatterns += patterns('',
+urlpatterns += i18n_patterns('',
                         url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
                         url(r'^api/', include('apps.api.urls', namespace='api')),
                         )
