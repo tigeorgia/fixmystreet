@@ -63,6 +63,10 @@ class ReportCount(object):
         self.status = 'not-fixed'
         return self
 
+    def in_progress(self):
+        self.status = 'in-progress'
+        return self
+
     @property
     def count_cache(self):
         cache_key = 'repcnt_{0}_{1}_{2}'.format(self.status, self.start.isoformat(), self.end.isoformat())
@@ -71,7 +75,7 @@ class ReportCount(object):
     @count_cache.setter
     def count_cache(self, value):
         cache_key = 'repcnt_{0}_{1}_{2}'.format(self.status, self.start.isoformat(), self.end.isoformat())
-        self._cache.set(cache_key, value, 60 * 60 * 24)
+        self._cache.set(cache_key, value, 60 * 60 * 2)
 
     def get_counts(self):
         q = Q(created_at__range=(self.start, self.end))
