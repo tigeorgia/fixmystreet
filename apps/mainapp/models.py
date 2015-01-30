@@ -251,7 +251,7 @@ class Report(models.Model):
     ward = models.ForeignKey(Ward, verbose_name=_("ward"), help_text=_('Ward associated with report'))
 
     # CharFields
-    street = models.CharField(max_length=255, verbose_name=_("street address"), help_text="Address of the problem")
+    street = models.CharField(max_length=255, verbose_name=_("street address"), help_text=_("Address of the problem"))
     status = models.CharField(_('status'), max_length=32, choices=REPORT_STATUS_CHOICES,
                               default=NOT_FIXED, help_text=_('Report status'))
     sent_at = models.DateTimeField(null=True, help_text=_('Date when report was sent to city representative'))
