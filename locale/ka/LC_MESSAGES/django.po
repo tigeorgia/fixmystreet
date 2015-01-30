@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ChemiKucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-28 20:02+0400\n"
-"PO-Revision-Date: 2015-01-28 20:02+0400\n"
+"POT-Creation-Date: 2015-01-30 17:07+0400\n"
+"PO-Revision-Date: 2015-01-30 17:08+0400\n"
 "Last-Translator:  <sandro@transparency.ge>\n"
 "Language-Team: TI Georgia <fixmystreet@transparency.ge>\n"
 "Language: ka\n"
@@ -25,6 +25,33 @@ msgid ""
 msgstr ""
 "გრძედი და განედი string ფორმატში. გამოტოვებული მძიმით. მაგ: "
 "'44.7965081557,41.708484'"
+
+#: apps/api/metadata.py:40 apps/mainapp/forms.py:15 apps/mainapp/forms.py:128
+#: apps/mainapp/models.py:452 apps/users/forms.py:67 apps/users/forms.py:73
+#: apps/users/forms.py:114
+msgid "Email"
+msgstr "ელ.ფოსტა*"
+
+#: apps/api/metadata.py:44 apps/mainapp/forms.py:75 apps/users/forms.py:11
+#: apps/users/forms.py:132
+msgid "Password"
+msgstr "პაროლი"
+
+#: apps/api/metadata.py:58
+msgid "Total number of reports"
+msgstr "პრობლემების საერთო რაოდენობა"
+
+#: apps/api/metadata.py:61 templates/cities/category.html:15
+msgid "Fixed reports"
+msgstr "მოგვარებული პრობლემები"
+
+#: apps/api/metadata.py:64
+msgid "Not fixed reports"
+msgstr "მოუგვარებელი პრობლემები"
+
+#: apps/api/metadata.py:67
+msgid "Reports in progress"
+msgstr "პრობლემები მოგვარების პროცესში"
 
 #: apps/api/serializers.py:54
 msgid "User account is disabled."
@@ -43,12 +70,6 @@ msgstr " \"email\" და \"password\" აუცილებელია"
 #: apps/mainapp/models.py:476
 msgid "Name"
 msgstr "სახელი*"
-
-#: apps/mainapp/forms.py:15 apps/mainapp/forms.py:128
-#: apps/mainapp/models.py:452 apps/users/forms.py:67 apps/users/forms.py:73
-#: apps/users/forms.py:114
-msgid "Email"
-msgstr "ელ.ფოსტა*"
 
 #: apps/mainapp/forms.py:20 templates/base_site.html:131
 msgid "Message"
@@ -72,10 +93,6 @@ msgstr "კატეგორია"
 #: apps/mainapp/forms.py:74
 msgid "Username"
 msgstr "ნიკი"
-
-#: apps/mainapp/forms.py:75 apps/users/forms.py:11 apps/users/forms.py:132
-msgid "Password"
-msgstr "პაროლი"
 
 #: apps/mainapp/forms.py:76
 msgid "Repeat Password"
@@ -165,6 +182,10 @@ msgstr "პრობლემასთან დაკავშირებუ�
 #: apps/mainapp/models.py:254
 msgid "street address"
 msgstr "ქუჩის მისამართი"
+
+#: apps/mainapp/models.py:254
+msgid "Address of the problem"
+msgstr "პრობლემის მისამართი"
 
 #: apps/mainapp/models.py:255 apps/mainapp/models.py:351
 msgid "status"
@@ -426,7 +447,6 @@ msgid "Confirmation successful! You can now login"
 msgstr "დადასტურება წარმატებით დასრულდა!"
 
 #: apps/users/views.py:92
-#| msgid "Please enter your new password"
 msgid "Please enter your email"
 msgstr "შეიყვანეთ თქვენი ელ. ფოსტა"
 
@@ -534,10 +554,6 @@ msgstr "შეტყობინებები:"
 #: templates/cities/category.html:9
 msgid "Unfixed reports"
 msgstr "მოუგვარებელი პრობლემები"
-
-#: templates/cities/category.html:15
-msgid "Fixed reports"
-msgstr "მოგვარებული პრობლემები"
 
 #: templates/cities/home.html:6
 msgid "Report, view, or discuss local problems in"

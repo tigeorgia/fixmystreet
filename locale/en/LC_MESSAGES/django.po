@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemikucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-28 20:02+0400\n"
+"POT-Creation-Date: 2015-01-30 17:07+0400\n"
 "PO-Revision-Date: 2014-03-31 13:02+0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chemikucha <gio@transparency.ge>\n"
@@ -21,6 +21,33 @@ msgstr ""
 msgid ""
 "Longitude and Latitude in string format. Separated by comma. Example: "
 "'44.7965081557,41.708484'"
+msgstr ""
+
+#: apps/api/metadata.py:40 apps/mainapp/forms.py:15 apps/mainapp/forms.py:128
+#: apps/mainapp/models.py:452 apps/users/forms.py:67 apps/users/forms.py:73
+#: apps/users/forms.py:114
+msgid "Email"
+msgstr ""
+
+#: apps/api/metadata.py:44 apps/mainapp/forms.py:75 apps/users/forms.py:11
+#: apps/users/forms.py:132
+msgid "Password"
+msgstr ""
+
+#: apps/api/metadata.py:58
+msgid "Total number of reports"
+msgstr ""
+
+#: apps/api/metadata.py:61 templates/cities/category.html:15
+msgid "Fixed reports"
+msgstr ""
+
+#: apps/api/metadata.py:64
+msgid "Not fixed reports"
+msgstr ""
+
+#: apps/api/metadata.py:67
+msgid "Reports in progress"
 msgstr ""
 
 #: apps/api/serializers.py:54
@@ -39,12 +66,6 @@ msgstr ""
 #: apps/mainapp/models.py:65 apps/mainapp/models.py:108
 #: apps/mainapp/models.py:476
 msgid "Name"
-msgstr ""
-
-#: apps/mainapp/forms.py:15 apps/mainapp/forms.py:128
-#: apps/mainapp/models.py:452 apps/users/forms.py:67 apps/users/forms.py:73
-#: apps/users/forms.py:114
-msgid "Email"
 msgstr ""
 
 #: apps/mainapp/forms.py:20 templates/base_site.html:131
@@ -66,10 +87,6 @@ msgstr ""
 
 #: apps/mainapp/forms.py:74
 msgid "Username"
-msgstr ""
-
-#: apps/mainapp/forms.py:75 apps/users/forms.py:11 apps/users/forms.py:132
-msgid "Password"
 msgstr ""
 
 #: apps/mainapp/forms.py:76
@@ -159,6 +176,10 @@ msgstr ""
 
 #: apps/mainapp/models.py:254
 msgid "street address"
+msgstr ""
+
+#: apps/mainapp/models.py:254
+msgid "Address of the problem"
 msgstr ""
 
 #: apps/mainapp/models.py:255 apps/mainapp/models.py:351
@@ -515,10 +536,6 @@ msgstr ""
 
 #: templates/cities/category.html:9
 msgid "Unfixed reports"
-msgstr ""
-
-#: templates/cities/category.html:15
-msgid "Fixed reports"
 msgstr ""
 
 #: templates/cities/home.html:6
