@@ -186,7 +186,7 @@ class FMSPasswordResetToken(AbstractToken):
     def get_unused_token(cls, user):
         try:
             token = cls.objects.filter(user=user, used=False).latest('created_at')
-            return Token
+            return token
         except cls.DoesNotExist:
             return None
 
