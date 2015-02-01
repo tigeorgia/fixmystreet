@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemikucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-30 17:07+0400\n"
+"POT-Creation-Date: 2015-02-01 06:10+0400\n"
 "PO-Revision-Date: 2014-03-31 13:02+0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chemikucha <gio@transparency.ge>\n"
@@ -23,14 +23,14 @@ msgid ""
 "'44.7965081557,41.708484'"
 msgstr ""
 
-#: apps/api/metadata.py:40 apps/mainapp/forms.py:15 apps/mainapp/forms.py:128
-#: apps/mainapp/models.py:452 apps/users/forms.py:67 apps/users/forms.py:73
-#: apps/users/forms.py:114
+#: apps/api/metadata.py:40 apps/mainapp/forms.py:17 apps/mainapp/forms.py:147
+#: apps/mainapp/models.py:452 apps/users/forms.py:69 apps/users/forms.py:75
+#: apps/users/forms.py:116
 msgid "Email"
 msgstr ""
 
-#: apps/api/metadata.py:44 apps/mainapp/forms.py:75 apps/users/forms.py:11
-#: apps/users/forms.py:132
+#: apps/api/metadata.py:44 apps/mainapp/forms.py:90 apps/users/forms.py:13
+#: apps/users/forms.py:134
 msgid "Password"
 msgstr ""
 
@@ -62,66 +62,78 @@ msgstr ""
 msgid "Must include \"email\" and \"password\""
 msgstr ""
 
-#: apps/mainapp/forms.py:12 apps/mainapp/models.py:50
+#: apps/mainapp/forms.py:14 apps/mainapp/models.py:50
 #: apps/mainapp/models.py:65 apps/mainapp/models.py:108
 #: apps/mainapp/models.py:476
 msgid "Name"
 msgstr ""
 
-#: apps/mainapp/forms.py:20 templates/base_site.html:131
+#: apps/mainapp/forms.py:22 templates/base_site.html:131
 msgid "Message"
 msgstr ""
 
-#: apps/mainapp/forms.py:31
+#: apps/mainapp/forms.py:33
 msgid "You need to be logged in to post an update"
 msgstr ""
 
-#: apps/mainapp/forms.py:32
+#: apps/mainapp/forms.py:34
 msgid "Only city councillors and report creators can update report status"
 msgstr ""
 
-#: apps/mainapp/forms.py:66 templates/reports/report_list.html:44
+#: apps/mainapp/forms.py:68 templates/reports/report_list.html:44
 #: templates/reports/report_list.html:63
 msgid "Category"
 msgstr ""
 
-#: apps/mainapp/forms.py:74
+#: apps/mainapp/forms.py:80
+msgid "Additional report details"
+msgstr ""
+
+#: apps/mainapp/forms.py:87
 msgid "Username"
 msgstr ""
 
-#: apps/mainapp/forms.py:76
+#: apps/mainapp/forms.py:88
+msgid "Please choose username for your account"
+msgstr ""
+
+#: apps/mainapp/forms.py:89
+msgid "Password for your new account"
+msgstr ""
+
+#: apps/mainapp/forms.py:91
 msgid "Repeat Password"
 msgstr ""
 
-#: apps/mainapp/forms.py:95
+#: apps/mainapp/forms.py:114
 msgid "Problem Title"
 msgstr ""
 
-#: apps/mainapp/forms.py:101
+#: apps/mainapp/forms.py:120
 msgid "Street"
 msgstr ""
 
-#: apps/mainapp/forms.py:108
+#: apps/mainapp/forms.py:127
 msgid "First Name"
 msgstr ""
 
-#: apps/mainapp/forms.py:115
+#: apps/mainapp/forms.py:134
 msgid "Last Name"
 msgstr ""
 
-#: apps/mainapp/forms.py:122
+#: apps/mainapp/forms.py:141
 msgid "Phone Number"
 msgstr ""
 
-#: apps/mainapp/forms.py:136
+#: apps/mainapp/forms.py:155
 msgid "Created descending"
 msgstr ""
 
-#: apps/mainapp/forms.py:137
+#: apps/mainapp/forms.py:156
 msgid "Created ascending"
 msgstr ""
 
-#: apps/mainapp/forms.py:138
+#: apps/mainapp/forms.py:157
 msgid "Most subscribers"
 msgstr ""
 
@@ -289,19 +301,23 @@ msgstr ""
 msgid "Important dates"
 msgstr ""
 
-#: apps/users/forms.py:13 apps/users/forms.py:134 apps/users/views.py:97
+#: apps/users/forms.py:15 apps/users/forms.py:136 apps/users/views.py:97
 msgid "Password confirmation"
 msgstr ""
 
-#: apps/users/forms.py:15 apps/users/forms.py:136
+#: apps/users/forms.py:17 apps/users/forms.py:138
 msgid "Enter the same password as above, for verification."
 msgstr ""
 
-#: apps/users/forms.py:75
+#: apps/users/forms.py:77
 msgid "Incorrect email address or password"
 msgstr ""
 
-#: apps/users/forms.py:126
+#: apps/users/forms.py:117
+msgid "Captcha"
+msgstr ""
+
+#: apps/users/forms.py:128
 msgid "User with provided email not found"
 msgstr ""
 
@@ -415,12 +431,17 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: apps/users/templates/users/login.html:13 templates/menu_profile.html:22
+#: apps/users/templates/users/login.html:13 templates/home.html:183
+#: templates/menu_profile.html:22
 msgid "Recover password"
 msgstr ""
 
-#: apps/users/templates/users/reset.html:12
-msgid "submit"
+#: apps/users/templates/users/reset.html:4
+msgid "Password Reset"
+msgstr ""
+
+#: apps/users/templates/users/reset.html:13
+msgid "Continue"
 msgstr ""
 
 #: apps/users/templates/users/reset_confirm.txt:4
@@ -463,8 +484,8 @@ msgstr ""
 msgid "About Chemikucha.ge - FixMyStreet Georgia"
 msgstr ""
 
-#: templates/about.html:34 templates/home.html:306
-#: templates/reports/new.html:126 templates/reports/report_list.html:133
+#: templates/about.html:34 templates/home.html:307
+#: templates/reports/new.html:124 templates/reports/report_list.html:133
 #: templates/reports/show.html:169
 msgid "Last Updates"
 msgstr ""
@@ -605,8 +626,8 @@ msgid ""
 "                        "
 msgstr ""
 
-#: templates/contact/new.html:40 templates/home.html:190
-#: templates/reports/new.html:96 templates/reports/show.html:157
+#: templates/contact/new.html:40 templates/home.html:191
+#: templates/reports/new.html:94 templates/reports/show.html:157
 msgid "Georgian keyboard"
 msgstr ""
 
@@ -673,7 +694,7 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: templates/home.html:158 templates/home.html.py:226
+#: templates/home.html:158 templates/home.html.py:227
 msgid "Address"
 msgstr ""
 
@@ -691,56 +712,56 @@ msgid ""
 "location. Then fill out this form and press continue"
 msgstr ""
 
-#: templates/home.html:173 templates/home.html.py:204
-#: templates/reports/new.html:111 templates/reports/show.html:160
+#: templates/home.html:173 templates/home.html.py:205
+#: templates/reports/new.html:109 templates/reports/show.html:160
 msgid "Submit"
 msgstr ""
 
-#: templates/home.html:247 templates/reports/show.html:172
+#: templates/home.html:248 templates/reports/show.html:172
 msgid "How to report a Problem"
 msgstr ""
 
-#: templates/home.html:249
+#: templates/home.html:250
 msgid "Click on your city"
 msgstr ""
 
-#: templates/home.html:250 templates/reports/show.html:175
+#: templates/home.html:251 templates/reports/show.html:175
 msgid "Type in your address"
 msgstr ""
 
-#: templates/home.html:251 templates/reports/show.html:176
+#: templates/home.html:252 templates/reports/show.html:176
 msgid "Click on a marker button and drag it to desired location"
 msgstr ""
 
-#: templates/home.html:252 templates/reports/show.html:177
+#: templates/home.html:253 templates/reports/show.html:177
 msgid "Fill in the details in the form"
 msgstr ""
 
-#: templates/home.html:253
+#: templates/home.html:254
 msgid "Upload a photo if you have one"
 msgstr ""
 
-#: templates/home.html:254 templates/reports/show.html:179
+#: templates/home.html:255 templates/reports/show.html:179
 msgid "We send it to the city on your behalf"
 msgstr ""
 
-#: templates/home.html:264
+#: templates/home.html:265
 msgid "Reports Fixed"
 msgstr ""
 
-#: templates/home.html:274
+#: templates/home.html:275
 msgid "Reports Filed in the past year"
 msgstr ""
 
-#: templates/home.html:284
+#: templates/home.html:285
 msgid "Latest report photos:"
 msgstr ""
 
-#: templates/home.html:287
+#: templates/home.html:288
 msgid "Not fixed:"
 msgstr ""
 
-#: templates/home.html:290
+#: templates/home.html:291
 msgid "Fixed:"
 msgstr ""
 
@@ -779,7 +800,7 @@ msgid ""
 "soon as possible.</p>\n"
 msgstr ""
 
-#: templates/reports/new.html:6
+#: templates/reports/new.html:7
 msgid "New Report"
 msgstr ""
 
