@@ -302,6 +302,9 @@ var FMS = ( function () {
             $.ajax({
                 type: "POST",
                 url: current_lang + "/user/ajax/login/",
+                headers: {
+                "X-CSRFToken": $.cookie('csrftoken')
+                },
                 data: cached_form.serialize(),
                 success: function (data) {
                     FMS._ajaxLoginCallback(forms, data)
@@ -316,7 +319,11 @@ var FMS = ( function () {
         var error_container = cached_form.find('.error-container');
 
         if (!data.errors) {
-            FMS.processForms(forms.new_report_user, data)
+            $('#preform').find("input[name='csrfmiddlewaretoken']").each(function(){
+                console.log($(this));
+                $(this).val($.cookie('csrftoken'));
+            });
+            FMS.processForms(forms.new_report_user, data);
         } else {
             error_container.html('');
             $.each(data.errors, function (i, val) {
