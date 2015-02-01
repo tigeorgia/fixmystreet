@@ -1,6 +1,7 @@
 {% extends "base_site.html" %}
 {% load i18n %}
 {% load bootstrap3 %}
+{% load crispy_forms_tags %}
 {% load staticfiles %}
 {% load widget_tweaks %}
 {% block title %}{% trans "New Report" %}{% endblock %}
@@ -86,9 +87,6 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-8 col-lg-8">
-                {% if form_error %}
-                    {{ form_error }}
-                {% endif %}
                 <form enctype="multipart/form-data" method="post" id="report-description" class="fms-form">
                 {% csrf_token %}
                 <div class="checkbox">
@@ -102,7 +100,7 @@
                         {% if wizard.form.forms %}
                             {{ wizard.form.management_form }}
                         {% else %}
-                            {% bootstrap_form wizard.form %}
+                            {% crispy wizard.form %}
                         {% endif %}
 
                     {% comment %}{{ update_form.as_table }}{% endcomment %}

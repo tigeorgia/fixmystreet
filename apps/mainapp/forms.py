@@ -3,6 +3,8 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.translation import get_language, ugettext_lazy as _
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 
 from apps.mainapp.models import Report, ReportUpdate, ReportSubscriber, ReportCategory
 from apps.users.models import FMSUser, FMSUserValidators
@@ -70,17 +72,34 @@ class ReportForm2(forms.ModelForm):
         self.user_validators = FMSUserValidators()
         super(ReportForm2, self).__init__(*args, **kwargs)
         # We don't need user creation fields if user is already logged in
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.disable_csrf = True
+        self.helper.layout = Layout(
+            Fieldset(
+                _('Additional report details'),
+                'desc',
+                'photo',
+                'category',
+            ),
+        )
         if not self.user.is_authenticated():
-            self.fields['username'] = forms.CharField(label=_('Username'), max_length=30)
-            self.fields['password1'] = forms.CharField(widget=forms.PasswordInput, label=_('Password'),)
+            self.fields['username'] = forms.CharField(label=_('Username'), max_length=30,
+                                                      help_text=_('Please choose username for your account'))
+            self.fields['password1'] = forms.CharField(help_text=_('Password for your new account'),
+                                                       widget=forms.PasswordInput, label=_('Password'),)
             self.fields['password2'] = forms.CharField(widget=forms.PasswordInput, label=_('Repeat Password'))
+            self.helper.layout.append(
+                Fieldset('Create user account', 'username', 'password1', 'password2')
+            )
 
     def clean(self):
-        password1 = self.cleaned_data.get('password1')
-        password2 = self.cleaned_data.get('password2')
-        username = self.cleaned_data.get('username')
-        self.user_validators.validate_passwords(password1, password2)
-        self.user_validators.validate_username(username)
+        if not self.user.is_authenticated():
+            password1 = self.cleaned_data.get('password1')
+            password2 = self.cleaned_data.get('password2')
+            username = self.cleaned_data.get('username')
+            self.user_validators.validate_passwords(password1, password2)
+            self.user_validators.validate_username(username)
         return self.cleaned_data
 
     class Meta:

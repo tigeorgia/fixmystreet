@@ -180,6 +180,7 @@
                 </div>
                 {% bootstrap_form ajax_login %}
                 <button class="btn btn-default btn-block btn-lg" type="submit">{% trans "Login" %}</button>
+                <a class="btn btn-warning center-block btn-sm" style="margin-top:10px;" href="{% url 'users:reset' %}">{% trans 'Recover password' %}</a>
             </form>
 
             <form class="start-hidden-form" name="new-report" id="new-report" action="" method="post">
