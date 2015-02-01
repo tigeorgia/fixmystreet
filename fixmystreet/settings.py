@@ -116,6 +116,8 @@ DATE_FORMAT = "l, F jS, Y"
 
 AUTH_USER_MODEL = 'users.FMSUser'
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -139,13 +141,13 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'pipeline.middleware.MinifyHTMLMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware',
-    'ignore_lang.middleware.ForceDefaultLanguageMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'ignore_lang.middleware.ForceDefaultLanguageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
     'pagination.middleware.PaginationMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'apps.mainapp.middleware.subdomains.SubdomainMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -221,7 +223,8 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'stdimage',
     'bootstrap3',
-    'captcha'
+    'captcha',
+    'crispy_forms'
 )
 
 DEBUG = False

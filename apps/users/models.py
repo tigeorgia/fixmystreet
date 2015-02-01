@@ -137,7 +137,7 @@ class FMSSettings(models.Model):
         ('en', _('English'))
     )  # ISO 639-1
 
-    user = models.OneToOneField(FMSUser, primary_key=True)
+    user = models.OneToOneField(FMSUser, primary_key=True, related_name='user_settings')
     language = models.CharField(_('language'), max_length=2, choices=LANGUAGE_CHOICES, default='ka')
 
 
