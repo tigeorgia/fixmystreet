@@ -3,6 +3,8 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate
 from captcha.fields import ReCaptchaField
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Fieldset
 
 from apps.users.models import FMSUser, FMSUserValidators, FMSPasswordResetToken
 
@@ -112,7 +114,7 @@ class FMSUserLoginForm(AuthenticationForm):
 
 class PasswordResetStart(forms.Form):
     email = forms.EmailField(label=(_('Email')))
-    captcha = ReCaptchaField(attrs={'theme': 'clean'})
+    captcha = ReCaptchaField(attrs={'theme': 'clean'}, label=_('Captcha'))
 
     def __init__(self, *args, **kwargs):
         super(PasswordResetStart, self).__init__(*args, **kwargs)
