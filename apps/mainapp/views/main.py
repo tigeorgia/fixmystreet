@@ -3,6 +3,7 @@ import os
 
 from django.views.generic import TemplateView
 from django.contrib.formtools.wizard.views import SessionWizardView
+from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.contrib.gis.geos import fromstr
@@ -79,6 +80,12 @@ class HomeView(SessionWizardView):
         report.ip = get_client_ip(self.request)
         report.ward = Ward.objects.get(geom__contains=self.get_point())
         report.save()
+        if report.user.is_confirmed:
+            report.email_councillor()
+            messages.success(self.request, _('Report was successfuly created'))
+        else:
+            messages.success(self.request, _('Report was successfuly created. But not yet confirmed'))
+            messages.success(self.request, _('Please check your email for the confirmation link'))
         return report
 
     def done(self, form_list, **kwargs):
