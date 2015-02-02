@@ -8,6 +8,7 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 
 from .models import FMSUser, FMSPasswordResetToken
+from .signals import user_confirmed
 from utils.utils import get_client_ip
 import forms
 
@@ -76,6 +77,7 @@ class TokenConfirmationView(TemplateView):
             user.is_confirmed = True
             user.fms_user_token.delete()
             user.save()
+            user_confirmed.send(sender=self.__class__, user=user)
             context['message'] = _('Confirmation successful! You can now login')
 
         return context
