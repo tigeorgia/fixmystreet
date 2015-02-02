@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemikucha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-01 06:10+0400\n"
+"POT-Creation-Date: 2015-02-02 17:45+0400\n"
 "PO-Revision-Date: 2014-03-31 13:02+0400\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chemikucha <gio@transparency.ge>\n"
@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 
 #: apps/api/metadata.py:40 apps/mainapp/forms.py:17 apps/mainapp/forms.py:147
-#: apps/mainapp/models.py:452 apps/users/forms.py:69 apps/users/forms.py:75
+#: apps/mainapp/models.py:471 apps/users/forms.py:69 apps/users/forms.py:75
 #: apps/users/forms.py:116
 msgid "Email"
 msgstr ""
@@ -62,9 +62,9 @@ msgstr ""
 msgid "Must include \"email\" and \"password\""
 msgstr ""
 
-#: apps/mainapp/forms.py:14 apps/mainapp/models.py:50
-#: apps/mainapp/models.py:65 apps/mainapp/models.py:108
-#: apps/mainapp/models.py:476
+#: apps/mainapp/forms.py:14 apps/mainapp/models.py:52
+#: apps/mainapp/models.py:67 apps/mainapp/models.py:110
+#: apps/mainapp/models.py:495
 msgid "Name"
 msgstr ""
 
@@ -80,8 +80,8 @@ msgstr ""
 msgid "Only city councillors and report creators can update report status"
 msgstr ""
 
-#: apps/mainapp/forms.py:68 templates/reports/report_list.html:44
-#: templates/reports/report_list.html:63
+#: apps/mainapp/forms.py:68 templates/emails/send_report_to_city/message.txt:4
+#: templates/reports/report_list.html:44 templates/reports/report_list.html:63
 msgid "Category"
 msgstr ""
 
@@ -137,112 +137,113 @@ msgstr ""
 msgid "Most subscribers"
 msgstr ""
 
-#: apps/mainapp/models.py:89
+#: apps/mainapp/models.py:91
 msgid "First name"
 msgstr ""
 
-#: apps/mainapp/models.py:90
+#: apps/mainapp/models.py:92
 msgid "Last name"
 msgstr ""
 
-#: apps/mainapp/models.py:147 apps/mainapp/models.py:160
+#: apps/mainapp/models.py:149 apps/mainapp/models.py:162
+#: templates/emails/send_report_to_city/message.txt:3
 #: templates/reports/report_list.html:42 templates/reports/report_list.html:60
 msgid "Title"
 msgstr ""
 
-#: apps/mainapp/models.py:161
+#: apps/mainapp/models.py:163
 msgid "Hint"
 msgstr ""
 
-#: apps/mainapp/models.py:243 apps/mainapp/models.py:341
+#: apps/mainapp/models.py:245 apps/mainapp/models.py:360
 msgid "Not Fixed"
 msgstr ""
 
-#: apps/mainapp/models.py:244 apps/mainapp/models.py:342
+#: apps/mainapp/models.py:246 apps/mainapp/models.py:361
 msgid "Fixed"
 msgstr ""
 
-#: apps/mainapp/models.py:245 apps/mainapp/models.py:343
+#: apps/mainapp/models.py:247 apps/mainapp/models.py:362
 msgid "In Progress"
 msgstr ""
 
-#: apps/mainapp/models.py:249
+#: apps/mainapp/models.py:251
 msgid "category"
 msgstr ""
 
-#: apps/mainapp/models.py:249
+#: apps/mainapp/models.py:251
 msgid "Report category"
 msgstr ""
 
-#: apps/mainapp/models.py:250
+#: apps/mainapp/models.py:252
 msgid "Author of the report"
 msgstr ""
 
-#: apps/mainapp/models.py:251 templates/wards/show.html:8
+#: apps/mainapp/models.py:253 templates/wards/show.html:8
 msgid "ward"
 msgstr ""
 
-#: apps/mainapp/models.py:251
+#: apps/mainapp/models.py:253
 msgid "Ward associated with report"
 msgstr ""
 
-#: apps/mainapp/models.py:254
+#: apps/mainapp/models.py:256
 msgid "street address"
 msgstr ""
 
-#: apps/mainapp/models.py:254
+#: apps/mainapp/models.py:256
 msgid "Address of the problem"
 msgstr ""
 
-#: apps/mainapp/models.py:255 apps/mainapp/models.py:351
+#: apps/mainapp/models.py:257 apps/mainapp/models.py:370
 msgid "status"
 msgstr ""
 
-#: apps/mainapp/models.py:256
+#: apps/mainapp/models.py:258
 msgid "Report status"
 msgstr ""
 
-#: apps/mainapp/models.py:257
+#: apps/mainapp/models.py:259
 msgid "Date when report was sent to city representative"
 msgstr ""
 
-#: apps/mainapp/models.py:258
+#: apps/mainapp/models.py:260
 msgid "title"
 msgstr ""
 
-#: apps/mainapp/models.py:258
+#: apps/mainapp/models.py:260
 msgid "Report title"
 msgstr ""
 
-#: apps/mainapp/models.py:264
+#: apps/mainapp/models.py:266
 msgid "Date when report was created"
 msgstr ""
 
-#: apps/mainapp/models.py:265
+#: apps/mainapp/models.py:267
 msgid "Date when report was fixed"
 msgstr ""
 
-#: apps/mainapp/models.py:267
+#: apps/mainapp/models.py:269
 msgid "Date when report was updated"
 msgstr ""
 
-#: apps/mainapp/models.py:270 apps/mainapp/models.py:361
+#: apps/mainapp/models.py:272 apps/mainapp/models.py:380
 msgid "details"
 msgstr ""
 
-#: apps/mainapp/models.py:270
+#: apps/mainapp/models.py:272
 msgid "Report description"
 msgstr ""
 
-#: apps/mainapp/models.py:275 apps/mainapp/models.py:363
+#: apps/mainapp/models.py:277 apps/mainapp/models.py:382
 msgid "photo"
 msgstr ""
 
-#: apps/mainapp/models.py:277
+#: apps/mainapp/models.py:279
 msgid "Please upload report photo"
 msgstr ""
 
-#: apps/mainapp/models.py:475
+#: apps/mainapp/models.py:494
 msgid "Domain"
 msgstr ""
 
@@ -257,7 +258,19 @@ msgid ""
 "International movement.\n"
 msgstr ""
 
-#: apps/mainapp/views/main.py:92
+#: apps/mainapp/views/main.py:85
+msgid "Report was successfuly created"
+msgstr ""
+
+#: apps/mainapp/views/main.py:87
+msgid "Report was successfuly created. But not yet confirmed"
+msgstr ""
+
+#: apps/mainapp/views/main.py:88
+msgid "Please check your email for the confirmation link"
+msgstr ""
+
+#: apps/mainapp/views/main.py:99
 msgid "Something went crazy here. Try again. We saved your data: "
 msgstr ""
 
@@ -301,7 +314,7 @@ msgstr ""
 msgid "Important dates"
 msgstr ""
 
-#: apps/users/forms.py:15 apps/users/forms.py:136 apps/users/views.py:97
+#: apps/users/forms.py:15 apps/users/forms.py:136 apps/users/views.py:99
 msgid "Password confirmation"
 msgstr ""
 
@@ -321,94 +334,94 @@ msgstr ""
 msgid "User with provided email not found"
 msgstr ""
 
-#: apps/users/models.py:45
+#: apps/users/models.py:44
 msgid ""
 "Password should contain at least 8 characters, 1 alpha numeric and 1 digit"
 msgstr ""
 
-#: apps/users/models.py:46
+#: apps/users/models.py:45
 msgid "Account is not confirmed. Confirmation email has been resent"
 msgstr ""
 
-#: apps/users/models.py:49
+#: apps/users/models.py:48
 msgid "Please provide the password"
 msgstr ""
 
-#: apps/users/models.py:51
+#: apps/users/models.py:50
 msgid "Passwords don't match!"
 msgstr ""
 
-#: apps/users/models.py:67
+#: apps/users/models.py:66
 msgid "User with that username already exists."
 msgstr ""
 
-#: apps/users/models.py:73
+#: apps/users/models.py:72
 msgid "email address"
 msgstr ""
 
-#: apps/users/models.py:74
+#: apps/users/models.py:73
 msgid "username"
 msgstr ""
 
-#: apps/users/models.py:75
+#: apps/users/models.py:74
 msgid "first name"
 msgstr ""
 
-#: apps/users/models.py:76
+#: apps/users/models.py:75
 msgid "last name"
 msgstr ""
 
-#: apps/users/models.py:77
+#: apps/users/models.py:76
 msgid "phone"
 msgstr ""
 
-#: apps/users/models.py:78
+#: apps/users/models.py:77
 msgid "date joined"
 msgstr ""
 
-#: apps/users/models.py:79
+#: apps/users/models.py:78
 msgid "councillor"
 msgstr ""
 
-#: apps/users/models.py:80
+#: apps/users/models.py:79
 msgid "staff"
 msgstr ""
 
-#: apps/users/models.py:81
+#: apps/users/models.py:80
 msgid "email confirmed"
 msgstr ""
 
-#: apps/users/models.py:82
+#: apps/users/models.py:81
 msgid "active"
 msgstr ""
 
-#: apps/users/models.py:92
+#: apps/users/models.py:91
 msgid "user"
 msgstr ""
 
-#: apps/users/models.py:93
+#: apps/users/models.py:92
 msgid "users"
 msgstr ""
 
-#: apps/users/models.py:136
+#: apps/users/models.py:137
 msgid "Georgian"
 msgstr ""
 
-#: apps/users/models.py:137
+#: apps/users/models.py:138
 msgid "English"
 msgstr ""
 
-#: apps/users/models.py:141
+#: apps/users/models.py:142
 #, fuzzy
 #| msgid "Language"
 msgid "language"
 msgstr "ენა"
 
-#: apps/users/models.py:166 apps/users/models.py:176
+#: apps/users/models.py:167 apps/users/models.py:177
 msgid "created at"
 msgstr ""
 
-#: apps/users/receivers.py:15
+#: apps/users/receivers.py:19
 msgid "Veify Email"
 msgstr ""
 
@@ -448,31 +461,31 @@ msgstr ""
 msgid "Please click the following link to update your password"
 msgstr ""
 
-#: apps/users/views.py:74
+#: apps/users/views.py:75
 msgid "Invalid confirmation link"
 msgstr ""
 
-#: apps/users/views.py:79
+#: apps/users/views.py:81
 msgid "Confirmation successful! You can now login"
 msgstr ""
 
-#: apps/users/views.py:92
+#: apps/users/views.py:94
 msgid "Please enter your email"
 msgstr ""
 
-#: apps/users/views.py:112
+#: apps/users/views.py:114
 msgid "Please check email associated with the account for password reset link"
 msgstr ""
 
-#: apps/users/views.py:132 apps/users/views.py:134
+#: apps/users/views.py:134 apps/users/views.py:136
 msgid "Incorrect reset link"
 msgstr ""
 
-#: apps/users/views.py:140
+#: apps/users/views.py:142
 msgid "Please enter your new password"
 msgstr ""
 
-#: apps/users/views.py:152
+#: apps/users/views.py:154
 msgid "Password updated. You can log in now."
 msgstr ""
 
@@ -484,7 +497,7 @@ msgstr ""
 msgid "About Chemikucha.ge - FixMyStreet Georgia"
 msgstr ""
 
-#: templates/about.html:34 templates/home.html:307
+#: templates/about.html:34 templates/home.html:308
 #: templates/reports/new.html:124 templates/reports/report_list.html:133
 #: templates/reports/show.html:169
 msgid "Last Updates"
@@ -646,6 +659,23 @@ msgid ""
 "<a href=\"/\">Return to FixMyStreet.ge</a>\n"
 msgstr ""
 
+#: templates/emails/send_report_to_city/message.txt:5
+msgid "Author"
+msgstr ""
+
+#: templates/emails/send_report_to_city/message.txt:6 templates/home.html:158
+#: templates/home.html.py:226
+msgid "Address"
+msgstr ""
+
+#: templates/emails/send_report_to_city/message.txt:7
+msgid "Report ID"
+msgstr ""
+
+#: templates/emails/send_report_to_city/message.txt:11
+msgid "Update was sent from chemikucha.ge"
+msgstr ""
+
 #: templates/faq/show.html:3 templates/faq/show.html.py:7
 msgid "About"
 msgstr ""
@@ -694,10 +724,6 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: templates/home.html:158 templates/home.html.py:227
-msgid "Address"
-msgstr ""
-
 #: templates/home.html:161
 msgid "Search Street"
 msgstr ""
@@ -717,51 +743,51 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: templates/home.html:248 templates/reports/show.html:172
+#: templates/home.html:247 templates/reports/show.html:172
 msgid "How to report a Problem"
 msgstr ""
 
-#: templates/home.html:250
+#: templates/home.html:249
 msgid "Click on your city"
 msgstr ""
 
-#: templates/home.html:251 templates/reports/show.html:175
+#: templates/home.html:250 templates/reports/show.html:175
 msgid "Type in your address"
 msgstr ""
 
-#: templates/home.html:252 templates/reports/show.html:176
+#: templates/home.html:251 templates/reports/show.html:176
 msgid "Click on a marker button and drag it to desired location"
 msgstr ""
 
-#: templates/home.html:253 templates/reports/show.html:177
+#: templates/home.html:252 templates/reports/show.html:177
 msgid "Fill in the details in the form"
 msgstr ""
 
-#: templates/home.html:254
+#: templates/home.html:253
 msgid "Upload a photo if you have one"
 msgstr ""
 
-#: templates/home.html:255 templates/reports/show.html:179
+#: templates/home.html:254 templates/reports/show.html:179
 msgid "We send it to the city on your behalf"
 msgstr ""
 
-#: templates/home.html:265
+#: templates/home.html:264
 msgid "Reports Fixed"
 msgstr ""
 
-#: templates/home.html:275
+#: templates/home.html:274
 msgid "Reports Filed in the past year"
 msgstr ""
 
-#: templates/home.html:285
+#: templates/home.html:284
 msgid "Latest report photos:"
 msgstr ""
 
-#: templates/home.html:288
+#: templates/home.html:287
 msgid "Not fixed:"
 msgstr ""
 
-#: templates/home.html:291
+#: templates/home.html:290
 msgid "Fixed:"
 msgstr ""
 
