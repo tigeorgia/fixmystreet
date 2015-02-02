@@ -15,5 +15,5 @@ class ForceDefaultLanguageMiddleware(object):
             language = request.user.user_settings.language
             translation.activate(language)
             request.LANGUAGE_CODE = language
-        elif request.META.has_key('HTTP_ACCEPT_LANGUAGE'):
+        if request.META.has_key('HTTP_ACCEPT_LANGUAGE'):
             del request.META['HTTP_ACCEPT_LANGUAGE']
