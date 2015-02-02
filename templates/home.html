@@ -184,7 +184,7 @@
             </form>
 
             <form class="start-hidden-form" name="new-report" id="new-report" action="" method="post">
-            {% csrf_token %}
+                {% csrf_token %}
                 <fieldset>
                     <div class="checkbox">
                         <label id="geokbd">
@@ -194,14 +194,14 @@
                         </label>
                     </div>
                     {{ wizard.management_form }}
-                        {% if wizard.form.forms %}
-                            {{ wizard.form.management_form }}
-                            {% for form in wizard.form.forms %}
-                                {{ form }}
-                            {% endfor %}
-                        {% else %}
-                            {{ wizard.form }}
-                        {% endif %}
+                    {% if wizard.form.forms %}
+                        {{ wizard.form.management_form }}
+                        {% for form in wizard.form.forms %}
+                            {{ form }}
+                        {% endfor %}
+                    {% else %}
+                        {{ wizard.form }}
+                    {% endif %}
                     <button id="home-report" class="btn btn-default pull-right" type="submit">{% trans "Submit" %}</button>
                 </fieldset>
             </form>
@@ -216,11 +216,10 @@
             </script>
 
 
-
         </div>
         <div id="tig-overlay-logo" class="pull-right hidden-sm">
-                <img src="{% static 'images/main/tig-logo-'|add:LANGUAGE_CODE|add:'.png' %}"/>
-            </div>
+            <img src="{% static 'images/main/tig-logo-'|add:LANGUAGE_CODE|add:'.png' %}"/>
+        </div>
         <div class="address-search-form-wrapper start-hidden visible-lg">
             <form action="#" method="POST" class="address-search-form" name="address-search" onsubmit="return false;">
                 <fieldset>
@@ -293,8 +292,10 @@
                         {% endif %}
                     <ul>
                         {% for value in values %}
-                            <li><a href="{{ value.get_absolute_url }}"><img width="133" height="100"
-                                                                            src="{{ value.photo.thumbnail.url }}"/></a>
+                            <li><a href="{{ value.get_absolute_url }}">
+                                <img class="lazy" width="133" height="100" data-original="{{ value.photo.thumbnail.url }}"/>
+                                <noscript><img width="133" height="100" src="{{ value.photo.thumbnail.url }}"/></noscript>
+                                </a>
                             </li>
                         {% endfor %}
                     </ul>

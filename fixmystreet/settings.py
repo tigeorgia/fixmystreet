@@ -78,6 +78,7 @@ PIPELINE_JS = {
             'js/jquery-ui.min.js',
             'js/jquery.easing.min.js',
             'js/jquery.validate.min.js',
+            'js/jquery.lazyload.min.js',
             'js/jquery.cookie.js',
             'bootstrap/dist/js/bootstrap.min.js',
             'js/bootstrap-datepicker.js',
