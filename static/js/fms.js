@@ -1,3 +1,7 @@
+$(function() {
+    $("img.lazy").lazyload();
+});
+
 $(function () {
     $('#create-report-update').submit(function () {
         var form = $('#create-report-update');
