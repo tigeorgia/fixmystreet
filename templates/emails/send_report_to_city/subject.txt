@@ -1,1 +1,1 @@
-ChemiKucha.ge: {{update.report.title|safe}}
+ChemiKucha.ge: {{report.title|safe}}

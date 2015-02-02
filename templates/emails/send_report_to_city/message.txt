@@ -1,12 +1,13 @@
-﻿სათაური:        {{update.report.title|safe}}
-კატეგორია:     {{update.report.category.name}}
-ავტორი: {{update.user.username|safe}}
-ტელეფონი:        {{update.phone}}
-ელ.ფოსტა:        {{update.email}}
-Address: {{update.report.street}}
-FMS ID:       {{update.report.id}}
+﻿{% load i18n %}
 
-{{update.desc|safe}}
+{% trans 'Title' %}: {{report.title|safe}}
+{% trans 'Category' %}: {{report.category.name}}
+{% trans 'Author' %}: {{report.user.first_name|safe}} {{report.user.last_name|safe}}
+{% trans 'Address' %}: {{report.street}}
+{% trans 'Report ID' %}: {{report.id}}
 
-შეტყობინება გამოგზავნილია ChemiKucha.ge-ს მეშვეობით {{update.report.created_at|date}}.
-{{update.report.get_absolute_url}}
+{{report.desc|safe}}
+
+{% trans 'Update was sent from chemikucha.ge' %} {{report.created_at|date}}.
+{{report.get_full_absolute_url}}
+
