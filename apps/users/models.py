@@ -3,10 +3,9 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 
 from django.utils.translation import ugettext_lazy as _
+from django.utils import translation
 from django.core.mail import send_mail
 from django.utils import timezone
-from django.db.utils import IntegrityError
-from apps.mainapp.models import Report
 from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
 
@@ -125,6 +124,8 @@ class FMSUser(AbstractBaseUser, PermissionsMixin):
         """
         Sends an email to this User.
         """
+        language = self.user_settings.language or translation.get_language()
+        translation.activate(language)
         send_mail(subject, message, from_email, [self.email,], **kwargs)
 
     def __unicode__(self):
