@@ -14,11 +14,13 @@ from django.conf import settings
 from django.core.mail import send_mail, EmailMessage
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+from django.utils import translation
 from transmeta import TransMeta
 from stdimage import StdImageField
 from django.utils.encoding import iri_to_uri
 
 from apps.mainapp import emailrules
+from signals import councillor_notified
 
 
 class CCEmailMessage(EmailMessage):
@@ -107,7 +109,7 @@ class Ward(models.Model):
 
     name = models.CharField(max_length=100, verbose_name=_("Name"))
     number = models.IntegerField()
-    councillor = models.ForeignKey(Councillor)
+    councillor = models.ForeignKey('users.FMSUser', limit_choices_to={'is_councillor': True})
     city = models.ForeignKey(City)
     geom = models.MultiPolygonField(null=True)
     objects = models.GeoManager()
@@ -314,6 +316,23 @@ class Report(models.Model):
 
     def get_absolute_url(self):
         return reverse('report_detail', args=[self.id])
+
+    def get_full_absolute_url(self):
+        return '{0}{1}'.format(settings.SITE_URL, self.get_absolute_url())
+
+    def email_councillor(self):
+        """
+        Email councillor that report was created
+        """
+        if self.user.is_confirmed and self.user.is_active:
+            councillor = self.ward.councillor
+            user_language = councillor.user_settings.language
+            translation.activate(user_language)
+            subject = render_to_string("emails/send_report_to_city/subject.txt", {'report': self})
+            message = render_to_string("emails/send_report_to_city/message.txt", {'report': self})
+            councillor.email_user(subject, message)
+            #Send signal that councillor was notified
+            councillor_notified.send(sender=self.__class__, report=self, councillor=councillor)
 
     class Meta:
         db_table = u'reports'
@@ -816,3 +835,4 @@ class PollingStation(models.Model):
     class Meta:
         db_table = u'polling_stations'
 
+from .receivers import *
