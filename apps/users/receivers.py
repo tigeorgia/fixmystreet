@@ -2,8 +2,12 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.template.loader import render_to_string
 from models import FMSUser, FMSSettings, FMSUserToken, FMSPasswordResetToken
+from .views import TokenConfirmationView
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.authtoken.models import Token
+from datetime import datetime
+
+import signals
 
 
 @receiver(post_save, sender=FMSUserToken)
@@ -47,3 +51,9 @@ def user_created(sender, instance, created, **kwargs):
         FMSSettings.objects.create(user=instance)  # Create user settings object
         FMSUserToken.objects.create(user=instance)  # Create token
         Token.objects.create(user=instance) # Create rest framework auth token
+
+@receiver(signals.user_confirmed, sender=TokenConfirmationView)
+def email_councillor(sender, user, **kwargs):
+    reports = user.reports.filter(is_active=True)
+    for report in reports:
+        report.email_councillor()
