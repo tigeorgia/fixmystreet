@@ -9,6 +9,8 @@ admin.site.register(EmailRule)
 admin.site.register(City)
 admin.site.register(Province)
 
+class LocalOpenLayersMixin(object):
+    openlayers_url = 'https://www.chemikucha.ge/static/js/OpenLayers.js'
 
 class ReportCategoryClassAdmin(admin.ModelAdmin):
     list_display = ('name',)
@@ -38,7 +40,7 @@ class CouncillorAdmin(admin.ModelAdmin):
 admin.site.register(Councillor, CouncillorAdmin)
 
 
-class WardAdmin(gisadmin.GeoModelAdmin):
+class WardAdmin(LocalOpenLayersMixin, gisadmin.GeoModelAdmin):
     list_display = ('id', 'city', 'number', 'name')
     ordering = ['city', 'number']
     display_wkt = True
@@ -60,7 +62,7 @@ class ReportUpdateAdmin(admin.ModelAdmin):
 admin.site.register(ReportUpdate, ReportUpdateAdmin)
 
 
-class ReportAdmin(admin.ModelAdmin):
+class ReportAdmin(LocalOpenLayersMixin, gisadmin.GeoModelAdmin):
     list_display = ('title', 'category', 'ward', 'status', 'created_at')
 
 

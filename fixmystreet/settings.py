@@ -80,6 +80,7 @@ PIPELINE_JS = {
             'js/jquery.validate.min.js',
             'js/jquery.lazyload.min.js',
             'js/jquery.cookie.js',
+            'js/OpenLayers.js',
             'bootstrap/dist/js/bootstrap.min.js',
             'js/bootstrap-datepicker.js',
             'js/jquery.qtip.min.js',
