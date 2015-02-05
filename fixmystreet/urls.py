@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.sitemaps import FlatPageSitemap
+from django.views.decorators.cache import cache_page
 
 from apps.mainapp.feeds import LatestReports, LatestReportsByCity, LatestReportsByWard, LatestUpdatesByReport
 from apps.mainapp.sitemaps import MainSitemap
@@ -31,9 +32,11 @@ sitemaps = {
 
 admin.autodiscover()
 urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.Feed', {'feed_dict': feeds}),
     url(r'^i18n/', include('django.conf.urls.i18n')),
+)
+
+urlpatterns += i18n_patterns('',
+    url(r'^admin/', include(admin.site.urls)),
 )
 
 urlpatterns += patterns('django.views.i18n',
@@ -46,7 +49,7 @@ urlpatterns += patterns('django.contrib.sitemaps.views',
 
 urlpatterns += i18n_patterns('',
     url(r'^$', HomeView.as_view(), name='home'),
-    url(r'about/$', AboutView.as_view(), name='about')
+    url(r'about/$', cache_page(60*60*24)(AboutView.as_view()), name='about')
 )
 
 urlpatterns += i18n_patterns('apps.mainapp.views.promotion',
@@ -78,7 +81,7 @@ urlpatterns += i18n_patterns('apps.mainapp.views.reports.flags',
 urlpatterns += i18n_patterns('apps.mainapp.views.reports.main',
     url(r'^reports/(?P<pk>\d+)/$', ReportDetailView.as_view(), name='report_detail'),
     url(r'^reports/(?P<pk>\d+)/poster/$', 'poster', name='poster'),
-    url(r'^reports/$', ReportListView.as_view(), name='report_list'),
+    url(r'^reports/$', cache_page(60*5)(ReportListView.as_view()), name='report_list'),
 )
 
 urlpatterns += i18n_patterns('apps.mainapp.views.contact',
