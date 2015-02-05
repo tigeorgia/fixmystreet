@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.views.generic.list import ListView
+from django.views.decorators.cache import cache_page
 
 from apps.mainapp.models import Report, ReportCategory
 
@@ -14,9 +15,9 @@ class latestReportsJson(ListView):
 
 
 
-
+@cache_page(60*60)
 def latest_reports_json(request):
-    reports = Report.active.order_by('-created_at')[:800]
+    reports = Report.active.order_by('-created_at')[:200]
 
     data = json.dumps([{'id': r.id,
                         'user': r.user.username,

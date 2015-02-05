@@ -579,7 +579,10 @@ var FMS = ( function () {
             var domain = urlArr[2];
             var lang = urlArr[3];
 
-            for (var i = 0; i < reports.length; i++) {
+            /***
+             * Non-blocking loop to populate markers
+             */
+            var AsyncLoop = function(i){
                 if (reports[i]['status'] == 'fixed') {
                     icon = GmapMarkerIcons['green'];
                 } else if (reports[i]['status'] == 'not-fixed') {
@@ -597,7 +600,13 @@ var FMS = ( function () {
                     infowindow.setContent(this.description);
                     infowindow.open(map, this);
                 })
+
+                if (i < reports.length -1){
+                    setTimeout(function(){AsyncLoop(i+1);}, 1)
+                }
             }
+
+            AsyncLoop(0);
         };
 
     /**
