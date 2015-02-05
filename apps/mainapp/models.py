@@ -264,14 +264,14 @@ class Report(models.Model):
 
     # DateTimeFields
     created_at = models.DateTimeField(auto_now_add=True, help_text=_('Date when report was created'))
-    fixed_at = models.DateTimeField(null=True, help_text=_('Date when report was fixed'))
+    fixed_at = models.DateTimeField(blank=True, null=True, help_text=_('Date when report was fixed'))
     reminded_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, help_text=_('Date when report was updated'))
 
     # Other fields
     desc = models.TextField(verbose_name=_("details"), help_text=_('Report description'))
-    email_sent_to = models.EmailField(null=True)
-    ip = models.GenericIPAddressField(null=True)
+    email_sent_to = models.EmailField(blank=True, null=True)
+    ip = models.GenericIPAddressField(blank=True, null=True)
     # Postgis 1.5 is breaking migrations on this field. See https://code.djangoproject.com/ticket/23085
     point = models.PointField(null=True)
     photo = StdImageField(upload_to="photos", blank=True, verbose_name=_("photo"),
