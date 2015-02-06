@@ -72,7 +72,7 @@ PIPELINE_CSS = {
 }
 
 PIPELINE_JS = {
-    'main_js': {
+    'jquery': {
         'source_filenames': (
             'js/jquery.min.js',
             'js/jquery-ui.min.js',
@@ -80,17 +80,28 @@ PIPELINE_JS = {
             'js/jquery.validate.min.js',
             'js/jquery.lazyload.min.js',
             'js/jquery.cookie.js',
+        ),
+        'output_filename': 'js.min/jquery.min.js'
+    },
+    'lib': {
+        'source_filenames': (
             'js/markerclusterer_compiled.js',
             'js/OpenLayers.js',
             'bootstrap/dist/js/bootstrap.min.js',
             'js/bootstrap-datepicker.js',
             'js/jquery.qtip.min.js',
             'js/geokbd.js',
+        ),
+        'output_filename': 'js.min/lib.min.js',
+    },
+
+    'app': {
+        'source_filenames': (
             'js/fms.js',
             'js/fms.forms.js',
             'js/fms.map.js',
         ),
-        'output_filename': 'js.min/scripts.min.js',
+        'output_filename': 'js.min/app.min.js',
     },
 
     'ie_js': {
