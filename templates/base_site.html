@@ -25,16 +25,14 @@
     <![endif]-->
 
     <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
+<script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key={% settings_value "GMAP_KEY" %}&sensor=true&libraries=places"></script>
     {% compressed_js 'main_js' %}
 
     {% block css %}{% endblock %}
 
     {% block script %}
     {% endblock %}
-
-    <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key={% settings_value "GMAP_KEY" %}&sensor=true&libraries=places"></script>
-
 </head>
 <body class="lang-{{ LANGUAGE_CODE }}" {% block body_tags %}{% endblock %}>
 {% block body_script %}{% endblock %}

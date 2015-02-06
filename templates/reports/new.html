@@ -5,29 +5,22 @@
 {% load staticfiles %}
 {% load widget_tweaks %}
 {% block title %}{% trans "New Report" %}{% endblock %}
-{% block body_tags %}onload='initialize()'{% endblock %}
+{% block body_tags %}onload='init()'{% endblock %}
 {% block script %}
     {% load reports_tags %}
     <script type="text/javascript" src="{% static 'js/jquery.validate.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/geokbd.js' %}"></script>
     <script type="text/javascript">
 
-
-        function initialize() {
-            var mapOptions = {
-                center: new google.maps.LatLng({{ center.y }}, {{ center.x }}),
-                zoom: 17,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            map = new google.maps.Map(document.getElementById("map_canvas"),
-                    mapOptions);
-
+        function init(){
+            var center = new google.maps.LatLng({{ center.y }}, {{ center.x }})
             var markerOptions = {
                 draggable: false
             };
-
-            FMS.addMarker('address_marker', mapOptions.center, markerOptions)
-        }
+            window.fmsmap = new FMSMap();
+            fmsmap.map.setCenter(center);
+            fmsmap.markers.createMarker('address_marker', center, markerOptions)
+        };
 
 
         function updateNotes() {
@@ -35,7 +28,7 @@
             var el_id = $('#category_select').val();
             $("#secondary_container").load("/ajax/categories/" + el_id, function () {
             });
-        }
+        };
 
         $(document).ready(function () {
             $('#category_select').change(function () {

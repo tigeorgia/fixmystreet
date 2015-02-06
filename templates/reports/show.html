@@ -11,20 +11,15 @@
     <script type="text/javascript" src="{% static 'js/geokbd.js' %}"></script>
     <script type="text/javascript">
 
-        function initialize() {
-            var LatLng = new google.maps.LatLng({{ google.center.1 }}, {{ google.center.0 }});
-            var mapOptions = {
-                center: LatLng,
-                zoom: 17,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
+        function init(){
+            var center = new google.maps.LatLng({{ google.center.1 }}, {{ google.center.0 }});
+            var markerOptions = {
+                draggable: false
             };
-            map = new google.maps.Map(document.getElementById("map_canvas"),
-                    mapOptions);
-
-            google.maps.event.addListenerOnce(map, 'idle', function () {
-                FMS.addMarker("Marker", LatLng)
-            });
-        }
+            window.fmsmap = new FMSMap();
+            fmsmap.map.setCenter(center);
+            fmsmap.markers.createMarker('Marker', center, markerOptions)
+        };
 
 
     </script>
@@ -49,7 +44,7 @@
         }
     </style>
 {% endblock %}
-{% block body_tags %}onload='initialize()'{% endblock %}
+{% block body_tags %}onload='init()'{% endblock %}
 {% block content %}
     <div id="content-top">
         <div id="header-box" class="reports">
