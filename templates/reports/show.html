@@ -16,9 +16,10 @@
             var markerOptions = {
                 draggable: false
             };
-            window.fmsmap = new FMSMap();
-            fmsmap.map.setCenter(center);
-            fmsmap.markers.createMarker('Marker', center, markerOptions)
+            canvas = document.getElementById("map_canvas");
+            FMSMap.initialize(canvas);
+            FMSMap.map.setCenter(center);
+            FMSMap.markers.createMarker('Marker', center, markerOptions);
         };
 
 

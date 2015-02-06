@@ -16,12 +16,13 @@
     <script type="text/javascript">
 
         {% if user.is_authenticated %}
-            fms.is_authenticated = true;
+            FMS.is_authenticated = true;
         {% endif %}
 
         function init(){
-            window.fmsmap = new FMSMap();
-            fmsmap.initialize();
+            canvas = document.getElementById("map_canvas");
+            FMSMap.initialize(canvas);
+            FMSMap.homeinit();
         }
 
     </script>
@@ -117,7 +118,7 @@
                             {% trans "Search Street" %}</button>
                     </fieldset>
                 </form>
-                <button class="add-marker btn btn-default btn-fixed" id="add-marker-mobile" onclick="fmsmap.markers.addressMarker()">
+                <button class="add-marker btn btn-default btn-fixed" id="add-marker-mobile" onclick="FMSMap.markers.addressMarker()">
                     {% trans "Add marker" %}</button>
             </div>
 
@@ -183,7 +184,7 @@
                     <button type="submit" id="search-street"></button>
                 </fieldset>
             </form>
-            <button class="add-marker" onclick="fmsmap.markers.addressMarker()"></button>
+            <button class="add-marker" onclick="FMSMap.markers.addressMarker()"></button>
         </div>
     </div>
 

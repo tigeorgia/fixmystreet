@@ -17,11 +17,11 @@
             var markerOptions = {
                 draggable: false
             };
-            window.fmsmap = new FMSMap();
-            fmsmap.map.setCenter(center);
-            fmsmap.markers.createMarker('address_marker', center, markerOptions)
+            canvas = document.getElementById("map_canvas");
+            FMSMap.initialize(canvas);
+            FMSMap.map.setCenter(center);
+            FMSMap.markers.createMarker('Marker', center, markerOptions)
         };
-
 
         function updateNotes() {
             // updates entry notes

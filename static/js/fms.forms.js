@@ -1,12 +1,10 @@
-function FMSForms () {
-    if (arguments.callee._singletonInstance)
-        return arguments.callee._singletonInstance;
-    arguments.callee._singletonInstance = this;
+var FMSForms = (function () {
+    var pub = {};
 
     /**
      * Loads problem submit form and changes map position. Called by event when map is idle.
      */
-    this.loadDivs = function () {
+    pub.loadDivs = function () {
         var mapCanvas = $("#map_canvas");
         mapCanvas.append('<div id="blue-overlay-200"></div>');
         mapCanvas.after('<div id="box-reports-transpar-logo"></div>');
@@ -15,7 +13,7 @@ function FMSForms () {
     /**
      * Makes element visible with smooth transition
      */
-    this.makeVisible = function (selector) {
+    pub.makeVisible = function (selector) {
         $('#' + selector).css({'display': 'block', 'visibility': 'visible'}).animate({
             opacity: 1
         }, 1300);
@@ -27,7 +25,7 @@ function FMSForms () {
      * @param form Form to process. This makes step-forms possible
      * @param other_data additional data to pass to form processors. Like email
      */
-    this.processForms = function (form, other_data) {
+    pub.processForms = function (form, other_data) {
 
         // All available forms.
         var forms = {
@@ -65,8 +63,8 @@ function FMSForms () {
 
     };
 
-    this.startFormCheck = function (forms) {
-        if (fms.is_authenticated) {
+    pub.startFormCheck = function (forms) {
+        if (FMS.is_authenticated) {
             this.processForms(forms.new_report_user);
         } else {
             this.processForms(forms.check_email_form);
@@ -77,16 +75,15 @@ function FMSForms () {
      * Check if user email exists. Passes result to callback
      * @param forms Forms object.
      */
-    this.checkEmail = function (forms) {
+    pub.checkEmail = function (forms) {
         this.makeVisible(forms.check_email_form);
-        var scope = this;
 
         $('#' + forms.check_email_form).submit(function (event) {
             event.preventDefault();
             var email = $(this).serializeArray()[0].value;
 
-            $.get(fms.current_lang + '/user/email-exists', {'email': email}, function (data) {
-                scope._checkEmailCallback(data, forms, email);
+            $.get(FMS.current_lang + '/user/email-exists', {'email': email}, function (data) {
+                pub._checkEmailCallback(data, forms, email);
             });
         });
     };
@@ -99,21 +96,19 @@ function FMSForms () {
      * @param email Email which was checked
      * @private
      */
-    this._checkEmailCallback = function (data, forms, email) {
-        var scope = this;
+    pub._checkEmailCallback = function (data, forms, email) {
         if (data.email_exists) {
-            scope.processForms(forms.ajax_login_form, data = {'email': email});
+            pub.processForms(forms.ajax_login_form, {'email': email});
         } else {
-            scope.processForms(forms.new_report_full, data = {'email': email})
+            pub.processForms(forms.new_report_full, {'email': email});
         }
     };
 
     /**
      * Ajax login form process
      */
-    this.ajaxLogin = function (forms, data) {
-        this.makeVisible(forms.ajax_login_form);
-        var scope = this;
+    pub.ajaxLogin = function (forms, data) {
+        pub.makeVisible(forms.ajax_login_form);
         var cached_form = $('#' + forms.ajax_login_form);
         if (data.email) {
             cached_form.find('#login_email').val(data.email).attr({'readonly': 'True'});
@@ -126,37 +121,34 @@ function FMSForms () {
 
             $.ajax({
                 type: "POST",
-                url: fms.current_lang + "/user/ajax/login/",
+                url: FMS.current_lang + "/user/ajax/login/",
                 headers: {
                     "X-CSRFToken": $.cookie('csrftoken')
                 },
                 data: cached_form.serialize(),
                 success: function (data) {
-                    scope._ajaxLoginCallback(forms, data)
+                    pub._ajaxLoginCallback(forms, data);
                 }
             });
         });
 
     };
 
-    this._ajaxLoginCallback = function (forms, data) {
+    pub._ajaxLoginCallback = function (forms, data) {
         var cached_form = $('#' + forms.ajax_login_form);
         var error_container = cached_form.find('.error-container');
-        var scope = this;
 
         if (!data.errors) {
             $('#preform').find("input[name='csrfmiddlewaretoken']").each(function () {
-                console.log($(this));
                 $(this).val($.cookie('csrftoken'));
             });
-            scope.processForms(forms.new_report_user, data);
+            pub.processForms(forms.new_report_user, data);
         } else {
             error_container.html('');
             $.each(data.errors, function (i, val) {
-                console.log(data);
                 error_container.append(
                     '<div class="alert alert-danger" role="alert">' + val + '</div>'
-                )
+                );
             });
             cached_form.css({'cursor': 'default'});
             cached_form.find('button').removeAttr('disabled');
@@ -168,7 +160,7 @@ function FMSForms () {
      * @param forms
      * @param data
      */
-    this.newReportFull = function (forms, data) {
+    pub.newReportFull = function (forms, data) {
         var cached_form = $('#new-report');
         cached_form.css({'display': 'block', 'visibility': 'visible'}).animate({
             opacity: 1
@@ -205,11 +197,11 @@ function FMSForms () {
      * @param forms
      * @param data
      */
-    this.newReportUser = function (forms, data) {
+    pub.newReportUser = function (forms, data) {
         $('#new-report').css({'display': 'block', 'visibility': 'visible'}).animate({
             opacity: 1
         }, 1300);
-        $('.user-hidden').css({'display': 'none'}).attr({'disabled': 'disabled', 'read-only': true})
+        $('.user-hidden').css({'display': 'none'}).attr({'disabled': 'disabled', 'read-only': true});
 
         // Mark required fields
         $('#new-report').validate({
@@ -228,6 +220,6 @@ function FMSForms () {
         });
     };
 
-};
+    return pub;
 
-fmsforms = new FMSForms();
+}());

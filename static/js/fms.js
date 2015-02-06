@@ -25,7 +25,6 @@ $(function () {
             error: function (xhr) {
                 form_inputs.prop('disabled', false);
                 errors = $.parseJSON(xhr.responseText).errors;
-                console.log(errors);
                 for (var error in errors) {
                     form.find('.error-container').prepend(
                         '<div class="alert alert-dismissible alert-danger" role="alert">' + errors[error] + '</div>'
@@ -59,7 +58,6 @@ $(function () {
                 "X-CSRFToken": csrftoken
             }
         }).done(function (result) {
-            console.log(result);
             location.href = '/' + lang + next;
         });
     });
@@ -132,14 +130,12 @@ $(function () {
 });
 
 
-function FMS() {
-    if (arguments.callee._singletonInstance)
-        return arguments.callee._singletonInstance;
-    arguments.callee._singletonInstance = this;
+var FMS = (function() {
+    var pub = {};
 
-    this.current_lang = '/' + window.location.href.split('/')[3];
-    this.is_authenticated = false;
+    pub.current_lang = '/' + window.location.href.split('/')[3];
+    pub.is_authenticated = false;
 
-};
+    return pub;
 
-fms = new FMS();
+}());

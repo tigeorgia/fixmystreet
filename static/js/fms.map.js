@@ -1,39 +1,46 @@
-function FMSMarkers(map) {
-    if (arguments.callee._singletonInstance)
-        return arguments.callee._singletonInstance;
-    arguments.callee._singletonInstance = this;
-    var cluster_opts = {gridSize: 20, maxZoom: 17}
-    this.map = map;
-    this.addressmarker = '';
+var FMSMarkers = (function () {
+    var pub = {},
+        cluster_opts = {
+            gridSize: 20,
+            maxZoom: 17,
+            imagePath: 'https://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m'
+        };
+    pub.map = '';
+    pub.addressmarker = '';
+    pub.markercluster = '';
 
-    this.markericons = {
+    pub.initialize = function (map) {
+        pub.map = map;
+        pub.markercluster = new MarkerClusterer(pub.map, [], cluster_opts);
+    };
+
+    pub.markericons = {
         dragme: "/static/images/marker/default/marker.png",
         green: "/static/images/marker/default/green.png",
         red: "/static/images/marker/default/red.png",
         yellow: "/static/images/marker/default/yellow.png"
     };
-    this.markercluster = new MarkerClusterer(this.map, [], cluster_opts);
 
     /*
      Creates google.maps.Marker
      */
-    this.createMarker = function (name, latlng, opts) {
-        var timestamp = new Date().valueOf(); //Generate unique name if it's not supplied
-        var params = {};
+    pub.createMarker = function (name, latlng, opts) {
+        var marker = '', params = {},
+            timestamp = new Date().valueOf(); //Generate unique name if it's not supplied
         opts = opts || {};
 
         //Set defaults
         params.name = name || "marker_" + String(timestamp);
-        params.position = latlng || map.getCenter();
+        params.position = latlng || pub.map.getCenter();
         params.draggable = opts.draggable || false;
         params.animation = opts.animation || google.maps.Animation.DROP;
-        params.icon = opts.icon || this.markericons.dragme;
+        params.icon = opts.icon || pub.markericons.dragme;
         params.title = opts.title || "Marker";
 
         //Create marker and store in global GmapMarkers object
         marker = new google.maps.Marker({
             position: params.position,
-            map: this.map,
+            map: pub.map,
             draggable: params.draggable,
             animation: params.animation,
             icon: params.icon,
@@ -47,27 +54,26 @@ function FMSMarkers(map) {
     /**
      * Blue marker, which is draggable and used for reporting a problem
      */
-    this.addressMarker = function () {
-        var center = this.map.getCenter(); // Get center of the map where user is
-        var marker = this.addressmarker;
+    pub.addressMarker = function () {
+        var center = pub.map.getCenter(),
+            marker = pub.addressmarker;
 
         //If marker is already there, remove it and make it again. Otherwise it won't work
         if (!marker) {
-            this.addressmarker = this.createMarker('address_marker', center, {
+            pub.addressmarker = pub.createMarker('address_marker', center, {
                 draggable: true,
                 animation: google.maps.Animation.BOUNCE
             });
         } else {
-            this.addressmarker.setMap(null);
-            this.addressmarker = this.createMarker('address_marker', center, {
+            pub.addressmarker.setMap(null);
+            pub.addressmarker = pub.createMarker('address_marker', center, {
                 draggable: true,
                 animation: google.maps.Animation.BOUNCE
             });
         }
-        marker = this.addressmarker;
+        marker = pub.addressmarker;
 
         //Populate hidden input fields for problem reporting on homepage with lonlat data.
-        //TODO: Change input to one field. I.e. not separate lat and lon, but one single POINT geom field.
         google.maps.event.addListener(marker, "dragend", function () {
             marker.setAnimation(google.maps.Animation.BOUNCE);
 
@@ -83,28 +89,32 @@ function FMSMarkers(map) {
         google.maps.event.trigger(marker, "dragend");
     };
 
-};
+    return pub;
 
-function FMSMap() {
-    if (arguments.callee._singletonInstance)
-        return arguments.callee._singletonInstance;
-    arguments.callee._singletonInstance = this;
+}());
 
-    var map_options = {
-        center: new google.maps.LatLng(41.708484, 44.79847),
-        zoom: 17,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+var FMSMap = (function () {
+    var pub = {},
+        map_options = {
+            center: new google.maps.LatLng(41.708484, 44.79847),
+            zoom: 17,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+    pub.map = '';
+    pub.markers = '';
+    pub.geocoder = new google.maps.Geocoder();
+
+
+    pub.initialize = function (canvas) {
+        pub.map = new google.maps.Map(canvas, map_options);
+        FMSMarkers.initialize(pub.map);
+        pub.markers = FMSMarkers;
     };
-    this.map = new google.maps.Map(document.getElementById("map_canvas"), map_options);
-    this.markers = new FMSMarkers(this.map);
-    this.geocoder = new google.maps.Geocoder();
 
-
-    this.initialize = function () {
-        var input = (document.getElementById('address_search'));
-        var autocomplete = new google.maps.places.Autocomplete(input);
-        var scope = this;
-        autocomplete.bindTo('bounds', this.map);
+    pub.homeinit = function () {
+        var input = (document.getElementById('address_search')),
+            autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', pub.map);
         autocomplete.setComponentRestrictions({'country': 'GE'});
         window.infowindow = new google.maps.InfoWindow({
             maxWidth: 300
@@ -113,7 +123,8 @@ function FMSMap() {
         //START GOOGLE MAPS AUTOCOMPLETE
         google.maps.event.addListener(autocomplete, 'place_changed', function () {
             input.className = '';
-            var place = autocomplete.getPlace();
+            var place = autocomplete.getPlace(),
+                address = '';
             if (!place.geometry) {
                 // Inform the user that the place was not found and return.
                 input.className = 'notfound';
@@ -121,28 +132,27 @@ function FMSMap() {
             }
 
             if (place.geometry.viewport) {
-                scope.map.fitBounds(place.geometry.viewport);
+                pub.map.fitBounds(place.geometry.viewport);
             } else {
-                scope.map.setCenter(place.geometry.location);
-                scope.map.setZoom(17);
+                pub.map.setCenter(place.geometry.location);
+                pub.map.setZoom(17);
             }
 
-            var address = '';
             if (place.address_components) {
                 address = [
-                    (place.address_components[0] && place.address_components[0].short_name || ''),
-                    (place.address_components[1] && place.address_components[1].short_name || ''),
-                    (place.address_components[2] && place.address_components[2].short_name || '')
+                    ((place.address_components[0] && place.address_components[0].short_name) || ''),
+                    ((place.address_components[1] && place.address_components[1].short_name) || ''),
+                    ((place.address_components[2] && place.address_components[2].short_name) || '')
                 ].join(' ');
             }
-            scope.markers.addressMarker();
+            pub.markers.addressMarker();
         });
 
         //END GOOGLE MAPS AUTOCOMPLETE
 
-        google.maps.event.addListenerOnce(this.map, 'idle', function () {
-            fmsforms.loadDivs();
-            scope.populateMarkers();
+        google.maps.event.addListenerOnce(pub.map, 'idle', function () {
+            FMSForms.loadDivs();
+            pub.populateMarkers();
         });
 
         $('.cities-moveto li').each(function () {
@@ -150,26 +160,25 @@ function FMSMap() {
                 if ($(this).data('city')) {
                     var city = $(this).data('city');
                     $('#change-city').show();
-                    scope.moveToCity(city);
+                    pub.moveToCity(city);
                 }
             });
         });
 
-        this.jqueryfuncs();
+        pub.jqueryfuncs();
     };
 
-    this.jqueryfuncs = function(){
-        var scope = this;
+    pub.jqueryfuncs = function () {
 
         // Geocoding on homepage
         $(document).on('submit', '.address-search-form', function getLocation() {
-            var inputs = $(this).serializeArray();
-            var address = inputs[0].value.trim().replace(' ', '+');
-            var city = inputs[1].value;
+            var inputs = $(this).serializeArray(),
+                address = inputs[0].value.trim().replace(' ', '+'),
+                city = inputs[1].value;
 
-            scope.geocoder.geocode({
+            pub.geocoder.geocode({
                 address: address + ', ' + city
-            }, scope.panToStreet);
+            }, pub.panToStreet);
 
             return false;
         });
@@ -234,40 +243,41 @@ function FMSMap() {
         return data;
     };
 
-    this.mapResize = function () {
-        var window_height = $(window).height();
-        var window_width = $(window).width();
-        if (window_height < 600 && window_width < 1005)
+    pub.mapResize = function () {
+        var window_height = $(window).height(),
+            window_width = $(window).width();
+
+        if (window_height < 600 && window_width < 1005) {
             $('#map_canvas').css({
                 'height': window_height - 120
             });
+        }
     };
 
     /*Resizes google map if nesessary. Without this, map breaks. Poll it in case of animation
      */
-    this.checkSize = function () {
-        google.maps.event.trigger(this.map, 'resize');
+    pub.checkSize = function () {
+        google.maps.event.trigger(pub.map, 'resize');
     };
 
     /*
      * Moves map to city center when clicking on cities on homepage
      */
-    this.moveToCity = function (cityName) {
+    pub.moveToCity = function (cityName) {
         cityName = cityName || 'Tbilisi';
-        var cityCenter, cityData;
-        var scope = this;
+        var cityCenter,
+            cityData,
+            left_img = $('#left-image'),
+            left_width = left_img.width() - 10;
 
         $('.choose-city.hidden-lg').remove();
-        this.checkSize();
+        pub.checkSize();
         $('#desk-city').empty();
         cityData = getCityData(cityName);
         cityCenter = cityData.center.LatLng;
-        this.map.panTo(cityCenter);
-        this.map.setZoom(17);
-        this.fixCenter(true);
-
-        var left_img = $('#left-image');
-        var left_width = left_img.width() - 10;
+        pub.map.panTo(cityCenter);
+        pub.map.setZoom(17);
+        pub.fixCenter(true);
 
         $('#map_canvas').animate({
             marginLeft: '-' + left_width
@@ -278,12 +288,12 @@ function FMSMap() {
                 opacity: 1
             }, 1300);
 
-            fmsforms.processForms();
+            FMSForms.processForms();
 
             left_img.animate({
                 opacity: 0,
                 marginLeft: -1600
-            }, 800, scope.checkSize());
+            }, 800, pub.checkSize());
 
             $('.choose-city.visible-lg').remove();
 
@@ -291,56 +301,55 @@ function FMSMap() {
 
         $('.geocode-city').val(cityName);
         $('#id-city').val(cityName);
-        this.markers.addressMarker();
+        pub.markers.addressMarker();
     };
 
     /**
      * Initial loader of markers. Run when map is idle
      */
-    this.populateMarkers = function () {
-        var coords, LatLng, marker, icon;
-        var reports = this.getLatestReports();
-        var texts = {
-            readmore: gettext('Read more...')
-        };
-
-        var url = window.location.href;
-        var urlArr = url.split("/");
-        var protocol = urlArr[0] + "//";
-        var domain = urlArr[2];
-        var lang = urlArr[3];
-        var scope = this;
+    pub.populateMarkers = function () {
+        var coords, LatLng, marker, icon,
+            reports = pub.getLatestReports(),
+            texts = {
+                readmore: gettext('Read more...')
+            },
+            url = window.location.href,
+            urlArr = url.split("/"),
+            protocol = urlArr[0] + "//",
+            domain = urlArr[2],
+            lang = urlArr[3],
+            AsyncLoop;
 
         /***
          * Non-blocking loop to populate markers
          */
-        var AsyncLoop = function (i) {
+        AsyncLoop = function (i) {
             if (reports[i]['status'] == 'fixed') {
-                icon = scope.markers.markericons.green;
+                icon = pub.markers.markericons.green;
             } else if (reports[i]['status'] == 'not-fixed') {
-                icon = scope.markers.markericons.red;
+                icon = pub.markers.markericons.red;
             } else if (reports[i]['status'] == 'in-progress') {
-                icon = scope.markers.markericons.yellow;
+                icon = pub.markers.markericons.yellow;
             }
             coords = reports[i]['point']['coordinates'];
             LatLng = new google.maps.LatLng(coords[1], coords[0]);
-            marker = scope.markers.createMarker('id_marker_' + reports[i]['id'], LatLng, {icon: icon});
+            marker = pub.markers.createMarker('id_marker_' + reports[i]['id'], LatLng, {icon: icon});
             marker.description = reports[i]['description'] + '<br><a href="' + protocol + domain + '/' +
             lang + '/reports/' + reports[i]['id'] + '">' + texts.readmore + '</a>';
 
             google.maps.event.addListener(marker, 'click', function () {
-                infowindow.setContent(this.description);
-                infowindow.open(this.map, this);
+                infowindow.setContent(pub.description);
+                infowindow.open(pub.map, this);
             });
 
-            scope.markers.markercluster.addMarker(marker);
+            pub.markers.markercluster.addMarker(marker);
 
             if (i < reports.length - 1) {
                 setTimeout(function () {
                     AsyncLoop(i + 1);
-                }, 1)
+                }, 1);
             }
-        }
+        };
 
         AsyncLoop(0);
     };
@@ -348,7 +357,7 @@ function FMSMap() {
     /**
      * Gets latest reports in json format
      */
-    this.getLatestReports = function () {
+    pub.getLatestReports = function () {
         var result = '';
         $.ajax({
             url: 'ajax/latest-reports',
@@ -365,18 +374,18 @@ function FMSMap() {
     /*
      This function fixes center of the map according to width. Affects only large screens.
      */
-    this.fixCenter = function (inverted) {
+    pub.fixCenter = function (inverted) {
         var inverted = inverted || false;
         if (screen.width > 1005) {
             if (inverted) {
-                this.map.panBy(-screen.width / 7, 0);
+                pub.map.panBy(-screen.width / 7, 0);
             } else {
-                this.map.panBy(screen.width / 7, 0);
+                pub.map.panBy(screen.width / 7, 0);
             }
         }
     };
 
-    this.panToStreet = function (response, status) {
+    pub.panToStreet = function (response, status) {
         var streetObj;
 
         if (!response || status != google.maps.GeocoderStatus.OK) {
@@ -386,11 +395,13 @@ function FMSMap() {
             var steetName = streetObj.formatted_address;
 
             // Zoom in to correctly calculate pixels to move by
-            fmsmap.map.setZoom(15);
-            fmsmap.map.panTo(streetObj.geometry.location);
-            fmsmap.fixCenter();
-            fmsmap.markers.addressMarker();
+            pub.map.setZoom(15);
+            pub.map.panTo(streetObj.geometry.location);
+            pub.fixCenter();
+            pub.markers.addressMarker();
         }
     };
 
-};
+    return pub;
+
+}());
