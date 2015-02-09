@@ -1,4 +1,5 @@
 var FMSForms = (function () {
+    'use strict';
     var pub = {};
 
     /**
@@ -135,8 +136,8 @@ var FMSForms = (function () {
     };
 
     pub._ajaxLoginCallback = function (forms, data) {
-        var cached_form = $('#' + forms.ajax_login_form);
-        var error_container = cached_form.find('.error-container');
+        var cached_form = $('#' + forms.ajax_login_form),
+            error_container = cached_form.find('.error-container');
 
         if (!data.errors) {
             $('#preform').find("input[name='csrfmiddlewaretoken']").each(function () {

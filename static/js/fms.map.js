@@ -1,4 +1,5 @@
 var FMSMarkers = (function () {
+    'use strict';
     var pub = {},
         cluster_opts = {
             gridSize: 20,
@@ -94,6 +95,7 @@ var FMSMarkers = (function () {
 }());
 
 var FMSMap = (function () {
+    'use strict';
     var pub = {},
         map_options = {
             center: new google.maps.LatLng(41.708484, 44.79847),
@@ -124,7 +126,7 @@ var FMSMap = (function () {
         google.maps.event.addListener(autocomplete, 'place_changed', function () {
             input.className = '';
             var place = autocomplete.getPlace(),
-                address = '';
+                address;
             if (!place.geometry) {
                 // Inform the user that the place was not found and return.
                 input.className = 'notfound';
@@ -241,7 +243,7 @@ var FMSMap = (function () {
         data.bounds.ne.latlng = new google.maps.LatLng(data.bounds.ne.lat, data.bounds.ne.lng);
         data.bounds.LatLngBounds = new google.maps.LatLngBounds(google.maps.LatLng(data.bounds.sw.latlng, data.bounds.ne.latlng));
         return data;
-    };
+    }
 
     pub.mapResize = function () {
         var window_height = $(window).height(),
@@ -318,24 +320,24 @@ var FMSMap = (function () {
             protocol = urlArr[0] + "//",
             domain = urlArr[2],
             lang = urlArr[3],
-            AsyncLoop;
+            asyncLoop;
 
         /***
          * Non-blocking loop to populate markers
          */
-        AsyncLoop = function (i) {
-            if (reports[i]['status'] == 'fixed') {
+        asyncLoop = function (i) {
+            if (reports[i].status === 'fixed') {
                 icon = pub.markers.markericons.green;
-            } else if (reports[i]['status'] == 'not-fixed') {
+            } else if (reports[i].status === 'not-fixed') {
                 icon = pub.markers.markericons.red;
-            } else if (reports[i]['status'] == 'in-progress') {
+            } else if (reports[i].status === 'in-progress') {
                 icon = pub.markers.markericons.yellow;
             }
-            coords = reports[i]['point']['coordinates'];
+            coords = reports[i].point.coordinates;
             LatLng = new google.maps.LatLng(coords[1], coords[0]);
-            marker = pub.markers.createMarker('id_marker_' + reports[i]['id'], LatLng, {icon: icon});
-            marker.description = reports[i]['description'] + '<br><a href="' + protocol + domain + '/' +
-            lang + '/reports/' + reports[i]['id'] + '">' + texts.readmore + '</a>';
+            marker = pub.markers.createMarker('id_marker_' + reports[i].id, LatLng, {icon: icon});
+            marker.description = reports[i].description + '<br><a href="' + protocol + domain + '/' +
+            lang + '/reports/' + reports[i].id + '">' + texts.readmore + '</a>';
 
             google.maps.event.addListener(marker, 'click', function () {
                 infowindow.setContent(pub.description);
@@ -346,12 +348,12 @@ var FMSMap = (function () {
 
             if (i < reports.length - 1) {
                 setTimeout(function () {
-                    AsyncLoop(i + 1);
+                    asyncLoop(i + 1);
                 }, 1);
             }
         };
 
-        AsyncLoop(0);
+        asyncLoop(0);
     };
 
     /**
@@ -375,7 +377,7 @@ var FMSMap = (function () {
      This function fixes center of the map according to width. Affects only large screens.
      */
     pub.fixCenter = function (inverted) {
-        var inverted = inverted || false;
+        inverted = (inverted !== undefined) ? inverted : false;
         if (screen.width > 1005) {
             if (inverted) {
                 pub.map.panBy(-screen.width / 7, 0);
@@ -386,9 +388,10 @@ var FMSMap = (function () {
     };
 
     pub.panToStreet = function (response, status) {
-        var streetObj;
+        var streetObj,
+            streetName;
 
-        if (!response || status != google.maps.GeocoderStatus.OK) {
+        if (!response || status !== google.maps.GeocoderStatus.OK) {
             console.log(status);
         } else {
             streetObj = response[0];
