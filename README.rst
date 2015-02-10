@@ -10,4 +10,3 @@ Installation
 5. Migrate apps by running ``./manage.py migrate``
 6. Create your superuser account - ``./manage.py createsuperuser``
 7. Copy ``local_settings_example.py`` to ``local_settings.py`` and configure your database
-
