@@ -7,9 +7,18 @@ DATABASES = {
     }
 }
 
+DEBUG = True
+
 INTERNAL_IPS = ['127.0.0.1']
 
 ALLOWED_HOSTS = ['localhost']
+
+# Fix issues affecting webfaction
+WEBFACTION = False
+
+# Restrict access to IP's in staging environment
+STAGING = False
+STAGING_ACCESS = ('127.0.0.1',)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -37,7 +46,6 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = '25'
 EMAIL_FROM_USER = 'system@mysite.com'
 SERVER_EMAIL = EMAIL_FROM_USER
-DEBUG = True
 PIPELINE_ENABLED = not DEBUG
 LOCAL_DEV = 'http://127.0.0.1:8000'
 SITE_URL = 'http://mysite.com'
@@ -53,13 +61,12 @@ RECAPTCHA_PUBLIC_KEY = ''
 RECAPTCHA_PRIVATE_KEY = ''
 RECAPTCHA_USE_SSL = True
 
-# Set this or Django won't run
+# Secret key used for cryptographic functions. Make it strong.
 SECRET_KEY = ''
 
 SITE_ID = 0
 ADMIN_EMAIL = 'chemikucha@mysite.com'
 ADMINS = (('Name', 'admin@mysite.com'),)
-
 
 if DEBUG:
     CACHES = {

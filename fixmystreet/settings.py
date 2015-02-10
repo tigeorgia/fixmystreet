@@ -152,6 +152,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'apps.mainapp.middleware.webfaction.WebFactionFixes',
+    'apps.mainapp.middleware.staging.RestrictStagingAccess',
     'django.middleware.gzip.GZipMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -240,7 +242,7 @@ INSTALLED_APPS = (
     'stdimage',
     'bootstrap3',
     'captcha',
-    'crispy_forms'
+    'crispy_forms',
 )
 
 DEBUG = False
