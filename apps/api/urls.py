@@ -18,9 +18,14 @@ urlpatterns += patterns('',
                             name='report-updates'),
                         )
 
+urlpatterns += patterns('',
+                        url(r'^categories/$', views.CategoryListView.as_view(), name='category-list'),
+                        url(r'^categories/(?P<pk>\d+)/$', views.CategoryDetailView.as_view(), name='category-detail'),
+                        )
+
 urlpatterns +=  patterns('',
-                         url(r'^category/(?P<pk>\d+)/$', views.ReportListCreateView.as_view(), name='reportcategory-detail'),
-                         url(r'^ward/(?P<pk>\d+)/$', views.WardDetailView.as_view(), name='ward-detail'),
+                         url(r'^wards/$', views.WardListView.as_view(), name='ward-list'),
+                         url(r'^wards/(?P<pk>\d+)/$', views.WardDetailView.as_view(), name='ward-detail'),
                          )
 
 urlpatterns = format_suffix_patterns(urlpatterns)
