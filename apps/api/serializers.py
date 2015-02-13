@@ -1,8 +1,9 @@
 from rest_framework import serializers, exceptions
 
 from apps.api import fields
-from apps.mainapp.models import Report, Ward, ReportCategory
+from apps.mainapp.models import Report, Ward, ReportCategory, City
 from django.contrib.auth import authenticate
+from django.contrib.gis.geos import Point
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -10,10 +11,16 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ReportCategory
-        fields = ('id',)
+        fields = ('id', 'name')
 
+class CitySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = City
+        fields = ('id', 'name')
 
 class WardSerializer(serializers.ModelSerializer):
+    city = CitySerializer(read_only=True)
 
     class Meta:
         model = Ward
@@ -21,20 +28,27 @@ class WardSerializer(serializers.ModelSerializer):
 
 
 class ReportSerializer(serializers.ModelSerializer):
-    coordinates = fields.PointField(source='point',)
-    ward__city = serializers.IntegerField(source='ward.city.id', read_only=True)
-    # TODO convert photo to stdimagefield
+    longitude = serializers.FloatField(source='point.x')
+    latitude = serializers.FloatField(source='point.y')
+    photo = fields.StdImageField(required=False, allow_null=True)
 
     class Meta:
         model = Report
-        fields = ('id', 'title', 'category', 'ward', 'ward__city', 'created_at', 'updated_at', 'status', 'street', 'fixed_at',
-                  'sent_at', 'email_sent_to', 'coordinates', 'desc',
+        fields = ('id', 'title', 'category', 'ward', 'photo', 'created_at', 'updated_at', 'status', 'street', 'fixed_at',
+                  'sent_at', 'email_sent_to', 'longitude', 'latitude', 'desc',
         )
-        read_only_fields = ('id', 'sent_at', 'ward', 'created_at', 'updated_at', 'fixed_at', 'email_sent_to',)
+        read_only_fields = ('id', 'status', 'sent_at', 'ward', 'created_at', 'updated_at', 'fixed_at', 'email_sent_to',)
+
+    def generate_point(self, x, y):
+        return Point(x, y, srid=4326)
 
     def create(self, validated_attrs):
-        point = validated_attrs.get('point')
-        ward = Ward.objects.get(geom__contains=point)
+        point = self.generate_point(validated_attrs['point']['x'], validated_attrs['point']['y'])
+        validated_attrs['point'] = point
+        try:
+            ward = Ward.objects.get(geom__contains=point)
+        except Ward.DoesNotExist:
+            raise exceptions.ValidationError(_("Provided location doesn't belong to any of the available cities"))
         user = self.context['request'].user
         return Report.objects.create(user=user, ward=ward, **validated_attrs)
 
