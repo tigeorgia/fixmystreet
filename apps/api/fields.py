@@ -1,27 +1,22 @@
-from collections import OrderedDict
-from decimal import Decimal
-
 from rest_framework import serializers
-from django.contrib.gis.geos import Point
-from django.utils.translation import ugettext_lazy as _
 
-
-class PointField(serializers.Field):
-
+class StdImageField(serializers.ImageField):
     def __init__(self, *args, **kwargs):
-        super(PointField, self).__init__(*args, **kwargs)
-        self.points = OrderedDict([('longitude', None), ('latitude', None)])
-        self.help_text = _("Longitude and Latitude in string format. Separated by comma. "
-                           "Example: '44.7965081557,41.708484'")
+        super(StdImageField, self).__init__(*args, **kwargs)
 
-    def to_representation(self, obj):
-        self.points.update({'longitude': obj.x, 'latitude': obj.y})
-        return self.points
+    def get_variations(self, value):
+        stdimagefield = value.field
+        variations = {}
+        if hasattr(stdimagefield, 'variations'):
+            for name, variation in stdimagefield.variations.iteritems():
+                if hasattr(value, name):
+                    variations[name] = variation
+                    variations[name]['url'] = getattr(value, name).url
+        return variations if variations else None
 
-    def to_internal_value(self, value):
-        lonlat = [Decimal(x.strip()) for x in value.split(',')]
-        try:
-            point = Point(lonlat)
-        except TypeError:
-            raise serializers.ValidationError('Point field should be Longitude and Latitude string, separated by comma')
-        return point
+    def to_representation(self, value):
+        variations = self.get_variations(value)
+        return variations
+
+    def to_internal_value(self, data):
+        return super(StdImageField, self).to_internal_value(data)
