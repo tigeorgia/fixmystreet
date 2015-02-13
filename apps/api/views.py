@@ -9,11 +9,11 @@ from rest_framework.reverse import reverse as reverse
 from django.http import Http404
 from collections import OrderedDict
 
-from apps.mainapp.models import Report, Ward
+from apps.mainapp.models import Report, Ward, ReportCategory
 from apps.mainapp.utils import ReportCount
 from apps.mainapp.filters import ReportFilter
-from .serializers import ReportSerializer, WardSerializer, AuthTokenSerializer
-from metadata import ReportMetaData, AuthTokenMetaData, ReportCountMetadata
+from .serializers import ReportSerializer, WardSerializer, AuthTokenSerializer, CategorySerializer
+from metadata import AuthTokenMetaData, ReportCountMetadata
 
 
 class LoginRedirectView(RedirectView):
@@ -43,15 +43,34 @@ class APIRootView(APIView):
     `Authorization: Token 401f7ac837da42b97f613d789819ff93537bee6a`
 
     # Endpoints:
+
+    ___
+
     ## Authorization:
-    Obtain token: [/api/get-token/](/api/get-token/)
+    * Obtain token: [/api/get-token/](/api/get-token/)
+
+    ___
 
     ## Reports:
-    List: [/api/reports/](/api/reports/)
+    * List: [/api/reports/](/api/reports/)
 
-    Detail: [/api/reports/<id\>/](/api/reports/<id>/)
+    * Detail: [/api/reports/<id\>/](/api/reports/<id>/)
 
-    Counts: [/api/reports/counts/](/api/reports/counts/)
+    * Counts: [/api/reports/counts/](/api/reports/counts/)
+
+    ___
+
+    ## Wards:
+    * List: [/api/wards/](/api/wards/)
+
+    * Detail: [/api/wards/<id\>/](/api/wards/<id>/)
+
+    ___
+
+    ## Categories:
+    * List: [/api/categories/](/api/categories/)
+
+    * Detail: [/api/categories/<id\>/](/api/categories/<id>/)
 
 
     """
@@ -89,7 +108,6 @@ class ReportListCreateView(generics.ListCreateAPIView):
     paginate_by = 10
     paginate_by_param = 'page_size'
     max_paginate_by = 100
-    metadata_class = ReportMetaData
     filter_class = ReportFilter
     ordering_fields = ('created_at',)
 
@@ -108,6 +126,29 @@ class ReportDetailView(APIView):
         serializer = ReportSerializer(report)
         return Response(serializer.data)
 
+
+class CategoryListView(generics.ListAPIView):
+    queryset = ReportCategory.objects.all()
+    serializer_class = CategorySerializer
+
+class CategoryDetailView(APIView):
+    model = ReportCategory
+
+    def get_object(self, pk):
+        try:
+            return ReportCategory.objects.get(pk=pk)
+        except ReportCategory.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        category = self.get_object(pk)
+        serializer = CategorySerializer(category, context={'request': request})
+        return Response(serializer.data)
+
+
+class WardListView(generics.ListAPIView):
+    queryset = Ward.objects.all()
+    serializer_class = WardSerializer
 
 class WardDetailView(APIView):
     model = Ward
