@@ -17,3 +17,4 @@ class ReportFilter(FilterSet):
     class Meta:
         model = Report
         fields = ['ward__city', 'category', 'from_date', 'to_date']
+        order_by = True

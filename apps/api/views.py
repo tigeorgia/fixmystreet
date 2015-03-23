@@ -9,10 +9,10 @@ from rest_framework.reverse import reverse as reverse
 from django.http import Http404
 from collections import OrderedDict
 
-from apps.mainapp.models import Report, Ward, ReportCategory
+from apps.mainapp.models import Report, Ward, ReportCategory, FaqEntry
 from apps.mainapp.utils import ReportCount
 from apps.mainapp.filters import ReportFilter
-from .serializers import ReportSerializer, WardSerializer, AuthTokenSerializer, CategorySerializer
+from .serializers import ReportSerializer, WardSerializer, AuthTokenSerializer, CategorySerializer, FaqEntrySerializer
 from metadata import AuthTokenMetaData, ReportCountMetadata
 
 
@@ -71,6 +71,11 @@ class APIRootView(APIView):
     * List: [/api/categories/](/api/categories/)
 
     * Detail: [/api/categories/<id\>/](/api/categories/<id>/)
+
+    ___
+
+    ## FAQ:
+    * List: [/api/faq/](/api/faq/)
 
 
     """
@@ -131,6 +136,7 @@ class CategoryListView(generics.ListAPIView):
     queryset = ReportCategory.objects.all()
     serializer_class = CategorySerializer
 
+
 class CategoryDetailView(APIView):
     model = ReportCategory
 
@@ -150,6 +156,12 @@ class WardListView(generics.ListAPIView):
     queryset = Ward.objects.all()
     serializer_class = WardSerializer
 
+
+class FaqEntryListView(generics.ListAPIView):
+    queryset = FaqEntry.objects.all().order_by('order')
+    serializer_class = FaqEntrySerializer
+
+
 class WardDetailView(APIView):
     model = Ward
 
@@ -163,6 +175,7 @@ class WardDetailView(APIView):
         ward = self.get_object(pk)
         serializer = WardSerializer(ward, context={'request': request})
         return Response(serializer.data)
+
 
 class ObtainAuthTokenView(ObtainAuthToken):
     """

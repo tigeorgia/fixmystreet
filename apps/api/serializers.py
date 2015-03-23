@@ -1,23 +1,23 @@
 from rest_framework import serializers, exceptions
 
 from apps.api import fields
-from apps.mainapp.models import Report, Ward, ReportCategory, City
+from apps.mainapp.models import Report, Ward, ReportCategory, City, FaqEntry
 from django.contrib.auth import authenticate
 from django.contrib.gis.geos import Point
 from django.utils.translation import ugettext_lazy as _
 
 
 class CategorySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ReportCategory
         fields = ('id', 'name')
 
-class CitySerializer(serializers.ModelSerializer):
 
+class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
         fields = ('id', 'name')
+
 
 class WardSerializer(serializers.ModelSerializer):
     city = CitySerializer(read_only=True)
@@ -27,6 +27,13 @@ class WardSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'city')
 
 
+class FaqEntrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FaqEntry
+        fields = ('id', 'order', 'q_en', 'a_en', 'q_ka', 'a_ka')
+
+
+
 class ReportSerializer(serializers.ModelSerializer):
     longitude = serializers.FloatField(source='point.x')
     latitude = serializers.FloatField(source='point.y')
@@ -34,8 +41,9 @@ class ReportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Report
-        fields = ('id', 'title', 'category', 'ward', 'photo', 'created_at', 'updated_at', 'status', 'street', 'fixed_at',
-                  'sent_at', 'email_sent_to', 'longitude', 'latitude', 'desc',
+        fields = (
+            'id', 'title', 'category', 'ward', 'photo', 'created_at', 'updated_at', 'status', 'street', 'fixed_at',
+            'sent_at', 'email_sent_to', 'longitude', 'latitude', 'desc',
         )
         read_only_fields = ('id', 'status', 'sent_at', 'ward', 'created_at', 'updated_at', 'fixed_at', 'email_sent_to',)
 
@@ -51,6 +59,7 @@ class ReportSerializer(serializers.ModelSerializer):
             raise exceptions.ValidationError(_("Provided location doesn't belong to any of the available cities"))
         user = self.context['request'].user
         return Report.objects.create(user=user, ward=ward, **validated_attrs)
+
 
 class AuthTokenSerializer(serializers.Serializer):
     email = serializers.CharField()
