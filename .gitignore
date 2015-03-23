@@ -5,4 +5,5 @@
 media/photos
 apache
 fixmystreet/local_settings.py
+error.log
 .idea
