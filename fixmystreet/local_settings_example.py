@@ -1,3 +1,7 @@
+import os, sys
+
+PROJECT_PATH = os.path.dirname(os.path.dirname(__file__))
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
@@ -82,3 +86,33 @@ else:
             'TIMEOUT': 300
         }
     }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(PROJECT_PATH, 'error.log'),
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'stdimage': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'fms': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        }
+    },
+}
+
