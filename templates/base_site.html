@@ -1,12 +1,12 @@
 ﻿<!DOCTYPE html>
 {% load i18n %} {% get_current_language as LANGUAGE_CODE %}
 {% load static from staticfiles %}
-{% load compressed %}
+{% load pipeline %}
 {% load settings_in_templates %}
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
     <title>{% block title %}{% endblock %} | {% trans "FixMyStreet .ge" %}</title>
-    {% compressed_css 'main_css' %}
+    {% stylesheet 'main_css' %}
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="alternate" hreflang="ka" href="https://www.chemikucha.ge/ka/" />
@@ -16,20 +16,20 @@
     {% endblock %}
 
     <!--[if IE 8]>
-    {% compressed_js 'ie_js' %}
-    {% compressed_css 'ie' %}
+    {% javascript 'ie_js' %}
+    {% stylesheet 'ie' %}
     <![endif]-->
 
     <!--[if lt IE 8]>
-    {% compressed_css 'ie_deprecated' %}
+    {% stylesheet 'ie_deprecated' %}
     <![endif]-->
 
     <script type="text/javascript" src="{% url 'django.views.i18n.javascript_catalog' %}"></script>
 <script type="text/javascript"
             src="https://maps.googleapis.com/maps/api/js?key={% settings_value "GMAP_KEY" %}&sensor=true&libraries=places"></script>
-    {% compressed_js 'jquery' %}
-    {% compressed_js 'lib' %}
-    {% compressed_js 'app' %}
+    {% javascript 'jquery' %}
+    {% javascript 'lib' %}
+    {% javascript 'app' %}
 
     {% block css %}{% endblock %}
 
