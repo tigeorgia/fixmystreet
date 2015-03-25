@@ -42,7 +42,7 @@ DEBUG_TOOLBAR_PATCH_SETTINGS = False
 # START Pipeline settings
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
-#If javascript breaks, set this to true
+# If javascript breaks, set this to true
 PIPELINE_DISABLE_WRAPPER = True
 
 PIPELINE_COMPILERS = (
@@ -122,7 +122,7 @@ PIPELINE_YUI_JS_ARGUMENTS = ''
 PIPELINE_ENABLED = True
 # END Pipeline settings
 
-#PREPEND_WWW = True
+# PREPEND_WWW = True
 
 ADMIN_MEDIA_ROOT = 'django.contrib.admin.media'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
@@ -148,7 +148,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
-    "django.contrib.messages.context_processors.messages"
+    "django.contrib.messages.context_processors.messages",
+    "allauth.account.context_processors.account",
+    "allauth.socialaccount.context_processors.socialaccount",
 )
 
 MIDDLEWARE_CLASSES = (
@@ -243,7 +245,27 @@ INSTALLED_APPS = (
     'bootstrap3',
     'captcha',
     'crispy_forms',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
 )
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+SOCIALACCOUNT_PROVIDERS = \
+    {'facebook':
+         {'SCOPE': ['email', 'publish_stream'],
+          'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+          'METHOD': 'oauth2',
+          'LOCALE_FUNC': 'path.to.callable',
+          'VERIFIED_EMAIL': True,
+          'VERSION': 'v2.2'}
+
+    }
 
 DEBUG = False
 LOCAL_DEV = False
