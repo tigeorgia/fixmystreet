@@ -6,7 +6,8 @@ from captcha.fields import ReCaptchaField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset
 
-from apps.users.models import FMSUser, FMSUserValidators, FMSPasswordResetToken
+from apps.users.models import FMSUser, FMSUserTempToken
+from apps.users.validators import FMSUserValidators
 
 
 class FMSUserCreationForm(forms.ModelForm):

@@ -7,7 +7,8 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
 
 from apps.mainapp.models import Report, ReportUpdate, ReportSubscriber, ReportCategory
-from apps.users.models import FMSUser, FMSUserValidators
+from apps.users.models import FMSUser
+from apps.users.validators import FMSUserValidators
 
 class ContactForm(forms.Form):
     name = forms.CharField(max_length=100,

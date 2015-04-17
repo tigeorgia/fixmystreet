@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.template.loader import render_to_string
 from django.contrib import messages
 
-from .models import FMSUser, FMSPasswordResetToken
+from .models import FMSUser, FMSUserTempToken
 from .signals import user_confirmed
 from utils.utils import get_client_ip
 import forms
@@ -86,7 +86,7 @@ class TokenConfirmationView(TemplateView):
 class PasswordResetView(FormView):
     form_class = forms.PasswordResetStart
     template_name = 'users/reset.html'
-    model = FMSPasswordResetToken
+    model = FMSUserTempToken
     success_url = '/'
 
     def get_context_data(self, **kwargs):
@@ -118,7 +118,7 @@ class PasswordResetView(FormView):
 class PasswordResetConfirmView(FormView):
     form_class = forms.PasswordResetConfirm
     template_name = 'users/reset.html'
-    model = FMSPasswordResetToken
+    model = FMSUserTempToken
     success_url = reverse_lazy('users:login')
     object = None # Token object
 

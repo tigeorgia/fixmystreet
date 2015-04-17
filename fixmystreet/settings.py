@@ -179,8 +179,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
-    "allauth.account.context_processors.account",
-    "allauth.socialaccount.context_processors.socialaccount",
 )
 
 TEMPLATE_DIRS = (
@@ -298,15 +296,10 @@ INSTALLED_APPS = (
     'rosetta',
     'widget_tweaks',
     'rest_framework',
-    'rest_framework.authtoken',
     'stdimage',
     'bootstrap3',
     'captcha',
     'crispy_forms',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.facebook',
 )
 
 ######################################

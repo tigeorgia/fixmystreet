@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.contrib.auth.tokens import default_token_generator
-from django.core.exceptions import ValidationError
 
 from django.utils.translation import ugettext_lazy as _
 from django.utils import translation
@@ -37,36 +36,6 @@ class FMSUserManager(BaseUserManager):
         return self._create_user(username, email, password, True, True,
                                  **extra_fields)
 
-class FMSUserValidators(object):
-
-    def validate_passwords(self, password1, password2):
-        error_messages = {
-            'password_insecure': _('Password should contain at least 8 characters, 1 alpha numeric and 1 digit'),
-            'not_confirmed': _("Account is not confirmed. Confirmation email has been resent")
-        }
-        if not password1 or not password2:
-            raise ValidationError(_("Please provide the password"))
-        if password1 != password2:
-            raise ValidationError(_("Passwords don't match!"))
-        if len(password2) < 8:
-            raise ValidationError(error_messages['password_insecure'], code='password_insecure')
-        if not any(char.isdigit() for char in password2):
-            raise ValidationError(error_messages['password_insecure'], code='password_insecure')
-        if not any(char.isalpha() for char in password2):
-            raise ValidationError(error_messages['password_insecure'], code='password_insecure')
-
-        return password2
-
-    def validate_username(self, username):
-        try:
-            FMSUser.objects.get(username=username)
-        except FMSUser.DoesNotExist:
-            return username
-        raise ValidationError(
-            _("User with that username already exists."),
-            code='duplicate_username',
-        )
-
 
 class FMSUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), max_length=254, unique=True)
@@ -90,6 +59,7 @@ class FMSUser(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
+        db_table = 'users_fms_user'
 
     @classmethod
     def username_exists(cls, username):
@@ -132,7 +102,56 @@ class FMSUser(AbstractBaseUser, PermissionsMixin):
         return " ".join([self.first_name, self.email])
 
 
-class FMSSettings(models.Model):
+class BaseToken(models.Model):
+    token = models.CharField(_('token'), max_length=255)
+    date_created = models.DateTimeField(_('date created'), auto_now_add=True)
+
+    @staticmethod
+    def generate_token():
+        return binascii.hexlify(os.urandom(20)).decode()
+
+    def save(self, *args, **kwargs):
+        self.token = self.generate_token()
+        super(BaseToken, self).save(*args, **kwargs)
+
+    class Meta:
+        abstract = True
+
+
+class FMSUserTempToken(BaseToken):
+    """
+    Token for handling confirmations. Such as email or password reset
+    """
+    user = models.ForeignKey('users.FMSUser', related_name='temp_token')
+    ip = models.GenericIPAddressField(null=True)
+    used = models.BooleanField(default=False)
+    used_ip = models.GenericIPAddressField(help_text="IP of request which used the token", null=True)
+
+    @classmethod
+    def get_or_create_token(cls, user):
+        try:
+            token = cls.objects.filter(user=user, used=False).latest('created_at')
+            return token
+        except cls.DoesNotExist:
+            return cls.objects.create(user=user)
+
+    def get_absolute_url(self):
+        url = ''.join(settings.SITE_URL + str(reverse_lazy('users:confirm', kwargs={'token': self.token})))
+        return url
+
+    class Meta:
+        db_table = 'users_fms_user_temp_token'
+
+
+class FMSUserAuthToken(BaseToken):
+    user = models.OneToOneField('users.FMSUser', related_name='auth_token')
+    date_modified = models.DateTimeField(_('date modified'), auto_now=True)
+
+    class Meta:
+        db_table = 'users_fms_user_auth_token'
+
+
+class FMSUserSettings(models.Model):
     LANGUAGE_CHOICES = (
         ('ka', _('Georgian')),
         ('en', _('English'))
@@ -141,54 +160,8 @@ class FMSSettings(models.Model):
     user = models.OneToOneField(FMSUser, primary_key=True, related_name='user_settings')
     language = models.CharField(_('language'), max_length=2, choices=LANGUAGE_CHOICES, default='ka')
 
-
-class AbstractToken(models.Model):
-
     class Meta:
-        abstract = True
+        db_table = 'users_fms_user_settings'
 
-    def save(self, *args, **kwargs):
-        if not self.token:
-            self.token = self._generate_token()
-        super(AbstractToken, self).save(*args, **kwargs)
-
-    @staticmethod
-    def _generate_token():
-        return binascii.hexlify(os.urandom(20)).decode()
-
-    def generate_new(self):
-        self.token = self._generate_token()
-        return self
-
-
-class FMSUserToken(AbstractToken):
-    user = models.OneToOneField(FMSUser, related_name='fms_user_token')
-    token = models.CharField(max_length=40, unique=True, primary_key=True)
-    created_at = models.DateTimeField(_('created at'), auto_now=True)
-
-    def get_absolute_url(self):
-        url = ''.join(settings.SITE_URL + str(reverse_lazy('users:confirm', kwargs={'token': self.token})))
-        return url
-
-
-class FMSPasswordResetToken(AbstractToken):
-    user = models.ForeignKey(FMSUser, related_name='password_reset_token')
-    token = models.CharField(max_length=40, unique=True, primary_key=True)
-    created_at = models.DateTimeField(_('created at'), auto_now=True)
-    ip = models.GenericIPAddressField(null=True)
-    used = models.BooleanField(default=False)
-    used_ip = models.GenericIPAddressField(help_text="IP of request which used the token", null=True)
-
-    def get_absolute_url(self):
-        url = ''.join(settings.SITE_URL + str(reverse_lazy('users:reset_confirm', kwargs={'token': self.token})))
-        return url
-
-    @classmethod
-    def get_unused_token(cls, user):
-        try:
-            token = cls.objects.filter(user=user, used=False).latest('created_at')
-            return token
-        except cls.DoesNotExist:
-            return None
 
 from .receivers import *

@@ -2,11 +2,11 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 
-from apps.users.models import FMSUser, FMSSettings
+from apps.users.models import FMSUser, FMSUserSettings
 from apps.users.forms import FMSUserCreationForm, FMSUserChangeForm
 
 class FMSSettingsInline(admin.TabularInline):
-    model = FMSSettings
+    model = FMSUserSettings
 
 
 class FMSUserAdmin(UserAdmin):
