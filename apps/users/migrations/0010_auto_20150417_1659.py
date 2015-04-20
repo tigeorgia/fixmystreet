@@ -2,6 +2,18 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import os
+import binascii
+
+
+def generate_new_auth_tokens(apps, schema_editor):
+    User = apps.get_model('users', 'FMSUser')
+    AuthToken = apps.get_model('users', 'FMSUserAuthToken')
+    users = User.objects.all()
+    for user in users:
+        token = AuthToken(token=binascii.hexlify(os.urandom(20)).decode())
+        token.user_id = user.id
+        token.save()
 
 
 class Migration(migrations.Migration):
@@ -11,20 +23,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterModelTable(
-            name='fmsuser',
-            table='users_fms_user',
-        ),
-        migrations.AlterModelTable(
-            name='fmsuserauthtoken',
-            table='users_fms_user_auth_token',
-        ),
-        migrations.AlterModelTable(
-            name='fmsusersettings',
-            table='users_fms_user_settings',
-        ),
-        migrations.AlterModelTable(
-            name='fmsusertemptoken',
-            table='users_fms_user_temp_token',
-        ),
+        migrations.RunPython(generate_new_auth_tokens),
     ]
