@@ -59,6 +59,18 @@ html, body {
   padding: 0 0 130px;
 }
 
+.row-no-padding {
+  [class*="col-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+.row-no-margin {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
 /* RESPONSIVE TABLES */
 
 @media only screen and (max-width: 992px) {
@@ -196,8 +208,8 @@ button#home-search:hover {
   padding: 5px;
   top: 3px;
   overflow: visible;
-  z-index:1042;
-  display:none;
+  z-index: 1042;
+  display: none;
 }
 
 #change-city span:nth-child(1) {
@@ -208,7 +220,7 @@ button#home-search:hover {
   border-left: 1px solid #999999;
 }
 
-.navbar-nav > li:last-child{
+.navbar-nav > li:last-child {
   border-right: 1px solid #999999;
 }
 
@@ -240,7 +252,7 @@ button#home-search:hover {
 }
 
 .start-hidden-form {
-  opacity:0;
+  opacity: 0;
   visibility: hidden;
   display: none;
 }
@@ -701,13 +713,13 @@ ul.dropdown-menu {
   z-index: 1090;
 }
 
-@media (min-width: @screen-md-min){
-  #login-dropdown{
-    width:280px;
-    padding:8px;
+@media (min-width: @screen-md-min) {
+  #login-dropdown {
+    width: 280px;
+    padding: 8px;
   }
 }
 
-.facebook-icon{
+.facebook-icon {
   content: "\f09a";
 }

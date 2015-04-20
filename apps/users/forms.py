@@ -4,7 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import authenticate
 from captcha.fields import ReCaptchaField
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset
+from crispy_forms.layout import Layout, Fieldset, Div, Field, MultiField, ButtonHolder
+from crispy_forms.bootstrap import InlineField, StrictButton
 
 from apps.users.models import FMSUser, FMSUserTempToken
 from apps.users.validators import FMSUserValidators
@@ -20,17 +21,36 @@ class FMSUserCreationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.user_validators = FMSUserValidators()
         super(FMSUserCreationForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.form_class = 'form-inline'
+        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
+        self.helper.error_text_inline = True
+        self.helper.layout = Layout(
+                'username',
+                'email',
+                Div(
+                    Div('first_name', css_class='col-md-6 col-sm-6'),
+                    Div('last_name', css_class='col-md-6 col-sm-6'),
+                    css_class='row row-no-margin',
+                ),
+                'phone',
+                Div(
+                    Div('password1'),
+                    Div('password2'),
+                ),
+            ButtonHolder(
+                StrictButton(_('Register'), css_class='btn btn-default btn-block btn-lg', type='submit')
+            )
+        )
 
     class Meta:
         model = FMSUser
-        fields = ('username', 'first_name', 'password1', 'password2', 'last_name', 'email', 'phone')
+        fields = ['username', 'email', 'first_name', 'last_name', 'phone', 'password1', 'password2']
 
     def clean(self):
-        password1 = self.cleaned_data.get('password1')
-        password2 = self.cleaned_data.get('password2')
-        username = self.cleaned_data.get('username')
-        self.user_validators.validate_passwords(password1, password2)
-        self.user_validators.validate_username(username)
+        cleaned_data = self.cleaned_data
+        self.user_validators.validate(**cleaned_data)
         return self.cleaned_data
 
     def save(self, commit=True):

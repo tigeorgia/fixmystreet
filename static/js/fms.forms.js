@@ -30,9 +30,8 @@ var FMSForms = (function () {
 
         // All available forms.
         var forms = {
-            'check_email_form': 'check-email',
+            'signup_or_login': 'signup-login',
             'ajax_login_form': 'ajax-login',
-            'new_report_full': 'new-report-full',
             'new_report_user': 'new-report-user'
         };
         form = form || 'startFormCheck';
@@ -43,7 +42,7 @@ var FMSForms = (function () {
             case 'startFormCheck':
                 this.startFormCheck(forms);
                 break;
-            case forms.check_email_form:
+            case forms.signup_or_login:
                 $('#' + forms.ajax_login_form).hide();
                 this.checkEmail(forms);
                 break;
@@ -51,12 +50,7 @@ var FMSForms = (function () {
                 $('#' + forms.check_email_form).hide();
                 this.ajaxLogin(forms, other_data);
                 break;
-            case forms.new_report_full:
-                $('#' + forms.check_email_form).hide();
-                this.newReportFull(forms, other_data);
-                break;
             case forms.new_report_user:
-                $('#' + forms.check_email_form).hide();
                 $('#' + forms.ajax_login_form).hide();
                 this.newReportUser(forms, other_data);
                 break;
@@ -72,21 +66,8 @@ var FMSForms = (function () {
         }
     };
 
-    /**
-     * Check if user email exists. Passes result to callback
-     * @param forms Forms object.
-     */
-    pub.checkEmail = function (forms) {
-        this.makeVisible(forms.check_email_form);
+    pub.signupOrLogin = function (forms){
 
-        $('#' + forms.check_email_form).submit(function (event) {
-            event.preventDefault();
-            var email = $(this).serializeArray()[0].value;
-
-            $.get(FMS.current_lang + '/user/email-exists', {'email': email}, function (data) {
-                pub._checkEmailCallback(data, forms, email);
-            });
-        });
     };
 
     /**
@@ -157,44 +138,7 @@ var FMSForms = (function () {
     };
 
     /**
-     * Full report form. I.e. user is not registered
-     * @param forms
-     * @param data
-     */
-    pub.newReportFull = function (forms, data) {
-        var cached_form = $('#new-report');
-        cached_form.css({'display': 'block', 'visibility': 'visible'}).animate({
-            opacity: 1
-        }, 1300);
-
-        cached_form.find('#id_report_start-email').val(data.email);
-
-        // Mark required fields
-        cached_form.validate({
-            ignore: "",
-            rules: {
-                title: "required",
-                street: "required",
-                first_name: "required",
-                last_name: "required",
-                phone: "required",
-                email: "required",
-                lon: "required",
-                lat: "required"
-            },
-            messages: {
-                title: gettext("Please enter problem title"),
-                street: gettext("Enter street"),
-                lon: "Set point on map!"
-            },
-            submitHandler: function (form) {
-                form.submit();
-            }
-        });
-    };
-
-    /**
-     * User form. I.e. user is registered and only some fields are required
+     * User form. I.e. user is registered
      * @param forms
      * @param data
      */

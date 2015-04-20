@@ -1,4 +1,4 @@
-from django.views.generic import View, FormView, TemplateView, CreateView, UpdateView
+from django.views.generic import View, FormView, TemplateView, CreateView
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse_lazy
 from django.http import JsonResponse, HttpResponseRedirect, Http404
@@ -13,21 +13,28 @@ from utils.utils import get_client_ip
 import forms
 
 
-class EmailExistsView(View):
-    http_method_names = ['get']
+class SignupView(CreateView):
+    model = FMSUser
+    form_class = forms.FMSUserCreationForm
+    success_url = '/'
+    template_name = 'users/signup.html'
+    messages = {'success': _('Signup was successful. Please check your email for verification')}
 
-    def _email_exists(self, email):
-        try:
-            user = FMSUser.objects.get(email=email)
-        except ObjectDoesNotExist:
-            return False
+    def form_invalid(self, form):
+        response = super(SignupView, self).form_invalid(form)
+        if self.request.is_ajax():
+            return JsonResponse({'success': False,
+                                 'errors': form.errors.as_json(escape_html=True)})
+        else:
+            return response
 
-        return True
-
-    def get(self, request, *args, **kwargs):
-        email = request.GET.get('email')
-        response = {'email_exists': True if self._email_exists(email) else False}
-        return JsonResponse(response)
+    def form_valid(self, form):
+        response = super(SignupView, self).form_valid(form)
+        if self.request.is_ajax():
+            return JsonResponse({'success': True,
+                                 'message': self.messages['success']})
+        else:
+            return response
 
 
 class AjaxLoginView(View):
@@ -99,7 +106,7 @@ class PasswordResetView(FormView):
         subject = _('Password confirmation')
         message = render_to_string('users/reset_confirm.txt',
                                    {'user': self.object.user, 'reset_url': url}
-        )
+                                   )
         self.object.user.email_user(subject=subject, message=message)
 
     def form_valid(self, form):
@@ -120,7 +127,7 @@ class PasswordResetConfirmView(FormView):
     template_name = 'users/reset.html'
     model = FMSUserTempToken
     success_url = reverse_lazy('users:login')
-    object = None # Token object
+    object = None  # Token object
 
     def update_token(self):
         self.object.used = True

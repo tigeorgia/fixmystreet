@@ -5792,6 +5792,14 @@ body {
   margin: 0 auto -100px;
   padding: 0 0 130px;
 }
+.row-no-padding [class*="col-"] {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.row-no-margin {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
 /* RESPONSIVE TABLES */
 @media only screen and (max-width: 992px) {
   /* Force table to not be like tables anymore */
