@@ -99,7 +99,7 @@ class FMSUser(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, from_email, [self.email,], **kwargs)
 
     def __unicode__(self):
-        return " ".join([self.first_name, self.email])
+        return self.email
 
 
 class BaseToken(models.Model):
