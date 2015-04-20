@@ -265,7 +265,7 @@ SOCIALACCOUNT_PROVIDERS = \
           'VERIFIED_EMAIL': True,
           'VERSION': 'v2.2'}
 
-    }
+     }
 
 ######################################
 
@@ -284,7 +284,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
-    'django.contrib.formtools',
+    'formtools',
     'transmeta',
     'ignore_lang',
     'apps.mainapp',
@@ -310,21 +310,62 @@ INSTALLED_APPS = (
 ######################################
 
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
-DEBUG = False
-LOCAL_DEV = False
 
 ######################################
 
 
-try:
-    from local_settings import *
-except ImportError:
-    try:
-        from mod_python import apache
+######################################
+# ############ LOGGING ###############
+######################################
 
-        apache.log_error("local_settings.py not set; using default settings", apache.APLOG_NOTICE)
-    except ImportError:
-        import sys
+LOG_PATH = os.path.join(PROJECT_PATH, 'var/log/')
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'WARNING',
+            'class': 'apps.mainapp.deferred_logging.DefferedFileHandler',
+            'filename': 'error.log',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+        'stdimage': {
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+        'fms': {
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': True,
+        }
+    },
+}
 
-        sys.stderr.write("local_settings.py not set; using default settings\n")
+######################################
 
+
+from local_settings import *
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    EMAIL_FILE_PATH = os.path.join(PROJECT_PATH, 'var/log/email.log')
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+            'LOCATION': os.path.join(PROJECT_PATH, 'var/cache/'),
+            'TIMEOUT': 300
+        }
+    }
