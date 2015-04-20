@@ -74,34 +74,3 @@ SITE_ID = 0
 ADMIN_EMAIL = 'chemikucha@mysite.com'
 ADMINS = (('Name', 'admin@mysite.com'),)
 
-
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(PROJECT_PATH, 'error.log'),
-        },
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-        'stdimage': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-        'fms': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': True,
-        }
-    },
-}
-
