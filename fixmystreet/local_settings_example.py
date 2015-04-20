@@ -38,6 +38,7 @@ STATIC_ROOT = ""
 PIPELINE_LESS_BINARY = (
     '/usr/local/bin/lessc'
 )
+
 ROOT_URLCONF = 'fixmystreet.urls'
 
 # Path to YUI binary
@@ -50,6 +51,7 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = '25'
 EMAIL_FROM_USER = 'system@mysite.com'
 SERVER_EMAIL = EMAIL_FROM_USER
+
 PIPELINE_ENABLED = not DEBUG
 LOCAL_DEV = 'http://127.0.0.1:8000'
 SITE_URL = 'http://mysite.com'
@@ -72,20 +74,7 @@ SITE_ID = 0
 ADMIN_EMAIL = 'chemikucha@mysite.com'
 ADMINS = (('Name', 'admin@mysite.com'),)
 
-if DEBUG:
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-        }
-    }
-else:
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-            'LOCATION': '/var/tmp/chemikucha_cache',
-            'TIMEOUT': 300
-        }
-    }
+
 
 LOGGING = {
     'version': 1,
