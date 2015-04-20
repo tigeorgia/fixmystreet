@@ -2,7 +2,7 @@ import datetime
 import os
 
 from django.views.generic import TemplateView
-from django.contrib.formtools.wizard.views import SessionWizardView
+from formtools.wizard.views import SessionWizardView
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
