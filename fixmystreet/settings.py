@@ -253,19 +253,7 @@ AUTH_USER_MODEL = 'users.FMSUser'
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
 )
-
-SOCIALACCOUNT_PROVIDERS = \
-    {'facebook':
-         {'SCOPE': ['email', 'publish_stream'],
-          'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-          'METHOD': 'oauth2',
-          'LOCALE_FUNC': 'path.to.callable',
-          'VERIFIED_EMAIL': True,
-          'VERSION': 'v2.2'}
-
-     }
 
 ######################################
 
