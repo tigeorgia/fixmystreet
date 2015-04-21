@@ -3,7 +3,7 @@ import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = patterns('',
-                       url(r'^signup/$', views.SignupView.as_view()),
+                       url(r'^register/$', views.RegistrationView.as_view()),
                        url(r'^confirm/(?P<token>\w+)/$', views.TokenConfirmationView.as_view(), name='confirm'),
                        url(r'^login/$', views.LoginView.as_view(), name='login'),
                        url(r'^reset/$', views.PasswordResetView.as_view(), name='reset'),

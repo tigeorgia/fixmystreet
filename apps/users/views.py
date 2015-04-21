@@ -13,7 +13,7 @@ from utils.utils import get_client_ip
 import forms
 
 
-class SignupView(CreateView):
+class RegistrationView(CreateView):
     model = FMSUser
     form_class = forms.FMSUserCreationForm
     success_url = '/'
@@ -21,7 +21,7 @@ class SignupView(CreateView):
     messages = {'success': _('Signup was successful. Please check your email for verification')}
 
     def form_invalid(self, form):
-        response = super(SignupView, self).form_invalid(form)
+        response = super(RegistrationView, self).form_invalid(form)
         if self.request.is_ajax():
             return JsonResponse({'success': False,
                                  'errors': form.errors.as_json(escape_html=True)})
@@ -29,7 +29,7 @@ class SignupView(CreateView):
             return response
 
     def form_valid(self, form):
-        response = super(SignupView, self).form_valid(form)
+        response = super(RegistrationView, self).form_valid(form)
         if self.request.is_ajax():
             return JsonResponse({'success': True,
                                  'message': self.messages['success']})

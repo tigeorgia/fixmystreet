@@ -30,7 +30,7 @@ var FMSForms = (function () {
 
         // All available forms.
         var forms = {
-            'signup_or_login': 'signup-login',
+            'register_or_login': 'signup-login',
             'ajax_login_form': 'ajax-login',
             'new_report_user': 'new-report-user'
         };
@@ -42,7 +42,7 @@ var FMSForms = (function () {
             case 'startFormCheck':
                 this.startFormCheck(forms);
                 break;
-            case forms.signup_or_login:
+            case forms.register_or_login:
                 $('#' + forms.ajax_login_form).hide();
                 this.checkEmail(forms);
                 break;
@@ -66,7 +66,7 @@ var FMSForms = (function () {
         }
     };
 
-    pub.signupOrLogin = function (forms){
+    pub.registerOrLogin = function (forms){
 
     };
 
