@@ -310,14 +310,27 @@ LOG_PATH = os.path.join(PROJECT_PATH, 'var/log/')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
     'handlers': {
         'file': {
             'level': 'WARNING',
             'class': 'apps.mainapp.deferred_logging.DefferedFileHandler',
             'filename': 'error.log',
         },
+        'mail_admins': {
+            'level': 'WARNING',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
     },
     'loggers': {
+        'django': {
+            'handlers': ['file', 'mail_admins']
+        },
         'django.request': {
             'handlers': ['file'],
             'level': 'WARNING',
@@ -329,7 +342,7 @@ LOGGING = {
             'propagate': True,
         },
         'fms': {
-            'handlers': ['file'],
+            'handlers': ['file', 'mail_admins'],
             'level': 'WARNING',
             'propagate': True,
         }
