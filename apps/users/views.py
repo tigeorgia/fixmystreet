@@ -17,7 +17,7 @@ class RegistrationView(CreateView):
     model = FMSUser
     form_class = forms.FMSUserCreationForm
     success_url = '/'
-    template_name = 'users/signup.html'
+    template_name = 'users/register.html'
     messages = {'success': _('Signup was successful. Please check your email for verification')}
 
     def form_invalid(self, form):
