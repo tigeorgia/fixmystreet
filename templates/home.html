@@ -4,6 +4,7 @@
 {% load static from staticfiles %}
 {% load static_tags %}
 {% load reports_tags %}
+{% load crispy_forms_tags %}
 {% block css %}
     <!--<style type="text/css" media="screen">
         #supported_cities { font-size: 80%; }
@@ -19,7 +20,7 @@
             FMS.is_authenticated = true;
         {% endif %}
 
-        function init(){
+        function init() {
             canvas = document.getElementById("map_canvas");
             FMSMap.initialize(canvas);
             FMSMap.homeinit();
@@ -122,21 +123,19 @@
                     {% trans "Add marker" %}</button>
             </div>
 
-            <p class="start-hidden">
+            <p id="help-text" class="start-hidden">
                 {% trans "Enter your address on the map, press search and drag marker to desired location. Then fill out this form and press continue" %}</p>
 
-            <form action="" class="start-hidden-form" style="display:block;" id="check-email" name="check-email" method="get">
-                {% bootstrap_form check_email %}
-                <button class="btn btn-default pull-right" type="submit">{% trans "Submit" %}</button>
+            <form class="start-hidden-form" id="ajax-login" name="ajax-login" method="post">
+                <div class="form-error alert alert-block alert-danger start-hidden-form">
+                </div>
+                {% crispy ajax_login %}
+                <a class="btn btn-warning center-block btn-sm" style="margin-top:10px;" href="{% url 'users:reset' %}">{% trans 'Recover password' %}</a>
+                <a class="btn btn btn-info btn-block btn-lg" style="margin-top:10px;" >{% trans 'Register' %}</a>
             </form>
 
-            <form class="start-hidden-form" id="ajax-login" name="ajax-login" method="post">
-                <div class="error-container">
-
-                </div>
-                {% bootstrap_form ajax_login %}
-                <button class="btn btn-default btn-block btn-lg" type="submit">{% trans "Login" %}</button>
-                <a class="btn btn-warning center-block btn-sm" style="margin-top:10px;" href="{% url 'users:reset' %}">{% trans 'Recover password' %}</a>
+            <form class="start-hidden-form" id="registration-form" name="registration-form" method="post">
+                {% crispy registration_form %}
             </form>
 
             <form class="start-hidden-form" name="new-report" id="new-report" action="" method="post">
@@ -250,8 +249,9 @@
                         {% for value in values %}
                             <li><a href="{{ value.get_absolute_url }}">
                                 <img class="lazy" width="133" height="100" data-original="{{ value.photo.thumbnail.url }}"/>
-                                <noscript><img width="133" height="100" src="{{ value.photo.thumbnail.url }}"/></noscript>
-                                </a>
+                                <noscript><img width="133" height="100" src="{{ value.photo.thumbnail.url }}"/>
+                                </noscript>
+                            </a>
                             </li>
                         {% endfor %}
                     </ul>

@@ -13,10 +13,10 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 from utils.utils import get_client_ip
 
-from apps.mainapp.models import Report, FixMyStreetMap, FaqEntry, ReportCategory, GmapPoint, City, Ward
+from apps.mainapp import models as mainapp_models
 from apps.mainapp.forms import ReportForm1, ReportForm2
 from apps.mainapp.utils import random_image, ReportCount
-from apps.users.forms import FMSUserLoginForm, FMSCheckEmailForm
+from apps.users.forms import FMSUserLoginForm, FMSCheckEmailForm, FMSUserCreationForm
 from apps.users.models import FMSUser
 from apps.users.forms import FMSUserCreationForm
 
@@ -25,7 +25,7 @@ class HomeView(SessionWizardView):
     form_list = [('report_start', ReportForm1), ('report_description', ReportForm2)]
     form_templates = {'report_start': 'home.html', 'report_description': 'reports/new.html'}
     file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'photos'))
-    cities = City.get_all_cities
+    cities = mainapp_models.City.get_all_cities
 
     def __init__(self, **kwargs):
         super(HomeView, self).__init__(**kwargs)
@@ -47,7 +47,7 @@ class HomeView(SessionWizardView):
         """
         Separate user and report data
         """
-        report_fields = Report._meta.get_all_field_names()
+        report_fields = mainapp_models.Report._meta.get_all_field_names()
         user_fields = FMSUser._meta.get_all_field_names() + ['password1', 'password2']
         self.report_data = {field: self.form_data[field] for field in self.form_data.keys() if field in report_fields}
         self.user_data = {field: self.form_data.get(field) for field in self.form_data.keys() if field in user_fields}
@@ -71,14 +71,14 @@ class HomeView(SessionWizardView):
             return user
 
     def _create_report(self):
-        report = Report(**self.get_report_data())
+        report = mainapp_models.Report(**self.get_report_data())
         if self.request.user.is_authenticated():
             report.user = self.request.user
         else:
             report.user = self._create_user()
 
         report.ip = get_client_ip(self.request)
-        report.ward = Ward.objects.get(geom__contains=self.get_point())
+        report.ward = mainapp_models.Ward.objects.get(geom__contains=self.get_point())
         report.save()
         if report.user.is_confirmed:
             report.email_councillor()
@@ -111,7 +111,7 @@ class HomeView(SessionWizardView):
 
     def _reports_with_photos(self):
         try:
-            problems_with_photo = Report.active.order_by(
+            problems_with_photo = mainapp_models.Report.active.order_by(
                 '-created_at').exclude(photo__isnull=True).exclude(photo__iexact='')
         except IndexError:
             return
@@ -133,12 +133,13 @@ class HomeView(SessionWizardView):
 
         ctx = super(HomeView, self).get_context_data(**kwargs)
         ctx['report_counts'] = ReportCount.by_interval('1 year')
-        ctx['center'] = GmapPoint(point=center)
+        ctx['center'] = mainapp_models.GmapPoint(point=center)
         ctx['last_year'] = (datetime.datetime.today() + datetime.timedelta(-365)).strftime('%Y-%m-%d')
-        ctx['categories'] = ReportCategory.objects.all().order_by("name_" + get_language()[:2])
+        ctx['categories'] = mainapp_models.ReportCategory.objects.all().order_by("name_" + get_language()[:2])
         ctx['check_email'] = FMSCheckEmailForm()
         ctx['ajax_login'] = FMSUserLoginForm()
-        ctx['google'] = FixMyStreetMap(pnt=pnt, draggable=True)
+        ctx['registration_form'] = FMSUserCreationForm
+        ctx['google'] = mainapp_models.FixMyStreetMap(pnt=pnt, draggable=True)
         ctx['random_image'] = random_image()
         ctx['photos'] = self._reports_with_photos()
         ctx['cities'] = self.cities
@@ -150,5 +151,5 @@ class AboutView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super(AboutView, self).get_context_data(**kwargs)
-        ctx['faq_entries'] = FaqEntry.objects.all().order_by('order')
+        ctx['faq_entries'] = mainapp_models.FaqEntry.objects.all().order_by('order')
         return ctx

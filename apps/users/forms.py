@@ -68,6 +68,24 @@ class FMSUserChangeForm(forms.ModelForm):
         f = self.fields.get('user_permissions', None)
         if f is not None:
             f.queryset = f.queryset.select_related('content_type')
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.form_class = 'form-inline'
+        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
+        self.helper.error_text_inline = True
+        self.helper.layout = Layout(
+                'username',
+                'email',
+                Div(
+                    Div('first_name', css_class='col-md-6 col-sm-6'),
+                    Div('last_name', css_class='col-md-6 col-sm-6'),
+                    css_class='row row-no-margin',
+                ),
+                'phone',
+            ButtonHolder(
+                StrictButton(_('Update'), css_class='btn btn-default btn-block btn-lg', type='submit')
+            )
+        )
 
     class Meta:
         model = FMSUser
@@ -96,6 +114,18 @@ class FMSUserLoginForm(AuthenticationForm):
         self.fields['username'].label = _('Email')
         self.fields['username'].widget = forms.TextInput(attrs={'type': 'email', 'id': 'login_email'})
         self.error_messages['invalid_login'] = _('Incorrect email address or password')
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.form_class = 'form-inline'
+        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
+        self.helper.error_text_inline = True
+        self.helper.layout = Layout(
+                'username',
+                'password',
+            ButtonHolder(
+                StrictButton(_('Login'), css_class='btn btn-default btn-block btn-lg', type='submit')
+            )
+        )
 
     def confirm_login_allowed(self, user):
         """
@@ -141,6 +171,16 @@ class PasswordResetStart(forms.Form):
         super(PasswordResetStart, self).__init__(*args, **kwargs)
         self.validators = FMSUserValidators()
         self.user = None
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.error_text_inline = True
+        self.helper.layout = Layout(
+                'email',
+                'captcha',
+            ButtonHolder(
+                StrictButton(_('Request reset link'), css_class='btn btn-default btn-block btn-lg', type='submit')
+            )
+        )
 
     def clean(self):
         email = self.cleaned_data.get('email')
@@ -161,6 +201,18 @@ class PasswordResetConfirm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(PasswordResetConfirm, self).__init__(*args, **kwargs)
         self.user_validators = FMSUserValidators()
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.form_class = 'form-inline'
+        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
+        self.helper.error_text_inline = True
+        self.helper.layout = Layout(
+                'password1',
+                'password2',
+            ButtonHolder(
+                StrictButton(_('Reset password'), css_class='btn btn-default btn-block btn-lg', type='submit')
+            )
+        )
 
     def clean(self):
         password1 = self.cleaned_data.get('password1')

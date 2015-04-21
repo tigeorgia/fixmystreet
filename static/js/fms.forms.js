@@ -15,7 +15,7 @@ var FMSForms = (function () {
      * Makes element visible with smooth transition
      */
     pub.makeVisible = function (selector) {
-        $('#' + selector).css({'display': 'block', 'visibility': 'visible'}).animate({
+        selector.css({'display': 'block', 'visibility': 'visible'}).animate({
             opacity: 1
         }, 1300);
     };
@@ -23,133 +23,92 @@ var FMSForms = (function () {
 
     /**
      * Process forms on homepage
-     * @param form Form to process. This makes step-forms possible
-     * @param other_data additional data to pass to form processors. Like email
      */
-    pub.processForms = function (form, other_data) {
-
-        // All available forms.
-        var forms = {
-            'register_or_login': 'signup-login',
-            'ajax_login_form': 'ajax-login',
-            'new_report_user': 'new-report-user'
-        };
-        form = form || 'startFormCheck';
-        other_data = other_data || {};
-
-        // Form strategy
-        switch (form) {
-            case 'startFormCheck':
-                this.startFormCheck(forms);
-                break;
-            case forms.register_or_login:
-                $('#' + forms.ajax_login_form).hide();
-                this.checkEmail(forms);
-                break;
-            case forms.ajax_login_form:
-                $('#' + forms.check_email_form).hide();
-                this.ajaxLogin(forms, other_data);
-                break;
-            case forms.new_report_user:
-                $('#' + forms.ajax_login_form).hide();
-                this.newReportUser(forms, other_data);
-                break;
-        }
-
-    };
-
-    pub.startFormCheck = function (forms) {
+    pub.processForms = function () {
+        var self = this;
         if (FMS.is_authenticated) {
-            this.processForms(forms.new_report_user);
+            this.processForms(forms.new_report);
         } else {
-            this.processForms(forms.check_email_form);
+            this.loginOrRegister();
         }
     };
 
-    pub.registerOrLogin = function (forms){
+    pub.loginOrRegister = function () {
+        var self = this,
+            form = $('#ajax-login'),
+            help_text = gettext('Please login to your account or <a href="/user/register/">create new one</a> in order to create report.');
+        pub.makeVisible(form);
+        $('#help-text').html(help_text);
 
-    };
+        form.validate({
+            ignore: "",
+            errorClass: 'has-error',
+            highlight: function (element, errorClass) {
+                $(element).parent().addClass(errorClass);
+            },
+            rules: {
+                username: "required",
+                password: "required"
+            },
+            messages: {
+                username: gettext("Invalid email"),
+                password: gettext("Please enter the password")
+            },
+            submitHandler: function () {
+                form.css({'cursor': 'progress'});
+                form.find('button').attr({'disabled': 'disabled'});
 
-    /**
-     * Process response and handle next step accordingly.
-     *
-     * @param data Response data from email existence checker
-     * @param forms Forms object
-     * @param email Email which was checked
-     * @private
-     */
-    pub._checkEmailCallback = function (data, forms, email) {
-        if (data.email_exists) {
-            pub.processForms(forms.ajax_login_form, {'email': email});
-        } else {
-            pub.processForms(forms.new_report_full, {'email': email});
-        }
-    };
-
-    /**
-     * Ajax login form process
-     */
-    pub.ajaxLogin = function (forms, data) {
-        pub.makeVisible(forms.ajax_login_form);
-        var cached_form = $('#' + forms.ajax_login_form);
-        if (data.email) {
-            cached_form.find('#login_email').val(data.email).attr({'readonly': 'True'});
-            cached_form.find('#id_password').focus();
-        }
-        cached_form.submit(function (event) {
-            cached_form.css({'cursor': 'progress'});
-            cached_form.find('button').attr({'disabled': 'disabled'});
-            event.preventDefault();
-
-            $.ajax({
-                type: "POST",
-                url: FMS.current_lang + "/user/ajax/login/",
-                headers: {
-                    "X-CSRFToken": $.cookie('csrftoken')
-                },
-                data: cached_form.serialize(),
-                success: function (data) {
-                    pub._ajaxLoginCallback(forms, data);
-                }
-            });
+                $.ajax({
+                    type: "POST",
+                    url: FMS.current_lang + "/user/ajax/login/",
+                    headers: {
+                        "X-CSRFToken": $.cookie('csrftoken')
+                    },
+                    data: form.serialize(),
+                    success: function (data) {
+                        pub._ajaxLoginCallback(form, data);
+                    }
+                });
+            }
         });
 
     };
 
-    pub._ajaxLoginCallback = function (forms, data) {
-        var cached_form = $('#' + forms.ajax_login_form),
-            error_container = cached_form.find('.error-container');
+
+    pub._ajaxLoginCallback = function (form, data) {
+        var self = this,
+            error_container = form.find('.form-error');
 
         if (!data.errors) {
             $('#preform').find("input[name='csrfmiddlewaretoken']").each(function () {
                 $(this).val($.cookie('csrftoken'));
             });
-            pub.processForms(forms.new_report_user, data);
+            pub.newReport(form);
         } else {
+            pub.makeVisible(error_container);
             error_container.html('');
             $.each(data.errors, function (i, val) {
-                error_container.append(
-                    '<div class="alert alert-danger" role="alert">' + val + '</div>'
-                );
+                console.log(val);
+                error_container.append(val.message);
             });
-            cached_form.css({'cursor': 'default'});
-            cached_form.find('button').removeAttr('disabled');
+            form.css({'cursor': 'default'});
+            form.find('button').removeAttr('disabled');
         }
     };
 
     /**
      * User form. I.e. user is registered
-     * @param forms
-     * @param data
+     * @param prev_form
      */
-    pub.newReportUser = function (forms, data) {
-        $('#new-report').css({'display': 'block', 'visibility': 'visible'}).animate({
+    pub.newReport = function (prev_form) {
+        var form = $('#new-report');
+
+        form.css({'display': 'block', 'visibility': 'visible'}).animate({
             opacity: 1
         }, 1300);
-        $('.user-hidden').css({'display': 'none'}).attr({'disabled': 'disabled', 'read-only': true});
 
         // Mark required fields
-        $('#new-report').validate({
+        form.validate({
             ignore: "",
             rules: {
                 title: "required",

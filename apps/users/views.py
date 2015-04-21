@@ -1,7 +1,8 @@
 from django.views.generic import View, FormView, TemplateView, CreateView
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse_lazy
-from django.http import JsonResponse, HttpResponseRedirect, Http404
+from django.http import JsonResponse, HttpResponseRedirect, Http404, HttpResponse
+from django.core.urlresolvers import reverse
 from django.contrib.auth import login as auth_login
 from django.utils.translation import ugettext_lazy as _
 from django.template.loader import render_to_string
@@ -11,6 +12,7 @@ from .models import FMSUser, FMSUserTempToken
 from .signals import user_confirmed
 from utils.utils import get_client_ip
 import forms
+import ast
 
 
 class RegistrationView(CreateView):
@@ -47,8 +49,13 @@ class AjaxLoginView(View):
             auth_login(request, form.get_user())
             return JsonResponse(data={'success': True})
         else:
-            errors = {'errors': [e for e in form.errors['__all__']]}
-            return JsonResponse(errors)
+            # Hack. as_json() returns str object instead of dict so we can't return it
+            # as a json.
+            if "__all__" in form.errors:
+                errors = ast.literal_eval(form.errors.as_json(escape_html=True))['__all__']
+                return JsonResponse(data={"errors": errors}, safe=False)
+            else:
+                return JsonResponse(data={'errors': ""})
 
 
 class LoginView(FormView):
