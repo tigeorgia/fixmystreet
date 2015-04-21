@@ -122,11 +122,8 @@
                     {{ filter.form.from_date|attr:"class:datepicker form-control" }}
                     <label><h5><b>{% trans "Created Before" %}</b></h5></label>
                     {{ filter.form.to_date|attr:"class:datepicker form-control" }}
-                    <label><h5><b>{% trans "Sorting:" %}</b></h5></label>
-
-                    <div class="nolist">
-                        {{ sortform.sorting }}
-                    </div>
+                    <label><h5><b>{% trans "Ordering:" %}</b></h5></label>
+                    {{ filter.form.order_by|attr:"class:form-control" }}
                     <button class="btn btn-default btn-fixed" type="submit">
                         {% trans "Filter" %}</button>
                 </form>

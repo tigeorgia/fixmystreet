@@ -50,18 +50,10 @@ class ReportListView(FilterView):
         data = self.request.GET
         today = datetime.datetime.combine(datetime.datetime.today(), datetime.time.max)
         ctx['random_image'] = random_image()
-        ctx['sortform'] = sortingForm(data={
-            'sorting': data.get('sorting', ),
-        })
         return ctx
 
     def get_queryset(self):
-        data = self.request.GET
-        form = sortingForm(data={
-            'sorting': data.get('sorting') or '-created_at',
-        })
-        qs = Report.active.all()
-
+        qs = self.model.active.all()
         qs = qs.extra(
             select={
                 'sub_count': 'SELECT COUNT(*)\
@@ -69,7 +61,6 @@ class ReportListView(FilterView):
                                 WHERE reports.id = report_subscribers.report_id'
             }
         )
-        if form.is_valid():
-            qs = qs.prefetch_related('ward', 'category').order_by(form.cleaned_data['sorting'])
+        qs = qs.prefetch_related('ward', 'category')
 
         return qs
