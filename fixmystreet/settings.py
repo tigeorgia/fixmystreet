@@ -330,11 +330,13 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['file', 'mail_admins']
+            'handlers': ['file', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
         },
         'django.request': {
             'handlers': ['file', 'mail_admins'],
-            'level': 'WARNING',
+            'level': 'ERROR',
             'propagate': True,
         },
         'stdimage': {
