@@ -73,4 +73,4 @@ SECRET_KEY = ''
 SITE_ID = 0
 ADMIN_EMAIL = 'chemikucha@mysite.com'
 ADMINS = (('Name', 'admin@mysite.com'),)
-
+MANAGERS = ADMINS
