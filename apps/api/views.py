@@ -2,7 +2,6 @@ from django.views.generic.base import RedirectView
 from django.core.urlresolvers import reverse as dj_reverse
 from rest_framework.views import APIView
 from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.authtoken.models import Token
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.reverse import reverse as reverse
@@ -14,6 +13,7 @@ from apps.mainapp.utils import ReportCount
 from apps.mainapp.filters import ReportFilter
 from .serializers import ReportSerializer, WardSerializer, AuthTokenSerializer, CategorySerializer, FaqEntrySerializer
 from metadata import AuthTokenMetaData, ReportCountMetadata
+from apps.users.models import FMSUserAuthToken
 
 
 class LoginRedirectView(RedirectView):
@@ -189,8 +189,8 @@ class ObtainAuthTokenView(ObtainAuthToken):
         serializer = AuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key})
+        token, created = FMSUserAuthToken.objects.get_or_create(user=user)
+        return Response({'token': token.token})
 
 
 class ReportCountView(APIView):

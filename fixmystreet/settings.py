@@ -231,7 +231,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        'apps.api.authentication.TokenAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',
                                 'rest_framework.filters.OrderingFilter'),
@@ -278,6 +278,7 @@ INSTALLED_APPS = (
     'apps.mainapp',
     'apps.api',
     'apps.users',
+    'oauth2_provider',
     'pipeline',
     'django_filters',
     'debug_toolbar',
