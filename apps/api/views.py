@@ -2,18 +2,22 @@ from django.views.generic.base import RedirectView
 from django.core.urlresolvers import reverse as dj_reverse
 from rest_framework.views import APIView
 from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.reverse import reverse as reverse
+from rest_framework.renderers import BrowsableAPIRenderer, JSONRenderer
+from rest_framework.decorators import renderer_classes
 from django.http import Http404
 from collections import OrderedDict
 
 from apps.mainapp.models import Report, Ward, ReportCategory, FaqEntry
 from apps.mainapp.utils import ReportCount
 from apps.mainapp.filters import ReportFilter
-from .serializers import ReportSerializer, WardSerializer, AuthTokenSerializer, CategorySerializer, FaqEntrySerializer
+from .serializers import ReportSerializer, WardSerializer, AuthTokenSerializer, CategorySerializer, FaqEntrySerializer,\
+    ContactSerializer
 from metadata import AuthTokenMetaData, ReportCountMetadata
 from apps.users.models import FMSUserAuthToken
+from apps.mainapp.forms import ContactForm
 
 
 class LoginRedirectView(RedirectView):
@@ -78,6 +82,12 @@ class APIRootView(APIView):
     * List: [/api/faq/](/api/faq/)
 
 
+    ___
+
+    ## Contact:
+    * Form: [/api/contact/](/api/contact/)
+
+
     """
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
@@ -90,7 +100,7 @@ class APIRootView(APIView):
 
 class ReportListCreateView(generics.ListCreateAPIView):
     """
-    List of all reports.
+    List of all reports. Dates are UTC.
 
     ##**Available filters**:
 
@@ -206,3 +216,22 @@ class ReportCountView(APIView):
             'in-progress': report_count.in_progress().get_counts()
         })
         return Response(counts)
+
+class ContactFormRenderer(BrowsableAPIRenderer):
+    def get_context(self, *args, **kwargs):
+        context = super(ContactFormRenderer, self).get_context(*args, **kwargs)
+        context["post_form"] = ContactForm(initial=context['request'].data)
+        return context
+
+@renderer_classes((ContactFormRenderer,JSONRenderer))
+class ContactView(APIView):
+    permission_classes = (permissions.AllowAny,)
+    serializer = ContactSerializer
+
+    def post(self, request):
+        serializer = self.serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.form.save()
+            return Response(request.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

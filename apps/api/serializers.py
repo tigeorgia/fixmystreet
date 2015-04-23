@@ -1,5 +1,7 @@
+from django.conf import settings
 from rest_framework import serializers, exceptions
-
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
 from apps.api import fields
 from apps.mainapp.models import Report, Ward, ReportCategory, City, FaqEntry
 from django.contrib.auth import authenticate
@@ -32,12 +34,24 @@ class FaqEntrySerializer(serializers.ModelSerializer):
         model = FaqEntry
         fields = ('id', 'order', 'q_en', 'a_en', 'q_ka', 'a_ka')
 
+class ContactSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    email = serializers.EmailField()
+    body = serializers.CharField()
+
+    def save(self, **kwargs):
+        message = render_to_string("emails/contact/message.txt", self.cleaned_data)
+        send_mail('FixMyStreet.ge User Message from %s' % self.cleaned_data['email'], message,
+                  settings.EMAIL_FROM_USER, [settings.ADMIN_EMAIL], fail_silently=False)
 
 
 class ReportSerializer(serializers.ModelSerializer):
     longitude = serializers.FloatField(source='point.x')
     latitude = serializers.FloatField(source='point.y')
     photo = fields.StdImageField(required=False, allow_null=True)
+    created_at = fields.EpochTimeReadOnlyField()
+    updated_at = fields.EpochTimeReadOnlyField()
+    sent_at = fields.EpochTimeReadOnlyField()
 
     class Meta:
         model = Report
@@ -45,7 +59,7 @@ class ReportSerializer(serializers.ModelSerializer):
             'id', 'title', 'category', 'ward', 'photo', 'created_at', 'updated_at', 'status', 'street', 'fixed_at',
             'sent_at', 'email_sent_to', 'longitude', 'latitude', 'desc',
         )
-        read_only_fields = ('id', 'status', 'sent_at', 'ward', 'created_at', 'updated_at', 'fixed_at', 'email_sent_to',)
+        read_only_fields = ('id', 'status', 'ward', 'fixed_at', 'email_sent_to',)
 
     def generate_point(self, x, y):
         return Point(x, y, srid=4326)

@@ -1,4 +1,8 @@
 from rest_framework import serializers
+from time import mktime
+from arrow.arrow import Arrow
+import dateutil.parser
+
 
 class StdImageField(serializers.ImageField):
     def __init__(self, *args, **kwargs):
@@ -20,3 +24,10 @@ class StdImageField(serializers.ImageField):
 
     def to_internal_value(self, data):
         return super(StdImageField, self).to_internal_value(data)
+
+
+class EpochTimeReadOnlyField(serializers.ReadOnlyField):
+
+    def to_representation(self, value):
+        epoch_utc = int(mktime(value.timetuple()))
+        return epoch_utc

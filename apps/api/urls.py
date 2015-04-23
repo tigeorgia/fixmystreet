@@ -32,4 +32,9 @@ urlpatterns += patterns('',
                         url(r'^faq/$', views.FaqEntryListView.as_view(), name='faq-list'),
 )
 
+
+urlpatterns += patterns('',
+                        url(r'^contact/$', views.ContactView.as_view(), name='contact'),
+)
+
 urlpatterns = format_suffix_patterns(urlpatterns)
