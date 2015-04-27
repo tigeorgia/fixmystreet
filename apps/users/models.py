@@ -59,7 +59,6 @@ class FMSUser(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
-        db_table = 'users_fms_user'
 
     @classmethod
     def username_exists(cls, username):
@@ -140,7 +139,7 @@ class FMSUserTempToken(BaseToken):
         return url
 
     class Meta:
-        db_table = 'users_fms_user_temp_token'
+        db_table = 'users_fmsuser_temp_token'
 
 
 class FMSUserAuthToken(BaseToken):
@@ -148,7 +147,7 @@ class FMSUserAuthToken(BaseToken):
     date_modified = models.DateTimeField(_('date modified'), auto_now=True)
 
     class Meta:
-        db_table = 'users_fms_user_auth_token'
+        db_table = 'users_fmsuser_auth_token'
 
 
 class FMSUserSettings(models.Model):
@@ -161,7 +160,7 @@ class FMSUserSettings(models.Model):
     language = models.CharField(_('language'), max_length=2, choices=LANGUAGE_CHOICES, default='ka')
 
     class Meta:
-        db_table = 'users_fms_user_settings'
+        db_table = 'users_fmsuser_settings'
 
 
 from .receivers import *

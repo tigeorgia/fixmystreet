@@ -12,19 +12,15 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterModelTable(
-            name='fmsuser',
-            table='users_fms_user',
-        ),
-        migrations.AlterModelTable(
             name='fmsuserauthtoken',
-            table='users_fms_user_auth_token',
+            table='users_fmsuser_auth_token',
         ),
         migrations.AlterModelTable(
             name='fmsusersettings',
-            table='users_fms_user_settings',
+            table='users_fmsuser_settings',
         ),
         migrations.AlterModelTable(
             name='fmsusertemptoken',
-            table='users_fms_user_temp_token',
+            table='users_fmsuser_temp_token',
         ),
     ]
