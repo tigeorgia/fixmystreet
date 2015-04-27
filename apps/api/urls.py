@@ -1,10 +1,18 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from rest_framework.urlpatterns import format_suffix_patterns
+from oauth2_provider.views import AuthorizationView, TokenView
+from rest_framework_social_oauth2.views import convert_token
 
 import views
 
-
 urlpatterns = [
+    url(r'^auth/authorize/?$', AuthorizationView.as_view(), name="authorize"),
+    url(r'^auth/token/?$', TokenView.as_view(), name="token"),
+    url(r'^auth/social/$', include('social.apps.django_app.urls', namespace='social')),
+    url(r'^auth/convert-token/?$', convert_token, name="convert_token"),
+]
+
+urlpatterns += [
     url(r'^$', views.APIRootView.as_view(), name='root'),
     url(r'^login-redirect/$', views.LoginRedirectView.as_view(), name='login-redirect'),
     url(r'^get-token/$', views.ObtainAuthTokenView.as_view(), name='get-token'),

@@ -1,10 +1,11 @@
-from django_filters import FilterSet, ChoiceFilter, DateTimeFilter
+from django_filters import FilterSet, ChoiceFilter, DateTimeFilter, MethodFilter
 from django.utils.translation import ugettext_lazy as _
 
 from apps.mainapp.models import Report
 
 
 class ReportFilter(FilterSet):
+    center_point = MethodFilter(action='center_point')
     status_choices = (
         ('', '---------'),
         ('fixed', 'Fixed'),

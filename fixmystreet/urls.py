@@ -102,6 +102,7 @@ urlpatterns += i18n_patterns(
 
 urlpatterns += i18n_patterns(
     url(r'^user/', include('apps.users.urls', namespace='users', app_name='users')),
+    url(r'^user/social/', include('rest_framework_social_oauth2.urls')),
 )
 
 urlpatterns += i18n_patterns(

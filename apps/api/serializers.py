@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from apps.api import fields
 from apps.mainapp.models import Report, Ward, ReportCategory, City, FaqEntry
+from apps.users.models import FMSUser
 from django.contrib.auth import authenticate
 from django.contrib.gis.geos import Point
 from django.utils.translation import ugettext_lazy as _
@@ -45,21 +46,29 @@ class ContactSerializer(serializers.Serializer):
                   settings.EMAIL_FROM_USER, [settings.ADMIN_EMAIL], fail_silently=False)
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FMSUser
+        fields = ('id', 'username', 'first_name', 'last_name', 'is_councillor')
+
+
 class ReportSerializer(serializers.ModelSerializer):
     longitude = serializers.FloatField(source='point.x')
     latitude = serializers.FloatField(source='point.y')
     photo = fields.StdImageField(required=False, allow_null=True)
+    fixed_at = fields.EpochTimeReadOnlyField()
     created_at = fields.EpochTimeReadOnlyField()
     updated_at = fields.EpochTimeReadOnlyField()
     sent_at = fields.EpochTimeReadOnlyField()
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Report
         fields = (
             'id', 'title', 'category', 'ward', 'photo', 'created_at', 'updated_at', 'status', 'street', 'fixed_at',
-            'sent_at', 'email_sent_to', 'longitude', 'latitude', 'desc',
+            'sent_at', 'email_sent_to', 'longitude', 'latitude', 'desc', 'user',
         )
-        read_only_fields = ('id', 'status', 'ward', 'fixed_at', 'email_sent_to',)
+        read_only_fields = ('id', 'status', 'ward', 'fixed_at', 'email_sent_to')
 
     def generate_point(self, x, y):
         return Point(x, y, srid=4326)
