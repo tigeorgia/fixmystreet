@@ -20,6 +20,10 @@ from apps.users.models import FMSUserAuthToken
 from apps.mainapp.forms import ContactForm
 from django.contrib.gis.measure import D
 from django.contrib.gis.geos import fromstr
+from time import mktime
+from arrow import Arrow
+import datetime
+import pytz
 
 class LoginRedirectView(RedirectView):
     permanent = True
@@ -152,11 +156,11 @@ class ReportListCreateView(generics.ListCreateAPIView):
     Used in conjunction with `center_distance`, to filter reports from the center up to provided distance in meters
     * `center_distance` - Distance from `center_point`. In order to enable this filtering, both `center_point` and
     `center_distance` must be provided
-    * `status`
-    * `category`
-    * `from_date`
-    * `to_date`
-    * `ward__city`
+    * `status` - Report status. You can get available statuses by using OPTIONS request on this endpoint
+    * `category` - Category by id
+    * `start_date` Min date in unix timestamp (utc)
+    * `end_date` - Max date in unix timestamp (utc)
+    * `ward__city` - City ID. You can get city ID from [/api/wards/](/api/wards/)
 
     ##**Sorting**:
 
@@ -182,12 +186,23 @@ class ReportListCreateView(generics.ListCreateAPIView):
         queryset = self.queryset
         center_point = self.request.QUERY_PARAMS.get('center_point', None)
         center_distance = self.request.QUERY_PARAMS.get('center_distance', None)
-
+        start_date = self.request.QUERY_PARAMS.get('start_date', None)
+        end_date = self.request.QUERY_PARAMS.get('end_date', None)
 
         if center_distance and center_point:
             center_point = center_point.replace(',', ' ')
             center_point = fromstr('POINT({0})'.format(center_point), srid=4326)
             queryset = queryset.filter(point__distance_lte=(center_point, D(m=center_distance)))
+
+        if start_date:
+            start_date = datetime.datetime.fromtimestamp(int(start_date))
+            min_day = datetime.datetime.combine(start_date, datetime.time.min)
+            queryset = queryset.filter(created_at__gte=min_day)
+
+        if end_date:
+            end_date = datetime.datetime.fromtimestamp(int(end_date))
+            max_day = datetime.datetime.combine(end_date, datetime.time.max)
+            queryset = queryset.filter(created_at__lte=max_day)
 
         return queryset
 
