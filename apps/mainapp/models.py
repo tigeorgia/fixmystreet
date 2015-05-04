@@ -293,6 +293,10 @@ class Report(models.Model):
     def get_status(self):
         return self.status
 
+    @property
+    def has_photo(self):
+        return True if self.photo else False
+
     def is_subscribed(self, email):
         if len(self.subscribers.filter(email=email)) != 0:
             return True

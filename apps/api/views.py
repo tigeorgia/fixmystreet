@@ -160,6 +160,7 @@ class ReportListCreateView(generics.ListCreateAPIView):
     * `category` - Category by id
     * `start_date` Min date in unix timestamp (utc)
     * `end_date` - Max date in unix timestamp (utc)
+    * `has_photo` - Bool.
     * `ward__city` - City ID. You can get city ID from [/api/wards/](/api/wards/)
 
     ##**Sorting**:
@@ -169,7 +170,7 @@ class ReportListCreateView(generics.ListCreateAPIView):
         * `created_at` - Oldest first
         * `-created_at` - Newest first
 
-    **Example**: [/api/reports/?category=25&status=fixed&order_by=created_at](/api/reports/?category=25&status=fixed&order_by=created_at)
+    **Example**: [/api/reports/?category=25&status=fixed&order_by=created_at](/api/reports/?category=25&status=fixed&has_photo=true&order_by=created_at)
 
     -----
     """
@@ -188,6 +189,7 @@ class ReportListCreateView(generics.ListCreateAPIView):
         center_distance = self.request.QUERY_PARAMS.get('center_distance', None)
         start_date = self.request.QUERY_PARAMS.get('start_date', None)
         end_date = self.request.QUERY_PARAMS.get('end_date', None)
+        has_photo = self.request.QUERY_PARAMS.get('has_photo', None)
 
         if center_distance and center_point:
             center_point = center_point.replace(',', ' ')
@@ -203,6 +205,12 @@ class ReportListCreateView(generics.ListCreateAPIView):
             end_date = datetime.datetime.fromtimestamp(int(end_date))
             max_day = datetime.datetime.combine(end_date, datetime.time.max)
             queryset = queryset.filter(created_at__lte=max_day)
+
+        if has_photo:
+            if has_photo.lower() == 'true' or '1':
+                queryset = queryset.exclude(photo__isnull=True).exclude(photo="")
+            else:
+                queryset = queryset.filter(photo="")
 
         return queryset
 
