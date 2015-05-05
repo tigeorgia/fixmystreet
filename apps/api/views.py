@@ -319,7 +319,7 @@ class ContactView(APIView):
     def post(self, request):
         serializer = self.serializer(data=request.data)
         if serializer.is_valid():
-            serializer.form.save()
-            return Response(request.data, status=status.HTTP_200_OK)
+            serializer.save()
+            return Response(data={'detail': 'success'}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
