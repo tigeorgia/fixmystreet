@@ -52,6 +52,14 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'first_name', 'last_name', 'is_councillor')
 
 
+class ExtendedUserSerializer(serializers.ModelSerializer):
+    date_joined = fields.EpochTimeReadOnlyField()
+
+    class Meta:
+        model = FMSUser
+        fields = ('id', 'email', 'username', 'first_name', 'last_name',
+                  'phone', 'date_joined', 'is_councillor', 'is_staff', 'is_confirmed', 'is_active')
+
 class ReportSerializer(serializers.ModelSerializer):
     longitude = serializers.FloatField(source='point.x')
     latitude = serializers.FloatField(source='point.y')

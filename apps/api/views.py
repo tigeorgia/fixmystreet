@@ -14,7 +14,7 @@ from apps.mainapp.models import Report, Ward, ReportCategory, FaqEntry
 from apps.mainapp.utils import ReportCount
 from apps.mainapp.filters import ReportFilter
 from .serializers import ReportSerializer, WardSerializer, AuthTokenSerializer, CategorySerializer, FaqEntrySerializer,\
-    ContactSerializer
+    ContactSerializer, ExtendedUserSerializer
 from metadata import AuthTokenMetaData, ReportCountMetadata
 from apps.users.models import FMSUserAuthToken
 from apps.mainapp.forms import ContactForm
@@ -110,6 +110,11 @@ class APIRootView(APIView):
 
     ___
 
+    ## Current User Information:
+    * Detail: [/api/user/](/api/user/)
+
+    ___
+
     ## Wards:
     * List: [/api/wards/](/api/wards/)
 
@@ -162,6 +167,7 @@ class ReportListCreateView(generics.ListCreateAPIView):
     * `end_date` - Max date in unix timestamp (utc)
     * `has_photo` - Bool.
     * `ward__city` - City ID. You can get city ID from [/api/wards/](/api/wards/)
+    * `user_id` - User ID. You can get user ID from [/api/user/](/api/user/)
 
     ##**Sorting**:
 
@@ -190,6 +196,7 @@ class ReportListCreateView(generics.ListCreateAPIView):
         start_date = self.request.QUERY_PARAMS.get('start_date', None)
         end_date = self.request.QUERY_PARAMS.get('end_date', None)
         has_photo = self.request.QUERY_PARAMS.get('has_photo', None)
+        user_id = self.request.QUERY_PARAMS.get('user_id', None)
 
         if center_distance and center_point:
             center_point = center_point.replace(',', ' ')
@@ -212,6 +219,9 @@ class ReportListCreateView(generics.ListCreateAPIView):
             else:
                 queryset = queryset.filter(photo="")
 
+        if user_id:
+            queryset = queryset.filter(user__id=int(user_id))
+
         return queryset
 
 
@@ -227,6 +237,14 @@ class ReportDetailView(APIView):
     def get(self, request, pk, format=None):
         report = self.get_object(pk)
         serializer = ReportSerializer(report)
+        return Response(serializer.data)
+
+class ExtendedUserDetailView(generics.GenericAPIView):
+    serializer_class = ExtendedUserSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        serializer = self.serializer_class(request.user)
         return Response(serializer.data)
 
 
