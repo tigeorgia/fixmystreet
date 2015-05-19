@@ -10,7 +10,7 @@ class FMSUserValidators(object):
         self.errors = {
             'not_provided': _('Please provide the password'),
             'no_match': _("Passwords don't match!"),
-            'password_insecure': _('Password should contain at least 8 characters, 1 alpha numeric and 1 digit'),
+            'password_insecure': _('Password should contain at least 8 characters'),
             'not_confirmed': _("Account is not confirmed. Confirmation email has been resent"),
             'duplicate_username': _("User with that username already exists."),
             'duplicate_email': _("User with provided email is already registered."),
@@ -33,10 +33,6 @@ class FMSUserValidators(object):
             if password1 != password2:
                 self.add_error('no_match')
             if len(password2) < 8:
-                self.add_error('password_insecure')
-            if not any(char.isdigit() for char in password2):
-                self.add_error('password_insecure')
-            if not any(char.isalpha() for char in password2):
                 self.add_error('password_insecure')
 
     def validate_username(self, username):
