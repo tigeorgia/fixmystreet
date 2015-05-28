@@ -14,7 +14,7 @@ from collections import OrderedDict
 from apps.mainapp.models import Report, Ward, ReportCategory, FaqEntry, ReportPhoto
 from apps.mainapp.utils import ReportCount
 from apps.mainapp.filters import ReportFilter
-from .serializers import ReportSerializer, WardSerializer, AuthTokenSerializer, CategorySerializer, FaqEntrySerializer,\
+from .serializers import ReportSerializer, WardSerializer, CategorySerializer, FaqEntrySerializer,\
     ContactSerializer, ExtendedUserSerializer, ReportPhotoSerializer
 from metadata import AuthTokenMetaData, ReportCountMetadata
 from apps.users.models import FMSUserAuthToken
