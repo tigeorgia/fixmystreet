@@ -42,7 +42,7 @@ class ReportUpdateForm(forms.ModelForm):
 
     class Meta:
         model = ReportUpdate
-        fields = ('desc', 'photo', 'status')
+        fields = ('desc', 'status')
 
     def clean(self):
         clean_data = super(ReportUpdateForm, self).clean()
@@ -80,7 +80,6 @@ class ReportForm2(forms.ModelForm):
             Fieldset(
                 _('Additional report details'),
                 'desc',
-                'photo',
                 'category',
             ),
         )
@@ -105,7 +104,7 @@ class ReportForm2(forms.ModelForm):
 
     class Meta:
         model = Report
-        fields = ('desc', 'photo', 'category')
+        fields = ('desc', 'category')
 
 
 class ReportForm1(forms.Form):
