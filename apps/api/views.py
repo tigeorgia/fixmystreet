@@ -7,19 +7,21 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse as reverse
 from rest_framework.renderers import BrowsableAPIRenderer, JSONRenderer
 from rest_framework.decorators import renderer_classes
+from rest_framework import exceptions
 from django.http import Http404
 from collections import OrderedDict
 
-from apps.mainapp.models import Report, Ward, ReportCategory, FaqEntry
+from apps.mainapp.models import Report, Ward, ReportCategory, FaqEntry, ReportPhoto
 from apps.mainapp.utils import ReportCount
 from apps.mainapp.filters import ReportFilter
 from .serializers import ReportSerializer, WardSerializer, AuthTokenSerializer, CategorySerializer, FaqEntrySerializer,\
-    ContactSerializer, ExtendedUserSerializer
+    ContactSerializer, ExtendedUserSerializer, ReportPhotoSerializer
 from metadata import AuthTokenMetaData, ReportCountMetadata
 from apps.users.models import FMSUserAuthToken
 from apps.mainapp.forms import ContactForm
 from django.contrib.gis.measure import D
 from django.contrib.gis.geos import fromstr
+from django.utils.translation import ugettext_lazy as _
 from time import mktime
 from arrow import Arrow
 import datetime
@@ -225,19 +227,24 @@ class ReportListCreateView(generics.ListCreateAPIView):
         return queryset
 
 
-class ReportDetailView(APIView):
+class ReportPhotoListCreateView(generics.ListCreateAPIView):
+    model = ReportPhoto
+    serializer_class = ReportPhotoSerializer
+    queryset = model.objects.all()
+
+
+class ReportDetailView(generics.RetrieveUpdateAPIView):
     model = Report
+    serializer_class = ReportSerializer
 
-    def get_object(self, pk):
-        try:
-            return Report.objects.get(pk=pk)
-        except Report.DoesNotExist:
-            raise Http404
+    def patch(self, request, *args, **kwargs):
+        if self.request.user.can_update_report():
+            pass
 
-    def get(self, request, pk, format=None):
-        report = self.get_object(pk)
-        serializer = ReportSerializer(report)
-        return Response(serializer.data)
+    def put(self, request, *args, **kwargs):
+        if self.request.user.can_update_report():
+            pass
+
 
 class ExtendedUserDetailView(generics.GenericAPIView):
     serializer_class = ExtendedUserSerializer
@@ -291,22 +298,6 @@ class WardDetailView(APIView):
         ward = self.get_object(pk)
         serializer = WardSerializer(ward, context={'request': request})
         return Response(serializer.data)
-
-
-class ObtainAuthTokenView(ObtainAuthToken):
-    """
-    Obtain authentication token.
-
-    Make sure to clear session cookies if you have them, otherwise authentication will fail and you'll get an CSRF error.
-    """
-    metadata_class = AuthTokenMetaData
-
-    def post(self, request):
-        serializer = AuthTokenSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        token, created = FMSUserAuthToken.objects.get_or_create(user=user)
-        return Response({'token': token.token})
 
 
 class ReportCountView(APIView):
