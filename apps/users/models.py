@@ -76,6 +76,16 @@ class FMSUser(AbstractBaseUser, PermissionsMixin):
         except cls.DoesNotExist:
             return False
 
+    def can_upload_photo(self, report):
+        return True if self.is_active and self.id == report.user_id else False
+
+    def can_update_report(self, report):
+        """
+        Checks if user has permissions to update report
+        """
+        if (self.is_active and self.id == report.user_id) or self.is_councillor:
+            return True
+
     def get_full_name(self):
         """
         Returns the first_name plus the last_name, with a space in between.
