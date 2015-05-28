@@ -13,7 +13,7 @@ def migrate_photos(apps, schema_editor):
     Report = apps.get_model('mainapp', 'Report')
     ReportPhoto = apps.get_model('mainapp', 'ReportPhoto')
 
-    for report in Report.objects.all():
+    for report in Report.objects.all().exclude(photo__isnull=True).exclude(photo=""):
         photo = ReportPhoto(report=report, photo=report.photo)
         photo.save()
 
