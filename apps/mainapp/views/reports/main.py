@@ -25,7 +25,7 @@ class ReportDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ReportDetailView, self).get_context_data(**kwargs)
         context['update_form'] = ReportUpdateForm()
-        context['updates'] = ReportUpdate.active.filter(report=self.object).order_by("created_at")[1:]
+        context['updates'] = ReportUpdate.active.filter(report=self.object).order_by("created_at")
         context['google'] = FixMyStreetMap(self.object.point)
         return context
 

@@ -17,6 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import translation
 from transmeta import TransMeta
 from stdimage import StdImageField
+from stdimage.utils import UploadToUUID
 from django.utils.encoding import iri_to_uri
 
 from apps.mainapp import emailrules
@@ -237,6 +238,19 @@ class ActiveManager(models.Manager):
                                                                 user__is_confirmed=True)
 
 
+class ReportStatus(models.Model):
+    REPORT_STATUS_CHOICES = (
+        ('not-fixed', _('Not Fixed')),
+        ('fixed', _('Fixed')),
+        ('in-progress', _('In Progress'))
+    )
+    report = models.ForeignKey('mainapp.Report', verbose_name=_('report'), related_name='report_statuses')
+    user = models.ForeignKey('users.FMSUser', verbose_name=_('user'), help_text=_('creator of status'))
+    status = models.CharField(_('status'), max_length=32, choices=REPORT_STATUS_CHOICES,
+                              default='not-fixed', help_text=_('Report status'))
+    created_at = models.DateTimeField(help_text=_('Date when report was created'))
+
+
 class Report(models.Model):
     NOT_FIXED = 'not-fixed'
     FIXED = 'fixed'
@@ -292,7 +306,7 @@ class Report(models.Model):
 
     @property
     def has_photo(self):
-        return True if self.photo else False
+        return True if self.report_photos else False
 
     def is_subscribed(self, email):
         if len(self.subscribers.filter(email=email)) != 0:
@@ -342,7 +356,8 @@ class Report(models.Model):
 
 class ReportPhoto(models.Model):
     report = models.ForeignKey('mainapp.Report', related_name='report_photos')
-    photo = StdImageField(upload_to="photos", blank=True, verbose_name=_("photo"),
+    order = models.IntegerField(_('order'))
+    photo = StdImageField(upload_to=UploadToUUID(path='photos'), verbose_name=_("photo"),
                           variations={'large': (800, 600), 'thumbnail': (133, 100)},
                           help_text=_('Report photo'))
 
@@ -390,6 +405,7 @@ class ReportUpdate(models.Model):
     photo = StdImageField(upload_to="photos/updates", blank=True, verbose_name=_("photo"),
                           variations={'large': (800, 600), 'thumbnail': (133, 100)})
 
+    objects = models.Manager()
     active = ActiveManager()
 
     def __unicode__(self):
