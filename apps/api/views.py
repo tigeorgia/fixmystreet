@@ -110,6 +110,8 @@ class APIRootView(APIView):
 
     * Counts: [/api/reports/counts/](/api/reports/counts/)
 
+    * Photos (list/upload) [/api/reports/photos/](/api/reports/photos/)
+
     ___
 
     ## Current User Information:
