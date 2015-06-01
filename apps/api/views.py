@@ -217,9 +217,9 @@ class ReportListCreateView(generics.ListCreateAPIView):
 
         if has_photo:
             if has_photo.lower() == 'true' or '1':
-                queryset = queryset.exclude(photo__isnull=True).exclude(photo="")
+                queryset = queryset.exclude(has_photo=True)
             else:
-                queryset = queryset.filter(photo="")
+                queryset = queryset.filter(has_photo=False)
 
         if user_id:
             queryset = queryset.filter(user__id=int(user_id))
