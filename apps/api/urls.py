@@ -24,7 +24,7 @@ urlpatterns += [
     url(r'^reports/counts/$', views.ReportCountView.as_view(), name='report-counts'),
     url(r'^reports/(?P<pk>\d+)/updates$', views.ReportListCreateView.as_view(),
         name='report-updates'),
-    url(r'^reports/photo/$', views.ReportPhotoListCreateView.as_view(), name='report-photo'),
+    url(r'^reports/photos/$', views.ReportPhotoListCreateView.as_view(), name='report-photos'),
 ]
 
 urlpatterns += [

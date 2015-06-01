@@ -306,7 +306,7 @@ class Report(models.Model):
 
     @property
     def has_photo(self):
-        return True if self.report_photos else False
+        return True if self.report_photos.exists() else False
 
     def is_subscribed(self, email):
         if len(self.subscribers.filter(email=email)) != 0:
