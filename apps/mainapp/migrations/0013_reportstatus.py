@@ -36,7 +36,7 @@ def update_statuses(apps, schema_editor):
                         rep_status = ReportStatus(created_at=update.created_at, report_id=update.report.id, status=update.status,
                                               user_id=update.user.id)
                         rep_status.save()
-                elif previous_update:
+                elif previous_update and update.status != previous_update.status:
                     rep_status = ReportStatus(created_at=update.created_at, report_id=update.report.id, status=update.status,
                                               user_id=update.user.id)
                     rep_status.save()
@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('mainapp', '0013_auto_20150525_1233'),
+        ('mainapp', '0012_auto_20150525_1233'),
     ]
 
     operations = [

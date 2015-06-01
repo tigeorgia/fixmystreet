@@ -36,7 +36,7 @@ def rename_photos(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainapp', '0012_reportphoto_order'),
+        ('mainapp', '0011_reportphoto_order'),
     ]
 
     operations = [

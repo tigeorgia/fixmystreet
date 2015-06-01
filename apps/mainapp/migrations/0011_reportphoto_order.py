@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainapp', '0011_remove_report_photo'),
+        ('mainapp', '0010_reportphoto'),
     ]
 
     operations = [
