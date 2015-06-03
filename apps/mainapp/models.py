@@ -238,27 +238,11 @@ class ActiveManager(models.Manager):
                                                                 user__is_confirmed=True)
 
 
-class ReportStatus(models.Model):
+class Report(models.Model):
     REPORT_STATUS_CHOICES = (
         ('not-fixed', _('Not Fixed')),
         ('fixed', _('Fixed')),
         ('in-progress', _('In Progress'))
-    )
-    report = models.ForeignKey('mainapp.Report', verbose_name=_('report'), related_name='report_statuses')
-    user = models.ForeignKey('users.FMSUser', verbose_name=_('user'), help_text=_('creator of status'))
-    status = models.CharField(_('status'), max_length=32, choices=REPORT_STATUS_CHOICES,
-                              default='not-fixed', help_text=_('Report status'))
-    created_at = models.DateTimeField(help_text=_('Date when report was created'))
-
-
-class Report(models.Model):
-    NOT_FIXED = 'not-fixed'
-    FIXED = 'fixed'
-    IN_PROGRESS = 'in-progress'
-    REPORT_STATUS_CHOICES = (
-        (NOT_FIXED, _('Not Fixed')),
-        (FIXED, _('Fixed')),
-        (IN_PROGRESS, _('In Progress'))
     )
 
     # ForeignKeys
@@ -269,7 +253,7 @@ class Report(models.Model):
     # CharFields
     street = models.CharField(max_length=255, verbose_name=_("street address"), help_text=_("Address of the problem"))
     status = models.CharField(_('status'), max_length=32, choices=REPORT_STATUS_CHOICES,
-                              default=NOT_FIXED, help_text=_('Report status'))
+                              default='not-fixed', help_text=_('Report status'))
     sent_at = models.DateTimeField(null=True, help_text=_('Date when report was sent to city representative'))
     title = models.CharField(max_length=100, verbose_name=_("title"), help_text=_('Report title'))
 

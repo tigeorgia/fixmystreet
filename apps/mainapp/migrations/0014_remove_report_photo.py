@@ -7,7 +7,7 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainapp', '0013_reportstatus'),
+        ('mainapp', '0013_delete_redundant_updates'),
     ]
 
     operations = [
