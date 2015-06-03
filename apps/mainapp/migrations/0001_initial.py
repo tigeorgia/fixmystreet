@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import stdimage.fields
+from stdimage import StdImageField
 import django.contrib.gis.db.models.fields
 
 
@@ -113,7 +113,7 @@ class Migration(migrations.Migration):
                 ('email_sent_to', models.EmailField(max_length=75, null=True)),
                 ('reminded_at', models.DateTimeField(auto_now_add=True)),
                 ('point', django.contrib.gis.db.models.fields.PointField(srid=4326, null=True)),
-                ('photo', stdimage.fields.StdImageField(upload_to=b'photos', verbose_name='* Photo', blank=True)),
+                ('photo', StdImageField(upload_to=b'photos', verbose_name='* Photo', blank=True)),
                 ('desc', models.TextField(null=True, verbose_name='Details', blank=True)),
                 ('author', models.CharField(max_length=255, verbose_name='Name')),
                 ('is_confirmed', models.BooleanField(default=False)),
@@ -178,7 +178,7 @@ class Migration(migrations.Migration):
                 ('author', models.CharField(max_length=255, verbose_name='Name')),
                 ('phone', models.CharField(max_length=255, verbose_name='Phone')),
                 ('first_update', models.BooleanField(default=False)),
-                ('photo', stdimage.fields.StdImageField(upload_to=b'photos/updates', verbose_name='* Photo', blank=True)),
+                ('photo', StdImageField(upload_to=b'photos/updates', verbose_name='* Photo', blank=True)),
                 ('report', models.ForeignKey(to='mainapp.Report')),
             ],
             options={

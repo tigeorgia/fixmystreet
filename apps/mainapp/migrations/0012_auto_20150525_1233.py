@@ -4,9 +4,8 @@ from __future__ import unicode_literals
 from django.db import models, migrations
 from django.conf import settings
 from django.core.management import call_command
-import stdimage.fields
-import stdimage.utils
-import stdimage.models
+from stdimage import StdImageField
+from stdimage.utils import UploadToUUID
 import os
 
 def remove_old_photos():
@@ -48,7 +47,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='reportphoto',
             name='photo',
-            field=stdimage.models.StdImageField(help_text='Report photo', upload_to=stdimage.utils.UploadToUUID(path=b'photos'), verbose_name='photo'),
+            field=StdImageField(help_text='Report photo', upload_to=UploadToUUID(path=b'photos'), verbose_name='photo'),
         ),
         migrations.RunPython(rename_photos)
     ]
