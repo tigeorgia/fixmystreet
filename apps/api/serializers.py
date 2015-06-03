@@ -3,7 +3,7 @@ from rest_framework import serializers, exceptions
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from apps.api import fields
-from apps.mainapp.models import Report, Ward, ReportCategory, City, FaqEntry, ReportPhoto
+from apps.mainapp.models import Report, ReportUpdate, Ward, ReportCategory, City, FaqEntry, ReportPhoto
 from apps.users.models import FMSUser
 from django.contrib.auth import authenticate
 from django.contrib.gis.geos import Point
@@ -88,7 +88,7 @@ class ExtendedUserSerializer(serializers.ModelSerializer):
     User serializer containing more data. Used for authenticated users,
     so that only they can access private information
     """
-    date_joined = fields.EpochTimeReadOnlyField()
+    date_joined = fields.UnixTimeReadOnlyField()
 
     class Meta:
         model = FMSUser
@@ -124,10 +124,10 @@ class ReportSerializer(serializers.ModelSerializer):
     """
     longitude = serializers.FloatField(source='point.x')
     latitude = serializers.FloatField(source='point.y')
-    fixed_at = fields.EpochTimeReadOnlyField()
-    created_at = fields.EpochTimeReadOnlyField()
-    updated_at = fields.EpochTimeReadOnlyField()
-    sent_at = fields.EpochTimeReadOnlyField()
+    fixed_at = fields.UnixTimeReadOnlyField()
+    created_at = fields.UnixTimeReadOnlyField()
+    updated_at = fields.UnixTimeReadOnlyField()
+    sent_at = fields.UnixTimeReadOnlyField()
     user = UserSerializer(read_only=True)
     report_photos = ReportPhotoSerializer(many=True, read_only=True)
 
@@ -158,4 +158,15 @@ class ReportSerializer(serializers.ModelSerializer):
             raise EXCEPTIONS['ward-not-found']
         user = self.context['request'].user
         return Report.objects.create(user=user, ward=ward, **validated_attrs)
+
+
+class ReportUpdateSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    created_at = fields.UnixTimeReadOnlyField()
+    updated_at = fields.UnixTimeReadOnlyField()
+    report_id = serializers.IntegerField()
+
+    class Meta:
+        model = ReportUpdate
+        fields = ('report_id', 'user', 'status', 'created_at', 'updated_at', 'desc')
 

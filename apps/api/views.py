@@ -11,11 +11,11 @@ from rest_framework import exceptions
 from django.http import Http404
 from collections import OrderedDict
 
-from apps.mainapp.models import Report, Ward, ReportCategory, FaqEntry, ReportPhoto
+from apps.mainapp.models import Report, ReportUpdate, Ward, ReportCategory, FaqEntry, ReportPhoto
 from apps.mainapp.utils import ReportCount
-from apps.mainapp.filters import ReportFilter
+from apps.mainapp.filters import ReportFilter, ReportUpdateFilter
 from .serializers import ReportSerializer, WardSerializer, CategorySerializer, FaqEntrySerializer,\
-    ContactSerializer, ExtendedUserSerializer, ReportPhotoSerializer
+    ContactSerializer, ExtendedUserSerializer, ReportPhotoSerializer, ReportUpdateSerializer
 from metadata import AuthTokenMetaData, ReportCountMetadata
 from apps.users.models import FMSUserAuthToken
 from apps.mainapp.forms import ContactForm
@@ -184,7 +184,7 @@ class ReportListCreateView(generics.ListCreateAPIView):
 
     -----
     """
-    queryset = Report.active.all()
+    queryset = Report.active.all().select_related('user').prefetch_related('report_photos')
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     serializer_class = ReportSerializer
     paginate_by = 10
@@ -229,6 +229,12 @@ class ReportListCreateView(generics.ListCreateAPIView):
         return queryset
 
 
+class ReportUpdateListCreateView(generics.ListCreateAPIView):
+    model = ReportUpdate
+    serializer_class = ReportUpdateSerializer
+    queryset = model.active.all().select_related('user', 'prev_update')
+    filter_class = ReportUpdateFilter
+
 class ReportPhotoListCreateView(generics.ListCreateAPIView):
     model = ReportPhoto
     serializer_class = ReportPhotoSerializer
@@ -238,6 +244,7 @@ class ReportPhotoListCreateView(generics.ListCreateAPIView):
 class ReportDetailView(generics.RetrieveUpdateAPIView):
     model = Report
     serializer_class = ReportSerializer
+    queryset = Report.active.all().select_related('user').prefetch_related('report_photos')
 
     def patch(self, request, *args, **kwargs):
         if self.request.user.can_update_report():
@@ -278,7 +285,7 @@ class CategoryDetailView(APIView):
 
 
 class WardListView(generics.ListAPIView):
-    queryset = Ward.objects.all()
+    queryset = Ward.objects.select_related('city')
     serializer_class = WardSerializer
 
 

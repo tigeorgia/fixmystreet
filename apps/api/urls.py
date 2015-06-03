@@ -25,6 +25,7 @@ urlpatterns += [
     url(r'^reports/(?P<pk>\d+)/updates$', views.ReportListCreateView.as_view(),
         name='report-updates'),
     url(r'^reports/photos/$', views.ReportPhotoListCreateView.as_view(), name='report-photos'),
+    url(r'^reports/updates/$', views.ReportUpdateListCreateView.as_view(), name='report-updates'),
 ]
 
 urlpatterns += [
