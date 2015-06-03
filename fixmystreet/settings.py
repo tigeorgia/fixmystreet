@@ -22,6 +22,7 @@ POSTGIS_TEMPLATE = 'template_postgis'
 TIME_ZONE = 'Asia/Tbilisi'
 LANGUAGE_CODE = 'ka'
 USE_I18N = True
+USE_TZ = True
 DATE_FORMAT = "l, F jS, Y"
 LANGUAGES = (
     ('en', 'English'),

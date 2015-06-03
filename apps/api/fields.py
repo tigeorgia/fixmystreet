@@ -1,7 +1,10 @@
+from django.forms.utils import to_current_timezone, from_current_timezone
 from rest_framework import serializers
 from time import mktime
+from calendar import timegm
 from arrow.arrow import Arrow
 import dateutil.parser
+import pytz
 
 
 class StdImageField(serializers.ImageField):
@@ -80,8 +83,8 @@ class StdImageField(serializers.ImageField):
         return super(StdImageField, self).to_internal_value(data)
 
 
-class EpochTimeReadOnlyField(serializers.ReadOnlyField):
+class UnixTimeReadOnlyField(serializers.ReadOnlyField):
 
     def to_representation(self, value):
-        epoch_utc = int(mktime(value.timetuple()))
-        return epoch_utc
+        unix_utc = int(timegm(value.timetuple()))
+        return unix_utc
