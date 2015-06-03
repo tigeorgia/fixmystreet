@@ -239,8 +239,9 @@ class ActiveManager(models.Manager):
 
 
 class Report(models.Model):
+    DEFAULT_STATUS = 'not-fixed'
     REPORT_STATUS_CHOICES = (
-        ('not-fixed', _('Not Fixed')),
+        (DEFAULT_STATUS, _('Not Fixed')),
         ('fixed', _('Fixed')),
         ('in-progress', _('In Progress'))
     )
@@ -253,7 +254,7 @@ class Report(models.Model):
     # CharFields
     street = models.CharField(max_length=255, verbose_name=_("street address"), help_text=_("Address of the problem"))
     status = models.CharField(_('status'), max_length=32, choices=REPORT_STATUS_CHOICES,
-                              default='not-fixed', help_text=_('Report status'))
+                              default=DEFAULT_STATUS, help_text=_('Report status'))
     sent_at = models.DateTimeField(null=True, help_text=_('Date when report was sent to city representative'))
     title = models.CharField(max_length=100, verbose_name=_("title"), help_text=_('Report title'))
 
@@ -345,6 +346,13 @@ class ReportPhoto(models.Model):
                           variations={'large': (800, 600), 'thumbnail': (133, 100)},
                           help_text=_('Report photo'))
 
+class ReportUpdatePhoto(models.Model):
+    report_update = models.ForeignKey('mainapp.ReportUpdate', related_name='update_photos')
+    order = models.IntegerField(_('order'))
+    photo = StdImageField(upload_to=UploadToUUID(path='photos/updates'), verbose_name=_("photo"),
+                          variations={'large': (800, 600), 'thumbnail': (133, 100)},
+                          help_text=_('Report update photo'))
+
 
 class ReportCount(object):
     def __init__(self, interval):
@@ -363,6 +371,7 @@ class ReportUpdate(models.Model):
     NOT_FIXED = 'not-fixed'
     FIXED = 'fixed'
     IN_PROGRESS = 'in-progress'
+    DEFAULT_STATUS = NOT_FIXED
     REPORT_STATUS_CHOICES = (
         (NOT_FIXED, _('Not Fixed')),
         (FIXED, _('Fixed')),
@@ -371,10 +380,12 @@ class ReportUpdate(models.Model):
 
     # ForeignKeys
     report = models.ForeignKey(Report, related_name='report_updates')
+    prev_update = models.ForeignKey('self', verbose_name=_('previous update'), null=True,
+                                    help_text=_('Link to the previous report update'), related_name='next_update')
     user = models.ForeignKey('users.FMSUser', related_name='report_updates')
 
     # CharFields
-    status = models.CharField(_('status'), max_length=32, choices=REPORT_STATUS_CHOICES, default=NOT_FIXED)
+    status = models.CharField(_('status'), max_length=32, choices=REPORT_STATUS_CHOICES, default=DEFAULT_STATUS)
 
     # BooleanFields
     is_active = models.BooleanField(default=True)
@@ -408,6 +419,19 @@ class ReportUpdate(models.Model):
     def is_fixed(self):
         if self.status is 'fixed':
             return True
+
+    @property
+    def previous_status(self):
+        """
+        Returns report's previous status or default status if
+        previous update does not exist.
+        """
+        if self.prev_update:
+            return self.prev_update.status
+        else:
+            # If there's no previous update, that means this is the first update.
+            # So we must return default status
+            return self.DEFAULT_STATUS
 
     @property
     def get_status(self):
