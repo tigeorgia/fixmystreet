@@ -1,4 +1,4 @@
-from django_filters import FilterSet, ChoiceFilter, DateTimeFilter, MethodFilter, Filter
+from django_filters import FilterSet, ChoiceFilter, DateTimeFilter, MethodFilter, Filter, BooleanFilter
 from django.utils.translation import ugettext_lazy as _
 from django.forms.fields import BaseTemporalField
 from django.forms.utils import from_current_timezone, to_current_timezone
@@ -35,15 +35,6 @@ class UnixTimeField(BaseTemporalField):
 class UnixTimeFilter(Filter):
     field_class = UnixTimeField
 
-    # def filter(self, qs, value):
-    #     timezone = pytz.timezone(settings.TIME_ZONE)
-    #     if self.lookup_type == 'gte' or 'gt':
-    #         min_val = datetime.datetime.combine(value, datetime.time.min).replace(tzinfo=timezone)
-    #         value = min_val
-    #     if self.lookup_type == 'lte' or 'lt':
-    #         max_val = datetime.datetime.combine(value, datetime.time.max).replace(tzinfo=timezone)
-    #         value = max_val
-    #     return super(UnixTimeFilter, self).filter(qs, value)
 
 class ReportFilter(FilterSet):
     center_point = MethodFilter(action='center_point')
@@ -56,11 +47,13 @@ class ReportFilter(FilterSet):
     status = ChoiceFilter(choices=status_choices)
     from_date = DateTimeFilter(name='created_at', lookup_type='gte')
     to_date = DateTimeFilter(name='created_at', lookup_type='lte')
+    from_date_unix = UnixTimeFilter(name='created_at', lookup_type='gte')
+    to_date_unix = UnixTimeFilter(name='created_at', lookup_type='lte')
     order_by_field = 'order_by'
 
     class Meta:
         model = Report
-        fields = ['ward__city', 'category', 'from_date', 'to_date']
+        fields = ['ward__city', 'category', 'from_date', 'to_date', 'from_date_unix', 'to_date_unix']
         order_by = (
             ('-created_at', _('Latest First')),
             ('created_at', _('Oldest First'))
@@ -74,5 +67,9 @@ class ReportUpdateFilter(FilterSet):
 
     class Meta:
         model = ReportUpdate
-        fields = ['user', 'from_date', 'to_date', 'from_date_unix', 'to_date_unix']
+        fields = ['user', 'report', 'status', 'from_date', 'to_date', 'from_date_unix', 'to_date_unix']
+        order_by = (
+            ('-created_at', _('Latest First')),
+            ('created_at', _('Oldest First'))
+        )
 

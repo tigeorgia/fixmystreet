@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 
 EXCEPTIONS = {
     'no-permission-report': exceptions.PermissionDenied(_('You are not allowed to modify this report')),
+    'no-permission-report-status': exceptions.PermissionDenied(_('Only city councillors and report creators can update report status')),
     'no-permission-general': exceptions.PermissionDenied(_('You are not allowed to perform this action')),
     'report-not-found': exceptions.ValidationError(_('Report with this ID does not exist')),
     'user-disabled': exceptions.ValidationError(_('User account is disabled.')),
@@ -166,7 +167,22 @@ class ReportUpdateSerializer(serializers.ModelSerializer):
     updated_at = fields.UnixTimeReadOnlyField()
     report_id = serializers.IntegerField()
 
+    def create(self, validated_data):
+        report_id = int(validated_data.pop('report_id'))
+        user = self.context['request'].user
+
+        try:
+            report = Report.objects.get(id=report_id)
+        except Report.DoesNotExist:
+            raise EXCEPTIONS['report-not-found']
+
+        if not report.status == validated_data.get('status'):
+            if not user.can_update_report(report):
+                raise EXCEPTIONS['no-permission-report-status']
+
+        return ReportUpdate.objects.create(report=report, user=user, **validated_data)
+
     class Meta:
         model = ReportUpdate
-        fields = ('report_id', 'user', 'status', 'created_at', 'updated_at', 'desc')
+        fields = ('id', 'report_id', 'user', 'status', 'created_at', 'updated_at', 'desc')
 

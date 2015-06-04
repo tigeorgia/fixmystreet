@@ -9,6 +9,7 @@ from rest_framework.renderers import BrowsableAPIRenderer, JSONRenderer
 from rest_framework.decorators import renderer_classes
 from rest_framework import exceptions
 from django.http import Http404
+from django.db.models import Prefetch
 from collections import OrderedDict
 
 from apps.mainapp.models import Report, ReportUpdate, Ward, ReportCategory, FaqEntry, ReportPhoto
@@ -112,6 +113,10 @@ class APIRootView(APIView):
 
     * Photos (list/upload) [/api/reports/photos/](/api/reports/photos/)
 
+    * Report Updates [/api/reports/updates/](/api/reports/updates/)
+
+    * Report Update Detail [/api/reports/updates/<id\>/](/api/reports/updates/<id\>/)
+
     ___
 
     ## Current User Information:
@@ -167,9 +172,9 @@ class ReportListCreateView(generics.ListCreateAPIView):
     `center_distance` must be provided
     * `status` - Report status. You can get available statuses by using OPTIONS request on this endpoint
     * `category` - Category by id
-    * `start_date` Min date in unix timestamp (utc)
-    * `end_date` - Max date in unix timestamp (utc)
-    * `has_photo` - Bool.
+    * `from_date_unix` Min date in unix timestamp (utc)
+    * `to_date_unix` - Max date in unix timestamp (utc)
+    * `has_photos` - Bool.
     * `ward__city` - City ID. You can get city ID from [/api/wards/](/api/wards/)
     * `user_id` - User ID. You can get user ID from [/api/user/](/api/user/)
 
@@ -180,11 +185,11 @@ class ReportListCreateView(generics.ListCreateAPIView):
         * `created_at` - Oldest first
         * `-created_at` - Newest first
 
-    **Example**: [/api/reports/?category=25&status=fixed&order_by=created_at](/api/reports/?category=25&status=fixed&has_photo=true&order_by=created_at)
+    **Example**: [/api/reports/?category=25&status=fixed&order_by=created_at](/api/reports/?category=25&status=fixed&has_photos=true&order_by=created_at)
 
     -----
     """
-    queryset = Report.active.all().select_related('user').prefetch_related('report_photos')
+    queryset = Report.active.all().select_related('user', 'category').prefetch_related('report_photos')
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     serializer_class = ReportSerializer
     paginate_by = 10
@@ -197,9 +202,7 @@ class ReportListCreateView(generics.ListCreateAPIView):
         queryset = self.queryset
         center_point = self.request.QUERY_PARAMS.get('center_point', None)
         center_distance = self.request.QUERY_PARAMS.get('center_distance', None)
-        start_date = self.request.QUERY_PARAMS.get('start_date', None)
-        end_date = self.request.QUERY_PARAMS.get('end_date', None)
-        has_photo = self.request.QUERY_PARAMS.get('has_photo', None)
+        has_photos = self.request.QUERY_PARAMS.get('has_photos', None)
         user_id = self.request.QUERY_PARAMS.get('user_id', None)
 
         if center_distance and center_point:
@@ -207,21 +210,11 @@ class ReportListCreateView(generics.ListCreateAPIView):
             center_point = fromstr('POINT({0})'.format(center_point), srid=4326)
             queryset = queryset.filter(point__distance_lte=(center_point, D(m=center_distance)))
 
-        if start_date:
-            start_date = datetime.datetime.fromtimestamp(int(start_date))
-            min_day = datetime.datetime.combine(start_date, datetime.time.min)
-            queryset = queryset.filter(created_at__gte=min_day)
-
-        if end_date:
-            end_date = datetime.datetime.fromtimestamp(int(end_date))
-            max_day = datetime.datetime.combine(end_date, datetime.time.max)
-            queryset = queryset.filter(created_at__lte=max_day)
-
-        if has_photo:
-            if has_photo.lower() == 'true' or '1':
-                queryset = queryset.exclude(has_photo=True)
+        if has_photos:
+            if has_photos.lower() == 'true' or has_photos == '1':
+                queryset = queryset.filter(report_photos__isnull=False)
             else:
-                queryset = queryset.filter(has_photo=False)
+                queryset = queryset.filter(report_photos__isnull=True)
 
         if user_id:
             queryset = queryset.filter(user__id=int(user_id))
@@ -230,10 +223,49 @@ class ReportListCreateView(generics.ListCreateAPIView):
 
 
 class ReportUpdateListCreateView(generics.ListCreateAPIView):
+    """
+    List of all report updates. Dates are UTC.
+
+    ##**Available filters**:
+
+    (All filters are optional)
+
+    * `status` - Report status. You can get available statuses by using OPTIONS request on this endpoint
+    * `from_date_unix` Min date in unix timestamp (utc)
+    * `to_date_unix` - Max date in unix timestamp (utc)
+    * `user` - User ID. You can get user ID from [/api/user/](/api/user/)
+    * `report` - Report ID. You can get report ID from [/api/reports/](/api/reports/)
+
+    ##**Sorting**:
+
+    * `order_by`
+
+        * `created_at` - Oldest first
+        * `-created_at` - Newest first
+
+    -----
+    """
     model = ReportUpdate
     serializer_class = ReportUpdateSerializer
     queryset = model.active.all().select_related('user', 'prev_update')
     filter_class = ReportUpdateFilter
+
+class ReportUpdateDetailView(APIView):
+    serializer_class = ReportUpdateSerializer
+    model = ReportUpdate
+    queryset = ReportUpdate.objects.all().select_related('report', 'prev_update', 'user')
+
+    def get_object(self, pk):
+        try:
+            return ReportUpdate.objects.get(pk=pk)
+        except ReportUpdate.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        update= self.get_object(pk)
+        serializer = self.serializer_class(update, context={'request': request})
+        return Response(serializer.data)
+
 
 class ReportPhotoListCreateView(generics.ListCreateAPIView):
     model = ReportPhoto
