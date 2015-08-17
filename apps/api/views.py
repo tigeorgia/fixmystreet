@@ -175,7 +175,10 @@ class ReportListCreateView(generics.ListCreateAPIView):
     * `from_date_unix` Min date in unix timestamp (utc)
     * `to_date_unix` - Max date in unix timestamp (utc)
     * `has_photos` - Bool.
-    * `ward__city` - City ID. You can get city ID from [/api/wards/](/api/wards/)
+    * `ward` - Ward ID. You can get ward ID from [/api/wards/](/api/wards/). You can reuse the same key in the query
+    multiple times and that will include all matched wards. Like so: [/api/reports/?ward=8&ward=9&ward=10](/api/reports/?ward=8&ward=9&ward=10)
+    * `city` - City ID. You can get city ID from [/api/wards/](/api/wards/). You can reuse the same key in the query
+    multiple times and that will include all matched cities. Like so: [/api/reports/?city=2&city=3&city=4](/api/reports/?city=2&city=3&city=4)
     * `user_id` - User ID. You can get user ID from [/api/user/](/api/user/)
 
     ##**Sorting**:

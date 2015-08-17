@@ -1,9 +1,11 @@
-from django_filters import FilterSet, ChoiceFilter, DateTimeFilter, MethodFilter, Filter, BooleanFilter
+from django_filters import FilterSet, ChoiceFilter, DateTimeFilter, MethodFilter, Filter, BooleanFilter, ModelMultipleChoiceFilter
 from django.utils.translation import ugettext_lazy as _
 from django.forms.fields import BaseTemporalField
 from django.forms.utils import from_current_timezone, to_current_timezone
+from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from apps.mainapp.models import City, Ward
 import datetime
 import pytz
 
@@ -50,10 +52,12 @@ class ReportFilter(FilterSet):
     from_date_unix = UnixTimeFilter(name='created_at', lookup_type='gte')
     to_date_unix = UnixTimeFilter(name='created_at', lookup_type='lte')
     order_by_field = 'order_by'
+    city = ModelMultipleChoiceFilter(name='ward__city', queryset=City.objects.all(), widget=forms.CheckboxSelectMultiple())
+    ward = ModelMultipleChoiceFilter(queryset=Ward.objects.all(), widget=forms.CheckboxSelectMultiple())
 
     class Meta:
         model = Report
-        fields = ['ward__city', 'category', 'from_date', 'to_date', 'from_date_unix', 'to_date_unix']
+        fields = ['ward', 'city', 'category', 'from_date', 'to_date', 'from_date_unix', 'to_date_unix']
         order_by = (
             ('-created_at', _('Latest First')),
             ('created_at', _('Oldest First'))
