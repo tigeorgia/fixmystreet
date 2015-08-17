@@ -40,6 +40,11 @@ urlpatterns += [
 ]
 
 urlpatterns += [
+    url(r'^cities/$', views.CityListView.as_view(), name='city-list'),
+    url(r'^cities/(?P<pk>\d+)/$', views.CityDetailView.as_view(), name='city-detail'),
+]
+
+urlpatterns += [
     url(r'^faq/$', views.FaqEntryListView.as_view(), name='faq-list'),
 ]
 

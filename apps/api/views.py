@@ -12,11 +12,11 @@ from django.http import Http404
 from django.db.models import Prefetch
 from collections import OrderedDict
 
-from apps.mainapp.models import Report, ReportUpdate, Ward, ReportCategory, FaqEntry, ReportPhoto
+from apps.mainapp.models import Report, ReportUpdate, Ward, ReportCategory, FaqEntry, ReportPhoto, City
 from apps.mainapp.utils import ReportCount
 from apps.mainapp.filters import ReportFilter, ReportUpdateFilter
 from .serializers import ReportSerializer, WardSerializer, CategorySerializer, FaqEntrySerializer,\
-    ContactSerializer, ExtendedUserSerializer, ReportPhotoSerializer, ReportUpdateSerializer
+    ContactSerializer, ExtendedUserSerializer, ReportPhotoSerializer, ReportUpdateSerializer, CitySerializer
 from metadata import AuthTokenMetaData, ReportCountMetadata
 from apps.users.models import FMSUserAuthToken
 from apps.mainapp.forms import ContactForm
@@ -128,6 +128,13 @@ class APIRootView(APIView):
     * List: [/api/wards/](/api/wards/)
 
     * Detail: [/api/wards/<id\>/](/api/wards/<id>/)
+
+    ___
+
+    ## Cities:
+    * List: [/api/cities/](/api/cities/)
+
+    * Detail: [/api/cities/<id\>/](/api/cities/<id>/)
 
     ___
 
@@ -343,6 +350,24 @@ class WardDetailView(APIView):
         serializer = WardSerializer(ward, context={'request': request})
         return Response(serializer.data)
 
+
+class CityListView(generics.ListAPIView):
+    queryset = City.objects.all()
+    serializer_class = CitySerializer
+
+class CityDetailView(APIView):
+    model = City
+
+    def get_object(self, pk):
+        try:
+            return City.objects.get(pk=pk)
+        except City.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        city = self.get_object(pk)
+        serializer = CitySerializer(city, context={'request': request})
+        return Response(serializer.data)
 
 class ReportCountView(APIView):
     permission_classes = (permissions.AllowAny,)
